@@ -1,107 +1,212 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  
-  
-  <title>Python学习 | Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
   <meta name="description" content="Python作为我学习的第三门语言，感觉它与Java还是有些相似之处，所以3天内学完Python对我来说还可以接受，关键是读写文件那里还是有些许不懂的地方。之所以学习Python，是因为我们专业开了一门机器学习的课，老师要求用Python编写程序，另一门课也涉及到爬虫之类。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python学习">
 <meta property="og:url" content="http://example.com/posts/e39e2a4e.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="v5le0n9&#39;s garden">
 <meta property="og:description" content="Python作为我学习的第三门语言，感觉它与Java还是有些相似之处，所以3天内学完Python对我来说还可以接受，关键是读写文件那里还是有些许不懂的地方。之所以学习Python，是因为我们专业开了一门机器学习的课，老师要求用Python编写程序，另一门课也涉及到爬虫之类。">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/posts/e39e2a4e/struct%E5%8C%85.png">
 <meta property="og:image" content="http://example.com/posts/e39e2a4e/struct%E5%8C%852.png">
 <meta property="article:published_time" content="2022-04-05T01:29:27.922Z">
 <meta property="article:modified_time" content="2022-04-04T12:40:02.275Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="v5le0n9">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/posts/e39e2a4e/struct%E5%8C%85.png">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+<link rel="canonical" href="http://example.com/posts/e39e2a4e.html">
 
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
-  
-<meta name="generator" content="Hexo 6.1.0"></head>
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
+  <title>Python学习 | v5le0n9's garden</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">v5le0n9's garden</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">小凉的秘密基地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
     </div>
   </div>
-</header>
+</div>
 
-      <div class="outer">
-        <section id="main"><article id="post-Python学习" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/posts/e39e2a4e.html" class="article-date">
-  <time class="dt-published" datetime="2022-04-05T01:29:27.922Z" itemprop="datePublished">2022-04-05</time>
-</a>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a>
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
   </div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      Python学习
-    </h1>
-  
 
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/e39e2a4e.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="v5le0n9">
+      <meta itemprop="description" content="v5le0n9's garden">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="v5le0n9's garden">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python学习
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-05 09:29:27" itemprop="dateCreated datePublished" datetime="2022-04-05T09:29:27+08:00">2022-04-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-04 20:40:02" itemprop="dateModified" datetime="2022-04-04T20:40:02+08:00">2022-04-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">开发</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="e-content article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
         <p>Python作为我学习的第三门语言，感觉它与Java还是有些相似之处，所以3天内学完Python对我来说还可以接受，关键是读写文件那里还是有些许不懂的地方。之所以学习Python，是因为我们专业开了一门机器学习的课，老师要求用Python编写程序，另一门课也涉及到爬虫之类。</p>
 <span id="more"></span>
@@ -1249,157 +1354,199 @@
 <h2 id="22-4-字符串与字节串之间的转换"><a href="#22-4-字符串与字节串之间的转换" class="headerlink" title="22.4 字符串与字节串之间的转换"></a>22.4 字符串与字节串之间的转换</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 字符串转字节串</span></span><br><span class="line"><span class="comment"># 字符串编码为字节码</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;v5le0n9&#x27;</span>.encode(<span class="string">&#x27;ascii&#x27;</span>))	<span class="comment"># b&#x27;v5le0n9&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果有中文用utf-8编码</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;v5le0n9哈&#x27;</span>.encode(<span class="string">&#x27;utf-8&#x27;</span>))	<span class="comment"># b&#x27;v5le0n9\xe5\x93\x88&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数字或字符数组编码成字节码</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">bytes</span>(<span class="number">1</span>)) 	<span class="comment"># b&#x27;\x00&#x27;</span></span><br><span class="line"><span class="comment"># print(bytes(1,2,3))   # 当多个整型转换要先转化为数组</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">bytes</span>([<span class="number">1</span>,<span class="number">0xb</span>,<span class="built_in">ord</span>(<span class="string">&#x27;3&#x27;</span>)]))	<span class="comment"># b&#x27;\x01\x0b3&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 16进制字符串转字节串</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">bytes</span>().fromhex(<span class="string">&#x27;abcd45&#x27;</span>)) 	<span class="comment"># b&#x27;\xab\xcdE&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># map(func,iterable)第一个参数表示函数，第二参数表示一个或多个序列</span></span><br><span class="line"><span class="comment"># 将后面序列都调用前面的函数，最后返回一个迭代器</span></span><br><span class="line"><span class="comment"># 将这个迭代器里的内容转化为字节串</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">bytes</span>(<span class="built_in">map</span>(<span class="built_in">ord</span>,<span class="string">&#x27;\x01\x02\x31\x32\x97\x98&#x27;</span>)))	<span class="comment"># b&#x27;\x01\x0212\x97\x98&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 字节串转字符串</span></span><br><span class="line"><span class="comment"># 字节码解码为字符串</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">bytes</span>(<span class="string">b&#x27;v5le0n9\xe5\x93\x88&#x27;</span>).decode(<span class="string">&#x27;utf-8&#x27;</span>))	<span class="comment"># v5le0n9哈</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将里面的内容先转为字节串，再转化为字符串，截取下标为2到-1的字符串</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">str</span>(<span class="built_in">bytes</span>(<span class="string">b&#x27;\x01\x0212&#x27;</span>))[<span class="number">2</span>:-<span class="number">1</span>])	<span class="comment"># \x01\x0212</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 字节串转16进制，再转字符串，截取下标为2到-1的字符串</span></span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">str</span>(binascii.b2a_hex(<span class="string">b&#x27;\x01\x0212&#x27;</span>))[<span class="number">2</span>:-<span class="number">1</span>])	<span class="comment"># 01023132</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 字节串转16进制，再以字符串的形式插入列表</span></span><br><span class="line"><span class="built_in">print</span>([<span class="built_in">hex</span>(x) <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">bytes</span>(<span class="string">b&#x27;\x01\x0212&#x27;</span>)])	<span class="comment"># [&#x27;0x1&#x27;, &#x27;0x2&#x27;, &#x27;0x31&#x27;, &#x27;0x32&#x27;]</span></span><br></pre></td></tr></table></figure>
 
 
-      
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/posts/e39e2a4e.html" data-id="cl1lgrwhw000eokhqas01cpts" data-title="Python学习" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li></ul>
 
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/33a085c7.html" rel="prev" title="调试器使用教程">
+      <i class="fa fa-chevron-left"></i> 调试器使用教程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/855b12c4.html" rel="next" title="RSA算法">
+      RSA算法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-print%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">1. print函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6"><span class="nav-number">2.</span> <span class="nav-text">2. 转义字符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E4%B8%8E%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">3.</span> <span class="nav-text">3. 字符编码与关键字</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E5%8F%98%E9%87%8F"><span class="nav-number">4.</span> <span class="nav-text">4. 变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">5.</span> <span class="nav-text">5. 数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-%E6%95%B4%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 整数类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-%E6%B5%AE%E7%82%B9%E7%B1%BB%E5%9E%8B"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 浮点类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 布尔类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 字符串类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-5-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="nav-number">5.5.</span> <span class="nav-text">5.5 数据类型转换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-input%E5%87%BD%E6%95%B0"><span class="nav-number">6.</span> <span class="nav-text">6. input函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">7.</span> <span class="nav-text">7. 运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">7.1.</span> <span class="nav-text">7.1 算术运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">7.2.</span> <span class="nav-text">7.2 赋值运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-3-%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">7.3.</span> <span class="nav-text">7.3 比较运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-4-%E5%B8%83%E5%B0%94%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">7.4.</span> <span class="nav-text">7.4 布尔运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-5-%E4%BD%8D%E8%BF%90%E7%AE%97"><span class="nav-number">7.5.</span> <span class="nav-text">7.5 位运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-6-%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">7.6.</span> <span class="nav-text">7.6 运算符的优先级</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-%E7%A8%8B%E5%BA%8F%E7%9A%84%E7%BB%84%E7%BB%87%E7%BB%93%E6%9E%84"><span class="nav-number">8.</span> <span class="nav-text">8. 程序的组织结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-1-%E9%80%89%E6%8B%A9%E7%BB%93%E6%9E%84"><span class="nav-number">8.1.</span> <span class="nav-text">8.1 选择结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-1-%E5%8D%95%E5%88%86%E6%94%AF%E7%BB%93%E6%9E%84"><span class="nav-number">8.1.1.</span> <span class="nav-text">8.1.1 单分支结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-2-%E5%8F%8C%E5%88%86%E6%94%AF%E7%BB%93%E6%9E%84"><span class="nav-number">8.1.2.</span> <span class="nav-text">8.1.2 双分支结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-3-%E5%A4%9A%E5%88%86%E6%94%AF%E7%BB%93%E6%9E%84"><span class="nav-number">8.1.3.</span> <span class="nav-text">8.1.3 多分支结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-4-%E5%B5%8C%E5%A5%97if%E8%AF%AD%E5%8F%A5"><span class="nav-number">8.1.4.</span> <span class="nav-text">8.1.4 嵌套if语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-5-%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">8.1.5.</span> <span class="nav-text">8.1.5 条件表达式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-2-pass%E8%AF%AD%E5%8F%A5"><span class="nav-number">8.2.</span> <span class="nav-text">8.2 pass语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-3-range%E5%87%BD%E6%95%B0"><span class="nav-number">8.3.</span> <span class="nav-text">8.3 range函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-4-%E5%BE%AA%E7%8E%AF%E7%BB%93%E6%9E%84"><span class="nav-number">8.4.</span> <span class="nav-text">8.4 循环结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-4-1-while%E5%BE%AA%E7%8E%AF"><span class="nav-number">8.4.1.</span> <span class="nav-text">8.4.1 while循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-4-2-for-in%E5%BE%AA%E7%8E%AF"><span class="nav-number">8.4.2.</span> <span class="nav-text">8.4.2 for-in循环</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-5-%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5"><span class="nav-number">8.5.</span> <span class="nav-text">8.5 流程控制语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-5-1-break%E8%AF%AD%E5%8F%A5"><span class="nav-number">8.5.1.</span> <span class="nav-text">8.5.1 break语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-5-2-continue%E8%AF%AD%E5%8F%A5"><span class="nav-number">8.5.2.</span> <span class="nav-text">8.5.2 continue语句</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-6-else%E8%AF%AD%E5%8F%A5"><span class="nav-number">8.6.</span> <span class="nav-text">8.6 else语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-7-%E5%B5%8C%E5%A5%97%E5%BE%AA%E7%8E%AF"><span class="nav-number">8.7.</span> <span class="nav-text">8.7 嵌套循环</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-%E5%88%97%E8%A1%A8"><span class="nav-number">9.</span> <span class="nav-text">9. 列表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#9-1-%E5%88%9B%E5%BB%BA%E5%88%97%E8%A1%A8"><span class="nav-number">9.1.</span> <span class="nav-text">9.1 创建列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-2-%E5%88%97%E8%A1%A8%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">9.2.</span> <span class="nav-text">9.2 列表的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-3-%E5%88%97%E8%A1%A8%E7%9A%84%E6%9F%A5%E8%AF%A2"><span class="nav-number">9.3.</span> <span class="nav-text">9.3 列表的查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#9-3-1-%E8%8E%B7%E5%8F%96%E5%88%97%E8%A1%A8%E4%B8%AD%E6%8C%87%E5%AE%9A%E5%85%83%E7%B4%A0%E7%9A%84%E7%B4%A2%E5%BC%95"><span class="nav-number">9.3.1.</span> <span class="nav-text">9.3.1 获取列表中指定元素的索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-3-2-%E8%8E%B7%E5%8F%96%E5%88%97%E8%A1%A8%E4%B8%AD%E7%9A%84%E5%8D%95%E4%B8%AA%E5%85%83%E7%B4%A0"><span class="nav-number">9.3.2.</span> <span class="nav-text">9.3.2 获取列表中的单个元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-3-3-%E8%8E%B7%E5%8F%96%E5%88%97%E8%A1%A8%E4%B8%AD%E7%9A%84%E5%A4%9A%E4%B8%AA%E5%85%83%E7%B4%A0"><span class="nav-number">9.3.3.</span> <span class="nav-text">9.3.3 获取列表中的多个元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-3-4-%E5%88%97%E8%A1%A8%E5%85%83%E7%B4%A0%E7%9A%84%E5%88%A4%E6%96%AD%E4%B8%8E%E9%81%8D%E5%8E%86"><span class="nav-number">9.3.4.</span> <span class="nav-text">9.3.4 列表元素的判断与遍历</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-4-%E5%88%97%E8%A1%A8%E5%85%83%E7%B4%A0%E7%9A%84%E6%B7%BB%E5%8A%A0"><span class="nav-number">9.4.</span> <span class="nav-text">9.4 列表元素的添加</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-5-%E5%88%97%E8%A1%A8%E5%85%83%E7%B4%A0%E7%9A%84%E5%88%A0%E9%99%A4"><span class="nav-number">9.5.</span> <span class="nav-text">9.5 列表元素的删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-6-%E5%88%97%E8%A1%A8%E5%85%83%E7%B4%A0%E7%9A%84%E4%BF%AE%E6%94%B9"><span class="nav-number">9.6.</span> <span class="nav-text">9.6 列表元素的修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-7-%E5%88%97%E8%A1%A8%E5%85%83%E7%B4%A0%E7%9A%84%E6%8E%92%E5%BA%8F"><span class="nav-number">9.7.</span> <span class="nav-text">9.7 列表元素的排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-8-%E5%88%97%E8%A1%A8%E7%94%9F%E6%88%90%E5%BC%8F"><span class="nav-number">9.8.</span> <span class="nav-text">9.8 列表生成式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-%E5%AD%97%E5%85%B8"><span class="nav-number">10.</span> <span class="nav-text">10. 字典</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#10-1-%E5%AD%97%E5%85%B8%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="nav-number">10.1.</span> <span class="nav-text">10.1 字典的创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-2-%E5%AD%97%E5%85%B8%E5%85%83%E7%B4%A0%E7%9A%84%E8%8E%B7%E5%8F%96"><span class="nav-number">10.2.</span> <span class="nav-text">10.2 字典元素的获取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-3-%E5%AD%97%E5%85%B8%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9"><span class="nav-number">10.3.</span> <span class="nav-text">10.3 字典的增删改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-4-%E8%8E%B7%E5%8F%96%E5%AD%97%E5%85%B8%E8%A7%86%E5%9B%BE"><span class="nav-number">10.4.</span> <span class="nav-text">10.4 获取字典视图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-5-%E5%AD%97%E5%85%B8%E5%85%83%E7%B4%A0%E7%9A%84%E9%81%8D%E5%8E%86"><span class="nav-number">10.5.</span> <span class="nav-text">10.5 字典元素的遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-6-%E5%AD%97%E5%85%B8%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">10.6.</span> <span class="nav-text">10.6 字典的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-7-%E5%AD%97%E5%85%B8%E7%94%9F%E6%88%90%E5%BC%8F"><span class="nav-number">10.7.</span> <span class="nav-text">10.7 字典生成式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#10-7-1-zip%E5%87%BD%E6%95%B0"><span class="nav-number">10.7.1.</span> <span class="nav-text">10.7.1 zip函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-7-2-%E5%AD%97%E5%85%B8%E7%94%9F%E6%88%90%E5%BC%8F"><span class="nav-number">10.7.2.</span> <span class="nav-text">10.7.2 字典生成式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-%E5%85%83%E7%BB%84"><span class="nav-number">11.</span> <span class="nav-text">11. 元组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#11-1-%E5%85%83%E7%BB%84%E7%9A%84%E5%88%9B%E5%BB%BA%E6%96%B9%E5%BC%8F"><span class="nav-number">11.1.</span> <span class="nav-text">11.1 元组的创建方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-2-%E5%85%83%E7%BB%84%E7%9A%84%E9%81%8D%E5%8E%86"><span class="nav-number">11.2.</span> <span class="nav-text">11.2 元组的遍历</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#12-%E9%9B%86%E5%90%88"><span class="nav-number">12.</span> <span class="nav-text">12. 集合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#12-1-%E9%9B%86%E5%90%88%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="nav-number">12.1.</span> <span class="nav-text">12.1 集合的创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-2-%E9%9B%86%E5%90%88%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9"><span class="nav-number">12.2.</span> <span class="nav-text">12.2 集合的增删改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-3-%E9%9B%86%E5%90%88%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">12.3.</span> <span class="nav-text">12.3 集合间的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-4-%E9%9B%86%E5%90%88%E7%9A%84%E6%95%B0%E5%AD%A6%E6%93%8D%E4%BD%9C"><span class="nav-number">12.4.</span> <span class="nav-text">12.4 集合的数学操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-5-%E9%9B%86%E5%90%88%E7%94%9F%E6%88%90%E5%BC%8F"><span class="nav-number">12.5.</span> <span class="nav-text">12.5 集合生成式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#13-%E5%88%97%E8%A1%A8%E3%80%81%E5%AD%97%E5%85%B8%E3%80%81%E5%85%83%E7%BB%84%E3%80%81%E9%9B%86%E5%90%88%E6%80%BB%E7%BB%93"><span class="nav-number">13.</span> <span class="nav-text">13. 列表、字典、元组、集合总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#14-%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">14.</span> <span class="nav-text">14. 字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#14-1-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%88%9B%E5%BB%BA%E4%B8%8E%E9%A9%BB%E7%95%99%E6%9C%BA%E5%88%B6"><span class="nav-number">14.1.</span> <span class="nav-text">14.1 字符串的创建与驻留机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-2-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">14.2.</span> <span class="nav-text">14.2 字符串的常用操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#14-2-1-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%9F%A5%E8%AF%A2"><span class="nav-number">14.2.1.</span> <span class="nav-text">14.2.1 字符串的查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-2-2-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%A7%E5%B0%8F%E5%86%99%E8%BD%AC%E6%8D%A2"><span class="nav-number">14.2.2.</span> <span class="nav-text">14.2.2 字符串大小写转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-2-3-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%AF%B9%E9%BD%90"><span class="nav-number">14.2.3.</span> <span class="nav-text">14.2.3 字符串的对齐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-2-4-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%8A%88%E5%88%86"><span class="nav-number">14.2.4.</span> <span class="nav-text">14.2.4 字符串的劈分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-2-5-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%88%A4%E6%96%AD"><span class="nav-number">14.2.5.</span> <span class="nav-text">14.2.5 字符串的判断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-2-6-%E6%9B%BF%E6%8D%A2%E4%B8%8E%E5%90%88%E5%B9%B6"><span class="nav-number">14.2.6.</span> <span class="nav-text">14.2.6 替换与合并</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-3-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">14.3.</span> <span class="nav-text">14.3 字符串的比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-4-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%88%87%E7%89%87"><span class="nav-number">14.4.</span> <span class="nav-text">14.4 字符串的切片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-5-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">14.5.</span> <span class="nav-text">14.5 格式化字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-6-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E7%BC%96%E7%A0%81%E8%BD%AC%E6%8D%A2"><span class="nav-number">14.6.</span> <span class="nav-text">14.6 字符串的编码转换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#15-%E5%87%BD%E6%95%B0"><span class="nav-number">15.</span> <span class="nav-text">15. 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#15-1-%E5%87%BD%E6%95%B0%E7%9A%84%E5%88%9B%E5%BB%BA%E4%B8%8E%E8%B0%83%E7%94%A8"><span class="nav-number">15.1.</span> <span class="nav-text">15.1 函数的创建与调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-2-%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-number">15.2.</span> <span class="nav-text">15.2 函数的参数传递</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-3-%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">15.3.</span> <span class="nav-text">15.3 函数的返回值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-4-%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0%E5%AE%9A%E4%B9%89"><span class="nav-number">15.4.</span> <span class="nav-text">15.4 函数的参数定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#15-4-1-%E9%BB%98%E8%AE%A4%E5%80%BC%E5%8F%82%E6%95%B0"><span class="nav-number">15.4.1.</span> <span class="nav-text">15.4.1 默认值参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-4-2-%E4%B8%AA%E6%95%B0%E5%8F%AF%E5%8F%98%E7%9A%84%E4%BD%8D%E7%BD%AE%E5%8F%82%E6%95%B0"><span class="nav-number">15.4.2.</span> <span class="nav-text">15.4.2 个数可变的位置参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-4-3-%E4%B8%AA%E6%95%B0%E5%8F%AF%E5%8F%98%E7%9A%84%E5%85%B3%E9%94%AE%E5%AD%97%E5%BD%A2%E5%8F%82"><span class="nav-number">15.4.3.</span> <span class="nav-text">15.4.3 个数可变的关键字形参</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-5-%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0%E6%80%BB%E7%BB%93"><span class="nav-number">15.5.</span> <span class="nav-text">15.5 函数的参数总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#16-%E5%8F%98%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">16.</span> <span class="nav-text">16. 变量的作用域</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#17-%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0"><span class="nav-number">17.</span> <span class="nav-text">17. 递归函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#18-Python%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6"><span class="nav-number">18.</span> <span class="nav-text">18. Python的异常处理机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#18-1-try%E2%80%A6except"><span class="nav-number">18.1.</span> <span class="nav-text">18.1 try…except</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-2-try%E2%80%A6except%E2%80%A6else"><span class="nav-number">18.2.</span> <span class="nav-text">18.2 try…except…else</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-3-try%E2%80%A6except%E2%80%A6else%E2%80%A6finally"><span class="nav-number">18.3.</span> <span class="nav-text">18.3 try…except…else…finally</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-4-%E5%B8%B8%E8%A7%81%E7%9A%84%E5%BC%82%E5%B8%B8%E7%B1%BB%E5%9E%8B"><span class="nav-number">18.4.</span> <span class="nav-text">18.4 常见的异常类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-5-traceback%E6%A8%A1%E5%9D%97"><span class="nav-number">18.5.</span> <span class="nav-text">18.5 traceback模块</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#19-%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1"><span class="nav-number">19.</span> <span class="nav-text">19. 类与对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#19-1-%E7%B1%BB%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="nav-number">19.1.</span> <span class="nav-text">19.1 类的创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-2-%E7%B1%BB%E5%B1%9E%E6%80%A7%E3%80%81%E7%B1%BB%E6%96%B9%E6%B3%95%E3%80%81%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95"><span class="nav-number">19.2.</span> <span class="nav-text">19.2 类属性、类方法、静态方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-3-%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E5%B1%9E%E6%80%A7%E5%92%8C%E6%96%B9%E6%B3%95"><span class="nav-number">19.3.</span> <span class="nav-text">19.3 动态绑定属性和方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-4-%E5%B0%81%E8%A3%85"><span class="nav-number">19.4.</span> <span class="nav-text">19.4 封装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-5-%E7%BB%A7%E6%89%BF"><span class="nav-number">19.5.</span> <span class="nav-text">19.5 继承</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#19-5-1-%E6%96%B9%E6%B3%95%E9%87%8D%E5%86%99"><span class="nav-number">19.5.1.</span> <span class="nav-text">19.5.1 方法重写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#19-5-2-object%E7%B1%BB"><span class="nav-number">19.5.2.</span> <span class="nav-text">19.5.2 object类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-6-%E5%A4%9A%E6%80%81"><span class="nav-number">19.6.</span> <span class="nav-text">19.6 多态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-7-%E7%89%B9%E6%AE%8A%E7%9A%84%E5%B1%9E%E6%80%A7%E5%92%8C%E6%96%B9%E6%B3%95"><span class="nav-number">19.7.</span> <span class="nav-text">19.7 特殊的属性和方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-8-%E7%B1%BB%E7%9A%84%E6%B5%85%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B7%B1%E6%8B%B7%E8%B4%9D"><span class="nav-number">19.8.</span> <span class="nav-text">19.8 类的浅拷贝与深拷贝</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#20-%E6%A8%A1%E5%9D%97"><span class="nav-number">20.</span> <span class="nav-text">20. 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#20-1-%E6%A8%A1%E5%9D%97%E7%9A%84%E5%AF%BC%E5%85%A5"><span class="nav-number">20.1.</span> <span class="nav-text">20.1 模块的导入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20-2-%E4%BB%A5%E4%B8%BB%E7%A8%8B%E5%BA%8F%E5%BD%A2%E5%BC%8F%E8%BF%90%E8%A1%8C"><span class="nav-number">20.2.</span> <span class="nav-text">20.2 以主程序形式运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20-3-%E5%8C%85"><span class="nav-number">20.3.</span> <span class="nav-text">20.3 包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20-4-%E5%B8%B8%E7%94%A8%E7%9A%84%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97"><span class="nav-number">20.4.</span> <span class="nav-text">20.4 常用的内置模块</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#21-%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E4%B8%8E%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99"><span class="nav-number">21.</span> <span class="nav-text">21. 编码格式与文件读写</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#21-1-%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F"><span class="nav-number">21.1.</span> <span class="nav-text">21.1 编码格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-2-%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E5%8E%9F%E7%90%86"><span class="nav-number">21.2.</span> <span class="nav-text">21.2 文件读写原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-3-%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%87%E4%BB%B6%E6%89%93%E5%BC%80%E6%A8%A1%E5%BC%8F"><span class="nav-number">21.3.</span> <span class="nav-text">21.3 常用的文件打开模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-4-%E6%96%87%E4%BB%B6%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">21.4.</span> <span class="nav-text">21.4 文件对象的常用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-5-with%E8%AF%AD%E5%8F%A5"><span class="nav-number">21.5.</span> <span class="nav-text">21.5 with语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-6-os%E6%A8%A1%E5%9D%97%E7%9A%84%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-number">21.6.</span> <span class="nav-text">21.6 os模块的常用函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-7-os-path%E6%A8%A1%E5%9D%97%E6%93%8D%E4%BD%9C%E7%9B%AE%E5%BD%95%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="nav-number">21.7.</span> <span class="nav-text">21.7 os.path模块操作目录相关函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#22-CTF%E4%B8%AD%E5%B8%B8%E7%94%A8%E5%AD%97%E7%AC%A6%E8%BD%AC%E6%8D%A2"><span class="nav-number">22.</span> <span class="nav-text">22. CTF中常用字符转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#22-1-%E6%95%B4%E6%95%B0%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2"><span class="nav-number">22.1.</span> <span class="nav-text">22.1 整数之间的进制转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#22-2-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%95%B4%E6%95%B0"><span class="nav-number">22.2.</span> <span class="nav-text">22.2 字符串转整数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#22-3-%E6%95%B4%E6%95%B0%E4%B8%8E%E5%AD%97%E8%8A%82%E4%B8%B2%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="nav-number">22.3.</span> <span class="nav-text">22.3 整数与字节串之间的转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#22-4-%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E5%AD%97%E8%8A%82%E4%B8%B2%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="nav-number">22.4.</span> <span class="nav-text">22.4 字符串与字节串之间的转换</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">v5le0n9</p>
+  <div class="site-description" itemprop="description">v5le0n9's garden</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">v5le0n9</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
     </footer>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/posts/855b12c4.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          RSA算法
-        
-      </div>
-    </a>
-  
-  
-    <a href="/posts/33a085c7.html" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">调试器使用教程</div>
-    </a>
-  
-</nav>
 
   
-</article>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
 
 
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android%E9%80%86%E5%90%91/">Android逆向</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Windows%E9%80%86%E5%90%91/">Windows逆向</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%BC%8F%E6%B4%9E%E6%B8%97%E9%80%8F/">漏洞渗透</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%BC%E5%90%88/">综合</a></li></ul>
-    </div>
-  </div>
+<script src="/js/schemes/muse.js"></script>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Killer/" rel="tag">Android Killer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDA/" rel="tag">IDA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OllyDbg/" rel="tag">OllyDbg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reverse/" rel="tag">Reverse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x64dbg/" rel="tag">x64dbg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%BE%E7%88%B1%E7%A0%B4%E8%A7%A3%E5%9F%B9%E8%AE%AD/" rel="tag">吾爱破解培训</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B1%87%E7%BC%96/" rel="tag">汇编</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3/" rel="tag">脱壳</a></li></ul>
-    </div>
-  </div>
+<script src="/js/next-boot.js"></script>
 
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Android-Killer/" style="font-size: 11.67px;">Android Killer</a> <a href="/tags/CTF/" style="font-size: 16.67px;">CTF</a> <a href="/tags/IDA/" style="font-size: 15px;">IDA</a> <a href="/tags/Java/" style="font-size: 11.67px;">Java</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/OllyDbg/" style="font-size: 20px;">OllyDbg</a> <a href="/tags/PHP/" style="font-size: 11.67px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Reverse/" style="font-size: 18.33px;">Reverse</a> <a href="/tags/Web/" style="font-size: 13.33px;">Web</a> <a href="/tags/x64dbg/" style="font-size: 13.33px;">x64dbg</a> <a href="/tags/%E5%90%BE%E7%88%B1%E7%A0%B4%E8%A7%A3%E5%9F%B9%E8%AE%AD/" style="font-size: 20px;">吾爱破解培训</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 11.67px;">机器学习</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 10px;">汇编</a> <a href="/tags/%E8%84%B1%E5%A3%B3/" style="font-size: 10px;">脱壳</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/posts/9589547b.html">黑客丛林之旅小游戏</a>
-          </li>
-        
-          <li>
-            <a href="/posts/5a99a36.html">攻防世界 逆向高手进阶区</a>
-          </li>
-        
-          <li>
-            <a href="/posts/9f62af2.html">攻防世界 Android逆向合集</a>
-          </li>
-        
-          <li>
-            <a href="/posts/2670ba0d.html">感知机学习算法</a>
-          </li>
-        
-          <li>
-            <a href="/posts/15be101a.html">Android逆向入门教程</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2022 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.4.1.min.js"></script>
 
 
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
 
 
 
 
 
-  </div>
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
 </body>
 </html>

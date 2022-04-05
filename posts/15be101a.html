@@ -1,18 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  
-  
-  <title>Android逆向入门教程 | Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
   <meta name="description" content="1. 初识APK、Dalvik字节码以及Smali后缀名为.apk是安卓手机app的格式。它的实质是一个ZIP压缩包，将它的后缀名修改为.zip便可以看到内部的文件结构。解压出来后一般有以下文件：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android逆向入门教程">
 <meta property="og:url" content="http://example.com/posts/15be101a.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="v5le0n9&#39;s garden">
 <meta property="og:description" content="1. 初识APK、Dalvik字节码以及Smali后缀名为.apk是安卓手机app的格式。它的实质是一个ZIP压缩包，将它的后缀名修改为.zip便可以看到内部的文件结构。解压出来后一般有以下文件：">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/posts/15be101a/%E9%85%8D%E7%BD%AEjdk.png">
 <meta property="og:image" content="http://example.com/posts/15be101a/%E6%9B%B4%E6%94%B9apktool.png">
 <meta property="og:image" content="http://example.com/posts/15be101a/%E5%BC%82%E5%B8%B8.png">
@@ -160,94 +174,185 @@
 <meta property="og:image" content="http://example.com/posts/15be101a/14.1.png">
 <meta property="article:published_time" content="2022-04-05T01:29:28.232Z">
 <meta property="article:modified_time" content="2022-04-01T06:09:49.058Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="v5le0n9">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="IDA">
 <meta property="article:tag" content="Android Killer">
 <meta property="article:tag" content="吾爱破解培训">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/posts/15be101a/%E9%85%8D%E7%BD%AEjdk.png">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+<link rel="canonical" href="http://example.com/posts/15be101a.html">
 
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
-  
-<meta name="generator" content="Hexo 6.1.0"></head>
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
+  <title>Android逆向入门教程 | v5le0n9's garden</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">v5le0n9's garden</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">小凉的秘密基地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
     </div>
   </div>
-</header>
+</div>
 
-      <div class="outer">
-        <section id="main"><article id="post-安卓逆向入门教程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/posts/15be101a.html" class="article-date">
-  <time class="dt-published" datetime="2022-04-05T01:29:28.232Z" itemprop="datePublished">2022-04-05</time>
-</a>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Android%E9%80%86%E5%90%91/">Android逆向</a>
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
   </div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      Android逆向入门教程
-    </h1>
-  
 
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/15be101a.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="v5le0n9">
+      <meta itemprop="description" content="v5le0n9's garden">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="v5le0n9's garden">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android逆向入门教程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-05 09:29:28" itemprop="dateCreated datePublished" datetime="2022-04-05T09:29:28+08:00">2022-04-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-01 14:09:49" itemprop="dateModified" datetime="2022-04-01T14:09:49+08:00">2022-04-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">Android逆向</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="e-content article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
         <h1 id="1-初识APK、Dalvik字节码以及Smali"><a href="#1-初识APK、Dalvik字节码以及Smali" class="headerlink" title="1. 初识APK、Dalvik字节码以及Smali"></a>1. 初识APK、Dalvik字节码以及Smali</h1><p>后缀名为<code>.apk</code>是安卓手机app的格式。它的实质是一个ZIP压缩包，将它的后缀名修改为<code>.zip</code>便可以看到内部的文件结构。解压出来后一般有以下文件：</p>
 <span id="more"></span>
@@ -1228,157 +1333,202 @@
 
 <h2 id="15-4-Native-hook实战"><a href="#15-4-Native-hook实战" class="headerlink" title="15.4. Native hook实战"></a>15.4. Native hook实战</h2><p><a target="_blank" rel="noopener" href="https://v5le0n9.github.io/post/9f62af2.html#20-ill-intentions">攻防世界 ill-intentions</a></p>
 
-      
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/posts/15be101a.html" data-id="cl1lgrwir003uokhqfetu3c8b" data-title="Android逆向入门教程" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android-Killer/" rel="tag">Android Killer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IDA/" rel="tag">IDA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%90%BE%E7%88%B1%E7%A0%B4%E8%A7%A3%E5%9F%B9%E8%AE%AD/" rel="tag">吾爱破解培训</a></li></ul>
 
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/IDA/" rel="tag"># IDA</a>
+              <a href="/tags/Android-Killer/" rel="tag"># Android Killer</a>
+              <a href="/tags/%E5%90%BE%E7%88%B1%E7%A0%B4%E8%A7%A3%E5%9F%B9%E8%AE%AD/" rel="tag"># 吾爱破解培训</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/f398dcca.html" rel="prev" title="吾爱破解学习指导教程">
+      <i class="fa fa-chevron-left"></i> 吾爱破解学习指导教程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/2670ba0d.html" rel="next" title="感知机学习算法">
+      感知机学习算法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%88%9D%E8%AF%86APK%E3%80%81Dalvik%E5%AD%97%E8%8A%82%E7%A0%81%E4%BB%A5%E5%8F%8ASmali"><span class="nav-number">1.</span> <span class="nav-text">1. 初识APK、Dalvik字节码以及Smali</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-asset-VS-res"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 asset VS. res</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Dalvik%E5%AD%97%E8%8A%82%E7%A0%81"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 Dalvik字节码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-Smali"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 Smali</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-Smali%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.3.1 Smali基本语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-%E6%9D%A1%E4%BB%B6%E8%B7%B3%E8%BD%AC%E5%88%86%E6%94%AF"><span class="nav-number">1.3.2.</span> <span class="nav-text">1.3.2 条件跳转分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-3-Smali%E4%B8%AD%E7%9A%84%E5%8C%85%E4%BF%A1%E6%81%AF"><span class="nav-number">1.3.3.</span> <span class="nav-text">1.3.3 Smali中的包信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-4-Smali%E4%B8%AD%E7%9A%84%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="nav-number">1.3.4.</span> <span class="nav-text">1.3.4 Smali中的成员变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-5-Smali%E4%B8%AD%E5%87%BD%E6%95%B0%E7%9A%84%E8%B0%83%E7%94%A8"><span class="nav-number">1.3.5.</span> <span class="nav-text">1.3.5 Smali中函数的调用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#invoke-static"><span class="nav-number">1.3.5.1.</span> <span class="nav-text">invoke-static</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#invoke-super"><span class="nav-number">1.3.5.2.</span> <span class="nav-text">invoke-super</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#invoke-direct"><span class="nav-number">1.3.5.3.</span> <span class="nav-text">invoke-direct</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#invoke-virtual"><span class="nav-number">1.3.5.4.</span> <span class="nav-text">invoke-virtual</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#invoke-xxxxx-x2F-range"><span class="nav-number">1.3.5.5.</span> <span class="nav-text">invoke-xxxxx&#x2F;range</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-6-Smali%E4%B8%AD%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E7%9A%84%E7%BB%93%E6%9E%9C%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">1.3.6.</span> <span class="nav-text">1.3.6 Smali中函数返回的结果的操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-7-Smali%E4%B8%AD%E5%87%BD%E6%95%B0%E5%AE%9E%E4%BD%93%E5%88%86%E6%9E%90%E2%80%93if%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-number">1.3.7.</span> <span class="nav-text">1.3.7 Smali中函数实体分析–if函数分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-8-Smali%E4%B8%AD%E5%87%BD%E6%95%B0%E5%AE%9E%E4%BD%93%E5%88%86%E6%9E%90%E2%80%93for%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-number">1.3.8.</span> <span class="nav-text">1.3.8 Smali中函数实体分析–for函数分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-9-%E8%AF%BE%E5%90%8E%E4%B9%A0%E9%A2%98"><span class="nav-number">1.3.9.</span> <span class="nav-text">1.3.9 课后习题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 寄存器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-1-%E7%AE%80%E5%8D%95%E5%AF%B9%E8%B1%A1%E5%88%86%E6%9E%90"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.4.1 简单对象分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E7%A0%B4%E8%A7%A3%E7%AC%AC%E4%B8%80%E4%B8%AAAndroid%E7%A8%8B%E5%BA%8F"><span class="nav-number">2.</span> <span class="nav-text">2. 破解第一个Android程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E7%A0%B4%E8%A7%A3%E7%AC%AC%E4%B8%80%E4%B8%AAAndroid%E6%B8%B8%E6%88%8F"><span class="nav-number">3.</span> <span class="nav-text">3. 破解第一个Android游戏</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-AS%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95smali%E4%BB%A3%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">4. AS动态调试smali代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E5%9C%A8smali%E4%BB%A3%E7%A0%81%E4%B8%AD%E6%8F%92%E5%85%A5Log"><span class="nav-number">5.</span> <span class="nav-text">5. 在smali代码中插入Log</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E7%BC%96%E5%86%99%E7%AC%AC%E4%B8%80%E4%B8%AAso"><span class="nav-number">6.</span> <span class="nav-text">6. 编写第一个so</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-IDA%E7%A0%B4%E8%A7%A3%E7%AC%AC%E4%B8%80%E4%B8%AAso"><span class="nav-number">7.</span> <span class="nav-text">7. IDA破解第一个so</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86%E4%B8%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">7.1.</span> <span class="nav-text">7.1 预备知识与环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-%E7%A0%B4%E8%A7%A3so%E6%96%87%E4%BB%B6"><span class="nav-number">7.2.</span> <span class="nav-text">7.2 破解so文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-IDA%E7%88%86%E7%A0%B4%E7%AD%BE%E5%90%8D%E9%AA%8C%E8%AF%81-IDA%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="nav-number">8.</span> <span class="nav-text">8. IDA爆破签名验证(IDA静态分析)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IDAv7-0"><span class="nav-number">8.1.</span> <span class="nav-text">IDAv7.0+</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDAv6-6"><span class="nav-number">8.2.</span> <span class="nav-text">IDAv6.6</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-IDA%E5%8A%A8%E6%80%81%E7%A0%B4%E8%A7%A3%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81"><span class="nav-number">9.</span> <span class="nav-text">9. IDA动态破解登录验证</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#9-1-%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86%E4%B8%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">9.1.</span> <span class="nav-text">9.1 预备知识与环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-2-%E5%8A%A8%E6%80%81%E7%A0%B4%E8%A7%A3%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81"><span class="nav-number">9.2.</span> <span class="nav-text">9.2 动态破解登录验证</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%8F%8D%E8%B0%83%E8%AF%95apk"><span class="nav-number">10.</span> <span class="nav-text">10. 动态调试反调试apk</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#10-1-%E5%8F%8D%E8%B0%83%E8%AF%95%E5%8F%8A%E5%8F%8D%E5%8F%8D%E8%B0%83%E8%AF%95"><span class="nav-number">10.1.</span> <span class="nav-text">10.1 反调试及反反调试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#10-1-1-IDA%E8%B0%83%E8%AF%95%E7%AB%AF%E5%8F%A3%E6%A3%80%E6%B5%8B"><span class="nav-number">10.1.1.</span> <span class="nav-text">10.1.1 IDA调试端口检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-1-2-%E8%B0%83%E8%AF%95%E5%99%A8%E8%BF%9B%E7%A8%8B%E5%90%8D%E6%A3%80%E6%B5%8B"><span class="nav-number">10.1.2.</span> <span class="nav-text">10.1.2 调试器进程名检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-1-3-ptrace%E6%A3%80%E6%B5%8B"><span class="nav-number">10.1.3.</span> <span class="nav-text">10.1.3 ptrace检测</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-2-%E5%8F%8D%E5%8F%8D%E8%B0%83%E8%AF%95apk"><span class="nav-number">10.2.</span> <span class="nav-text">10.2 反反调试apk</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-%E7%BC%96%E5%86%99Xposed%E6%A8%A1%E5%9D%97"><span class="nav-number">11.</span> <span class="nav-text">11. 编写Xposed模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#12-Xpose%E5%AE%9E%E6%88%98"><span class="nav-number">12.</span> <span class="nav-text">12. Xpose实战</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#13-Xpose%E5%AE%9E%E6%88%982"><span class="nav-number">13.</span> <span class="nav-text">13. Xpose实战2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#14-adb%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">14.</span> <span class="nav-text">14. adb注意事项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#15-Native%E5%B1%82hook"><span class="nav-number">15.</span> <span class="nav-text">15. Native层hook</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#15-1-Frida-hook-java"><span class="nav-number">15.1.</span> <span class="nav-text">15.1 Frida hook java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-2-Frida-hook-%E8%BF%94%E5%9B%9E%E5%80%BC%E4%B8%BAint%E7%B1%BB%E5%9E%8B"><span class="nav-number">15.2.</span> <span class="nav-text">15.2 Frida hook 返回值为int类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-3-Frida-hook-%E8%BF%94%E5%9B%9E%E5%80%BC%E4%B8%BAString%E7%B1%BB%E5%9E%8B"><span class="nav-number">15.3.</span> <span class="nav-text">15.3 Frida hook 返回值为String类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-4-Native-hook%E5%AE%9E%E6%88%98"><span class="nav-number">15.4.</span> <span class="nav-text">15.4. Native hook实战</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">v5le0n9</p>
+  <div class="site-description" itemprop="description">v5le0n9's garden</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">v5le0n9</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
     </footer>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/posts/2670ba0d.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          感知机学习算法
-        
-      </div>
-    </a>
-  
-  
-    <a href="/posts/f398dcca.html" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">吾爱破解学习指导教程</div>
-    </a>
-  
-</nav>
 
   
-</article>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
 
 
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android%E9%80%86%E5%90%91/">Android逆向</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Windows%E9%80%86%E5%90%91/">Windows逆向</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%BC%8F%E6%B4%9E%E6%B8%97%E9%80%8F/">漏洞渗透</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%BC%E5%90%88/">综合</a></li></ul>
-    </div>
-  </div>
+<script src="/js/schemes/muse.js"></script>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Killer/" rel="tag">Android Killer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDA/" rel="tag">IDA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OllyDbg/" rel="tag">OllyDbg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reverse/" rel="tag">Reverse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x64dbg/" rel="tag">x64dbg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%BE%E7%88%B1%E7%A0%B4%E8%A7%A3%E5%9F%B9%E8%AE%AD/" rel="tag">吾爱破解培训</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B1%87%E7%BC%96/" rel="tag">汇编</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3/" rel="tag">脱壳</a></li></ul>
-    </div>
-  </div>
+<script src="/js/next-boot.js"></script>
 
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Android-Killer/" style="font-size: 11.67px;">Android Killer</a> <a href="/tags/CTF/" style="font-size: 16.67px;">CTF</a> <a href="/tags/IDA/" style="font-size: 15px;">IDA</a> <a href="/tags/Java/" style="font-size: 11.67px;">Java</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/OllyDbg/" style="font-size: 20px;">OllyDbg</a> <a href="/tags/PHP/" style="font-size: 11.67px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Reverse/" style="font-size: 18.33px;">Reverse</a> <a href="/tags/Web/" style="font-size: 13.33px;">Web</a> <a href="/tags/x64dbg/" style="font-size: 13.33px;">x64dbg</a> <a href="/tags/%E5%90%BE%E7%88%B1%E7%A0%B4%E8%A7%A3%E5%9F%B9%E8%AE%AD/" style="font-size: 20px;">吾爱破解培训</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 11.67px;">机器学习</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 10px;">汇编</a> <a href="/tags/%E8%84%B1%E5%A3%B3/" style="font-size: 10px;">脱壳</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/posts/9589547b.html">黑客丛林之旅小游戏</a>
-          </li>
-        
-          <li>
-            <a href="/posts/5a99a36.html">攻防世界 逆向高手进阶区</a>
-          </li>
-        
-          <li>
-            <a href="/posts/9f62af2.html">攻防世界 Android逆向合集</a>
-          </li>
-        
-          <li>
-            <a href="/posts/2670ba0d.html">感知机学习算法</a>
-          </li>
-        
-          <li>
-            <a href="/posts/15be101a.html">Android逆向入门教程</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2022 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.4.1.min.js"></script>
 
 
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
 
 
 
 
 
-  </div>
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
 </body>
 </html>
