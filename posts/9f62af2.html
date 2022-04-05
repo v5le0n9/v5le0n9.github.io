@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":{"gitalk":{"order":-2}}},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/content.json"};
+  </script>
+
+  <meta name="description" content="1. app1这道题之前做过，也没什么难度，所以不想再说了。这道题的一个知识点就是程序自身的版本号版本名在BuildConfig中存储。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="攻防世界 Android逆向合集">
+<meta property="og:url" content="http://example.com/posts/9f62af2.html">
+<meta property="og:site_name" content="v5le0n9&#39;s garden">
+<meta property="og:description" content="1. app1这道题之前做过，也没什么难度，所以不想再说了。这道题的一个知识点就是程序自身的版本号版本名在BuildConfig中存储。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/posts/9f62af2/1.1.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/2.1.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/2.2.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/2.3.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/2.4.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/2.5.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/2.6.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/2.7.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/3.1.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/3.2.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/3.3.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/3.4.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/3.5.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/3.6.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/3.7.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/3.8.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/3.9.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/3.10.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/3.11.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/3.12.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/3.13.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/3.14.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/3.15.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/3.16.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/3.17.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/4.1.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/4.2.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/5.1.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/5.2.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/5.3.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/5.4.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/5.5.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/6.1.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/6.2.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/6.3.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/6.4.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/6.5.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/6.6.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/7.1.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/7.2.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/7.3.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/7.4.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/7.5.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/8.1.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/8.2.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/8.3.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/8.4.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/8.5.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/8.6.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/8.7.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/9.1.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/9.2.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/9.3.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/9.4.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/9.5.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/9.6.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/10.1.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/10.2.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/10.3.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/10.4.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/10.5.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/10.6.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/10.7.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/10.8.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/10.9.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/10.10.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/10.11.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/10.12.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/12.2.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/12.3.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/12.1.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/12.4.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/13.1.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/13.2.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/13.3.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/13.4.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/13.5.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/13.6.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/13.7.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/13.8.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/13.9.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/13.11.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/13.10.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/14.4.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/14.1.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/14.2.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/14.3.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/14.5.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/14.6.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/14.7.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/14.8.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/14.9.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/14.10.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/14.11.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/14.12.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/14.13.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/14.14.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/14.15.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/14.16.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/15.1.jpg">
+<meta property="og:image" content="http://example.com/posts/9f62af2/15.2.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/15.3.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/15.4.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/15.5.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/15.6.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/16.1.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/16.2.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/16.3.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/16.4.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/16.5.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/17.1.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/17.2.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/17.3.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/17.4.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/17.5.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/17.6.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/17.7.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/17.8.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/17.9.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/18.1.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/18.2.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/18.3.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/18.4.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/18.5.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/18.6.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/18.9.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/18.10.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/18.11.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/18.7.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/18.8.jpg">
+<meta property="og:image" content="http://example.com/posts/9f62af2/18.12.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/18.13.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/18.14.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/18.15.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/18.16.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/19.1.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/19.2.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/19.3.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/19.4.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/19.9.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/19.5.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/19.7.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/19.6.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/19.8.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/19.10.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/20.1.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/20.2.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/20.3.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/20.4.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/20.5.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/20.6.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/20.7.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/20.8.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/20.9.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/20.10.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/20.11.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/20.12.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/21.1.png">
+<meta property="article:published_time" content="2022-04-05T01:29:28.252Z">
+<meta property="article:modified_time" content="2022-04-01T06:58:56.745Z">
+<meta property="article:author" content="v5le0n9">
+<meta property="article:tag" content="Reverse">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/posts/9f62af2/1.1.png">
+
+<link rel="canonical" href="http://example.com/posts/9f62af2.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>攻防世界 Android逆向合集 | v5le0n9's garden</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">v5le0n9's garden</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">小凉的秘密基地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/v5le0n9" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/9f62af2.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="v5le0n9">
+      <meta itemprop="description" content="v5le0n9's garden">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="v5le0n9's garden">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          攻防世界 Android逆向合集
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-05 09:29:28" itemprop="dateCreated datePublished" datetime="2022-04-05T09:29:28+08:00">2022-04-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-01 14:58:56" itemprop="dateModified" datetime="2022-04-01T14:58:56+08:00">2022-04-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">Android逆向</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="1-app1"><a href="#1-app1" class="headerlink" title="1. app1"></a>1. app1</h1><p>这道题之前做过，也没什么难度，所以不想再说了。这道题的一个知识点就是程序自身的版本号版本名在BuildConfig中存储。</p>
+<img src="/posts/9f62af2/1.1.png" class="" title="jeb分析">
+
+<span id="more"></span>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> v5le0n9;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">demo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">    	<span class="type">String</span> <span class="variable">v3</span> <span class="operator">=</span> <span class="string">&quot;X&lt;cP[?PHNB&lt;P?aj&quot;</span>;</span><br><span class="line">    	<span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> v3.length();</span><br><span class="line">    	<span class="type">int</span> <span class="variable">v4</span> <span class="operator">=</span> <span class="number">15</span>;</span><br><span class="line">    	<span class="type">int</span> v0;</span><br><span class="line">    	<span class="type">int</span>[] v5 = <span class="keyword">new</span> <span class="title class_">int</span>[len];</span><br><span class="line">    	<span class="keyword">for</span>(v0=<span class="number">0</span>; v0&lt;len; v0++)</span><br><span class="line">    	&#123;</span><br><span class="line">    	    v5[v0] = v3.charAt(v0) ^ v4;</span><br><span class="line">    	    System.out.printf(<span class="string">&quot;%c&quot;</span>,v5[v0]);</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">W3l_T0_GAM3_0ne</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="2-app2"><a href="#2-app2" class="headerlink" title="2. app2"></a>2. app2</h1><img src="/posts/9f62af2/2.1.png" class="" title="运行程序">
+
+<p>载入AK由so文件，程序可动态调试。载入jeb查看Java源码。</p>
+<img src="/posts/9f62af2/2.2.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/2.3.png" class="" title="Logcat">
+
+<img src="/posts/9f62af2/2.4.png" class="" title="Logcat">
+
+<img src="/posts/9f62af2/2.5.png" class="" title="jeb分析">
+
+<p>将x86目录下的so文件载入IDA32，在Exports表里找到<code>doRawData</code>函数，查看伪代码。</p>
+<img src="/posts/9f62af2/2.6.png" class="" title="IDA分析">
+
+<p>python3解决from Crypto.Cipher import AES报错问题：<a target="_blank" rel="noopener" href="https://www.dandelioncloud.cn/article/details/1018083534028833">https://www.dandelioncloud.cn/article/details/1018083534028833</a> </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line">cipher=base64.b64decode(<span class="string">&quot;VEIzd/V2UPYNdn/bxH3Xig==&quot;</span>)</span><br><span class="line">key = <span class="string">&quot;thisisatestkey==&quot;</span>.encode(<span class="string">&quot;utf-8&quot;</span>)</span><br><span class="line">aes = AES.new(key,AES.MODE_ECB)</span><br><span class="line">msg = aes.decrypt(cipher)</span><br><span class="line"><span class="built_in">print</span>(msg.decode(<span class="string">&quot;utf-8&quot;</span>))</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">aimagetencent</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>发现这个也不是flag。再分析一下XML文件。还有<code>FileDataActivity</code>我们还没有分析。</p>
+<img src="/posts/9f62af2/2.7.png" class="" title="jeb分析">
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line">cipher=base64.b64decode(<span class="string">&quot;9YuQ2dk8CSaCe7DTAmaqAA==&quot;</span>)</span><br><span class="line">key = <span class="string">&quot;thisisatestkey==&quot;</span>.encode(<span class="string">&quot;utf-8&quot;</span>)</span><br><span class="line">aes = AES.new(key,AES.MODE_ECB)</span><br><span class="line">msg = aes.decrypt(cipher)</span><br><span class="line"><span class="built_in">print</span>(msg.decode(<span class="string">&quot;utf-8&quot;</span>))</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">Cas3_0f_A_CAK3</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>所以这题到底怎么转换到<code>FileDataActivity</code>去的，迷惑。</p>
+<h1 id="3-app3"><a href="#3-app3" class="headerlink" title="3. app3"></a>3. app3</h1><p>下载下来是一个<code>.ab</code>文件，<code>.ab</code>文件是 Android 系统的备份文件格式，它分为加密和未加密两种类型。<code>.ab</code>文件的前 24 个字节是类似文件头的东西，如果是加密的，在前 24 个字节中会有 AES-256 的标志，如果未加密，则在前 24 个字节中会有 none 的标志。</p>
+<img src="/posts/9f62af2/3.1.png" class="" title="文件头">
+
+<p>下载<code>abe.jar</code>，将<code>.ab</code>文件解压。在abe目录下运行cmd。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar abe.jar unpack C:\Users\dell\Desktop\app3.ab app3.tar</span><br></pre></td></tr></table></figure>
+
+<p><code>.tar</code>文件在Windows也可解压。找到<code>.apk</code>文件安装到模拟器，又运行不了。</p>
+<img src="/posts/9f62af2/3.2.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/3.3.png" class="" title="jeb分析">
+
+<p>因为没有跳转语句，无论输入什么都是出来这句话。再看看有什么隐藏的<code>&lt;activity&gt;</code>，发现也只有我们分析过的那两个。</p>
+<img src="/posts/9f62af2/3.4.png" class="" title="jeb分析">
+
+<p>再去那两个<code>&lt;activity&gt;</code>仔细分析我们刚才没有分析的，肯定是有什么遗漏了。</p>
+<img src="/posts/9f62af2/3.5.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/3.6.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/3.7.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/3.8.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/3.9.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/3.10.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/3.11.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/3.12.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/3.13.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/3.14.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/3.15.png" class="" title="jeb分析">
+
+<p>SHA1&#x3D;”Stra1234” + “44e2e4457d4e252ca5b9fe9d20b3fea5” + “yaphetshan”&#x3D; ae56f99638285eb0743d8bf76d2b0c80e5cbb096，取前7位就是ae56f99。</p>
+<p>我们刚才说的有加密，是用SqlCipher加密的，而这个就是数据库的密码。</p>
+<p>解压包除<code>.apk</code>文件之外，还有两个<code>.db</code>文件，一个<code>Demo.db</code>，另一个是<code>Encrypt.db</code>，因为在Java代码里面是<code>Demo.db</code>，所以解密也应该是解密这一个。</p>
+<p>安装sqlcipher用来解密数据库，上面分析写着版本为<code>3.4.0</code>，Linux注意对应版本，Windows下载最新也就<code>3.0.1</code>，所以没问题。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">E:\sqlcipher-3.0.1\bin&gt;sqlcipher-shell64.exe Demo.db</span><br><span class="line">sqlite&gt; PRAGMA key = &quot;ae56f99&quot;;</span><br><span class="line">sqlite&gt; ATTACH DATABASE &#x27;app3_1.db&#x27; AS plaintext KEY &quot;&quot;;</span><br><span class="line">sqlite&gt; SELECT sqlcipher_export(&quot;plaintext&quot;);</span><br><span class="line"></span><br><span class="line">sqlite&gt; DETACH DATABASE plaintext;</span><br><span class="line">sqlite&gt;</span><br></pre></td></tr></table></figure>
+
+<p>安装SQLite数据库：<a target="_blank" rel="noopener" href="https://nightlies.sqlitebrowser.org/latest/">https://nightlies.sqlitebrowser.org/latest/</a> </p>
+<p>SQLite用来打开解密后的<code>.db</code>文件，加密的<code>.db</code>文件SQLite打不开，也就是为什么我们要解密数据库的原因。</p>
+<img src="/posts/9f62af2/3.16.png" class="" title="数据库">
+
+<p>结果不是…那我们再试试<code>Encryto.db</code>。</p>
+<img src="/posts/9f62af2/3.17.png" class="" title="数据库">
+
+<p>很明显的Base64，拿去解码得：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">VGN0ZntIM2xsMF9Eb19ZMHVfTG92M19UZW5jM250IX0=</span><br><span class="line"></span><br><span class="line">Tctf&#123;H3ll0_Do_Y0u_Lov3_Tenc3nt!&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="4-easy-apk"><a href="#4-easy-apk" class="headerlink" title="4. easy_apk"></a>4. easy_apk</h1><img src="/posts/9f62af2/4.1.png" class="" title="运行程序">
+
+<p>载入AK没发现lib文件，载入jeb查看源码：</p>
+<img src="/posts/9f62af2/4.2.png" class="" title="jeb分析">
+
+<p>天真的我就拿去Base64解码了，结果解码失败。回来再看，它是新Base64，点进去查看它的算法，发现它是把索引表给替换了。</p>
+<p>拿Base64变种脚本替换索引表即可。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="comment"># base 字符集</span></span><br><span class="line"><span class="comment"># base64_charset = string.ascii_uppercase + string.ascii_lowercase + string.digits + &#x27;+/&#x27;</span></span><br><span class="line">base64_charset = <span class="string">&quot;vwxrstuopq34567ABCDEFGHIJyz012PQRSTKLMNOZabcdUVWXYefghijklmn89+/&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encode</span>(<span class="params">origin_bytes</span>):</span><br><span class="line"></span><br><span class="line">     <span class="comment"># 将每⼀位bytes转换为⼆进制字符串，用bin转换后是0b开头的，所以把0b替换了，首位补0补齐8位</span></span><br><span class="line">    base64_bytes = [<span class="string">&#x27;&#123;:0&gt;8&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="built_in">str</span>(<span class="built_in">bin</span>(b)).replace(<span class="string">&#x27;0b&#x27;</span>, <span class="string">&#x27;&#x27;</span>)) <span class="keyword">for</span> b <span class="keyword">in</span> origin_bytes]</span><br><span class="line">     </span><br><span class="line">    resp = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    nums = <span class="built_in">len</span>(base64_bytes) // <span class="number">3</span></span><br><span class="line">    remain = <span class="built_in">len</span>(base64_bytes) % <span class="number">3</span>     </span><br><span class="line">    integral_part = base64_bytes[<span class="number">0</span>:<span class="number">3</span> * nums]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> integral_part:</span><br><span class="line">         <span class="comment"># 取三个字节，以每6⽐特，转换为4个整数</span></span><br><span class="line">         tmp_unit = <span class="string">&#x27;&#x27;</span>.join(integral_part[<span class="number">0</span>:<span class="number">3</span>])</span><br><span class="line">         tmp_unit = [<span class="built_in">int</span>(tmp_unit[x: x + <span class="number">6</span>], <span class="number">2</span>) <span class="keyword">for</span> x <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">6</span>, <span class="number">12</span>, <span class="number">18</span>]]</span><br><span class="line">         <span class="comment"># 取对应base64字符</span></span><br><span class="line">         resp += <span class="string">&#x27;&#x27;</span>.join([base64_charset[i] <span class="keyword">for</span> i <span class="keyword">in</span> tmp_unit])</span><br><span class="line">         integral_part = integral_part[<span class="number">3</span>:]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> remain:</span><br><span class="line">         <span class="comment"># 补⻬三个字节，每个字节补充 0000 0000</span></span><br><span class="line">         remain_part = <span class="string">&#x27;&#x27;</span>.join(base64_bytes[<span class="number">3</span> * nums:]) + (<span class="number">3</span> - remain) * <span class="string">&#x27;0&#x27;</span> * <span class="number">8</span></span><br><span class="line">         <span class="comment"># 取三个字节，以每6⽐特，转换为4个整数</span></span><br><span class="line">         <span class="comment"># 剩余1字节可构造2个base64字符，补充==；剩余2字节可构造3个base64字符，补充=</span></span><br><span class="line">         tmp_unit = [<span class="built_in">int</span>(remain_part[x: x + <span class="number">6</span>], <span class="number">2</span>) <span class="keyword">for</span> x <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">6</span>, <span class="number">12</span>, <span class="number">18</span>]][:remain + <span class="number">1</span>]</span><br><span class="line">         resp += <span class="string">&#x27;&#x27;</span>.join([base64_charset[i] <span class="keyword">for</span> i <span class="keyword">in</span> tmp_unit]) + (<span class="number">3</span> - remain) * <span class="string">&#x27;=&#x27;</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> resp</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decode</span>(<span class="params">base64_str</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> valid_base64_str(base64_str):</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">bytearray</span>()</span><br><span class="line">    </span><br><span class="line">    base64_bytes = [<span class="string">&#x27;&#123;:0&gt;6&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="built_in">str</span>(<span class="built_in">bin</span>(base64_charset.index(s))).replace(<span class="string">&#x27;0b&#x27;</span>,<span class="string">&#x27;&#x27;</span>)) <span class="keyword">for</span> s <span class="keyword">in</span> base64_str <span class="keyword">if</span> s != <span class="string">&#x27;=&#x27;</span>]</span><br><span class="line">    resp = <span class="built_in">bytearray</span>()</span><br><span class="line">    nums = <span class="built_in">len</span>(base64_bytes) // <span class="number">4</span></span><br><span class="line">    remain = <span class="built_in">len</span>(base64_bytes) % <span class="number">4</span></span><br><span class="line">    integral_part = base64_bytes[<span class="number">0</span>:<span class="number">4</span> * nums]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> integral_part:</span><br><span class="line">         <span class="comment"># 取4个6位base64字符，作为3个字节</span></span><br><span class="line">         tmp_unit = <span class="string">&#x27;&#x27;</span>.join(integral_part[<span class="number">0</span>:<span class="number">4</span>])</span><br><span class="line">         tmp_unit = [<span class="built_in">int</span>(tmp_unit[x: x + <span class="number">8</span>], <span class="number">2</span>) <span class="keyword">for</span> x <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">8</span>, <span class="number">16</span>]]</span><br><span class="line">         <span class="keyword">for</span> i <span class="keyword">in</span> tmp_unit:</span><br><span class="line">            resp.append(i)</span><br><span class="line">         integral_part = integral_part[<span class="number">4</span>:]</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> remain:</span><br><span class="line">         remain_part = <span class="string">&#x27;&#x27;</span>.join(base64_bytes[nums * <span class="number">4</span>:])</span><br><span class="line">         tmp_unit = [<span class="built_in">int</span>(remain_part[i * <span class="number">8</span>:(i + <span class="number">1</span>) * <span class="number">8</span>], <span class="number">2</span>) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(remain - <span class="number">1</span>)]</span><br><span class="line">         <span class="keyword">for</span> i <span class="keyword">in</span> tmp_unit:</span><br><span class="line">         	resp.append(i)</span><br><span class="line">    <span class="keyword">return</span> resp</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">valid_base64_str</span>(<span class="params">b_str</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(b_str) % <span class="number">4</span>:</span><br><span class="line">     	<span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">for</span> m <span class="keyword">in</span> b_str:</span><br><span class="line">     	<span class="keyword">if</span> m != <span class="string">&quot;=&quot;</span> <span class="keyword">and</span> m <span class="keyword">not</span> <span class="keyword">in</span> base64_charset:</span><br><span class="line">     		<span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">     local_base64 = <span class="string">&quot;5rFf7E2K6rqN7Hpiyush7E6S5fJg6rsi5NBf6NGT5rs=&quot;</span></span><br><span class="line">     <span class="built_in">print</span>(<span class="string">&#x27;使用本地base64解密：&#x27;</span>, decode(local_base64).decode())</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">使用本地base64解密： 05397c42f9b6da593a3644162d36eb01</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;05397c42f9b6da593a3644162d36eb01&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="5-RememberOther"><a href="#5-RememberOther" class="headerlink" title="5. RememberOther"></a>5. RememberOther</h1><p>运行一下程序。</p>
+<img src="/posts/9f62af2/5.1.png" class="" title="运行程序">
+
+<p>拿去AK，没有看到需要动态调试的so文件。</p>
+<p>拿去jeb分析代码：</p>
+<img src="/posts/9f62af2/5.2.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/5.3.png" class="" title="jeb分析">
+
+<p>那我们试试直接点注册。</p>
+<img src="/posts/9f62af2/5.4.png" class="" title="出现MD5值">
+
+<p>MD5的奇数位为<code>b216ebb92fa5caf6</code>，再将MD5值解密，解出来为<code>YOU_KNOW_</code>(究竟哪个网站可以免费解MD5，我还是看牛牛们的wp才知道是这个答案)。拿到程序去验证没错。<code>YOU_KNOW_</code>很明显是flag形式，后面还缺了些东西，出题人给了剩下的线索。</p>
+<img src="/posts/9f62af2/5.5.png" class="" title="线索">
+
+<p>你懂！你懂安卓！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">YOU_KNOW_ANDROID</span><br></pre></td></tr></table></figure>
+
+<h1 id="6-easyjni"><a href="#6-easyjni" class="headerlink" title="6. easyjni"></a>6. easyjni</h1><p>这道题看名字就知道考察jni。</p>
+<img src="/posts/9f62af2/6.1.png" class="" title="运行程序">
+
+<p>载入AK，看到lib目录下有<code>libnative.so</code>文件，是armeabi-v7a架构的。载入jeb，代码混淆了，没关系一个个方法分析。</p>
+<p>在判断语句，调用了MainActivity.a方法，其中一个实参就是我们输入的内容。MainActivity.a方法返回到私有a方法里，形参是我们输入的内容。再看私有a方法，调用了ncheck()方法。</p>
+<img src="/posts/9f62af2/6.2.png" class="" title="jeb分析">
+
+<p>调用ncheck()方法前，还创建了一个a类对象，先进去看看a类的a方法。发现是变种Base64加密。</p>
+<img src="/posts/9f62af2/6.3.png" class="" title="jeb分析">
+
+<p>将apk文件解包，将里面的so文件载入IDA。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\dell\Desktop&gt;apktool d easyjni.apk</span><br><span class="line">I: Using Apktool 2.6.1 on easyjni.apk</span><br><span class="line">I: Loading resource table...</span><br><span class="line">I: Decoding AndroidManifest.xml with resources...</span><br><span class="line">I: Loading resource table from file: C:\Users\dell\AppData\Local\apktool\framework\1.apk</span><br><span class="line">I: Regular manifest package...</span><br><span class="line">I: Decoding file-resources...</span><br><span class="line">I: Decoding values */* XMLs...</span><br><span class="line">I: Baksmaling classes.dex...</span><br><span class="line">I: Copying assets and libs...</span><br><span class="line">I: Copying unknown files...</span><br><span class="line">I: Copying original files...</span><br></pre></td></tr></table></figure>
+
+<p>在Export模块找到ncheck()方法。</p>
+<img src="/posts/9f62af2/6.4.png" class="" title="IDA分析">
+
+<img src="/posts/9f62af2/6.5.png" class="" title="IDA分析">
+
+<p>哇这就有点恶心人了哈，我从没见过等号在中间的。仔细分析一下IDA源码，原来不过如此。</p>
+<img src="/posts/9f62af2/6.6.png" class="" title="IDA分析">
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MbT3sQgX039i3g==AQOoMQFPskB1Bsc7</span><br><span class="line"></span><br><span class="line"># i和i+1对换</span><br><span class="line">bM3TQsXg30i9g3==QAoOQMPFks1BsB7c</span><br><span class="line"></span><br><span class="line"># 前16位与后16位对换</span><br><span class="line">QAoOQMPFks1BsB7cbM3TQsXg30i9g3==</span><br></pre></td></tr></table></figure>
+
+<p>再用4中的变种Base64脚本解决。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="comment"># base 字符集</span></span><br><span class="line"><span class="comment"># base64_charset = string.ascii_uppercase + string.ascii_lowercase + string.digits + &#x27;+/&#x27;</span></span><br><span class="line">base64_charset = <span class="string">&quot;i5jLW7S0GX6uf1cv3ny4q8es2Q+bdkYgKOIT/tAxUrFlVPzhmow9BHCMDpEaJRZN&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encode</span>(<span class="params">origin_bytes</span>):</span><br><span class="line"></span><br><span class="line">     <span class="comment"># 将每⼀位bytes转换为⼆进制字符串，用bin转换后是0b开头的，所以把0b替换了，首位补0补齐8位</span></span><br><span class="line">    base64_bytes = [<span class="string">&#x27;&#123;:0&gt;8&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="built_in">str</span>(<span class="built_in">bin</span>(b)).replace(<span class="string">&#x27;0b&#x27;</span>, <span class="string">&#x27;&#x27;</span>)) <span class="keyword">for</span> b <span class="keyword">in</span> origin_bytes]</span><br><span class="line">     </span><br><span class="line">    resp = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    nums = <span class="built_in">len</span>(base64_bytes) // <span class="number">3</span></span><br><span class="line">    remain = <span class="built_in">len</span>(base64_bytes) % <span class="number">3</span>     </span><br><span class="line">    integral_part = base64_bytes[<span class="number">0</span>:<span class="number">3</span> * nums]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> integral_part:</span><br><span class="line">         <span class="comment"># 取三个字节，以每6⽐特，转换为4个整数</span></span><br><span class="line">         tmp_unit = <span class="string">&#x27;&#x27;</span>.join(integral_part[<span class="number">0</span>:<span class="number">3</span>])</span><br><span class="line">         tmp_unit = [<span class="built_in">int</span>(tmp_unit[x: x + <span class="number">6</span>], <span class="number">2</span>) <span class="keyword">for</span> x <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">6</span>, <span class="number">12</span>, <span class="number">18</span>]]</span><br><span class="line">         <span class="comment"># 取对应base64字符</span></span><br><span class="line">         resp += <span class="string">&#x27;&#x27;</span>.join([base64_charset[i] <span class="keyword">for</span> i <span class="keyword">in</span> tmp_unit])</span><br><span class="line">         integral_part = integral_part[<span class="number">3</span>:]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> remain:</span><br><span class="line">         <span class="comment"># 补⻬三个字节，每个字节补充 0000 0000</span></span><br><span class="line">         remain_part = <span class="string">&#x27;&#x27;</span>.join(base64_bytes[<span class="number">3</span> * nums:]) + (<span class="number">3</span> - remain) * <span class="string">&#x27;0&#x27;</span> * <span class="number">8</span></span><br><span class="line">         <span class="comment"># 取三个字节，以每6⽐特，转换为4个整数</span></span><br><span class="line">         <span class="comment"># 剩余1字节可构造2个base64字符，补充==；剩余2字节可构造3个base64字符，补充=</span></span><br><span class="line">         tmp_unit = [<span class="built_in">int</span>(remain_part[x: x + <span class="number">6</span>], <span class="number">2</span>) <span class="keyword">for</span> x <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">6</span>, <span class="number">12</span>, <span class="number">18</span>]][:remain + <span class="number">1</span>]</span><br><span class="line">         resp += <span class="string">&#x27;&#x27;</span>.join([base64_charset[i] <span class="keyword">for</span> i <span class="keyword">in</span> tmp_unit]) + (<span class="number">3</span> - remain) * <span class="string">&#x27;=&#x27;</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> resp</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decode</span>(<span class="params">base64_str</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> valid_base64_str(base64_str):</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">bytearray</span>()</span><br><span class="line">    </span><br><span class="line">    base64_bytes = [<span class="string">&#x27;&#123;:0&gt;6&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="built_in">str</span>(<span class="built_in">bin</span>(base64_charset.index(s))).replace(<span class="string">&#x27;0b&#x27;</span>,<span class="string">&#x27;&#x27;</span>)) <span class="keyword">for</span> s <span class="keyword">in</span> base64_str <span class="keyword">if</span> s != <span class="string">&#x27;=&#x27;</span>]</span><br><span class="line">    resp = <span class="built_in">bytearray</span>()</span><br><span class="line">    nums = <span class="built_in">len</span>(base64_bytes) // <span class="number">4</span></span><br><span class="line">    remain = <span class="built_in">len</span>(base64_bytes) % <span class="number">4</span></span><br><span class="line">    integral_part = base64_bytes[<span class="number">0</span>:<span class="number">4</span> * nums]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> integral_part:</span><br><span class="line">         <span class="comment"># 取4个6位base64字符，作为3个字节</span></span><br><span class="line">         tmp_unit = <span class="string">&#x27;&#x27;</span>.join(integral_part[<span class="number">0</span>:<span class="number">4</span>])</span><br><span class="line">         tmp_unit = [<span class="built_in">int</span>(tmp_unit[x: x + <span class="number">8</span>], <span class="number">2</span>) <span class="keyword">for</span> x <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">8</span>, <span class="number">16</span>]]</span><br><span class="line">         <span class="keyword">for</span> i <span class="keyword">in</span> tmp_unit:</span><br><span class="line">            resp.append(i)</span><br><span class="line">         integral_part = integral_part[<span class="number">4</span>:]</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> remain:</span><br><span class="line">         remain_part = <span class="string">&#x27;&#x27;</span>.join(base64_bytes[nums * <span class="number">4</span>:])</span><br><span class="line">         tmp_unit = [<span class="built_in">int</span>(remain_part[i * <span class="number">8</span>:(i + <span class="number">1</span>) * <span class="number">8</span>], <span class="number">2</span>) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(remain - <span class="number">1</span>)]</span><br><span class="line">         <span class="keyword">for</span> i <span class="keyword">in</span> tmp_unit:</span><br><span class="line">         	resp.append(i)</span><br><span class="line">    <span class="keyword">return</span> resp</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">valid_base64_str</span>(<span class="params">b_str</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(b_str) % <span class="number">4</span>:</span><br><span class="line">     	<span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">for</span> m <span class="keyword">in</span> b_str:</span><br><span class="line">     	<span class="keyword">if</span> m != <span class="string">&quot;=&quot;</span> <span class="keyword">and</span> m <span class="keyword">not</span> <span class="keyword">in</span> base64_charset:</span><br><span class="line">     		<span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">     local_base64 = <span class="string">&quot;QAoOQMPFks1BsB7cbM3TQsXg30i9g3==&quot;</span></span><br><span class="line">     <span class="built_in">print</span>(<span class="string">&#x27;使用本地base64解密：&#x27;</span>, decode(local_base64).decode())</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">使用本地base64解密： flag&#123;just_ANot#er_@p3&#125;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="7-easy-so"><a href="#7-easy-so" class="headerlink" title="7. easy-so"></a>7. easy-so</h1><p>运行程序。</p>
+<img src="/posts/9f62af2/7.1.png" class="" title="运行程序">
+
+<p>看题目，肯定有so文件，载入AK发现4种架构都有，可以快乐地玩耍了。</p>
+<p>载入jeb分析源码。</p>
+<img src="/posts/9f62af2/7.2.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/7.3.png" class="" title="jeb分析">
+
+<p>我们需要做的就是将CheckString方法的返回值为1。解包，用x86架构的so文件载入IDA。因为我用的模拟器是x86架构的。</p>
+<img src="/posts/9f62af2/7.4.png" class="" title="IDA分析">
+
+<p>这个与6的题目考点几乎一模一样，只是没了变种Base64的过程。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">f72c5a36569418a20907b55be5bf95ad</span><br><span class="line"></span><br><span class="line"># i与i+1对换</span><br><span class="line">7fc2a5636549812a90705bb55efb59da</span><br><span class="line"></span><br><span class="line"># 前16位与后16位对换</span><br><span class="line">90705bb55efb59da7fc2a5636549812a</span><br></pre></td></tr></table></figure>
+
+<p>拿去程序里运行验证一下，验证通过。</p>
+<img src="/posts/9f62af2/7.5.png" class="" title="验证通过">
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;90705bb55efb59da7fc2a5636549812a&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="8-easyjava"><a href="#8-easyjava" class="headerlink" title="8. easyjava"></a>8. easyjava</h1><p>运行一下程序。</p>
+<img src="/posts/9f62af2/8.1.png" class="" title="运行程序">
+
+<p>载入jeb分析：</p>
+<img src="/posts/9f62af2/8.2.png" class="" title="jeb分析">
+
+<p>将b类和a类所有方法都分析一遍，反正后面也要用到。</p>
+<img src="/posts/9f62af2/8.3.png" class="" title="b类">
+
+<img src="/posts/9f62af2/8.4.png" class="" title="b类">
+
+<img src="/posts/9f62af2/8.5.png" class="" title="a类">
+
+<img src="/posts/9f62af2/8.6.png" class="" title="a类">
+
+<p>回到MainActivity类，b.b和a.a的作用一样，都是以参数为边界，对换各自的c整形列表，所以v4和v5都应该是对换后的列表。经过分析a类和b类发现并没有增加或减少原本的长度，所以v2的长度就应该等于v3的长度，v3的长度从字符串中可以计算到是12，所以循环要经历12次。</p>
+<p>以v2索引值为0的值为例，将v2索引值为0的值传入b.a方法，如果这个值可以转换成小写字母，则把b.b小写字母表中相同的小写字母的索引值取出，与a列表(也就是v4)的数组元素对比，如果取出的索引值与a列表中某个元素相同，则返回元素的索引值。更新b.a列表和b.b小写字母表，都是首位放最末位。将返回的a列表元素的索引值作为参数传入a.a方法，如果这个形参与a列表中(也就是v5)的元素相同，取出这个元素的索引值，作为a.b小写字母表中的索引，返回该索引的元素，也就是“w”。</p>
+<p>用Python写出来相当于<code>a_alphabet[v5.index(v4.index(b_alphabet.index(ans[0])))] = w</code></p>
+<p>现在我们要做的就是把这个过程逆回来。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">v4 = [<span class="number">17</span>,<span class="number">23</span>,<span class="number">7</span>,<span class="number">22</span>,<span class="number">1</span>,<span class="number">16</span>,<span class="number">6</span>,<span class="number">9</span>,<span class="number">21</span>,<span class="number">0</span>,<span class="number">15</span>,<span class="number">5</span>,<span class="number">10</span>,<span class="number">18</span>,<span class="number">2</span>,<span class="number">24</span>,<span class="number">4</span>,<span class="number">11</span>,<span class="number">3</span>,<span class="number">14</span>,<span class="number">19</span>,<span class="number">12</span>,<span class="number">20</span>,<span class="number">13</span>,<span class="number">8</span>,<span class="number">25</span>]</span><br><span class="line">v5 = [<span class="number">21</span>,<span class="number">4</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">20</span>,<span class="number">5</span>,<span class="number">15</span>,<span class="number">9</span>,<span class="number">17</span>,<span class="number">6</span>,<span class="number">13</span>,<span class="number">3</span>,<span class="number">18</span>,<span class="number">12</span>,<span class="number">10</span>,<span class="number">19</span>,<span class="number">0</span>,<span class="number">22</span>,<span class="number">2</span>,<span class="number">11</span>,<span class="number">23</span>,<span class="number">1</span>,<span class="number">8</span>,<span class="number">7</span>,<span class="number">14</span>,<span class="number">16</span>]</span><br><span class="line">flag = <span class="string">&quot;wigwrkaugala&quot;</span></span><br><span class="line">ans = <span class="string">&quot;&quot;</span></span><br><span class="line">b_alphabet = [<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;d&#x27;</span>,<span class="string">&#x27;e&#x27;</span>,<span class="string">&#x27;f&#x27;</span>,<span class="string">&#x27;g&#x27;</span>,<span class="string">&#x27;h&#x27;</span>,<span class="string">&#x27;i&#x27;</span>,<span class="string">&#x27;j&#x27;</span>,<span class="string">&#x27;k&#x27;</span>,<span class="string">&#x27;l&#x27;</span>,<span class="string">&#x27;m&#x27;</span>,<span class="string">&#x27;n&#x27;</span>,<span class="string">&#x27;o&#x27;</span>,<span class="string">&#x27;p&#x27;</span>,<span class="string">&#x27;q&#x27;</span>,<span class="string">&#x27;r&#x27;</span>,<span class="string">&#x27;s&#x27;</span>,<span class="string">&#x27;t&#x27;</span>,<span class="string">&#x27;u&#x27;</span>,<span class="string">&#x27;v&#x27;</span>,<span class="string">&#x27;w&#x27;</span>,<span class="string">&#x27;x&#x27;</span>,<span class="string">&#x27;y&#x27;</span>,<span class="string">&#x27;z&#x27;</span>]</span><br><span class="line">a_alphabet = [<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;d&#x27;</span>,<span class="string">&#x27;e&#x27;</span>,<span class="string">&#x27;f&#x27;</span>,<span class="string">&#x27;g&#x27;</span>,<span class="string">&#x27;h&#x27;</span>,<span class="string">&#x27;i&#x27;</span>,<span class="string">&#x27;j&#x27;</span>,<span class="string">&#x27;k&#x27;</span>,<span class="string">&#x27;l&#x27;</span>,<span class="string">&#x27;m&#x27;</span>,<span class="string">&#x27;n&#x27;</span>,<span class="string">&#x27;o&#x27;</span>,<span class="string">&#x27;p&#x27;</span>,<span class="string">&#x27;q&#x27;</span>,<span class="string">&#x27;r&#x27;</span>,<span class="string">&#x27;s&#x27;</span>,<span class="string">&#x27;t&#x27;</span>,<span class="string">&#x27;u&#x27;</span>,<span class="string">&#x27;v&#x27;</span>,<span class="string">&#x27;w&#x27;</span>,<span class="string">&#x27;x&#x27;</span>,<span class="string">&#x27;y&#x27;</span>,<span class="string">&#x27;z&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> flag:</span><br><span class="line">    halflag = a_alphabet.index(i)</span><br><span class="line">    ans += b_alphabet[v4[v5[halflag]]]</span><br><span class="line">    temp = v4[<span class="number">0</span>]</span><br><span class="line">    v4.pop(<span class="number">0</span>)</span><br><span class="line">    v4.append(temp)</span><br><span class="line">    temp = b_alphabet[<span class="number">0</span>]</span><br><span class="line">    b_alphabet.pop(<span class="number">0</span>)</span><br><span class="line">    b_alphabet.append(temp)</span><br><span class="line"><span class="built_in">print</span>(ans)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">venividivkcr</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/9f62af2/8.7.png" class="" title="运行成功">
+
+<p>嘤嘤嘤终于成功了，在做的时候看漏了很多细节，所以正确的flag一直出不来，还是要耐心一点！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;venividivkcr&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="9-Ph0en1x-100"><a href="#9-Ph0en1x-100" class="headerlink" title="9. Ph0en1x-100"></a>9. Ph0en1x-100</h1><img src="/posts/9f62af2/9.1.png" class="" title="运行程序">
+
+<p>载入AK，看到有lib文件。载入jeb分析源码。</p>
+<img src="/posts/9f62af2/9.2.png" class="" title="jeb分析">
+
+<p>而getFlag和encrypt都是Native方法，需要在so文件查看详细内容。将程序解包，拿x86目录下的so文件载入IDA，查看getFlag和encrypt方法。</p>
+<p>encrypt方法就是将输入的字符串中的每个字符的ASCII码都减1。</p>
+<img src="/posts/9f62af2/9.3.png" class="" title="IDA分析">
+
+<p>getFlag方法看得就有点懵逼了，如果静态分析是在困难的话，可以考虑动态调试。</p>
+<img src="/posts/9f62af2/9.4.png" class="" title="IDA分析">
+
+<p>动态调试需要满足<code>android:debuggable=&quot;true&quot;</code>，没有就要在AK中编辑添加，重新编译签名。</p>
+<p>动态调试方法可看 <a target="_blank" rel="noopener" href="https://v5le0n9.github.io/post/15be101a.html?highlight=and#9-IDA%E5%8A%A8%E6%80%81%E7%A0%B4%E8%A7%A3%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81">https://v5le0n9.github.io/post/15be101a.html?highlight=and#9-IDA%E5%8A%A8%E6%80%81%E7%A0%B4%E8%A7%A3%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81</a> 我就在这偷下懒了。</p>
+<p>刚才静态分析中，很明显看到一个循环，那我们就在循环的下一句下断点，在程序中输入字符串点击按钮，IDA停在断点处。此时，查看寄存器窗口EDI的值，点击小箭头，跟随地址。</p>
+<img src="/posts/9f62af2/9.5.png" class="" title="IDA动态调试">
+
+<img src="/posts/9f62af2/9.6.png" class="" title="IDA动态调试">
+
+<p>到了这里还没行，循环解决了但getFlag方法还未结束。F8步过观察字符串的变化。运行到快要结束时字符串已经不再变化了。在F8步过的过程中，发现<code>.</code>变成了<code>e</code>。所以正确的getFlag的返回值应该为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ek`fz@q2^x/t^fn0mF^6/^rb`qanqntfg^E`hq|</span><br></pre></td></tr></table></figure>
+
+<p>所以我们输入的字符串中每个字符-1就是上面这个字符串。编写脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">flag = <span class="string">&quot;ek`fz@q2^x/t^fn0mF^6/^rb`qanqntfg^E`hq|&quot;</span></span><br><span class="line">ans = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> flag:</span><br><span class="line">    ans += <span class="built_in">chr</span>(<span class="built_in">ord</span>(i) + <span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(ans)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">flag&#123;Ar3_y0u_go1nG_70_scarborough_Fair&#125;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="10-黑客精神"><a href="#10-黑客精神" class="headerlink" title="10. 黑客精神"></a>10. 黑客精神</h1><p>运行程序，注册码保存后直接退出。</p>
+<img src="/posts/9f62af2/10.1.png" class="" title="运行程序">
+
+<p>载入AK，有so文件，因为没有x86目录，如果要动态调试的话就要开我那个慢得要死的AS原生模拟器了。</p>
+<p>载入jeb，分析源码：</p>
+<img src="/posts/9f62af2/10.2.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/10.3.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/10.4.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/10.5.png" class="" title="jeb分析">
+
+<p>看到有Log语句，赶紧打开AS连接上模拟器运行一下看看Log。程序一进去就显示m&#x3D;0，然后再m&#x3D;Xman。</p>
+<img src="/posts/9f62af2/10.6.png" class="" title="AS中Logcat窗口">
+
+<p>说明程序在打开窗口前就已经载入so文件读取m的值，但它是静态的，如果我们注册过的话，程序会读取m&#x3D;1，不会让我们再次注册。so文件的onCreate方法中，第一句就是初始化SN，所以m的值应该是在native方法initSN中存着。</p>
+<p>将so文件载入IDA，在导出表里找不到initSN方法，也找不到所有native方法，但看到了JNI_Onload，说明整个过程都是在JNI_Onload里动态完成的。</p>
+<img src="/posts/9f62af2/10.7.png" class="" title="IDAExport表">
+
+<p>点进JNI_Onload函数，查看源码：</p>
+<img src="/posts/9f62af2/10.8.png" class="" title="IDA分析">
+
+<img src="/posts/9f62af2/10.9.png" class="" title="IDA分析">
+
+<img src="/posts/9f62af2/10.10.png" class="" title="IDA分析">
+
+<p>所以<code>EoPAoY62@ElRD</code>应该就是注册码，但输入发现不对…Logcat窗口还是显示m&#x3D;0。</p>
+<p>那继续分析saveSN。</p>
+<img src="/posts/9f62af2/10.11.png" class="" title="IDA分析">
+
+<p>现在可以捋一下思路了，<code>W3_arE_whO_we_ARE</code>是要加密的字符串，<code>EoPAoY62@ElRD</code>相当于密钥，作为参数传入saveSN。v7存着的就是密钥。</p>
+<p>把这个加密算法用Python写一遍：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">flag = <span class="string">&quot;W3_arE_whO_we_ARE&quot;</span></span><br><span class="line">flagarr = <span class="built_in">list</span>(flag)</span><br><span class="line">key = <span class="string">&quot;EoPAoY62@ElRD&quot;</span></span><br><span class="line">keyarr = <span class="built_in">list</span>(key)</span><br><span class="line">ans = <span class="string">&quot;&quot;</span></span><br><span class="line">v9 = <span class="number">2016</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">13</span>):</span><br><span class="line">    <span class="keyword">if</span> (i%<span class="number">3</span> == <span class="number">1</span>):</span><br><span class="line">        v9 = (v9 + <span class="number">5</span>) % <span class="number">16</span></span><br><span class="line">        v11 = flagarr[v9 + <span class="number">1</span>]</span><br><span class="line">    <span class="keyword">elif</span> i%<span class="number">3</span> == <span class="number">2</span>:</span><br><span class="line">        v9 = (v9 + <span class="number">7</span>) % <span class="number">15</span></span><br><span class="line">        v11 = flagarr[v9 + <span class="number">2</span>]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        v9 = (v9 + <span class="number">3</span>) % <span class="number">13</span></span><br><span class="line">        v11 = flagarr[v9 + <span class="number">3</span>]</span><br><span class="line">    ans += <span class="built_in">chr</span>(<span class="built_in">ord</span>(keyarr[i]) ^ <span class="built_in">ord</span>(v11))</span><br><span class="line"><span class="built_in">print</span>(ans)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">201608Am!2333</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>最后一个work方法，查看它的内存，里面包含着flag的格式。</p>
+<img src="/posts/9f62af2/10.12.png" class="" title="IDA分析">
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xman&#123;201608Am!2333&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="11-APK逆向"><a href="#11-APK逆向" class="headerlink" title="11. APK逆向"></a>11. APK逆向</h1><p>同Bugku的mobile1。<a target="_blank" rel="noopener" href="https://v5le0n9.github.io/post/17c1c819.html#2-mobile1">https://v5le0n9.github.io/post/17c1c819.html#2-mobile1</a> </p>
+<h1 id="12-人民的名义-抓捕赵德汉1-200"><a href="#12-人民的名义-抓捕赵德汉1-200" class="headerlink" title="12. 人民的名义-抓捕赵德汉1-200"></a>12. 人民的名义-抓捕赵德汉1-200</h1><p>下载下来的是jar包，使用命令<code>jar -xvf 1-200.jar</code>解压jar包。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\dell\Desktop&gt;jar -xvf 1-200.jar</span><br><span class="line">  已解压: META-INF/MANIFEST.MF</span><br><span class="line">  已解压: CheckPassword.class</span><br><span class="line">  已解压: CheckInterface.class</span><br><span class="line">  已解压: ClassEnc</span><br><span class="line">  已解压: .project</span><br><span class="line">  已解压: .classpath</span><br><span class="line">  已解压: newClassName.class</span><br></pre></td></tr></table></figure>
+
+<p>在AS或eclipse中创建一个项目，将jar包中的<code>.class</code>文件放到项目的class目录下即可查看源码。</p>
+<img src="/posts/9f62af2/12.2.png" class="" title="查看源码">
+
+<img src="/posts/9f62af2/12.3.png" class="" title="查看源码">
+
+<img src="/posts/9f62af2/12.1.png" class="" title="查看源码">
+
+<img src="/posts/9f62af2/12.4.png" class="" title="查看源码">
+
+<p>这个MD5解出来是<code>monkey99</code>，拿去试了一下，发现flag就是这个。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;monkey99&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="13-基础android"><a href="#13-基础android" class="headerlink" title="13. 基础android"></a>13. 基础android</h1><img src="/posts/9f62af2/13.1.png" class="" title="运行程序">
+
+<p>载入AK没什么发现，载入jeb分析源码。</p>
+<img src="/posts/9f62af2/13.2.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/13.3.png" class="" title="jeb分析">
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> string</span><br><span class="line">base = string.ascii_uppercase + string.ascii_lowercase + string.digits + <span class="string">&quot;-+_&lt;&gt;?/\|&#123;&#125;()!@#$%^&amp;*~`&quot;</span></span><br><span class="line"><span class="built_in">len</span> = <span class="number">12</span></span><br><span class="line">ans = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> base:</span><br><span class="line">        s1 = <span class="number">255</span>-i-<span class="number">100</span>-<span class="built_in">ord</span>(j)</span><br><span class="line">        <span class="keyword">if</span> s1 == <span class="number">48</span>:</span><br><span class="line">            ans += j</span><br><span class="line"><span class="built_in">print</span> (ans)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">kjihgfedcba`</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>拿到密码后继续去到第二关。</p>
+<img src="/posts/9f62af2/13.4.png" class="" title="jeb分析">
+
+<p>那就再看看这个程序还开了哪个类我们还没有分析。<code>GetAndChange</code>和<code>NextContent</code>我们还没有分析，进去看看。</p>
+<img src="/posts/9f62af2/13.5.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/13.6.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/13.7.png" class="" title="jeb分析">
+
+<p>之后再也没有任何操作了，我们已经看到图片了，所以<code>NextContent</code>不是关键类。返回到<code>GetAndChange</code>类，找一下<code>BroadcastReceiver</code>是干什么用的。</p>
+<p><code>BroadcastReceiver</code>详解：<a target="_blank" rel="noopener" href="https://blog.csdn.net/huiblog/article/details/53234544">https://blog.csdn.net/huiblog/article/details/53234544</a> </p>
+<img src="/posts/9f62af2/13.8.png" class="" title="croadcastreceier静态注册">
+
+<p>回到<code>Manifest</code>发现果然有静态注册。</p>
+<img src="/posts/9f62af2/13.9.png" class="" title="静态注册">
+
+<p>将<code>android.is.very.fun</code>作为显示码输入，但我点击按钮没有任何反应…但是之前不是分析<code>time_2.zip</code>转换为图片嘛，直接解压不行，因为它本来就不是zip压缩包。所以将后缀名修改为jpg就可以看到图片了。</p>
+<img src="/posts/9f62af2/13.11.png" class="" title="jfif">
+
+<img src="/posts/9f62af2/13.10.png" class="" title="flag">
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;08067-wlecome&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="14-easy-dex"><a href="#14-easy-dex" class="headerlink" title="14. easy-dex"></a>14. easy-dex</h1><p>在模拟器运行，点一下屏幕就一直在闪，五颜六色地闪。</p>
+<p>载入AK，没有找到smali文件，但有一个so文件。并且在<code>AndroidManifest.xml</code>文件中能看到有两个丢失的但程序需要的smali文件。<code>MainActivity</code>和<code>NativeActivity</code>。<code>MainActivity</code>大家都知道啦，一般是安卓程序的入口。但我们发现这个程序的入口是<code>NativeActivity</code>，这个是什么呢？</p>
+<img src="/posts/9f62af2/14.4.png" class="" title="两个smali文件">
+
+<p>写android纯c++的程序需要用到<code>NativeActivity</code>，这个<code>NativeActivity</code>就是一个一般的java类， 和普通的activity没有区别。<code>NativeActivity</code> 是android sdk自带的一个activity。android的纯c++的程序也是需要一个java虚拟机来运行的。<code>NativeActivity</code>通过<code>native_app_glu</code>来启动我们的c++线程，传递各种activity事件给c++代码。<code>native_app_glu</code>在ndk的<code>sources\android</code>目录里面，将<code>native_app_glu</code>当作我们工程的静态库，这个静态库里面封装好了，会创建一个线程，这个线程里面会调用一个<code>android_main(android_app* pApplication)</code>的函数，因此，我们c++这边的入口函数就是<code>android_main()</code>。我们在这个<code>android_main()</code>函数里面的任务就是进行消息循环，做各种任务。</p>
+<p>解包，载入IDA查看so文件。找到<code>android_main</code>函数，点进去。</p>
+<img src="/posts/9f62af2/14.1.png" class="" title="IDA分析">
+
+<p>也就是说要在10s内要摇100次手机。</p>
+<img src="/posts/9f62af2/14.2.png" class="" title="IDA分析">
+
+<img src="/posts/9f62af2/14.3.png" class="" title="IDA分析">
+
+<p>看了个大概，再详细分析代码。</p>
+<img src="/posts/9f62af2/14.5.png" class="" title="IDA分析">
+
+<img src="/posts/9f62af2/14.6.png" class="" title="IDA分析">
+
+<img src="/posts/9f62af2/14.7.png" class="" title="IDA分析">
+
+<p>所以我们首先取出<code>unk_7004</code>里面的加密数据，再将它解密，再解压缩得出dex内容将它写入文件中。</p>
+<p>File -&gt; Script commond，选择Python，编写ida dump脚本将数据提取出来：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> idaapi <span class="keyword">import</span> *</span><br><span class="line">addr = <span class="number">0x7004</span></span><br><span class="line">size = <span class="number">0x3CA10</span></span><br><span class="line">file2Write = <span class="string">&#x27;.\\cipherdata&#x27;</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(file2Write,<span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(get_bytes(addr,size))</span><br></pre></td></tr></table></figure>
+
+<p>在so文件的同目录下就会生成一个<code>cipherdata</code>文件。接下来给这个文件进行解密操作。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> zlib</span><br><span class="line">file2Read = <span class="string">&#x27;.\\cipherdata&#x27;</span></span><br><span class="line">file2Write = <span class="string">&#x27;.\\easydex.dex&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(file2Read, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f2R:</span><br><span class="line">    data = <span class="built_in">list</span>(f2R.read())</span><br><span class="line">    size = <span class="number">0x3CA10</span></span><br><span class="line">    times = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="comment">#10次1组</span></span><br><span class="line">        <span class="keyword">if</span> times &lt;= <span class="number">89</span>:</span><br><span class="line">            timesDivide10 = <span class="built_in">int</span>(times / <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment">#10字节1组</span></span><br><span class="line">            <span class="keyword">if</span> times % <span class="number">10</span> == <span class="number">9</span>:</span><br><span class="line">                sizesDivide10 = <span class="built_in">int</span>(size / <span class="number">10</span>)</span><br><span class="line">                i = <span class="number">0</span></span><br><span class="line">                <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(sizesDivide10):</span><br><span class="line">                    data[sizesDivide10 * timesDivide10 + i] ^= times</span><br><span class="line">                    i += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">#次数为89次时</span></span><br><span class="line">                <span class="keyword">if</span> times == <span class="number">89</span>:</span><br><span class="line">                    j = (timesDivide10 + <span class="number">1</span>) * sizesDivide10</span><br><span class="line">                    <span class="keyword">while</span> j &lt; size:</span><br><span class="line">                        data[j] ^= <span class="number">89</span></span><br><span class="line">                        j += <span class="number">1</span></span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">        times += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#解压数据</span></span><br><span class="line">data = zlib.decompress(<span class="built_in">bytes</span>(data))</span><br><span class="line"></span><br><span class="line"><span class="comment">#判断解压出的数据是否是dex格式</span></span><br><span class="line"><span class="built_in">type</span> = data[<span class="number">0</span>:<span class="number">3</span>].decode(<span class="string">&quot;utf8&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="built_in">type</span> == <span class="string">&#x27;dex&#x27;</span>:</span><br><span class="line">    <span class="comment">#将数据写入文件</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(file2Write, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f2W:</span><br><span class="line">        f2W.write(data)</span><br></pre></td></tr></table></figure>
+
+<p>将dex文件载入jeb，就可以查看这个程序的<code>MainActivity</code>类了。</p>
+<img src="/posts/9f62af2/14.8.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/14.9.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/14.10.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/14.11.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/14.12.png" class="" title="jeb分析">
+
+<p>那么，先找密钥。密钥的id号为<code>2131099683</code>，转换成十六进制为<code>0x7F060023</code>。将dex重命名为<code>classes.dex</code>放到解包目录下，重打包。解包目录下就会生成一个<code>bulid</code>目录。</p>
+<img src="/posts/9f62af2/14.13.png" class="" title="资源文件">
+
+<p>将<code>resources.arsc</code>载入jadx，查找id号。</p>
+<img src="/posts/9f62af2/14.14.png" class="" title="jadx分析">
+
+<p>继续查找<code>two_fish</code>，找到一串字符串，这个就是密钥。</p>
+<img src="/posts/9f62af2/14.15.png" class="" title="jadx分析">
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">I have a male fish and a female fish.</span><br></pre></td></tr></table></figure>
+
+<p>Twofish是什么？它其实是一个分组加密算法！Twofish是布鲁斯·施奈尔带领的项目组于1998年研发的区块加密算法。美国国家标准技术研究所(NIST)公开招募的高级加密标准（AES）算法最终候选算法之一，但最终并未当选高级加密标准算法。双鱼算法的标志性特点是它采用了和密钥相关的替换盒（S盒）。密钥输入位的一半被用于“真正的”加密流程进行编排并作为Feistel的轮密钥使用，而另一半用于修改算法所使用的S盒。双鱼算法的密钥编排非常复杂。软件实现的128位双鱼算法在大多数平台上的运行速度不及最终获胜的128位的AES标准算法Rijndael，不过，256位的双鱼算法运行速度却较AES-256稍快。包括Twofish-ECB, Twofish-CBC, Twofish-CTR, Twofish-OFB, Twofish-CFB。</p>
+<p>所以再来捋一下思路。我们输入的字符串与密钥进行Twofish加密的结果是字节数组m。密钥经过&amp;0xFF转换不需要我们手动操作，因为网上的解密算法已经包含在内了。但网上的加密算法得出来的不是带负数的字节数组，而是Base64或hex。所以我们可以先将字节数组转换成Base64的形式，再拿去解密。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line">flag = [-<span class="number">120</span>, <span class="number">77</span>, -<span class="number">14</span>, -<span class="number">38</span>, <span class="number">17</span>, <span class="number">5</span>, -<span class="number">42</span>, <span class="number">44</span>, -<span class="number">32</span>, <span class="number">109</span>, <span class="number">85</span>, <span class="number">31</span>, <span class="number">24</span>, -<span class="number">91</span>, -<span class="number">112</span>, -<span class="number">83</span>, <span class="number">64</span>, -<span class="number">83</span>, -<span class="number">128</span>, <span class="number">84</span>, <span class="number">5</span>, -<span class="number">94</span>, -<span class="number">98</span>, -<span class="number">30</span>, <span class="number">18</span>, <span class="number">70</span>, -<span class="number">26</span>, <span class="number">71</span>, <span class="number">5</span>, -<span class="number">99</span>, -<span class="number">62</span>, -<span class="number">58</span>, <span class="number">117</span>, <span class="number">29</span>, -<span class="number">44</span>, <span class="number">6</span>, <span class="number">112</span>, -<span class="number">4</span>, <span class="number">81</span>, <span class="number">84</span>, <span class="number">9</span>, <span class="number">22</span>, -<span class="number">51</span>, <span class="number">95</span>, -<span class="number">34</span>, <span class="number">12</span>, <span class="number">47</span>, <span class="number">77</span>]</span><br><span class="line">data = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> flag:</span><br><span class="line">    data.append(i&amp;<span class="number">0xFF</span>)</span><br><span class="line"><span class="built_in">print</span>(base64.b64encode(<span class="built_in">bytes</span>(data)))</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">b&#x27;iE3y2hEF1izgbVUfGKWQrUCtgFQFop7iEkbmRwWdwsZ1HdQGcPxRVAkWzV/eDC9N&#x27;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/9f62af2/14.16.png" class="" title="twofish解密">
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qwb&#123;TH3y_Io&lt;e_EACh_OTh3r_FOrEUER&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="15-你是谁"><a href="#15-你是谁" class="headerlink" title="15. 你是谁"></a>15. 你是谁</h1><img src="/posts/9f62af2/15.1.jpg" class="" title="运行程序">
+
+<p>载入AK，有so文件。载入jeb，找到<code>MainActivity</code>中的<code>onCreate</code>方法。</p>
+<img src="/posts/9f62af2/15.2.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/15.3.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/15.4.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/15.5.png" class="" title="jeb分析">
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">11 12 17 18 20 23 26 29 30 34 35 39 40 49 51 58 62 67 73 76 84 85</span><br></pre></td></tr></table></figure>
+
+<p>按照上面点位点好后，弹出<code>Right design</code>，点击按钮，弹出<code>通过爱的验证</code>。好像并没有什么用。再往上找找源码，发现有flag字样。</p>
+<img src="/posts/9f62af2/15.6.png" class="" title="jeb分析">
+
+<p>中文意思是“你获得了已经排序过的flag”。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">chr</span>(<span class="number">20667</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">chr</span>(<span class="number">25105</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">chr</span>(<span class="number">26159</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">chr</span>(<span class="number">36924</span>))</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">傻</span></span><br><span class="line"><span class="string">我</span></span><br><span class="line"><span class="string">是</span></span><br><span class="line"><span class="string">逼</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>结合题目和代码，这个重新排序应该是“我是傻逼”。而它说了，那个是排序过的flag，而正确的flag应该为<code>25105 26159 20667 36924</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;25105 26159 20667 36924&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="16-Android2-0"><a href="#16-Android2-0" class="headerlink" title="16. Android2.0"></a>16. Android2.0</h1><img src="/posts/9f62af2/16.1.png" class="" title="运行程序">
+
+<p>载入AK发现有so文件，载入jeb分析源码。</p>
+<img src="/posts/9f62af2/16.2.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/16.3.png" class="" title="jeb分析">
+
+<p>解包，将so文件载入IDA，分析<code>getResult</code>方法。</p>
+<img src="/posts/9f62af2/16.4.png" class="" title="IDA分析">
+
+<img src="/posts/9f62af2/16.5.png" class="" title="IDA分析">
+
+<p>尝试编写Python脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">v5 = <span class="string">&quot;LN^dl&quot;</span></span><br><span class="line">v5arr = <span class="built_in">list</span>(v5)</span><br><span class="line">v6 = [<span class="number">0x20</span>, <span class="number">53</span>, <span class="number">45</span>, <span class="number">0x16</span>, <span class="number">97</span>]</span><br><span class="line">v7 = <span class="built_in">list</span>(<span class="string">&quot;AFBo&#125;&quot;</span>)</span><br><span class="line">ans = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    ans += <span class="built_in">chr</span>((<span class="built_in">ord</span>(v5arr[i]) ^ <span class="number">0x80</span>) // <span class="number">2</span>)</span><br><span class="line">ans += <span class="string">&#x27;l&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    ans += <span class="built_in">chr</span>(<span class="built_in">ord</span>(v5arr[i]) ^ v6[i])</span><br><span class="line">ans += <span class="string">&#x27;a&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    ans += <span class="built_in">chr</span>(<span class="built_in">ord</span>(v7[i]) ^ v6[i])</span><br><span class="line">ans += <span class="string">&#x27;&#125;&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(ans)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">fgorll&#123;sraasoy&#125;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>提交flag发现不对，看看哪里漏了。最后发现<code>Init</code>函数不是简单的平均分成3组，而是对正确的flag的每个索引除以3取余得到<code>fgorll&#123;sraasoy&#125;</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ans = <span class="string">&quot;fgorll&#123;sraasoy&#125;&quot;</span></span><br><span class="line">ansarr = <span class="built_in">list</span>(ans)</span><br><span class="line">ans = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">    ans += ansarr[i] + ansarr[i+<span class="number">5</span>] + ansarr[i+<span class="number">10</span>]</span><br><span class="line"><span class="built_in">print</span>(ans)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">flag&#123;sosorryla&#125;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span>        </span><br></pre></td></tr></table></figure>
+
+<h1 id="17-boomshakalaka-3"><a href="#17-boomshakalaka-3" class="headerlink" title="17. boomshakalaka-3"></a>17. boomshakalaka-3</h1><p>啊好讨厌为什么它是游戏！！我已经玩了好几分钟了！</p>
+<img src="/posts/9f62af2/17.1.png" class="" title="运行程序">
+
+<p>载入AK看到它有so文件，载入jeb分析源码：</p>
+<img src="/posts/9f62af2/17.2.png" class="" title="jeb分析">
+
+<p>这个base64解码得<code>bazingaaaa</code>。诶结果不是这个。进去a类看看吧。</p>
+<img src="/posts/9f62af2/17.3.png" class="" title="jeb分析">
+
+<p>SharedPreferences是一个轻量级的存储类，特别适合用于保存软件配置参数。使用SharedPreferences保存数据，其背后是用xml文件存放数据，文件存放在&#x2F;data&#x2F;data&#x2F;程序包名&#x2F;shared_prefs目录下。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> SharedPreferences <span class="title function_">getSharedPreferences</span><span class="params">(String name, <span class="type">int</span> mode)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>第一个参数是存储时的名称，第二个参数则是文件的打开方式。</p>
+<p>那我们先找找它的xml文件吧。这个程序的包名为<code>com.example.plane</code>，包名可在<code>AndroidManifest.xml</code>的<code>manifest</code>标签中找到。</p>
+<img src="/posts/9f62af2/17.4.png" class="" title="程序包名">
+
+<img src="/posts/9f62af2/17.5.png" class="" title="xml文件">
+
+<img src="/posts/9f62af2/17.6.png" class="" title="xml文件">
+
+<p>所以可以推测<code>N0</code>和<code>MG</code>被写进了<code>Cocos2dxPrefsFile.xml</code>文件中。</p>
+<img src="/posts/9f62af2/17.7.png" class="" title="jeb分析">
+
+<p>但打开<code>Cocos2dxPrefsFile.xml</code>文件却发现不止这两个字符串。我刚才玩了两次，出现了两个极为相似的字符串。</p>
+<img src="/posts/9f62af2/17.8.png" class="" title="xml文件">
+
+<p>那就再玩几次试试。我发现每次关闭程序再打开又重新写入<code>MGN0</code>，而不关闭程序重新玩不会写入<code>MGN0</code>，每次结束都会以<code>dz99</code>为结束标志。**里面的是每个串的区别。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">MGN0ZntDMGNvUzJkX0FuRHJvMW*Rf*dz99</span><br><span class="line">    ZntDMGNvUzJkX0FuRHJvMW*RfRV*dz99</span><br><span class="line"></span><br><span class="line">MGN0ZntDMGNvUzJkX0FuRHJvMW*RfRV*dz99</span><br><span class="line"></span><br><span class="line">MGN0ZntDMGNvUzJkX0FuRHJvMW*RfRzRV*dz99</span><br><span class="line"></span><br><span class="line">MGN0ZntDMGNvUzJkX0FuRHJvMW*RfRz*dz99</span><br><span class="line">    ZntDMGNvUzJkX0FuRHJvMWdz99</span><br><span class="line">    ZntDMGNvUzJkX0FuRHJvMW*Rf*dz99</span><br></pre></td></tr></table></figure>
+
+<p>这些星号里面的串有些区别，但又是固定出现的，比如都是<code>Rf</code>、<code>RV</code>等等。说明在某个内存中存有这些字符。解包将so文件载入IDA，在函数名窗口搜索<code>score</code>，发现有好多这些字符串。</p>
+<img src="/posts/9f62af2/17.9.png" class="" title="IDA分析">
+
+<p>原来<code>MW</code>其实也是包含在里面的。将这些字符串组合起来<code>MWRfRzBtRV9Zb1VfS24w</code>，再将前缀和后缀加上<code>MGN0ZntDMGNvUzJkX0FuRHJvMWRfRzBtRV9Zb1VfS24wdz99</code>。用Base64解码得<code>0ctf&#123;C0coS2d_AnDro1d_G0mE_YoU_Kn0w?&#125;</code>。为什么用Base64，其实题目上面的flag.xml中的Base64字符串已经暗示得很清楚了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0ctf&#123;C0coS2d_AnDro1d_G0mE_YoU_Kn0w?&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="18-Illusion"><a href="#18-Illusion" class="headerlink" title="18. Illusion"></a>18. Illusion</h1><p>运行程序。</p>
+<img src="/posts/9f62af2/18.1.png" class="" title="运行程序">
+
+<p>载入AK，有一个Flag文件，打开出现一串字符串<code>Ku@&#39;G_V9v(yGS</code>。</p>
+<img src="/posts/9f62af2/18.2.png" class="" title="AK中看到Flag文件">
+
+<p>载入jeb，分析源码。</p>
+<img src="/posts/9f62af2/18.3.png" class="" title="jeb分析">
+
+<p>将so文件载入IDA查看<code>CheckFlag</code>方法。</p>
+<img src="/posts/9f62af2/18.4.png" class="" title="IDA分析">
+
+<p>如果要将算法逆过来，就需要将Flag里的字符串减32再左移32位。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">flag = <span class="built_in">list</span>(<span class="string">&quot;Ku@&#x27;G_V9v(yGS&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(flag)):</span><br><span class="line">    flag[i] = (<span class="built_in">ord</span>(flag[i]) - <span class="number">32</span>) &lt;&lt; <span class="number">32</span></span><br><span class="line"><span class="built_in">print</span>(flag)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">[184683593728, 365072220160, 137438953472, 30064771072, 167503724544, 270582939648, 231928233984, 107374182400, 369367187456, 34359738368, 382252089344, 167503724544, 219043332096]</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>所以<code>sub_10C0</code>每次循环得出的值就是上面这一串数字。进去<code>sub_10C0</code>看看算法。</p>
+<img src="/posts/9f62af2/18.5.png" class="" title="IDA分析">
+
+<img src="/posts/9f62af2/18.6.png" class="" title="IDA分析">
+
+<p>(说着随机选取，结果还是认真算了)Flag字符串长度为13，所以在<code>aE116c5c66e7b37</code>数组中只取前13个字符。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.rodata:000023C8                 ; ORG 0x23C8</span><br><span class="line">.rodata:000023C8 aE116c5c66e7b37 DCB &quot;e116c5c66e7b373d912cb9b885b48913&quot;,0</span><br></pre></td></tr></table></figure>
+
+<p>前13个字符为<code>e116c5c66e7b3</code>，其中最大的ASCII码为<code>e</code>(101)，最小是<code>1</code>(49)。而我们可以输入的可视化字符的ASCII码范围是32~126。所以<code>v9[i]+aE116c5c66e7b37[i]-64</code>的范围应该在17~163。照着IDA的代码抄一遍：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> a1 <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">17</span>,<span class="number">164</span>):</span><br><span class="line">    a2 = <span class="number">93</span></span><br><span class="line">    v2 = a1 ^ a2</span><br><span class="line">    v3 = <span class="number">1</span></span><br><span class="line">    v4 = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span>((a2 &amp; <span class="number">0x80000000</span>) != <span class="number">0</span>):</span><br><span class="line">        a2 = -a2</span><br><span class="line">    <span class="keyword">if</span>((a1 &amp; <span class="number">0x80000000</span>) != <span class="number">0</span>):</span><br><span class="line">        a1 = -a1</span><br><span class="line">    <span class="keyword">if</span>(a1 &gt;= a2):</span><br><span class="line">        <span class="keyword">while</span> a2&lt;<span class="number">0x10000000</span> <span class="keyword">and</span> a2&lt;a1:</span><br><span class="line">            a2 *= <span class="number">16</span></span><br><span class="line">            v3 *= <span class="number">16</span></span><br><span class="line">        <span class="keyword">while</span> a2&lt;<span class="number">0x80000000</span> <span class="keyword">and</span> a2&lt;a1:</span><br><span class="line">            a2 *= <span class="number">2</span></span><br><span class="line">            v3 *= <span class="number">2</span></span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">if</span>(a1 &gt;= a2):</span><br><span class="line">                a1 -= a2</span><br><span class="line">                v4 |= v3</span><br><span class="line">            <span class="keyword">if</span>(a1 &gt;= a2 &gt;&gt; <span class="number">1</span>):</span><br><span class="line">                a1 -= a2 &gt;&gt; <span class="number">1</span></span><br><span class="line">                v4 |= v3 &gt;&gt; <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span>(a1 &gt;= a2 &gt;&gt; <span class="number">2</span>):</span><br><span class="line">                a1 -= a2 &gt;&gt; <span class="number">2</span></span><br><span class="line">                v4 |= v3 &gt;&gt; <span class="number">2</span></span><br><span class="line">            <span class="keyword">if</span>(a1 &gt;= a2 &gt;&gt; <span class="number">3</span>):</span><br><span class="line">                a1 -= a2 &gt;&gt; <span class="number">3</span></span><br><span class="line">                v4 |= v3 &gt;&gt; <span class="number">3</span></span><br><span class="line">            <span class="keyword">if</span> a1 == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            v3 &gt;&gt;= <span class="number">4</span></span><br><span class="line">            <span class="keyword">if</span> v3 == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            a2 &gt;&gt;= <span class="number">4</span></span><br><span class="line">    <span class="keyword">if</span> v2 &lt; <span class="number">0</span>:</span><br><span class="line">        v4 = -v4</span><br><span class="line">    <span class="built_in">print</span>(v4, end = <span class="string">&quot; &quot;</span>)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 Press any key to continue . . .</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>在这个范围完全没有这么大的数值…而且在这个范围要不就返回0要不就返回1。肯定是哪里出问题了。呜呜我看了牛牛们的wp说这个是假的，真的<code>CheckFlag</code>在<code>JNI_Onload</code>函数里，我就知道！！我就说导出表都有<code>CheckFlag</code>了怎么还有个<code>JNI_Onload</code>！以后记住从<code>JNI_Onload</code>进去准没错，还是没能抵挡住<code>CheckFlag</code>的诱惑。</p>
+<img src="/posts/9f62af2/18.9.png" class="" title="IDA分析">
+
+<img src="/posts/9f62af2/18.10.png" class="" title="IDA分析">
+
+<img src="/posts/9f62af2/18.11.png" class="" title="IDA分析">
+
+<p>可以继续试试参数范围。<code>aLjavaLangStrin_0</code>存的字符串为<code>(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;</code>。取前13个字符为<code>(Ljava/lang/S</code>。最小的ASCII码为<code>40</code>(<code>(</code>)，最大的ASCII码为<code>118</code>(v)。所以<code>v10[i]+aLjavaLangStrin_0[i]-64</code>的范围在8~180。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 Press any key to continue . . .</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>还是要不就是0要不就是1。这个时候就不要想是不是你的问题了！肯定是IDA反汇编的错！所以接下来要看汇编代码找到正确的逻辑。</p>
+<img src="/posts/9f62af2/18.7.png" class="" title="IDA分析">
+
+<p>对于栈的立即数，可以右键 -&gt; Q算得栈的偏移值。</p>
+<img src="/posts/9f62af2/18.8.jpg" class="" title="IDA分析">
+
+<img src="/posts/9f62af2/18.12.png" class="" title="IDA分析">
+
+<img src="/posts/9f62af2/18.13.png" class="" title="IDA分析">
+
+<img src="/posts/9f62af2/18.14.png" class="" title="IDA分析">
+
+<img src="/posts/9f62af2/18.15.png" class="" title="IDA分析">
+
+<img src="/posts/9f62af2/18.16.png" class="" title="IDA分析">
+
+<p>到这已经将所有细节都分析了，除了<code>sub_1028</code>，如果它反编译没错的话那答案基本就已经出来了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag = ((输入的字符串+内存字符串-64) - sub_1028(输入的字符串+内存字符串-64, 93) * 93) + 32</span><br></pre></td></tr></table></figure>
+
+<p>编写脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> string</span><br><span class="line">flag = <span class="built_in">list</span>(<span class="string">&quot;Ku@&#x27;G_V9v(yGS&quot;</span>)</span><br><span class="line"><span class="built_in">str</span> = <span class="built_in">list</span>(<span class="string">&quot;(Ljava/lang/S&quot;</span>)</span><br><span class="line">ans = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="comment">#输出可打印字符串</span></span><br><span class="line"><span class="built_in">input</span> = string.printable</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sub_1028</span>(<span class="params">a1</span>):</span><br><span class="line">    a2 = <span class="number">93</span></span><br><span class="line">    v2 = a1 ^ a2</span><br><span class="line">    v3 = <span class="number">1</span></span><br><span class="line">    v4 = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span>((a2 &amp; <span class="number">0x80000000</span>) != <span class="number">0</span>):</span><br><span class="line">        a2 = -a2</span><br><span class="line">    <span class="keyword">if</span>((a1 &amp; <span class="number">0x80000000</span>) != <span class="number">0</span>):</span><br><span class="line">        a1 = -a1</span><br><span class="line">    <span class="keyword">if</span>(a1 &gt;= a2):</span><br><span class="line">        <span class="keyword">while</span> a2&lt;<span class="number">0x10000000</span> <span class="keyword">and</span> a2&lt;a1:</span><br><span class="line">            a2 *= <span class="number">16</span></span><br><span class="line">            v3 *= <span class="number">16</span></span><br><span class="line">        <span class="keyword">while</span> a2&lt;<span class="number">0x80000000</span> <span class="keyword">and</span> a2&lt;a1:</span><br><span class="line">            a2 *= <span class="number">2</span></span><br><span class="line">            v3 *= <span class="number">2</span></span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">if</span>(a1 &gt;= a2):</span><br><span class="line">                a1 -= a2</span><br><span class="line">                v4 |= v3</span><br><span class="line">            <span class="keyword">if</span>(a1 &gt;= a2 &gt;&gt; <span class="number">1</span>):</span><br><span class="line">                a1 -= a2 &gt;&gt; <span class="number">1</span></span><br><span class="line">                v4 |= v3 &gt;&gt; <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span>(a1 &gt;= a2 &gt;&gt; <span class="number">2</span>):</span><br><span class="line">                a1 -= a2 &gt;&gt; <span class="number">2</span></span><br><span class="line">                v4 |= v3 &gt;&gt; <span class="number">2</span></span><br><span class="line">            <span class="keyword">if</span>(a1 &gt;= a2 &gt;&gt; <span class="number">3</span>):</span><br><span class="line">                a1 -= a2 &gt;&gt; <span class="number">3</span></span><br><span class="line">                v4 |= v3 &gt;&gt; <span class="number">3</span></span><br><span class="line">            <span class="keyword">if</span> a1 == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            v3 &gt;&gt;= <span class="number">4</span></span><br><span class="line">            <span class="keyword">if</span> v3 == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            a2 &gt;&gt;= <span class="number">4</span></span><br><span class="line">    <span class="keyword">if</span> v2 &lt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> -v4</span><br><span class="line">    <span class="keyword">return</span> v4</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(flag)):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">input</span>:</span><br><span class="line">        data = <span class="built_in">ord</span>(j) + <span class="built_in">ord</span>(<span class="built_in">str</span>[i]) - <span class="number">64</span></span><br><span class="line">        v4 = sub_1028(data)</span><br><span class="line">        <span class="keyword">if</span> (data - v4 * <span class="number">93</span>) + <span class="number">32</span> == <span class="built_in">ord</span>(flag[i]):</span><br><span class="line">            ans += j</span><br><span class="line"><span class="built_in">print</span>(ans)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">CISCN&#123;GJ5728&#125;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="19-APK逆向-2"><a href="#19-APK逆向-2" class="headerlink" title="19. APK逆向-2"></a>19. APK逆向-2</h1><p>在模拟器上安装失败，解包不能解包，用AK不能反编译。那就把它后缀改为<code>.zip</code>，解压发现可以解压。没有找到smali目录，但有<code>classes.dex</code>和<code>resources.arsc</code>文件。这两个文件在jadx都可以打开，但<code>AndroidManifest.xml</code>文件显示乱码。</p>
+<img src="/posts/9f62af2/19.1.png" class="" title="xml文件">
+
+<p>其实我们解压时就可以知道是<code>AndroidManifest.xml</code>的问题了。</p>
+<img src="/posts/9f62af2/19.2.png" class="" title="xml文件">
+
+<p>那么接下来就是要仔细分析<code>AndroidManifest.xml</code>文件。</p>
+<hr>
+<img src="/posts/9f62af2/19.3.png" class="" title="xml文件结构图">
+
+<p><code>AndroidManifest.xml</code>文件采用小端模式存储，可以大体分为四个部分：</p>
+<ol>
+<li><p>Header：头文件</p>
+</li>
+<li><p>String Chunk：存储字符串资源的程序块</p>
+</li>
+<li><p>ResourceId Chunk：存储资源id的程序块</p>
+</li>
+<li><p>XmlContent Chunk：存储xml内容程序块，其中包含了五个部分，Start Namespace Chunk 、End Namespace Chunk 、Start Tag Chunk 、End Tag Chunk 、Text Chunk</p>
+</li>
+</ol>
+<p><strong>Header</strong></p>
+<p>magicnumber：魔数，固定值 0x0008003(16进制)，占四个字节。</p>
+<p>filesize：xml文件总字节数 ，占四个字节。</p>
+<p><strong>String Chunk</strong></p>
+<p>ChunkType：StringChunk类型，4个字节 ，固定值 0x001c0001</p>
+<p>ChunkSize：StringChunk大小 ，4个字节</p>
+<p>StringCount：StringChunk字符串的个数，4个字节</p>
+<p>StyleCount：StringChunk样式的个数，4个字节，固定值 0x00000000</p>
+<p>Unkown： 位置区域，4个字节，固定值 0x00000000解析时候需要略过4个字节</p>
+<p>StringPoolOffset：字符串池偏移量，4个字节，偏移量相对StringChunk头部位置</p>
+<p>StylePoolOffset：样式池偏移量，4个字节，偏移量相对于StringChunk头部位置，固定值 0x00000000 ，这个字段基本没用到过</p>
+<p>StringOffsets：每个字符串在字符串池中的相对偏移量，int数组，它的大小是 StringCount*4 个字节</p>
+<p>StyleOffsets：每个样式的偏移量，int数组，它的大小是 StyleCount*4 个字节</p>
+<p>String Pool：字符串池，存储了所有的字符串</p>
+<p>Style Pool：样式池，存储了所有的样式，一般为0</p>
+<p><strong>ResourceId Chunk</strong></p>
+<p>ChunkType：ResourceldChunk的类型，占4个字节，固定值 0x00080180</p>
+<p>ChunkSize：ResourceldChunk的大小，占4个字节</p>
+<p>ResourceIds：int数组，大小为(ChunkSize - 8) &#x2F; 4 ，减 8是减去头部大小的8个字节(ChunkType和ChunkSize)</p>
+<p><strong>XmlContent Chunk</strong></p>
+<p>XmlContentChunk 这部分表示的是存储了清单文件的详细信息，包含的5项，其中Start Namespace Chunk 和End Namespace Chunk 这两个可以合并一个来说明， 因为它们的结构完全一致，解析过程也是一样的。至于End Tag Chunk一共有6个数据，也就是 Start Tag Chunk 的前 6 项，这里不做单独解析和说明。End Tag Chunk这个跟清单文件标签一样的，就是给解析出来的标签加上结束标签一样。Text Chunk这个模块在010 Editor模板里并没有用到过。</p>
+<p><em>Start Namespace Chunk</em>主要包含一个清单文件的命令空间内容</p>
+<p>ChunkType：Chunk的类型，4个字节 ，固定值 0x00100100</p>
+<p>ChunkSize：Chunk的大小 ，4个字节</p>
+<p>LineNumber：清单文件中的行号， 4个字节</p>
+<p>Unknown：未知区域， 4个字节</p>
+<p>Prefix：命名空间的前缀， 4个字节</p>
+<p>Uri：命名空间的URI， 4个字节</p>
+<p><em>Start Tag Chunk</em>主要存放清单文件中的标签信息</p>
+<p>ChunkType：Chunk的类型，4个字节 ，固定值 0x00100102</p>
+<p>ChunkSize：Chunk的大小 ，4个字节</p>
+<p>LineNumber：清单文件中的行号， 4个字节</p>
+<p>Unknown：未知区域， 4个字节</p>
+<p>Namespace Uri：命名空间用到的url在字符串的索引，值为 -1 表示没有用到命名空间 uri。标签的一般都没有使用到命名空间，4个字节</p>
+<p>Name：标签名称(在字符串中的索引值)，4个字节</p>
+<p>Flags：标签类型例如开始标签还是结束标签，固定值0x00140014，4个字节</p>
+<p>Attribute Count ：标签包含的属性个数，4个字节</p>
+<p>Class Attribute ：标签包含的类属性，此项值常为 0，4个字节</p>
+<p>Attributes ：属性内容集合,每个属性固定 20 个字节，包含 5 个字段，每个字段都是 4 字节无符号 int，解析的时候需要注意Type这个值做一次处理需要右移24位。各个字段含义如下：</p>
+<ul>
+<li><p>NamespaceUri：属性的命名空间uri 在字符串池中的索引</p>
+</li>
+<li><p>Name：属性名称在字符串池中的索引</p>
+</li>
+<li><p>ValueStr：属性值</p>
+</li>
+<li><p>Type：属性类型</p>
+</li>
+<li><p>Data：属性数据</p>
+</li>
+</ul>
+<hr>
+<p>首先查看xml的固定值是否有误。ChunkType应该为01 00 1c 00。而且StylePoolOffset应该为00 00 00 00。修改完后一定要点保存，而不是另存为，因为我发现另存为后有些其它值也被修改了，导致重打包后再解包时出现错误！</p>
+<img src="/posts/9f62af2/19.4.png" class="" title="xml文件">
+
+<img src="/posts/9f62af2/19.9.png" class="" title="xml文件">
+
+<p>忽然发现解包时异常已经告诉我有其中一个错误了…</p>
+<img src="/posts/9f62af2/19.5.png" class="" title="apk解包">
+
+<p>将它重打包时出现没有<code>apktool.yml</code>文件错误，将其它apk里面的<code>apktool.yml</code>复制一份下来，将apk文件名改了即可。</p>
+<img src="/posts/9f62af2/19.7.png" class="" title="apktool.yml">
+
+<img src="/posts/9f62af2/19.6.png" class="" title="apktool.yml">
+
+<p>这次终于成功解包了。</p>
+<img src="/posts/9f62af2/19.8.png" class="" title="解包成功">
+
+<p>所以xml有什么什么神秘的呢？发现中间那个字符串就是flag。</p>
+<img src="/posts/9f62af2/19.10.png" class="" title="xml文件">
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">8d6efd232c63b7d2</span><br></pre></td></tr></table></figure>
+
+<h1 id="20-ill-intentions"><a href="#20-ill-intentions" class="headerlink" title="20. ill-intentions"></a>20. ill-intentions</h1><img src="/posts/9f62af2/20.1.png" class="" title="运行程序">
+
+<p>翻译一下就是，选择您希望与之交互的MainActivity，待办事项：添加按钮来选择活动，现在使用的是Send_to_Activity。</p>
+<p>载入AK看可不可以直接修改<code>AndroidManifest.xml</code>的入口，不行。程序还是那个界面。</p>
+<img src="/posts/9f62af2/20.2.png" class="" title="修改文件">
+
+<p>那就载入jeb分析看看吧。</p>
+<img src="/posts/9f62af2/20.3.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/20.4.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/20.5.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/20.6.png" class="" title="jeb分析">
+
+<img src="/posts/9f62af2/20.7.png" class="" title="jeb分析">
+
+<p>这些方法都是在so文件里面。解包先看看so文件。导出表刚好有这三个函数。如果导出表有native函数，说明这些是导出函数；如果没有，而只有JNI_Onload，说明那些是未导出函数。</p>
+<img src="/posts/9f62af2/20.8.png" class="" title="IDA分析">
+
+<img src="/posts/9f62af2/20.9.png" class="" title="IDA分析">
+
+<img src="/posts/9f62af2/20.10.png" class="" title="IDA分析">
+
+<img src="/posts/9f62af2/20.11.png" class="" title="IDA分析">
+
+<p>可以确定<code>DefinitelyNotThisOne</code>函数肯定没有flag。剩下那两个函数看得我头大，而且传入的参数也有些是在Java层加密过的。</p>
+<p>因为你！我去学了Frida so hook！<a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-1128884-1-1.html">Frida超详细安装实战教程</a></p>
+<p>hook一个so方法需要知道：</p>
+<ul>
+<li>程序的名字(Frida-ps -U查看程序名字)：CTF Application</li>
+<li>so文件名：libhello-jni.so</li>
+<li>so方法名：Java_com_example_application_ThisIsTheRealOne_orThat</li>
+</ul>
+<p>编写hook脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> frida</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">jscode = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">function main()&#123;</span></span><br><span class="line"><span class="string">function getjstring(jstr) &#123;</span></span><br><span class="line"><span class="string">        return Java.vm.getEnv().getStringUtfChars(jstr, null).readCString();</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">Java.perform(function()&#123;</span></span><br><span class="line"><span class="string">    Interceptor.attach(Module.findExportByName(&quot;libhello-jni.so&quot;,&quot;Java_com_example_application_ThisIsTheRealOne_orThat&quot;),&#123;</span></span><br><span class="line"><span class="string">        onEnter: function(args) &#123;</span></span><br><span class="line"><span class="string">            send(&quot;Hook start&quot;);</span></span><br><span class="line"><span class="string">        &#125;,</span></span><br><span class="line"><span class="string">        onLeave: function(retval)&#123;</span></span><br><span class="line"><span class="string">            send(&quot;orThat_result:&quot; + getjstring(retval));</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;);</span></span><br><span class="line"><span class="string">&#125;);</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">setImmediate(main);</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">printMessage</span>(<span class="params">message,data</span>):</span><br><span class="line">    <span class="keyword">if</span> message[<span class="string">&#x27;type&#x27;</span>] == <span class="string">&#x27;send&#x27;</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;&#123;0&#125;&#x27;</span>.<span class="built_in">format</span>(message[<span class="string">&#x27;payload&#x27;</span>]))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(message)</span><br><span class="line"></span><br><span class="line">process = frida.get_remote_device().attach(<span class="string">&#x27;CTF Application&#x27;</span>)</span><br><span class="line">script = process.create_script(jscode)</span><br><span class="line">script.on(<span class="string">&#x27;message&#x27;</span>,printMessage)</span><br><span class="line">script.load()</span><br><span class="line">sys.stdin.read()</span><br></pre></td></tr></table></figure>
+
+<p>开启Frida服务：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\dell&gt;adb shell</span><br><span class="line">aosp:/ # cd /data/local/tmp</span><br><span class="line">aosp:/data/local/tmp # ls</span><br><span class="line">android_x86_server  frida-server-15.1.17-android-x86</span><br><span class="line">aosp:/data/local/tmp # ./frida-server-15.1.17-android-x86</span><br></pre></td></tr></table></figure>
+
+<p>打开另一命令窗口开启端口转发，Frida默认端口27042：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\dell&gt;adb forward tcp:27042 tcp:27042</span><br><span class="line">27042</span><br></pre></td></tr></table></figure>
+
+<p>等等，突然想起来我们还没去到我们想要进去的Activity，修改xml文件我是不会修改了，但可以利用objection运行指定的Activity。</p>
+<p>安装objection：<code>pip install objection</code></p>
+<p>在模拟器运行程序，在终端输入需要调试的程序的包名：<code>objection -g com.example.hellojni explore</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\dell&gt;objection -g com.example.hellojni explore</span><br><span class="line">Using USB device `Android Emulator 5554`</span><br><span class="line">Agent injected and responds ok!</span><br><span class="line"></span><br><span class="line">     _   _         _   _</span><br><span class="line"> ___| |_|_|___ ___| |_|_|___ ___</span><br><span class="line">| . | . | | -_|  _|  _| | . |   |</span><br><span class="line">|___|___| |___|___|_| |_|___|_|_|</span><br><span class="line">      |___|(object)inject(ion) v1.11.0</span><br><span class="line"></span><br><span class="line">     Runtime Mobile Exploration</span><br><span class="line">        by: @leonjza from @sensepost</span><br><span class="line"></span><br><span class="line">[tab] for command suggestions</span><br><span class="line">com.example.hellojni on (Meizu: 7.1.2) [usb] #</span><br></pre></td></tr></table></figure>
+
+<p>列出app所有的Activity：<code>android hooking list activities</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">com.example.hellojni on (Meizu: 7.1.2) [usb] # android hooking list activities</span><br><span class="line">com.example.application.DefinitelyNotThisOne</span><br><span class="line">com.example.application.IsThisTheRealOne</span><br><span class="line">com.example.application.MainActivity</span><br><span class="line">com.example.application.ThisIsTheRealOne</span><br><span class="line"></span><br><span class="line">Found 4 classes</span><br></pre></td></tr></table></figure>
+
+<p>启动指定Activity：<code>android intent launch_activity com.example.application.ThisIsTheRealOne</code> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">com.example.hellojni on (Meizu: 7.1.2) [usb] # android intent launch_activity com.example.application.ThisIsTheRealOne</span><br><span class="line">(agent) Starting activity com.example.application.ThisIsTheRealOne...</span><br><span class="line">(agent) Activity successfully asked to start.</span><br></pre></td></tr></table></figure>
+
+<p>可以看到程序页面已经变了：</p>
+<img src="/posts/9f62af2/20.12.png" class="" title="ThisIsTheRealOne页面">
+
+<p>运行脚本，点击程序中间的按钮，打印返回值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\dell\Desktop&gt;python hookso.py</span><br><span class="line">Hook start</span><br><span class="line">orThat_result:KeepTryingThisIsNotTheActivityYouAreLookingForButHereHaveSomeInternetPoints!</span><br></pre></td></tr></table></figure>
+
+<p>它说这个不是我要找的Activity，换一个。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">com.example.hellojni on (Meizu: 7.1.2) [usb] # android intent launch_activity com.example.application.IsThisTheRealOne</span><br><span class="line">(agent) Starting activity com.example.application.IsThisTheRealOne...</span><br><span class="line">(agent) Activity successfully asked to start.</span><br></pre></td></tr></table></figure>
+
+<p>修改脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> frida</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">jscode = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">function main()&#123;</span></span><br><span class="line"><span class="string">function getjstring(jstr) &#123;</span></span><br><span class="line"><span class="string">        return Java.vm.getEnv().getStringUtfChars(jstr, null).readCString();</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">Java.perform(function()&#123;</span></span><br><span class="line"><span class="string">    Interceptor.attach(Module.findExportByName(&quot;libhello-jni.so&quot;,&quot;Java_com_example_application_IsThisTheRealOne_perhapsThis&quot;),&#123;</span></span><br><span class="line"><span class="string">        onEnter: function(args) &#123;</span></span><br><span class="line"><span class="string">            send(&quot;Hook start&quot;);</span></span><br><span class="line"><span class="string">        &#125;,</span></span><br><span class="line"><span class="string">        onLeave: function(retval)&#123;</span></span><br><span class="line"><span class="string">            send(&quot;perhapsThis_result:&quot; + getjstring(retval));</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;);</span></span><br><span class="line"><span class="string">&#125;);</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">setImmediate(main);</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">printMessage</span>(<span class="params">message,data</span>):</span><br><span class="line">    <span class="keyword">if</span> message[<span class="string">&#x27;type&#x27;</span>] == <span class="string">&#x27;send&#x27;</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;&#123;0&#125;&#x27;</span>.<span class="built_in">format</span>(message[<span class="string">&#x27;payload&#x27;</span>]))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(message)</span><br><span class="line"></span><br><span class="line">process = frida.get_remote_device().attach(<span class="string">&#x27;CTF Application&#x27;</span>)</span><br><span class="line">script = process.create_script(jscode)</span><br><span class="line">script.on(<span class="string">&#x27;message&#x27;</span>,printMessage)</span><br><span class="line">script.load()</span><br><span class="line">sys.stdin.read()</span><br></pre></td></tr></table></figure>
+
+<p>运行，点击按钮，打印返回值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\dell\Desktop&gt;python hookso.py</span><br><span class="line">Hook start</span><br><span class="line">perhapsThis_result:Congratulation!YouFoundTheRightActivityHereYouGo-CTF&#123;IDontHaveABadjokeSorry&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CTF&#123;IDontHaveABadjokeSorry&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="21-LoopCrypto"><a href="#21-LoopCrypto" class="headerlink" title="21. LoopCrypto"></a>21. LoopCrypto</h1><img src="/posts/9f62af2/21.1.png" class="" title="运行程序">
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="v5le0n9 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="v5le0n9 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Reverse/" rel="tag"># Reverse</a>
+              <a href="/tags/CTF/" rel="tag"># CTF</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/2670ba0d.html" rel="prev" title="感知机学习算法">
+      <i class="fa fa-chevron-left"></i> 感知机学习算法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/5a99a36.html" rel="next" title="攻防世界 逆向高手进阶区">
+      攻防世界 逆向高手进阶区 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-app1"><span class="nav-text">1. app1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-app2"><span class="nav-text">2. app2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-app3"><span class="nav-text">3. app3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-easy-apk"><span class="nav-text">4. easy_apk</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-RememberOther"><span class="nav-text">5. RememberOther</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-easyjni"><span class="nav-text">6. easyjni</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-easy-so"><span class="nav-text">7. easy-so</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-easyjava"><span class="nav-text">8. easyjava</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-Ph0en1x-100"><span class="nav-text">9. Ph0en1x-100</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-%E9%BB%91%E5%AE%A2%E7%B2%BE%E7%A5%9E"><span class="nav-text">10. 黑客精神</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-APK%E9%80%86%E5%90%91"><span class="nav-text">11. APK逆向</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#12-%E4%BA%BA%E6%B0%91%E7%9A%84%E5%90%8D%E4%B9%89-%E6%8A%93%E6%8D%95%E8%B5%B5%E5%BE%B7%E6%B1%891-200"><span class="nav-text">12. 人民的名义-抓捕赵德汉1-200</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#13-%E5%9F%BA%E7%A1%80android"><span class="nav-text">13. 基础android</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#14-easy-dex"><span class="nav-text">14. easy-dex</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#15-%E4%BD%A0%E6%98%AF%E8%B0%81"><span class="nav-text">15. 你是谁</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#16-Android2-0"><span class="nav-text">16. Android2.0</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#17-boomshakalaka-3"><span class="nav-text">17. boomshakalaka-3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#18-Illusion"><span class="nav-text">18. Illusion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#19-APK%E9%80%86%E5%90%91-2"><span class="nav-text">19. APK逆向-2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#20-ill-intentions"><span class="nav-text">20. ill-intentions</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#21-LoopCrypto"><span class="nav-text">21. LoopCrypto</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="v5le0n9"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">v5le0n9</p>
+  <div class="site-description" itemprop="description">v5le0n9's garden</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/Leong_Vinson" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;Leong_Vinson" rel="noopener" target="_blank"><i class="fab fa-cuttlefish fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/v5le0n9" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;v5le0n9" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:v5le0n9@163.com" title="E-Mail → mailto:v5le0n9@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">v5le0n9</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
