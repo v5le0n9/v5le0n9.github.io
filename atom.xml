@@ -86,9 +86,9 @@
     <category term="Android逆向" scheme="http://example.com/categories/Android%E9%80%86%E5%90%91/"/>
     
     
-    <category term="Reverse" scheme="http://example.com/tags/Reverse/"/>
-    
     <category term="CTF" scheme="http://example.com/tags/CTF/"/>
+    
+    <category term="Reverse" scheme="http://example.com/tags/Reverse/"/>
     
   </entry>
   
