@@ -270,7 +270,6 @@
 <p>采用TCP协议程序发送数据所用API为：send，接收数据所用API为：recv</p>
 <p>采用UDP协议程序发送数据所用API为：WSASend，接收数据所用API为：WSARecv</p>
 <span id="more"></span>
-
 <p>在分析封包时，了解程序使用的协议类型，采用相对应抓包工具。有的抓包工具只能抓到TCP协议发送的封包数据，比如用易语言网截所写的抓包工具，那种工具只能抓到TCP协议的封包。</p>
 <h2 id="1-2-网络验证类型"><a href="#1-2-网络验证类型" class="headerlink" title="1.2 网络验证类型"></a>1.2 网络验证类型</h2><p>网络验证类型常见的为：Asp验证，PHP验证，云验证，exe程序互相通信验证。</p>
 <p>判断验证类型的例子：</p>
@@ -287,132 +286,85 @@
 <h2 id="2-1-网页未加密"><a href="#2-1-网页未加密" class="headerlink" title="2.1 网页未加密"></a>2.1 网页未加密</h2><p>破解简单说下：</p>
 <p>程序运行一下知道大概流程，载入OD寻找敏感字符串。发现登录成功在很大的一个循环里，登录失败在循环外。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">004025D7  |.  895D C0       |mov [local.16],ebx</span><br><span class="line">004025DA  |.  8B5D C0       |mov ebx,[local.16]</span><br><span class="line">004025DD  |.  FF33          |push dword ptr ds:[ebx]</span><br><span class="line">004025DF  |.  68 766C4800   |push 课件1_网.00486C76                     ;  到期时间：</span><br><span class="line">004025E4  |.  B9 02000000   |mov ecx,0x2</span><br><span class="line">004025E9  |.  E8 BEF4FFFF   |call 课件1_网.00401AAC</span><br><span class="line">004025EE  |.  83C4 08       |add esp,0x8</span><br><span class="line">004025F1  |.  8945 BC       |mov [local.17],eax</span><br><span class="line">004025F4  |.  6A 00         |push 0x0</span><br><span class="line">004025F6  |.  6A 00         |push 0x0</span><br><span class="line">004025F8  |.  6A 00         |push 0x0</span><br><span class="line">004025FA  |.  68 04000080   |push 0x80000004</span><br><span class="line">004025FF  |.  6A 00         |push 0x0</span><br><span class="line">00402601  |.  68 816C4800   |push 课件1_网.00486C81                     ;  登录成功</span><br><span class="line">00402606  |.  68 01030080   |push 0x80000301</span><br><span class="line">0040260B  |.  6A 00         |push 0x0</span><br><span class="line">0040260D  |.  68 00000000   |push 0x0</span><br><span class="line">00402612  |.  68 04000080   |push 0x80000004</span><br><span class="line">00402617  |.  6A 00         |push 0x0</span><br><span class="line">00402619  |.  8B45 BC       |mov eax,[local.17]</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">00402655  |&gt; \83C4 0C       add esp,0xC</span><br><span class="line">00402658  |.  6A 00         push 0x0</span><br><span class="line">0040265A  |.  6A 00         push 0x0</span><br><span class="line">0040265C  |.  6A 00         push 0x0</span><br><span class="line">0040265E  |.  68 04000080   push 0x80000004</span><br><span class="line">00402663  |.  6A 00         push 0x0</span><br><span class="line">00402665  |.  68 8A6C4800   push 课件1_网.00486C8A                      ;  登录失败</span><br><span class="line">0040266A  |.  68 01030080   push 0x80000301</span><br><span class="line">0040266F  |.  6A 00         push 0x0</span><br><span class="line">00402671  |.  68 00000000   push 0x0</span><br><span class="line">00402676  |.  68 04000080   push 0x80000004</span><br><span class="line">0040267B  |.  6A 00         push 0x0</span><br><span class="line">0040267D  |.  68 936C4800   push 课件1_网.00486C93                      ;  账号密码不正确</span><br><span class="line">00402682  |.  68 04000000   push 0x4</span><br></pre></td></tr></table></figure>
-
 <p>猜测登录时，程序先比对输入的用户名和某网页的所有用户名，如果存在再比对这个用户名的密码。两个都比对成功则执行登录成功的代码。</p>
 <p>输入假用户名和假密码进入循环。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">00402485  |.  50            |push eax</span><br><span class="line">00402486  |.  3BC8          |cmp ecx,eax</span><br><span class="line">00402488  |.  0F8F C7010000 |jg 课件1_网.00402655                       ;  判断输入是否为空</span><br><span class="line">0040248E  |.  8B5D D0       |mov ebx,[local.12]</span><br><span class="line">00402491  |.  E8 ADEBFFFF   |call 课件1_网.00401043</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">0040250B  |.  83C4 04       |add esp,0x4</span><br><span class="line">0040250E  |&gt;  837D B8 00    |cmp [local.18],0x0</span><br><span class="line">00402512  |.  0F84 35010000 |je 课件1_网.0040264D                       ;  这个跳转跳出循环外，不能跳转</span><br><span class="line">00402518  |.  8B5D CC       |mov ebx,[local.13]</span><br><span class="line">0040251B  |.  E8 23EBFFFF   |call 课件1_网.00401043</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">00402595  |.  83C4 04       |add esp,0x4</span><br><span class="line">00402598  |&gt;  837D B8 00    |cmp [local.18],0x0</span><br><span class="line">0040259C  |.  0F84 AB000000 |je 课件1_网.0040264D                       ;  这个跳转跳出循环外，不能跳转</span><br><span class="line">004025A2  |.  8B5D C8       |mov ebx,[local.14]</span><br><span class="line">004025A5  |.  E8 99EAFFFF   |call 课件1_网.00401043</span><br></pre></td></tr></table></figure>
-
 <p>将这两个<code>je</code>指令都nop掉，实现破解。</p>
 <p>但这节课的重点不是破解，而是算法流程。</p>
 <p>载入OD，Ctrl+B输入二进制字串<code>FF 55 FC 5F 5E</code>，这是易语言的按钮事件死码。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0041E18D  |&gt; \FF55 FC       call [local.1]</span><br><span class="line">0041E190  |.  5F            pop edi                                  ;  kernel32.7C817077</span><br><span class="line">0041E191  |.  5E            pop esi                                  ;  kernel32.7C817077</span><br></pre></td></tr></table></figure>
-
 <p>F9运行至此处，再F9出现主程序，输入用户名和密码后点击注册，程序再次停在此处，现在F7进入call指令，就是作者编写的易语言代码处了。F8步过跟踪，到这里就是将要访问的网页压栈。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00401BD1  |.  68 FA6B4800   push 课件1_网.00486BFA                      ;  http://blog.sina.com.cn/s/blog_151e522e60102vy1h.html</span><br></pre></td></tr></table></figure>
-
 <img src="/posts/a4cc5112/%E8%AE%BF%E9%97%AE%E7%BD%91%E9%A1%B5.png" class="" title="访问网页">
-
 <p>看着貌似写了一堆奇奇怪怪的东西，先不管它。回到OD继续往下，会发现信息窗口有类似于html的字符串，在信息窗口选中右键-&gt;数据窗口中跟随数值，发现这个程序的操作是把读取网页源码。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">00177CF0  00 00 00 00 DF 00 00 00 3C 68 74 6D 6C 3E 0D 0A  ....?..&lt;html&gt;..</span><br><span class="line">00177D00  3C 68 65 61 64 3E 0D 0A 3C 73 63 72 69 70 74 20  &lt;head&gt;..&lt;script</span><br><span class="line">00177D10  6C 61 6E 67 75 61 67 65 3D 22 6A 61 76 61 73 63  language=&quot;javasc</span><br><span class="line">00177D20  72 69 70 74 22 3E 73 65 74 54 69 6D 65 6F 75 74  ript&quot;&gt;setTimeout</span><br><span class="line">00177D30  28 22 6C 6F 63 61 74 69 6F 6E 2E 72 65 70 6C 61  (&quot;location.repla</span><br><span class="line">00177D40  63 65 28 6C 6F 63 61 74 69 6F 6E 2E 68 72 65 66  ce(location.href</span><br><span class="line">00177D50  2E 73 70 6C 69 74 28 5C 22 23 5C 22 29 5B 30 5D  .split(\&quot;#\&quot;)[0]</span><br><span class="line">00177D60  29 22 2C 31 30 30 30 29 3B 3C 2F 73 63 72 69 70  )&quot;,1000);&lt;/scrip</span><br><span class="line">00177D70  74 3E 0D 0A 3C 2F 68 65 61 64 3E 0D 0A 3C 69 66  t&gt;..&lt;/head&gt;..&lt;if</span><br><span class="line">00177D80  72 61 6D 65 20 73 72 63 3D 22 68 74 74 70 3A 2F  rame src=&quot;http:/</span><br><span class="line">00177D90  2F 32 32 32 2E 32 30 31 2E 35 34 2E 36 34 3A 38  /222.201.54.64:8</span><br><span class="line">00177DA0  39 2F 66 6C 61 73 68 72 65 64 69 72 2E 68 74 6D  9/flashredir.htm</span><br><span class="line">00177DB0  6C 22 20 66 72 61 6D 65 62 6F 72 64 65 72 3D 30  l&quot; frameborder=0</span><br><span class="line">00177DC0  3E 3C 2F 69 66 72 61 6D 65 3E 0D 0A 3C 2F 68 74  &gt;&lt;/iframe&gt;..&lt;/ht</span><br><span class="line">00177DD0  6D 6C 3E 0D 0A 0D 0A 68 1D 00 1E 00 31 01 08 00  ml&gt;....h..1.</span><br><span class="line">00177DE0  3C 68 74 6D 6C 3E 0D 0A 3C 68 65 61 64 3E 0D 0A  &lt;html&gt;..&lt;head&gt;..</span><br><span class="line">00177DF0  3C 73 63 72 69 70 74 20 6C 61 6E 67 75 61 67 65  &lt;script language</span><br><span class="line">00177E00  3D 22 6A 61 76 61 73 63 72 69 70 74 22 3E 73 65  =&quot;javascript&quot;&gt;se</span><br><span class="line">00177E10  74 54 69 6D 65 6F 75 74 28 22 6C 6F 63 61 74 69  tTimeout(&quot;locati</span><br><span class="line">00177E20  6F 6E 2E 72 65 70 6C 61 63 65 28 6C 6F 63 61 74  on.replace(locat</span><br><span class="line">00177E30  69 6F 6E 2E 68 72 65 66 2E 73 70 6C 69 74 28 5C  ion.href.split(\</span><br><span class="line">00177E40  22 23 5C 22 29 5B 30 5D 29 22 2C 31 30 30 30 29  &quot;#\&quot;)[0])&quot;,1000)</span><br><span class="line">00177E50  3B 3C 2F 73 63 72 69 70 74 3E 0D 0A 3C 2F 68 65  ;&lt;/script&gt;..&lt;/he</span><br><span class="line">00177E60  61 64 3E 0D 0A 3C 69 66 72 61 6D 65 20 73 72 63  ad&gt;..&lt;iframe src</span><br><span class="line">00177E70  3D 22 68 74 74 70 3A 2F 2F 32 32 32 2E 32 30 31  =&quot;http://222.201</span><br><span class="line">00177E80  2E 35 34 2E 36 34 3A 38 39 2F 66 6C 61 73 68 72  .54.64:89/flashr</span><br><span class="line">00177E90  65 64 69 72 2E 68 74 6D 6C 22 20 66 72 61 6D 65  edir.html&quot; frame</span><br><span class="line">00177EA0  62 6F 72 64 65 72 3D 30 3E 3C 2F 69 66 72 61 6D  border=0&gt;&lt;/ifram</span><br><span class="line">00177EB0  65 3E 0D 0A 3C 2F 68 74 6D 6C 3E 0D 0A 0D 0A 00  e&gt;..&lt;/html&gt;.....</span><br></pre></td></tr></table></figure>
-
 <p>再往下滑看到正文的一些字符串，应该是提取这些字符串之间的字符串，存进内存里。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">00401E97  |.  68 536C4800   push 课件1_网.00486C53                      ;  &lt;p&gt;^^^</span><br><span class="line">...</span><br><span class="line">(进入第一个大循环)</span><br><span class="line">00401F82  |.  68 5A6C4800   |push 课件1_网.00486C5A                     ;  $$$</span><br><span class="line">...</span><br><span class="line">00402003  |.  68 5E6C4800   |push 课件1_网.00486C5E                     ;  ###</span><br><span class="line">...</span><br><span class="line">00402084  |.  68 626C4800   |push 课件1_网.00486C62                     ;  ***</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(进入第二个大循环)</span><br><span class="line">00402485  |.  50            |push eax</span><br><span class="line">00402486  |.  3BC8          |cmp ecx,eax</span><br><span class="line">00402488  |.  0F8F C7010000 |jg 课件1_网.00402655                       ;  判断输入是否为空</span><br><span class="line">...</span><br><span class="line">004024D9  |.  83C4 10       |add esp,0x10                            ;  输入的用户名</span><br><span class="line">004024DC  |.  8945 BC       |mov [local.17],eax                      ;  存进local.17</span><br></pre></td></tr></table></figure>
-
 <p>此时发现寄存器窗口的eax也是我们输入的用户名，右键-&gt;数据窗口中跟随。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">00169970  61 62 63 00 01 00 00 00 02 00 02 00 3C 01 0A 00  abc......&lt;..</span><br><span class="line">00169980  61 62 63 39 39 00 37 00 02 00 02 00 22 01 0B 00  abc99.7...&quot;.</span><br><span class="line">00169990  61 62 63 31 00 01 15 00 24 00 02 00 20 01 0C 00  abc1..$.. ..</span><br></pre></td></tr></table></figure>
-
-<p>发现上面是^^^和$$$之间的内容“abc”，下面也是^^^和$$$之间的内容“abc1”。</p>
+<p>发现上面是\^\^\^和$$$之间的内容“abc”，下面也是\^\^\^和$$$之间的内容“abc1”。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00402512     /0F84 35010000 je 课件1_网.0040264D                        ;  不能跳转</span><br></pre></td></tr></table></figure>
-
 <p>绕过这个跳转继续往下，到达这里后eax的值为111，是$$$和###之间的内容“111”，并且对应网页，前面的字符串是“abc”。数据窗口这一行的上面也是“abc”。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0040255E  |.  E8 5F100000   |call 课件1_网.004035C2</span><br><span class="line">00402563  |.  83C4 10       |add esp,0x10</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">00169970  61 62 63 00 01 00 00 00 02 00 02 00 3C 01 0C 00  abc......&lt;..</span><br><span class="line">00169980  31 31 31 00 39 00 37 00 02 00 02 00 22 01 0B 00  111.9.7...&quot;.</span><br><span class="line">00169990  61 62 63 31 00 01 15 00 24 00 02 00 20 01 0C 00  abc1..$.. ..</span><br></pre></td></tr></table></figure>
-
 <p>继续往下</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0040259C     /0F84 AB000000 je 课件1_网.0040264D                        ;  不能跳转</span><br></pre></td></tr></table></figure>
-
 <p>绕过跳转</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00402630  |.  E8 870F0000   |call 课件1_网.004035BC</span><br></pre></td></tr></table></figure>
-
 <p>运行到这里时弹窗说登录成功，到期时间无法显示。但可以猜测<code>^^^abc$$$111###30***</code>这一串中的“30”应该是到期时间。所以这一串奇怪的字符其实包含了用户名、密码和到期时间。</p>
 <img src="/posts/a4cc5112/%E7%99%BB%E5%BD%95%E6%88%90%E5%8A%9F.png" class="" title="登录成功">
-
 <h2 id="2-2-网页加密"><a href="#2-2-网页加密" class="headerlink" title="2.2 网页加密"></a>2.2 网页加密</h2><p>破解同样是修改两个跳转指令。</p>
 <p>算法分析：与2.1同样操作来到</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">004019C0  |.  68 CD9D4800   push 课件2_网.00489DCD                      ;  http://blog.sina.com.cn/s/blog_151e522e60102vzdy.html</span><br></pre></td></tr></table></figure>
-
 <img src="/posts/a4cc5112/%E7%BD%91%E9%A1%B5%E5%8A%A0%E5%AF%86.png" class="" title="网页加密">
-
 <p>这时直接在程序按照分隔符输入字符串是不对的。看到字符串有等号很明显是Base64加密。拿去解码即可得真正的用户名、密码和到期时间。</p>
 <img src="/posts/a4cc5112/base64%E8%A7%A3%E7%A0%81.png" class="" title="base64解码">
-
 <p>但我们这个是分析流程，所以还是继续往下看看吧</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">00401F22  |.  83C4 1C       |add esp,0x1C                            ;  加密后的用户名(第一次循环用户名为空，第二次才显示第一行的用户名)</span><br><span class="line">00401F25  |.  8945 AC       |mov [local.21],eax</span><br><span class="line">00401F28  |.  8D45 AC       |lea eax,[local.21]</span><br><span class="line">00401F2B  |.  50            |push eax</span><br><span class="line">00401F2C  |.  68 08FA4A00   |push 课件2_网.004AFA08</span><br><span class="line">00401F31  |.  8B0424        |mov eax,dword ptr ss:[esp]</span><br><span class="line">00401F34  |.  8B00          |mov eax,dword ptr ds:[eax]</span><br><span class="line">00401F36  |.  8B00          |mov eax,dword ptr ds:[eax]</span><br><span class="line">00401F38  |.  FF50 0C       |call dword ptr ds:[eax+0xC]             ;  base64解密出来的用户名</span><br><span class="line">00401F3B  |.  8945 A8       |mov [local.22],eax</span><br></pre></td></tr></table></figure>
-
 <p>执行完base64解密的函数后，eax右键-&gt;数据窗口中跟随，就可看到解密出来的“abc”。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">001702A8  01 00 00 00 03 00 00 00 61 62 63 00 75 01 08 00  ......abc.u.</span><br></pre></td></tr></table></figure>
-
 <p>密码和到期时间一样的操作。</p>
 <h2 id="2-3-EXE验证"><a href="#2-3-EXE验证" class="headerlink" title="2.3 EXE验证"></a>2.3 EXE验证</h2><p>爆破：</p>
 <p>开启服务端，再将客户端载入OD，查找敏感字符串或设置按钮事件，找到函数段首下断运行，点击“验证”，程序停在断点处。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">004012EB  |. /0F85 99000000 jnz 课件3_易.0040138A                       ;  不能跳</span><br><span class="line">004012F1  |. |8B5D F8       mov ebx,[local.2]</span><br><span class="line">004012F4  |. |E8 0BFDFFFF   call 课件3_易.00401004</span><br><span class="line">004012F9  |. |B8 01000000   mov eax,0x1</span><br><span class="line">004012FE  |. |3BC1          cmp eax,ecx                              ;  课件3_易.00482C3B</span><br><span class="line">00401300  |. |7C 0D         jl short 课件3_易.0040130F</span><br><span class="line">00401302  |. |68 01000000   push 0x1</span><br><span class="line">00401307  |. |E8 4E030000   call 课件3_易.0040165A</span><br><span class="line">0040130C  |. |83C4 04       add esp,0x4</span><br><span class="line">0040130F  |&gt; |C1E0 02       shl eax,0x2</span><br><span class="line">00401312  |. |03D8          add ebx,eax</span><br><span class="line">00401314  |. |895D F4       mov [local.3],ebx</span><br><span class="line">00401317  |. |8B5D F4       mov ebx,[local.3]</span><br><span class="line">0040131A  |. |FF33          push dword ptr ds:[ebx]</span><br><span class="line">0040131C  |. |68 442C4800   push 课件3_易.00482C44                      ;  到期时间：</span><br><span class="line">00401321  |. |B9 02000000   mov ecx,0x2</span><br><span class="line">00401326  |. |E8 01FEFFFF   call 课件3_易.0040112C</span><br></pre></td></tr></table></figure>
-
 <p>分析算法：与2.4一样，只是没了加密过程。</p>
 <h2 id="2-4-EXE加密验证"><a href="#2-4-EXE加密验证" class="headerlink" title="2.4 EXE加密验证"></a>2.4 EXE加密验证</h2><p>爆破与2.3一样。</p>
 <p>分析算法：</p>
 <p>开头同2.1，F8一步步跟踪。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00401E6E  |.  E8 ED250000   call 课件4_易.00404460                      ;  获取输入的用户名</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00401EC2  |.  FF50 08       call dword ptr ds:[eax+0x8]              ;  base64加密用户名：YWJj</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00401EE6  |.  E8 75250000   call 课件4_易.00404460                      ;  获取输入的密码</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00401F3A  |.  FF50 08       call dword ptr ds:[eax+0x8]              ;  密码base64加密:MTIz</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00401F68  |.  8945 E0       mov [local.8],eax                        ;  拼接：YWJj|MTIz</span><br></pre></td></tr></table></figure>
-
 <p>经过<code>retn</code>后F9运行，程序又回到断点处。这次F7进去代码与之前不同。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00401B42  |.  83C4 10       add esp,0x10                             ;  【登录失败】|账号密码错误</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00401B6B  |.  83C4 10       add esp,0x10                             ;  【登录失败】|账号密码错误</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00401C47  |.  68 CD6E4800   push 课件4_易.00486ECD                      ;  【登录成功】</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">00401C59  |.  83F8 00       cmp eax,0x0                              ;  登录成功和登录失败相比较</span><br><span class="line">00401C5C      0F85 99000000 jnz 课件4_易.00401CFB                       ;  nop掉</span><br></pre></td></tr></table></figure>
-
 <h2 id="2-5-EXE加密验证2-0"><a href="#2-5-EXE加密验证2-0" class="headerlink" title="2.5 EXE加密验证2.0"></a>2.5 EXE加密验证2.0</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">004013C4     /0F85 CC020000 jnz 课件5_易.00401696</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0040147F  |. /0F8C D0010000 jl 课件5_易.00401655</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">004014CE  |. /0F8E 99000000 jle 课件5_易.0040156D</span><br></pre></td></tr></table></figure>
-
 <p>把这三处都nop掉即可。</p>
 <h2 id="2-6-可可-v9-5"><a href="#2-6-可可-v9-5" class="headerlink" title="2.6 可可 v9.5"></a>2.6 可可 v9.5</h2><p>程序无壳，放心食用。调试选项全选，StrongOD勾选忽略某些异常。下易语言按钮事件断点<code>FF 55 FC 5F 5E</code>。运行，输入账号密码，点击登录。取消断点，F7跟进，一路F8，注意堆栈窗口。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00405776   .  E8 D9460000   call 第七课作.00409E54                       ;  获取输入的用户名</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">004057C8   .  E8 87460000   call 第七课作.00409E54                       ;  获取输入的密码</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">00405992   . /0F84 7F000000 je 第七课作.00405A17                         ;  要跳</span><br><span class="line">00405998   . |8D45 F8       lea eax,dword ptr ss:[ebp-0x8]</span><br><span class="line">0040599B   . |50            push eax</span><br><span class="line">0040599C   . |E8 A4BEFFFF   call 第七课作.00401845                       ;  账号未找到</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">00405AB9   . /0F84 FE000000 je 第七课作.00405BBD                         ;  要跳</span><br><span class="line">...</span><br><span class="line">00405B63   .  68 04000080   push 0x80000004</span><br><span class="line">00405B68   .  6A 00         push 0x0</span><br><span class="line">00405B6A   .  68 14C65500   push 第七课作.0055C614                       ;  err</span><br><span class="line">00405B6F   .  68 04000080   push 0x80000004</span><br><span class="line">00405B74   .  6A 00         push 0x0</span><br><span class="line">00405B76   .  68 18C65500   push 第七课作.0055C618                       ;  signdata</span><br><span class="line">00405B7B   .  68 04000080   push 0x80000004</span><br></pre></td></tr></table></figure>
-
 <p>改变两个跳转后，F8到这，卡住，暂停+运行，程序弹出不断弹出“用户身份未校验”，还弹出了一个“暗桩”。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00405F78   .  E8 D13E0000   call 第七课作.00409E4E</span><br></pre></td></tr></table></figure>
-
 <p>救命啊我不会！！！</p>
 <hr>
 <p>跟进继续F8，到这又回到按钮事件。重载，跟进这个函数。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">004087E7  |.  E8 8B030000   call 第七课作.00408B77</span><br></pre></td></tr></table></figure>
-
 <p>发现跟进这个函数里面的<code>408C3F</code>的call指令又回到按钮事件。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00408C3F  |.  E8 D2D6FFFF   call 第七课作.00406316   </span><br></pre></td></tr></table></figure>
-
 <p>跟进这个函数里面的<code>4063FF</code>的call指令又回到按钮事件。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">004063FF  |.  E8 0DB3FFFF   call 第七课作.00401711</span><br></pre></td></tr></table></figure>
-
-
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">004087CC  |.  6A FF         push -0x1</span><br><span class="line">004087CE  |.  6A 08         push 0x8</span><br><span class="line">004087D0  |.  68 7A6B0116   push 0x16016B7A</span><br><span class="line">004087D5  |.  68 2B010152   push 0x5201012B</span><br><span class="line">004087DA  |.  E8 63160000   call 第七课作.00409E42</span><br><span class="line">004087DF  |.  83C4 18       add esp,0x18</span><br><span class="line">004087E2  |.  68 00000000   push 0x0</span><br><span class="line">004087E7  |.  E8 8B030000   call 第七课作.00408B77                       ;  暗桩call，跟进</span><br><span class="line">004087EC  |.  68 01000000   push 0x1</span><br><span class="line">004087F1  |.  E8 81030000   call 第七课作.00408B77</span><br></pre></td></tr></table></figure>
-
 
     </div>
 
@@ -599,12 +551,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">652k</span>
+    <span title="站点总字数">649k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:53</span>
+    <span title="站点阅读时长">9:50</span>
 </div>
 
         

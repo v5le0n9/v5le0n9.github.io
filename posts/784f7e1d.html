@@ -306,141 +306,96 @@
         <p><code>.Net</code>程序载入OD直接就运行起来了，完全没给我们调试的机会。针对这种程序，其实有专门的调试软件，比如dnSpy。其实调试流程跟OD差不多，在此只是熟悉一下dnSpy的运用。</p>
 <p>这个笔记是跟着up主muruoxi学习<code>.Net</code>逆向，<a target="_blank" rel="noopener" href="https://www.bilibili.com/read/readlist/rl73962?spm_id_from=333.999.0.0">这是她的.Net逆向专栏</a> 。</p>
 <span id="more"></span>
-
 <h1 id="1-静态分析"><a href="#1-静态分析" class="headerlink" title="1. 静态分析"></a>1. 静态分析</h1><p>拿去查壳，发现它是C#写32位的.net程序。</p>
 <img src="/posts/784f7e1d/1.1.png" class="" title="查壳">
-
 <img src="/posts/784f7e1d/1.2.png" class="" title="运行程序">
-
-<p>载入dnSpy，编辑 -&gt; 搜索程序集，选择搜索数字&#x2F;字符串，输入“登陆失败”，就可以定位到代码处。</p>
+<p>载入dnSpy，编辑 -&gt; 搜索程序集，选择搜索数字/字符串，输入“登陆失败”，就可以定位到代码处。</p>
 <img src="/posts/784f7e1d/1.3.png" class="" title="dnSpy分析">
-
 <p>这个看起来是不是特别像Java写的程序，C#我没接触过，但C#跟Java很像我是见识到了。程序逻辑很简单，如果文本框1的文本长度为-1则登录成功。很明显这是不可能实现的。我们的目的就是要修改这个if语句。在这个方法内右键 -&gt; 编辑方法。修改完后点击编译。</p>
 <img src="/posts/784f7e1d/1.4.png" class="" title="修改代码">
-
 <p>文件 -&gt; 全部保存，确定。</p>
 <img src="/posts/784f7e1d/1.5.png" class="" title="保存">
-
 <p>此时，再次打开原程序，无论输入什么都显示“登录成功”。</p>
 <img src="/posts/784f7e1d/1.6.png" class="" title="登录成功">
-
 <h1 id="2-动态调试"><a href="#2-动态调试" class="headerlink" title="2. 动态调试"></a>2. 动态调试</h1><p>C#写32位的.net程序，无壳。载入dnSpy读代码。</p>
 <img src="/posts/784f7e1d/2.1.png" class="" title="运行程序">
-
 <p>超级简单，注册码就是用户名的RSA值。</p>
 <img src="/posts/784f7e1d/2.2.png" class="" title="dnSpy分析">
-
 <p>那这个RSA怎么得到？使用动态调试。选中第22行F9下断或右键 -&gt; 添加断点。</p>
 <img src="/posts/784f7e1d/2.3.png" class="" title="dnSpy分析">
-
 <p>F5开始调试，此时dnSpy显示在运行中。输入用户名与注册码后，点击按钮，dnSpy停在断点处。</p>
 <img src="/posts/784f7e1d/2.4.png" class="" title="dnSpy分析">
-
 <p>但此时<code>text</code>和<code>text2</code>的值都为空，F11步入，F10步过，两次F10之后，<code>text</code>和<code>text2</code>的值都出来了。</p>
 <img src="/posts/784f7e1d/2.5.png" class="" title="dnSpy分析">
-
 <p><code>text</code>中的值就是我们需要的RSA值。选中<code>text</code>行，右键 -&gt; 复制值，将引号去掉，就是v5le0n9对应的注册码。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WgvOIwqEgAHU+Kfq6nVDMXbRw4SzUDh2RUOIjkwwEajSmRXuuRFZRV173AZum6hXx6USTCMIsCnQnpQjKpf7Q0efrYzsjnuEkOU0BGUs+SUWBS3dFCpNcLdqLp6UNIM1bJp4l+P0kDdSWHdJzGFdBUEkmQteAp3Dfbf+B3r8q70=</span><br></pre></td></tr></table></figure>
-
 <p>取消断点，F5继续。将正确的注册码填上，左上角已经显示“已注册”字样。</p>
 <img src="/posts/784f7e1d/2.6.png" class="" title="dnSpy分析">
-
 <p>但是不知道如何保存这个“已注册”的状态，因为它每次的RSA值都会变。</p>
-<p>那我只能爆破了，将“&#x3D;&#x3D;”修改为“!&#x3D;”。</p>
+<p>那我只能爆破了，将“==”修改为“!=”。</p>
 <h1 id="3-壳与脱壳"><a href="#3-壳与脱壳" class="headerlink" title="3. 壳与脱壳"></a>3. 壳与脱壳</h1><p>载入DIE发现有.NET Reactor(4.8-4.9)的壳，.NET壳非常好脱，用de4dot就可轻松脱去。</p>
 <img src="/posts/784f7e1d/3.1.png" class="" title=".net壳">
-
 <p>将需要脱壳的程序拖进<code>de4dot.exe</code>程序，在程序本目录下就会生成一个已脱壳程序。拿去DIE查壳，壳已经去掉了。</p>
 <img src="/posts/784f7e1d/3.2.png" class="" title="脱壳">
-
 <p>将两个程序载入dnSpy查看区别。发现加壳程序会有一些乱码的类。</p>
 <img src="/posts/784f7e1d/3.3.png" class="" title="dnSpy分析">
-
 <p>运行脱壳程序熟悉一下流程。搜索关键字符串定位函数。</p>
 <img src="/posts/784f7e1d/3.4.png" class="" title="dnSpy分析">
-
 <p>第一种方法：通过爆破，无论输入什么都显示已注册。</p>
 <img src="/posts/784f7e1d/3.5.png" class="" title="dnSpy分析">
-
 <img src="/posts/784f7e1d/3.6.png" class="" title="已注册">
-
 <p>第二种方法：获取注册码。</p>
 <p>在if语句处下断，运行，发现value值出不来，up主说是编译器优化问题，暂时还没有好的解决办法。</p>
 <img src="/posts/784f7e1d/3.7.png" class="" title="dnSpy分析">
-
 <h1 id="4-修改程序内容"><a href="#4-修改程序内容" class="headerlink" title="4. 修改程序内容"></a>4. 修改程序内容</h1><p>有壳，直接拿去de4dot脱壳。脱壳失败，让我们使用最新版的de4dot。</p>
 <img src="/posts/784f7e1d/4.1.png" class="" title="脱壳失败">
-
 <p>去爱盘下载了个最新版的，不错，好用！</p>
 <img src="/posts/784f7e1d/4.2.png" class="" title="脱壳成功">
-
 <p>这次的目标是要修改程序的内容，那就修改一下标题，修改成我不过分吧嘿嘿。</p>
 <img src="/posts/784f7e1d/4.3.png" class="" title="运行程序">
-
 <p>载入dnSpy，搜索需要修改的字符串。</p>
 <img src="/posts/784f7e1d/4.4.png" class="" title="dnSpy分析">
-
 <p>一样，右键 -&gt; 修改方法。编译，保存。锵锵~修改成功！</p>
 <img src="/posts/784f7e1d/4.5.png" class="" title="修改标题">
-
 <h1 id="5-调用堆栈"><a href="#5-调用堆栈" class="headerlink" title="5. 调用堆栈"></a>5. 调用堆栈</h1><p>程序无壳，运行一下程序，程序3秒后自动退出，退出会有一个提示。</p>
 <img src="/posts/784f7e1d/5.1.png" class="" title="运行程序">
-
 <p>这像不像退出时出现的NAG窗口。可以查看 <a target="_blank" rel="noopener" href="https://v5le0n9.github.io/post/33a085c7.html#13-%E5%AE%9E%E9%AA%8C%E5%85%AD-VisualSite-Designer">调试器使用教程实验六中的去除软件关闭后弹出的广告</a> 。</p>
 <p>这个程序一样，运行到弹窗后按暂停键。调试 -&gt; 窗口 -&gt; 调用堆栈，查看堆栈窗口，找到在程序领空的。</p>
 <img src="/posts/784f7e1d/5.2.png" class="" title="dnSpy分析">
-
 <p>倒着来一个个看，第一个<code>Form1_FormClosing</code>是弹窗内容。不是什么重要函数。</p>
 <img src="/posts/784f7e1d/5.3.png" class="" title="dnSpy分析">
-
 <p>第二个是有关时间的函数。很有可能是这个，因为3s后自动结束就是用了时间计数器。</p>
 <img src="/posts/784f7e1d/5.4.png" class="" title="dnSpy分析">
-
 <p>第三个是main函数，里面没有计数的内容。</p>
 <img src="/posts/784f7e1d/5.5.png" class="" title="dnSpy分析">
-
 <p>将第二个方法的退出函数注释，编译保存。重新运行程序，发现3s后没有退出程序，但关闭还是有NAG窗口。用同样方法注释掉即可。</p>
 <p>也可以在main函数中一直进去进到<code>InitializeComponent</code>方法，注释掉使用一二函数的代码，就可实现既无倒数也无NAG窗口。</p>
 <img src="/posts/784f7e1d/5.6.png" class="" title="dnSpy分析">
-
 <h1 id="6-Main函数"><a href="#6-Main函数" class="headerlink" title="6. Main函数"></a>6. Main函数</h1><p>在没有任何敏感字符串和NAG窗口的情况下，只能进入main函数一探究竟。</p>
 <img src="/posts/784f7e1d/6.1.png" class="" title="运行程序">
-
 <p>main函数如何进入？也是用5的方法调用堆栈。一直进入到<code>InitializeComponent</code>方法，分析。</p>
 <img src="/posts/784f7e1d/6.2.png" class="" title="dnSpy分析">
-
 <p>右键label2 -&gt; 分析，查看分析器，label2被timer1使用到了。</p>
 <img src="/posts/784f7e1d/6.3.png" class="" title="dnSpy分析">
-
 <p>注释掉随机函数，修改为自己想要的文本。</p>
 <img src="/posts/784f7e1d/6.4.png" class="" title="dnSpy分析">
-
 <img src="/posts/784f7e1d/6.5.png" class="" title="修改文本">
-
 <h1 id="7-打不开的程序"><a href="#7-打不开的程序" class="headerlink" title="7. 打不开的程序"></a>7. 打不开的程序</h1><p>运行一下，程序打开不了。查壳无壳，载入dnSpy查看函数。发现在main函数调用了程序关闭函数，导致程序一打开直接运行到关闭函数自动关闭自己。</p>
 <img src="/posts/784f7e1d/7.1.png" class="" title="dnSpy分析">
-
 <p>那就直接注释掉main函数调用关闭函数那一行。</p>
 <img src="/posts/784f7e1d/7.2.png" class="" title="打开程序">
-
 <h1 id="8-修改程序内容2-0"><a href="#8-修改程序内容2-0" class="headerlink" title="8. 修改程序内容2.0"></a>8. 修改程序内容2.0</h1><p>拿去查壳，无壳，64位.net程序，载入dnSpy。</p>
 <img src="/posts/784f7e1d/8.1.png" class="" title="dnSpy分析">
-
 <p>发现它与我们之前调试的程序有点不一样。搜索字符串无果。找到main函数分析一下。</p>
 <img src="/posts/784f7e1d/8.2.png" class="" title="dnSpy分析">
-
 <p>查看<code>.baml</code>文件，右键发现没有编辑方法功能，但可以使用十六进制编辑器修改内容。</p>
 <img src="/posts/784f7e1d/8.3.png" class="" title="dnSpy分析">
-
 <p>右键 -&gt; 打开十六进制编辑器。Ctrl + F 搜索，好像不能输入中文，但可以粘贴中文。确保找到的地方是我们要修改的地方，随意修改可能会出现问题。</p>
 <p>建议修改的比原来的字节数要少，因为怕溢出。系统用00填充未修改的字节。</p>
 <img src="/posts/784f7e1d/8.4.png" class="" title="修改内容">
-
 <img src="/posts/784f7e1d/8.5.png" class="" title="修改内容">
-
 <p>文件 -&gt; 全部保存。</p>
 <img src="/posts/784f7e1d/8.6.png" class="" title="修改成功">
-
 <h1 id="9-de4dot反混淆"><a href="#9-de4dot反混淆" class="headerlink" title="9. de4dot反混淆"></a>9. de4dot反混淆</h1><p>还没有找到合适的程序，暂时先到这里吧。</p>
 
     </div>
@@ -627,12 +582,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">652k</span>
+    <span title="站点总字数">649k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:53</span>
+    <span title="站点阅读时长">9:50</span>
 </div>
 
         

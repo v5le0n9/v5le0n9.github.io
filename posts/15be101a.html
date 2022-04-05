@@ -410,7 +410,7 @@
       
         <h1 id="1-初识APK、Dalvik字节码以及Smali"><a href="#1-初识APK、Dalvik字节码以及Smali" class="headerlink" title="1. 初识APK、Dalvik字节码以及Smali"></a>1. 初识APK、Dalvik字节码以及Smali</h1><p>后缀名为<code>.apk</code>是安卓手机app的格式。它的实质是一个ZIP压缩包，将它的后缀名修改为<code>.zip</code>便可以看到内部的文件结构。解压出来后一般有以下文件：</p>
 <span id="more"></span>
-
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -418,7 +418,8 @@
 <th>作用</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>asset文件夹</td>
 <td>资源目录1，asset和res都是资源目录但有所区别</td>
 </tr>
@@ -448,15 +449,17 @@
 </tr>
 <tr>
 <td>其他文件夹 etc.</td>
-<td></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h2 id="1-1-asset-VS-res"><a href="#1-1-asset-VS-res" class="headerlink" title="1.1 asset VS. res"></a>1.1 asset VS. res</h2><p>res目录下的资源文件在编译时会自动生成索引文件(R.java)，在Java代码中用R.xxx.yyy来引用；而asset目录下的资源文件不需要生成索引，在Java代码中需要用AssetManager来访问。</p>
 <p>一般来说，除了音频和视频资源(需要放在raw或asset下)，使用Java开发的Android工程使用到的资源文件都会放在res下；使用C++游戏引擎(或使用Lua Unity3D等)的资源文件均需要放在asset下。</p>
 <h2 id="1-2-Dalvik字节码"><a href="#1-2-Dalvik字节码" class="headerlink" title="1.2 Dalvik字节码"></a>1.2 Dalvik字节码</h2><p>Dalvik字节码是学习破解的基础。Dalvik是Google专门为Android操作系统设计的一个虚拟机，经过深度的优化。虽然Android上的程序是使用Java来开发的，但是Dalvik和标准的Java虚拟机JVM还是两回事。Dalvik VM是基于寄存器的，而JVM是基于栈的；Dalvik有专属的文件执行格式dex(dalvik executable)，而JVM则执行的是Java字节码。Dalvik VM比JVM速度更快，占用空间更少。</p>
 <p>通过Dalvik的字节码不能直接看到原来的逻辑代码，这是需要借助如Apktool或dex2jar+jd-gui工具来帮助查看。但是，需要注意的是最终我们修改APK需要操作的文件是<code>.smali</code>文件，而不是导出来的Java文件重新编译。</p>
-<h2 id="1-3-Smali"><a href="#1-3-Smali" class="headerlink" title="1.3 Smali"></a>1.3 Smali</h2><p>Smali是破解的重中之重。Smali，Baksmali分别是指安卓系统里的Java虚拟机(Dalvik)所使用的一种。dex格式文件的汇编器，反汇编器。其语法是一种宽松式的Jasmin&#x2F;dedexer语法，而且它实现了<code>.dex</code>格式所有功能(注解，调试信息，线路信息等)。</p>
-<p>当对APK文件进行反编译后，便会生成此类的文件。在Dalvik字节码中，寄存器都是32位的，能够支持任何类型；64位类型(Long&#x2F;Double)用2个寄存器表示。Dalvik字节码有两种类型：原始类型、引用类型(包括对象和数组)。</p>
+<h2 id="1-3-Smali"><a href="#1-3-Smali" class="headerlink" title="1.3 Smali"></a>1.3 Smali</h2><p>Smali是破解的重中之重。Smali，Baksmali分别是指安卓系统里的Java虚拟机(Dalvik)所使用的一种。dex格式文件的汇编器，反汇编器。其语法是一种宽松式的Jasmin/dedexer语法，而且它实现了<code>.dex</code>格式所有功能(注解，调试信息，线路信息等)。</p>
+<p>当对APK文件进行反编译后，便会生成此类的文件。在Dalvik字节码中，寄存器都是32位的，能够支持任何类型；64位类型(Long/Double)用2个寄存器表示。Dalvik字节码有两种类型：原始类型、引用类型(包括对象和数组)。</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -464,7 +467,8 @@
 <th>原始类型</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>B</td>
 <td>byte</td>
 </tr>
@@ -505,15 +509,18 @@
 <td>array</td>
 </tr>
 <tr>
-<td>Lxxx&#x2F;yyy</td>
+<td>Lxxx/yyy</td>
 <td>object</td>
 </tr>
-</tbody></table>
-<p>数组的表示方式是：在基本类型前加上中括号<code>[</code>，例如int数组和float数组分别表示为：<code>[I</code>，<code>[F</code>；对象的表示则以<code>L</code>作为开头，格式是<code>Lpackage/objectName;</code>(注意必须有个分号跟在后面)，例如String对象在Smali中为：<code>Ljava/lang/String;</code>，其中java&#x2F;lang对应java.lang包，String就是定义在该包中的一个对象。</p>
+</tbody>
+</table>
+</div>
+<p>数组的表示方式是：在基本类型前加上中括号<code>[</code>，例如int数组和float数组分别表示为：<code>[I</code>，<code>[F</code>；对象的表示则以<code>L</code>作为开头，格式是<code>Lpackage/objectName;</code>(注意必须有个分号跟在后面)，例如String对象在Smali中为：<code>Ljava/lang/String;</code>，其中java/lang对应java.lang包，String就是定义在该包中的一个对象。</p>
 <p>或许有人问，既然类是用<code>LpackageName/objectName;</code>来表示，那类里面的内部类又如何在smali中引用呢？<code>LpackageName/objectName$subObjectName;</code>，也就是在内部类前加<code>$</code>符号。</p>
 <p>方法的定义一般为：</p>
 <p>​                                Func-Name(Para-Type1Para-Type2Para-Type3…)Return-Type</p>
 <p>注意参数与参数之间没有任何分隔符。</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -521,7 +528,8 @@
 <th>意义</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>hello ()V</td>
 <td>void hello()</td>
 </tr>
@@ -530,18 +538,22 @@
 <td>boolean hello(int, int, int)</td>
 </tr>
 <tr>
-<td>hello (Z[I[ILjava&#x2F;lang&#x2F;String;J)Ljava&#x2F;lang&#x2F;String;</td>
+<td>hello (Z[I[ILjava/lang/String;J)Ljava/lang/String;</td>
 <td>String hello(boolean, int[], int[], String, long)</td>
 </tr>
-</tbody></table>
-<h3 id="1-3-1-Smali基本语法"><a href="#1-3-1-Smali基本语法" class="headerlink" title="1.3.1 Smali基本语法"></a>1.3.1 Smali基本语法</h3><table>
+</tbody>
+</table>
+</div>
+<h3 id="1-3-1-Smali基本语法"><a href="#1-3-1-Smali基本语法" class="headerlink" title="1.3.1 Smali基本语法"></a>1.3.1 Smali基本语法</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>基本语法</th>
 <th>含义</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>.field private isFlag:Z</td>
 <td>定义变量</td>
 </tr>
@@ -566,7 +578,7 @@
 <td>调用父函数</td>
 </tr>
 <tr>
-<td>const&#x2F;high16 v0, 0x7f03</td>
+<td>const/high16 v0, 0x7f03</td>
 <td>把0x7f03赋值给v0</td>
 </tr>
 <tr>
@@ -597,15 +609,19 @@
 <td>invoke-static</td>
 <td>调用静态函数</td>
 </tr>
-</tbody></table>
-<h3 id="1-3-2-条件跳转分支"><a href="#1-3-2-条件跳转分支" class="headerlink" title="1.3.2 条件跳转分支"></a>1.3.2 条件跳转分支</h3><table>
+</tbody>
+</table>
+</div>
+<h3 id="1-3-2-条件跳转分支"><a href="#1-3-2-条件跳转分支" class="headerlink" title="1.3.2 条件跳转分支"></a>1.3.2 条件跳转分支</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>用法</th>
 <th>含义</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>if-eq vA, vB, :cond_0</td>
 <td>如果vA等于vB则跳转到:cond_0</td>
 </tr>
@@ -653,73 +669,60 @@
 <td>if-lez vA, :cond_0</td>
 <td>如果vA小于等于0则跳转到:cond_0</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h3 id="1-3-3-Smali中的包信息"><a href="#1-3-3-Smali中的包信息" class="headerlink" title="1.3.3 Smali中的包信息"></a>1.3.3 Smali中的包信息</h3><p><code>.class public Lcom/aaaaa;</code>：是com这个package下的一个类aaaaa</p>
 <p><code>.super Lcom/bbbbb;</code>：继承自com.bbbbb这个类</p>
 <p><code>.source &quot;ccccc.java&quot;</code>：由ccccc.java编译得到的smali文件</p>
 <p>一般来说在smali文件中是这样子的：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># annotations</span><br><span class="line">.annotation system Ldalvik/annotation/MemberClasses;</span><br><span class="line">value=&#123;</span><br><span class="line">Lcom/aaa$qqq;,</span><br><span class="line">Lcom/aaa$www;</span><br><span class="line">&#125;</span><br><span class="line">.end annotation</span><br></pre></td></tr></table></figure>
-
 <p>这个声明是内部类的声明：aaa这个类它有两个成员内部类——qqq和www。</p>
 <h3 id="1-3-4-Smali中的成员变量"><a href="#1-3-4-Smali中的成员变量" class="headerlink" title="1.3.4 Smali中的成员变量"></a>1.3.4 Smali中的成员变量</h3><p>格式：<code>.field public/private [static][final] varName:&lt;类型&gt;</code></p>
 <p>对于不同的成员变量也有不同的指令。一般来说，获取的指令有：iget, sget, iget-boolean, sget-boolean, iget-object, sget-object等。操作的指令有：iput, sput, iput-boolean, sput-boolean, iput-object, sput-object等。</p>
 <p>没有<code>-object</code>后缀的表示操作的成员变量对象是基本数据类型，带<code>-object</code>表示操作的成员变量是对象类型。特别地，boolean类型则使用带<code>-boolean</code>的指令操作。</p>
 <p>例1：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sget-object v0, Lcom/aaa;-&gt;ID:Ljava/lang/String;</span><br></pre></td></tr></table></figure>
-
 <p>sget-object就是用来获取变量值并保存到紧接着的参数的寄存器中，本例中，它获取ID这个String类型的成员变量并放到v0这个寄存器中。注意，前面需要该变量所属的类的类型，后面需要加一个冒号和该成员变量的类型，中间的“-&gt;”表示所属关系。</p>
 <p>例2：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iget-object v0, p0, Lcom/aaa;-&gt;view:Lcom/aaa/view;</span><br></pre></td></tr></table></figure>
-
 <p>可以看到iget-object指令比sget-object多了一个参数，就是该变量所在类的对象，p0即“this”。</p>
 <p>获取array的话可以用aget和aget-object，指令使用方法和上述一致。</p>
 <p>例3：put指令的使用和get指令是统一的如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const/4 v3, 0x0</span><br><span class="line">sput-object v3, Lcom/aaa;-&gt;timer:Lcom/aaa/timer;</span><br></pre></td></tr></table></figure>
-
 <p>相当于<code>this.timer=null;</code>。</p>
 <p>注意，这里是因为赋值object所以是null；若是boolean的话应该是0。</p>
 <p>例4：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.local v0, args:Landroid/os/Message;</span><br><span class="line">const/4 v1, 0x12</span><br><span class="line">iput v1, v0, Landroid/os/Message;-&gt;what:l</span><br></pre></td></tr></table></figure>
-
 <p>相当于<code>args.what=18;</code>(args是Message的对象)。</p>
 <h3 id="1-3-5-Smali中函数的调用"><a href="#1-3-5-Smali中函数的调用" class="headerlink" title="1.3.5 Smali中函数的调用"></a>1.3.5 Smali中函数的调用</h3><p>smali中的函数和成员变量一样也分为两种类型，分别为direct和virtual之分。那么direct method和virtual method有什么区别呢？</p>
 <p>简单来说，direct method就是private函数，其余的public和protected函数都属于virtual method。所以在调用函数时，有invoke-direct，invoke-virtual，另外还有invoke-static、invoke-super以及invoke-interface等几种不同的指令。</p>
-<p>当然其实还有invoke-XXX&#x2F;range 指令的，这是参数多于4个的时候调用的指令，比较少见，了解下即可。</p>
+<p>当然其实还有invoke-XXX/range 指令的，这是参数多于4个的时候调用的指令，比较少见，了解下即可。</p>
 <h4 id="invoke-static"><a href="#invoke-static" class="headerlink" title="invoke-static"></a>invoke-static</h4><p>用于调用static函数的。</p>
 <p>例如：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">invoke-static &#123;&#125;, Lcom/aaa;-&gt;CheckSignature()Z</span><br></pre></td></tr></table></figure>
-
 <p>这里注意到invoke-static后面有一对大括号“{}”，其实是调用该方法的实例+参数列表，由于这个方法既不需参数也是static的，所以{}内为空。</p>
 <p>再看一个：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const-string v0, &quot;NDKLIB&quot; </span><br><span class="line">invoke-static &#123;v0&#125;, Ljava/lang/System;-&gt;loadLibrary(Ljava/lang/String;)V</span><br></pre></td></tr></table></figure>
-
 <p>这个是调用static void System.loadLibrary(String)来加载NDK编译的so库用的方法，同样也是这里v0就是参数“NDKLIB”了。</p>
 <h4 id="invoke-super"><a href="#invoke-super" class="headerlink" title="invoke-super"></a>invoke-super</h4><p>调用父类方法用的指令，一般用于调用onCreate、onDestroy等方法。</p>
 <h4 id="invoke-direct"><a href="#invoke-direct" class="headerlink" title="invoke-direct"></a>invoke-direct</h4><p>调用private函数。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">invoke-direct &#123;p0&#125;, Landroid/app/TabActivity;-&gt;&lt;init&gt;()V</span><br></pre></td></tr></table></figure>
-
 <p>这里init()就是定义在TabActivity中的一个private函数。</p>
 <h4 id="invoke-virtual"><a href="#invoke-virtual" class="headerlink" title="invoke-virtual"></a>invoke-virtual</h4><p>用于调用protected或public函数，同样注意修改smali时不要错用invoke-direct或invoke-static。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sget-object v0, Lcom/dddd;-&gt;bbb:Lcom/ccc;</span><br><span class="line">invoke-virtual &#123;v0, v1&#125;, Lcom/ccc;-&gt;Messages(Ljava/lang/Object;)V</span><br></pre></td></tr></table></figure>
-
-<p>v0是bbb:Lcom&#x2F;ccc，v1是传递给Messages方法的Ljava&#x2F;lang&#x2F;Object参数。</p>
-<h4 id="invoke-xxxxx-x2F-range"><a href="#invoke-xxxxx-x2F-range" class="headerlink" title="invoke-xxxxx&#x2F;range"></a>invoke-xxxxx&#x2F;range</h4><p>当方法的参数多于5个时（含5个），不能直接使用以上的指令，而是在后面加上“&#x2F;range”，range表示范围，使用方法也有所不同。</p>
+<p>v0是bbb:Lcom/ccc，v1是传递给Messages方法的Ljava/lang/Object参数。</p>
+<h4 id="invoke-xxxxx-range"><a href="#invoke-xxxxx-range" class="headerlink" title="invoke-xxxxx/range"></a>invoke-xxxxx/range</h4><p>当方法的参数多于5个时（含5个），不能直接使用以上的指令，而是在后面加上“/range”，range表示范围，使用方法也有所不同。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">invoke-direct/range &#123;v0 .. v5&#125;, Lcmb/pb/ui/PBContainerActivity;-&gt;h(ILjava/lang/CharSequence;Ljava/lang/String;Landroid/content/Intent;I)Z</span><br></pre></td></tr></table></figure>
-
 <p>需要传递v0到v5一共6个参数，这时候大括号内的参数采用省略形式，且需要连续。</p>
 <h3 id="1-3-6-Smali中函数返回的结果的操作"><a href="#1-3-6-Smali中函数返回的结果的操作" class="headerlink" title="1.3.6 Smali中函数返回的结果的操作"></a>1.3.6 Smali中函数返回的结果的操作</h3><p>在Java代码中调用函数和返回函数结果可以用一条语句完成，而在Smali里则需要分开来完成，在使用上述指令后，如果调用的函数返回非void，那么还需要用到move-result（返回基本数据类型）和move-result-object（返回对象）指令：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const-string v0, &quot;Eric&quot;</span><br><span class="line">invoke-static &#123;v0&#125;, Lcmb/pbi;-&gt;t(Ljava/lang/String;)Ljava/lang/String;</span><br><span class="line">move-result-object v2</span><br></pre></td></tr></table></figure>
-
 <p>v2保存的就是调用t方法返回String字符串。</p>
-<h3 id="1-3-7-Smali中函数实体分析–if函数分析"><a href="#1-3-7-Smali中函数实体分析–if函数分析" class="headerlink" title="1.3.7 Smali中函数实体分析–if函数分析"></a>1.3.7 Smali中函数实体分析–if函数分析</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">.method <span class="keyword">private</span> <span class="title function_">ifRegistered</span><span class="params">()</span>Z</span><br><span class="line">    .locals <span class="number">2</span>	<span class="comment">//在这个函数中本地寄存器的个数，2个</span></span><br><span class="line">    .prologue</span><br><span class="line">    const/<span class="number">4</span> v0, <span class="number">0x1</span>     <span class="comment">// v0赋值为1</span></span><br><span class="line">    .local v0, tempFlag:Z	</span><br><span class="line">    <span class="keyword">if</span>-eqz v0, :cond_0            <span class="comment">// 判断v0是否等于0，等于0则跳到cond_0执行</span></span><br><span class="line">    const/<span class="number">4</span> v1, <span class="number">0x1</span>            <span class="comment">// 符合条件分支</span></span><br><span class="line">    :goto_0	<span class="comment">//标签</span></span><br><span class="line">    <span class="keyword">return</span> v1	<span class="comment">//返回v1的值</span></span><br><span class="line">    :cond_0	<span class="comment">//标签</span></span><br><span class="line">    const/<span class="number">4</span> v1, <span class="number">0x0</span>            <span class="comment">// cond_0分支</span></span><br><span class="line">    goto :goto_0	<span class="comment">//跳到goto_0执行 即返回v1的值  这里可以改成return v1  也是一样的</span></span><br><span class="line">.end method</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-3-8-Smali中函数实体分析–for函数分析"><a href="#1-3-8-Smali中函数实体分析–for函数分析" class="headerlink" title="1.3.8 Smali中函数实体分析–for函数分析"></a>1.3.8 Smali中函数实体分析–for函数分析</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">const/<span class="number">4</span> v0, <span class="number">0x0</span>   <span class="comment">//v0 = 0;</span></span><br><span class="line">.local v0, i:I</span><br><span class="line">:goto_0</span><br><span class="line"><span class="keyword">if</span>-lt v0, v3, :cond_0     <span class="comment">//  v0小于v3 则跳到cond_0并执行分支 :cond_0</span></span><br><span class="line"><span class="keyword">return</span>-<span class="keyword">void</span></span><br><span class="line">:cond_0                <span class="comment">// 标签</span></span><br><span class="line">iget-object v1, p0, Lcom/aaa/MainActivity;-&gt;listStrings:Ljava/util/List;        <span class="comment">// 引用对象</span></span><br><span class="line">const-string v2, <span class="string">&quot;Eric&quot;</span></span><br><span class="line">invoke-interface &#123;v1, v2&#125;, Ljava/util/List;-&gt;add(Ljava/lang/Object;)Z    <span class="comment">// List是接口, 执行接口方法add</span></span><br><span class="line">add-<span class="type">int</span>/lit8 v0, v0, <span class="number">0x1</span>　　　　<span class="comment">// 将第二个v0寄存器中的值，加上0x1的值放入第一个寄存器中, 实现自增长</span></span><br><span class="line">goto :goto_0                <span class="comment">// 回去:goto_0标签</span></span><br></pre></td></tr></table></figure>
-
+<h3 id="1-3-7-Smali中函数实体分析—if函数分析"><a href="#1-3-7-Smali中函数实体分析—if函数分析" class="headerlink" title="1.3.7 Smali中函数实体分析—if函数分析"></a>1.3.7 Smali中函数实体分析—if函数分析</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">.method <span class="keyword">private</span> <span class="title function_">ifRegistered</span><span class="params">()</span>Z</span><br><span class="line">    .locals <span class="number">2</span>	<span class="comment">//在这个函数中本地寄存器的个数，2个</span></span><br><span class="line">    .prologue</span><br><span class="line">    const/<span class="number">4</span> v0, <span class="number">0x1</span>     <span class="comment">// v0赋值为1</span></span><br><span class="line">    .local v0, tempFlag:Z	</span><br><span class="line">    <span class="keyword">if</span>-eqz v0, :cond_0            <span class="comment">// 判断v0是否等于0，等于0则跳到cond_0执行</span></span><br><span class="line">    const/<span class="number">4</span> v1, <span class="number">0x1</span>            <span class="comment">// 符合条件分支</span></span><br><span class="line">    :goto_0	<span class="comment">//标签</span></span><br><span class="line">    <span class="keyword">return</span> v1	<span class="comment">//返回v1的值</span></span><br><span class="line">    :cond_0	<span class="comment">//标签</span></span><br><span class="line">    const/<span class="number">4</span> v1, <span class="number">0x0</span>            <span class="comment">// cond_0分支</span></span><br><span class="line">    goto :goto_0	<span class="comment">//跳到goto_0执行 即返回v1的值  这里可以改成return v1  也是一样的</span></span><br><span class="line">.end method</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-8-Smali中函数实体分析—for函数分析"><a href="#1-3-8-Smali中函数实体分析—for函数分析" class="headerlink" title="1.3.8 Smali中函数实体分析—for函数分析"></a>1.3.8 Smali中函数实体分析—for函数分析</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">const/<span class="number">4</span> v0, <span class="number">0x0</span>   <span class="comment">//v0 = 0;</span></span><br><span class="line">.local v0, i:I</span><br><span class="line">:goto_0</span><br><span class="line"><span class="keyword">if</span>-lt v0, v3, :cond_0     <span class="comment">//  v0小于v3 则跳到cond_0并执行分支 :cond_0</span></span><br><span class="line"><span class="keyword">return</span>-<span class="keyword">void</span></span><br><span class="line">:cond_0                <span class="comment">// 标签</span></span><br><span class="line">iget-object v1, p0, Lcom/aaa/MainActivity;-&gt;listStrings:Ljava/util/List;        <span class="comment">// 引用对象</span></span><br><span class="line">const-string v2, <span class="string">&quot;Eric&quot;</span></span><br><span class="line">invoke-interface &#123;v1, v2&#125;, Ljava/util/List;-&gt;add(Ljava/lang/Object;)Z    <span class="comment">// List是接口, 执行接口方法add</span></span><br><span class="line">add-<span class="type">int</span>/lit8 v0, v0, <span class="number">0x1</span>　　　　<span class="comment">// 将第二个v0寄存器中的值，加上0x1的值放入第一个寄存器中, 实现自增长</span></span><br><span class="line">goto :goto_0                <span class="comment">// 回去:goto_0标签</span></span><br></pre></td></tr></table></figure>
 <h3 id="1-3-9-课后习题"><a href="#1-3-9-课后习题" class="headerlink" title="1.3.9 课后习题"></a>1.3.9 课后习题</h3><p>翻译成Java代码。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">.local <span class="number">4</span>                   <span class="comment">//本地寄存器4个，即v0,v1,v2,v3</span></span><br><span class="line">const/<span class="number">4</span> v2, <span class="number">0x1</span>            <span class="comment">//4字节常量v2=1</span></span><br><span class="line">const/<span class="number">16</span> v1, <span class="number">0x10</span>          <span class="comment">//16字节常量v1=16</span></span><br><span class="line">:local v1, <span class="string">&quot;length&quot;</span>:I      <span class="comment">//本地寄存器int length=v1</span></span><br><span class="line"><span class="keyword">if</span>-nez v1，:cond_1        <span class="comment">//如果v1不等于0，这跳转至cond_1</span></span><br><span class="line">:cond_0                    <span class="comment">//cond_0标签</span></span><br><span class="line">:goto_0                    <span class="comment">//goto_0标签</span></span><br><span class="line"><span class="keyword">return</span> v2                  <span class="comment">//返回v2的值</span></span><br><span class="line">:cond_1                    <span class="comment">//开始执行cond_1标签代码</span></span><br><span class="line">const/<span class="number">4</span> v0,<span class="number">0x0</span>             <span class="comment">//4字节常量v0=0</span></span><br><span class="line">:local v0, <span class="string">&quot;i&quot;</span>:I           <span class="comment">//本地寄存器int i=v0</span></span><br><span class="line">:goto_1                    <span class="comment">//开始执行goto_1标签代码</span></span><br><span class="line"><span class="keyword">if</span>-lt v0, v1, :cond_2      <span class="comment">//如果v0小于v1,则跳转至cond_2</span></span><br><span class="line">const/<span class="number">16</span> v3,<span class="number">0x28</span>           <span class="comment">//接上：如果v0大于等于v1，则执行下面语句： 16字节常量v3=40</span></span><br><span class="line"><span class="keyword">if</span>-le v1,v3, :cond_0       <span class="comment">//接上：如果v1小于等于v3,则跳转至cond_0,即返回v2的值</span></span><br><span class="line">const/<span class="number">4</span> v2, <span class="number">0x0</span>            <span class="comment">//接上：如果v1大于v3,则4字节常量v2=0</span></span><br><span class="line">goto:goto_0                <span class="comment">//跳转至goto_0,即返回v2的值</span></span><br><span class="line">:cond_2                    <span class="comment">//cond_2标签</span></span><br><span class="line">xor-<span class="type">int</span>/lit8 v1, v1, <span class="number">0x3b</span>  <span class="comment">//将第二个v1寄存器中的值与0x3b（59）进行异或运算，得到的值赋值给第一个v1寄存器中</span></span><br><span class="line">add-<span class="type">int</span>/lit8 v0, v0, <span class="number">0x1</span>   <span class="comment">//将第二个v0寄存器中的值加上0x1(1)，所得的值放入第一个v0寄存器中</span></span><br><span class="line">goto:goto_1                <span class="comment">//跳转值goto_1标签，这里可以看到cond_2实际上是一个for循环，而不是简单的IF判断</span></span><br></pre></td></tr></table></figure>
-
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">v2 = <span class="number">1</span>;</span><br><span class="line">v1 = <span class="number">16</span>;</span><br><span class="line"><span class="keyword">if</span> (v1 != <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">    v0 = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(v0 &lt; v1)</span><br><span class="line">    &#123;</span><br><span class="line">		v1 = v1 ^ <span class="number">59</span>;</span><br><span class="line">		v0 = v0 + <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	v3 = <span class="number">40</span>;</span><br><span class="line">	<span class="keyword">if</span>(v1 &lt;= v3)</span><br><span class="line">	&#123;</span><br><span class="line">        <span class="keyword">return</span> v2;</span><br><span class="line">	&#125;</span><br><span class="line">	v2 = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">return</span> v2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <h2 id="1-4-寄存器"><a href="#1-4-寄存器" class="headerlink" title="1.4 寄存器"></a>1.4 寄存器</h2><p>在smali里的所有操作都必须经过寄存器来进行：</p>
 <ul>
 <li>本地寄存器用v开头数字结尾的符号来表示，如v0, v1, v2…</li>
@@ -727,120 +730,86 @@
 </ul>
 <p>特别注意的是，p0不一定是函数中的第一个参数，在非static函数中，p0代指“this”，p1表示函数的第一个参数，p2表示函数的第二个参数…而在static函数中p0才对应第一个参数(因为Java的static方法中没有this方法)。</p>
 <h3 id="1-4-1-简单对象分析"><a href="#1-4-1-简单对象分析" class="headerlink" title="1.4.1 简单对象分析"></a>1.4.1 简单对象分析</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const/<span class="number">4</span> v0, <span class="number">0x1</span></span><br><span class="line">iput-<span class="type">boolean</span> v0, p0, Lcom/aaa;-&gt;IsRegistered:Z</span><br></pre></td></tr></table></figure>
-
 <p>它使用了本地寄存器v0，并把值0x1存到v0中。用iput-boolean这个指令把v0中存的值存放到com.aaa.IsRegistered这个成员变量中。即相当于：<code>this.IsRegistered=true;</code>。</p>
 <h1 id="2-破解第一个Android程序"><a href="#2-破解第一个Android程序" class="headerlink" title="2. 破解第一个Android程序"></a>2. 破解第一个Android程序</h1><p>破解Android程序需要静态反编译程序Android Killer，打开后第一步配置JDK的安装路径。</p>
 <img src="/posts/15be101a/%E9%85%8D%E7%BD%AEjdk.png" class="" title="配置jdk">
-
 <p>从 <a target="_blank" rel="noopener" href="https://down.52pojie.cn/Tools/Android_Tools/ShakaApktool_3.0.0-20170503-release.jar">https://down.52pojie.cn/Tools/Android_Tools/ShakaApktool_3.0.0-20170503-release.jar</a> 下载ShakaApktool_3.0.0-20170503-release.jar，将它放到<code>AndroidKiller_v1.3.1\bin\apktool\apktool</code>目录下，按照下图完成操作。</p>
 <img src="/posts/15be101a/%E6%9B%B4%E6%94%B9apktool.png" class="" title="更改apktool">
-
 <p>将需要反编译的<code>.apk</code>文件拖进Android Killer后会自动反编译，但最后显示“正在反编译APK源码，请稍等…”时可能会卡住，需要关闭软件再次打开。</p>
 <img src="/posts/15be101a/%E5%BC%82%E5%B8%B8.png" class="" title="异常">
-
 <p>找到历史工程重新打开<code>.apk</code>文件，点击入口即可看到smali文件。</p>
 <img src="/posts/15be101a/%E6%88%90%E5%8A%9F%E5%8F%8D%E7%BC%96%E8%AF%91.png" class="" title="成功反编译">
-
 <p>如果经常卡住可以试试替换AK目录下的<code>rtl230.bpl</code> <a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-658341-1-1.html">https://www.52pojie.cn/thread-658341-1-1.html</a> 。</p>
 <img src="/posts/15be101a/smali%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90.png" class="" title="smali流程分析">
-
 <p>既然了解了流程，就可以动手破解程序了。</p>
 <p>第一种：知道了账户密码，可直接拿那个账户密码登录。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">用户名：hfdcxy</span><br><span class="line">密码：1234</span><br></pre></td></tr></table></figure>
-
 <p>第二种：将验证账户密码的两条跳转语句修改。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>-eqz v0, :cond_0		-&gt;	<span class="keyword">if</span>-nez v0, :cond_0</span><br><span class="line"><span class="keyword">if</span>-eqz v0, :cond_0		-&gt;	<span class="keyword">if</span>-nez v0, :cond_0</span><br></pre></td></tr></table></figure>
-
 <p>第三种：直接将验证账户密码的两条跳转语句删除。</p>
 <p>第四种：用goto语句直接跳到登录成功处。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">move-result v0</span><br><span class="line"></span><br><span class="line">goto :goto_3			#添加goto</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>-eqz v0, :cond_0</span><br><span class="line"></span><br><span class="line">const-string v0, <span class="string">&quot;1234&quot;</span></span><br><span class="line"></span><br><span class="line">invoke-virtual &#123;p2, v0&#125;, Ljava/lang/String;-&gt;equals(Ljava/lang/Object;)Z</span><br><span class="line"></span><br><span class="line">move-result v0</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>-eqz v0, :cond_0</span><br><span class="line"></span><br><span class="line">.line <span class="number">30</span></span><br><span class="line">:goto_3					#添加goto</span><br><span class="line">const-string v0, <span class="string">&quot;\u767b\u5f55\u6210\u529f&quot;</span>		#Unicode编码，“登录成功”</span><br></pre></td></tr></table></figure>
-
 <p>smali修改完成后 Ctrl+S 保存，点击左上角的编译。</p>
 <img src="/posts/15be101a/%E7%BC%96%E8%AF%91%E6%88%90%E5%8A%9F.png" class="" title="编译成功">
-
 <p>下载雷电模拟器 <a target="_blank" rel="noopener" href="http://www.ldmnq.com/">http://www.ldmnq.com/</a> 充当手机，可以在电脑上运行<code>.apk</code>文件，找到雷电模拟器设备，安装。</p>
 <img src="/posts/15be101a/%E5%AE%89%E8%A3%85.png" class="" title="安装apk">
-
 <p>然后在雷电模拟器中运行程序，输入错误的用户名和密码会提示登录成功，说明破解成功。</p>
 <h1 id="3-破解第一个Android游戏"><a href="#3-破解第一个Android游戏" class="headerlink" title="3. 破解第一个Android游戏"></a>3. 破解第一个Android游戏</h1><p>运行一下程序，发现购买会出现“支付失败”字样，其Unicode为<code>\u652F\u4ED8\u5931\u8D25</code>。拖入AK反编译，按照下图搜索字符串，但没有找到。</p>
 <img src="/posts/15be101a/%E6%90%9C%E7%B4%A2%E5%A4%B1%E8%B4%A5.png" class="" title="搜索失败">
-
 <p>再找“失败”，可直接在搜索框输入“失败”，再点左下角的编码转换即可转换为Unicode码。找到很多有关“失败”的字符串，一一排除。最后找到一个“购买失败”。</p>
 <img src="/posts/15be101a/%E8%B4%AD%E4%B9%B0%E5%A4%B1%E8%B4%A5.png" class="" title="购买失败">
-
 <p>再上下看看可以看到有“购买取消”、“购买成功”等字样。如果看smali难看懂，可以转换成java源码，但转换的源码可读性比较差，还是建议读smali，而且修改必须是在smali里修改才可以成功编译。</p>
 <img src="/posts/15be101a/%E8%BD%AC%E6%8D%A2java%E6%BA%90%E7%A0%81.png" class="" title="转换java源码">
-
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.method <span class="keyword">public</span> <span class="title function_">payResultCancel</span><span class="params">()</span>V</span><br><span class="line">...</span><br><span class="line">.end method		#以上为支付取消的代码</span><br><span class="line">    </span><br><span class="line">.method <span class="keyword">public</span> <span class="title function_">payResultFalse</span><span class="params">()</span>V</span><br><span class="line">...</span><br><span class="line">.end method		#支付失败</span><br><span class="line">    </span><br><span class="line">.method <span class="keyword">public</span> <span class="title function_">payResultSuccess</span><span class="params">()</span>V</span><br><span class="line">...</span><br><span class="line">.end method		#支付成功</span><br></pre></td></tr></table></figure>
-
 <p>首先来个简单粗暴的方法，直接将<code>public void payResultSuccess()</code>方法里的代码全都复制到<code>public void payResultCancel()</code>和<code>public void payResultFalse()</code>中。再删除可能会产生费用的危险权限：在<code>AndroidManifest.xml</code>里搜索（或者直接搜索）<code>android.permission.SEND_SMS</code> 和 <code>android.permission.CALL_PHONE</code>，删掉 <code>&lt;uses-permission android:name=&quot;android.permission.SEND_SMS&quot;/&gt;</code> 和 <code>&lt;uses-permission android:name=&quot;android.permission.CALL_PHONE&quot;/&gt;</code> 即可。</p>
 <p>第二种方法，再观察一下代码，到底是哪里开始分岔到“购买成功”、“购买取消”、“购买失败”的呢？搜索payResultFalse找到有跳转处的地方。</p>
 <img src="/posts/15be101a/%E4%BF%AE%E6%94%B9%E4%BB%A3%E7%A0%81.png" class="" title="修改代码">
-
 <p>同上，再删除可能会产生费用的危险权限，编译。</p>
 <h1 id="4-AS动态调试smali代码"><a href="#4-AS动态调试smali代码" class="headerlink" title="4. AS动态调试smali代码"></a>4. AS动态调试smali代码</h1><p>下载Android Studio，这里有个非常大的坑耗了我两天时间，由于在官网下载不了，导致我去别的地方下载了无数版本的AS，最后安装smalidea插件造成各种问题。</p>
 <p>解决办法：把官网链接https改为http即可。</p>
 <p><a target="_blank" rel="noopener" href="http://redirector.gvt1.com/edgedl/android/studio/install/2021.1.1.22/android-studio-2021.1.1.22-windows.exe">http://redirector.gvt1.com/edgedl/android/studio/install/2021.1.1.22/android-studio-2021.1.1.22-windows.exe</a></p>
 <p>动态调试需要smalidea插件，下载最新版的<code>smalidea-0.06.zip</code>压缩包。最后直接导入插件，不要解压。安装、导入自行百度。可以新建一个项目直接连入模拟器看AS是否能够正常运行。第一次新建项目花费时间长一点，我不会说我新建一个项目花了15分钟！！！</p>
-<p>将<code>.apk</code>文件拖进AK反编译成<code>.smali</code>文件，文件入口为<code> hfdcxy.com.myapplication.MainActivity</code>。在<code>application</code>标签里找<code>android:debuggable=&quot;true&quot;</code>这句代码。如果没有这句代码就调试不了，如果是<code>false</code>则改为<code>true</code>，重新编译签名。将新编译好的<code>.apk</code>安装在模拟器上。</p>
+<p>将<code>.apk</code>文件拖进AK反编译成<code>.smali</code>文件，文件入口为<code>hfdcxy.com.myapplication.MainActivity</code>。在<code>application</code>标签里找<code>android:debuggable=&quot;true&quot;</code>这句代码。如果没有这句代码就调试不了，如果是<code>false</code>则改为<code>true</code>，重新编译签名。将新编译好的<code>.apk</code>安装在模拟器上。</p>
 <img src="/posts/15be101a/debuggertrue.png" class="" title="debuggertrue">
-
 <p>在<code>.apk</code>文件右键，打开文件路径。</p>
 <img src="/posts/15be101a/%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84.jpg" class="" title="打开文件路径">
-
 <p>把整个project目录复制到某处，用AS导入。给smali目录设置Sources Root。</p>
 <img src="/posts/15be101a/sourcesroot.jpg" class="" title="sourcesroot">
-
 <p>Run-&gt;Edit configurations-&gt;+-&gt;Remote JVM Debug-&gt;设置Name，设置端口号为8700。</p>
 <img src="/posts/15be101a/%E8%AE%BE%E7%BD%AEremote.png" class="" title="设置remote">
-
 <p>打开CMD，运行以下命令，将会显示以下信息。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\dell&gt;adb devices</span><br><span class="line">List of devices attached</span><br><span class="line">emulator-5554   device</span><br><span class="line"></span><br><span class="line">C:\Users\dell&gt;adb shell am start -D -n hfdcxy.com.myapplication/hfdcxy.com.myapplication.MainActivity</span><br><span class="line">Starting: Intent &#123; cmp=hfdcxy.com.myapplication/.MainActivity &#125;</span><br></pre></td></tr></table></figure>
-
 <p>如果显示“’adb’ 不是内部或外部命令，也不是可运行的程序或批处理文件。”请看 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/plsmile/p/11172693.html">https://www.cnblogs.com/plsmile/p/11172693.html</a></p>
 <p>执行完第二条adb后，模拟器进入调试页面，记下PID为2160。不要点模拟器任何东西！！</p>
 <img src="/posts/15be101a/%E8%B0%83%E8%AF%95%E9%A1%B5%E9%9D%A2.png" class="" title="调试页面">
-
 <p>绑定远程调试窗口：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\dell&gt;adb forward tcp:8700 jdwp:2160</span><br><span class="line">8700</span><br></pre></td></tr></table></figure>
-
 <p>回到AS设置断点，Run-&gt;Attch Debugger to Android Process</p>
 <img src="/posts/15be101a/%E4%B8%8B%E6%96%AD.png" class="" title="下断点">
-
 <img src="/posts/15be101a/%E4%B8%8B%E6%96%AD2.png" class="" title="下断点">
-
 <p>回到模拟器，输入用户名和密码，点击登录。AS停在断点处，看到我们刚才输入的变量。</p>
 <img src="/posts/15be101a/%E6%96%AD%E7%82%B93.png" class="" title="下断点">
-
 <p>单步F8，运行F9，与OD一样。可以下多几个断点，看寄存器的值，但需要自己添加想看的寄存器。</p>
 <img src="/posts/15be101a/%E5%AF%84%E5%AD%98%E5%99%A8%E5%80%BC.png" class="" title="寄存器值">
-
 <h1 id="5-在smali代码中插入Log"><a href="#5-在smali代码中插入Log" class="headerlink" title="5. 在smali代码中插入Log"></a>5. 在smali代码中插入Log</h1><p>新建一个项目在MainActivity.java里面写一段switch case语句。注意，新建时语言要选择Java。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MainActivity</span> <span class="keyword">extends</span> <span class="title class_">AppCompatActivity</span></span><br><span class="line">&#123;</span><br><span class="line">    String name;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(Bundle savedInstanceState)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        name = <span class="string">&quot;v5le0n9&quot;</span>;</span><br><span class="line">        <span class="keyword">switch</span>(name)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&quot;v5le0n9&quot;</span>:</span><br><span class="line">                Log.i(<span class="string">&quot;Hello&quot;</span>,<span class="string">&quot;v5le0n9哈哈&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&quot;l30n9ry0n&quot;</span>:</span><br><span class="line">                Log.i(<span class="string">&quot;Hello&quot;</span>,<span class="string">&quot;l30n9ry0n啦啦&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                Log.i(<span class="string">&quot;Hello&quot;</span>,<span class="string">&quot;没有符合的name值&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>点击三角符号运行，或Shift+F10，程序被安装到模拟器上。在Logcat查找“hello”，找到对应Log。</p>
 <img src="/posts/15be101a/Log.png" class="" title="Log">
-
 <p>要想<code>.apk</code>文件保存在电脑上，按照下图操作。</p>
 <img src="/posts/15be101a/buildapk.jpg" class="" title="build apk">
-
 <p>在<code>D:\Java\Android\MyApplication\app\build\intermediates\apk\debug</code>找到<code>.apk</code>文件。拖进AK反编译。点击入口进入MainActivity.smali，分析代码。</p>
 <p>注意，能修改smali文件的前提是smali文件没有丢失，否则修改了也不能编译成功。再注意，为什么我们编写出来的程序放到AK反编译会显示文件已丢失？可能是因为Android Studio2.0+的Instant Run导致的。</p>
 <p>解决方法：关闭Android Stuio的Instant Run：File -&gt; Setting -&gt; Build, Execution，Deployment -&gt; Debugger -&gt; HotSwap ，取消选中，点击OK。点击Build -&gt; APK重新打包。</p>
 <img src="/posts/15be101a/instantrun.png" class="" title="instantrun">
-
 <p>结果还是不行！！直接生成release版本的apk试试，build -&gt;  Geberate signed apk -&gt; APK。如果没有keystore则需要创建一个新的。</p>
 <p>创建keystore看 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_24349695/article/details/78540982">https://blog.csdn.net/qq_24349695/article/details/78540982</a></p>
 <p>在点击finish时又给我抛出错误：<code>Error:Execution failed for task ‘:app:lintVitalRelease’</code>，解决方法：</p>
 <p>在app的build.gradle里的android{}中添加如下代码，然后再次运行Generate Signed Apk。例如： </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">android&#123;</span><br><span class="line">    lintOptions &#123;</span><br><span class="line">        checkReleaseBuilds <span class="literal">false</span></span><br><span class="line">        abortOnError <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>这次用release版本终于没有丢失smali文件了。已知代码运行出现的Log是<code>:cond_1</code>里面的信息，所以在<code>:cond_1</code>添加我们想看到的信息，保存编译。</p>
 <img src="/posts/15be101a/%E6%B7%BB%E5%8A%A0smali%E4%BB%A3%E7%A0%81.png" class="" title="添加smali代码">
-
 <p>AK连上模拟器，因为模拟器之前有我们在AS直接安装的程序，所以先卸载，再编译安装修改过的程序。回到AS就可以看到多了一条Log信息，但AS中的java语言并没有被修改。</p>
 <img src="/posts/15be101a/ASLog.png" class="" title="AS中多了一条Log信息">
-
 <p><strong>所以Log有什么用呢？很多情况下插入Log是为了打印出程序中某个变量的值。</strong></p>
 <p>用以下程序完成三个任务：</p>
 <ol>
@@ -848,147 +817,104 @@
 </li>
 <li><p>添加Log打印出fun3里面String类型str的值</p>
 </li>
-<li><p>添加Log打印出fun3里面int类型value3的值</p>
+<li><p>添加Log打印出fun3里面int类型value3的值 </p>
 </li>
 </ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MainActivity.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MainActivity</span> <span class="keyword">extends</span> <span class="title class_">AppCompatActivity</span> &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(Bundle savedInstanceState)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        fun1();</span><br><span class="line">        fun2();</span><br><span class="line">        fun3();</span><br><span class="line">        Log.i(<span class="string">&quot;这个值是&quot;</span>,String.valueOf(fun1()));</span><br><span class="line"> </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">fun1</span><span class="params">()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">value</span> <span class="operator">=</span> Test.value;</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">fun2</span><span class="params">()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">value2</span> <span class="operator">=</span> Test.value2;</span><br><span class="line">        <span class="keyword">return</span> value2;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">fun3</span><span class="params">()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> Test.str;</span><br><span class="line">        <span class="type">String</span> <span class="variable">str2</span> <span class="operator">=</span> Test.str2;</span><br><span class="line">        <span class="type">int</span> <span class="variable">value3</span> <span class="operator">=</span> Test.value3;</span><br><span class="line">        <span class="keyword">return</span> str2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Test.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="variable">value</span> <span class="operator">=</span> <span class="number">888</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="variable">value2</span> <span class="operator">=</span> <span class="number">777</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="variable">value3</span> <span class="operator">=</span> <span class="number">666</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> <span class="string">&quot;www.52pojie.cn&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">String</span> <span class="variable">str2</span> <span class="operator">=</span> <span class="string">&quot;码完代码去看东方明珠&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <img src="/posts/15be101a/1.png" class="" title="运行程序">
-
 <p>一样release版本拿去AK反编译。</p>
 <p>任务一：添加Log打印出fun2, fun3的值</p>
 <img src="/posts/15be101a/2.png" class="" title="打印fun1的值">
-
 <p><code>.line 17</code>是执行Log代码的内容，有趣的是在AS中<code>Log.i(&quot;这个值是&quot;,String.valueOf(fun1()));</code>刚好是第17行。</p>
 <p>由于fun2和fun1的返回值类型一致，所以可直接复制这些代码，区别只是将fun1改为fun2。</p>
 <img src="/posts/15be101a/3.png" class="" title="返回fun2的值">
-
 <p>fun2和fun3函数都是int类型，通过<code>String.valueOf</code>这个函数转换成的String类型。但是fun3这个函数本身就是String类型，这里如果还通过<code>String.valueOf</code>函数转换的话程序会报错。所以将执行<code>String.valueOf</code>的代码去掉即可。</p>
 <img src="/posts/15be101a/4.png" class="" title="返回fun3的值">
-
 <p>保存-&gt;卸载-&gt;编译-&gt;安装。</p>
 <img src="/posts/15be101a/5.png" class="" title="Log显示fun1,fun2,fun3返回值">
-
 <p>任务二：添加Log打印出fun3里面String类型str的值</p>
 <img src="/posts/15be101a/6.png" class="" title="fun3中的smali代码">
-
 <p>翻译一下就是：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> String <span class="title function_">fun3</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">v0</span> <span class="operator">=</span> str;</span><br><span class="line">	<span class="type">String</span> <span class="variable">v0</span> <span class="operator">=</span> str2;</span><br><span class="line">	<span class="type">int</span> <span class="variable">v1</span> <span class="operator">=</span> value3;</span><br><span class="line">	<span class="keyword">return</span> v0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>即str的值被str2覆盖了，所以可以直接删掉<code>.line 33</code>代码。</p>
 <img src="/posts/15be101a/7.png" class="" title="注释33行代码">
-
 <img src="/posts/15be101a/8.png" class="" title="显示str的值">
-
 <p>任务三：添加Log打印出fun3里面int类型value3的值 </p>
 <p>将fun3的smali代码按照fun2的smali代码修改返回值类型。</p>
 <img src="/posts/15be101a/9.png" class="" title="修改返回值类型">
-
 <img src="/posts/15be101a/11.png" class="" title="修改返回值类型">
-
 <p>最后还要添加修改Log处的代码。</p>
 <img src="/posts/15be101a/10.png" class="" title="修改返回值类型">
-
 <img src="/posts/15be101a/12.png" class="" title="显示value3的值">
-
 <h1 id="6-编写第一个so"><a href="#6-编写第一个so" class="headerlink" title="6. 编写第一个so"></a>6. 编写第一个so</h1><p>Android开发中，我们经常会用到<code>.so</code>文件。原因有很多，比如部分方法不想暴露，如加密规则。比如部分秘钥需要存储，哪怕最简单的一个String我们使用.so调用获取这个String，也比直接明文写在代码中要来的安全。那么逆向破解也是一样， 为了避免以后破解so时知其然而不知其所以然，要破解一个so就得先学习这个so是怎么编写的。</p>
 <p>生成so文件需要NDK，由于本人安装NDK安装得太混乱了，出了各种各种的问题最后莫名其妙就成功了，所以以下步骤仅供参考，如果发现错误及时百度。</p>
 <p>创建一个native C++项目，一路next。</p>
 <img src="/posts/15be101a/C++.png" class="" title="C++">
-
 <p>创建项目时会自动下载NDK，所以不用管。及时看build窗口信息，问题或异常会在build窗口显示。可以看到在<code>D:\Java\Android\sdk\ndk\21.4.7075529</code>就下载好了ndk的21.4版本。</p>
 <p>打开Project的<code>local.properties</code>文件添加NDK路径。</p>
 <img src="/posts/15be101a/%E9%85%8D%E7%BD%AEDNK.png" class="" title="配置NDK">
-
 <p>此时，可以在 File -&gt; Project Structure -&gt; SDK Location 就可以看到NDK路径了，说明NDK已经安装好并且能用了。</p>
 <img src="/posts/15be101a/%E9%85%8D%E7%BD%AENDK.png" class="" title="配置NDK">
-
 <p>那么现在就可以正式编写so文件了。在<code>MainActivity.java</code>的父目录里新建一个类，命名为<code>myJNI</code>。</p>
 <img src="/posts/15be101a/%E6%96%B0%E5%BB%BA%E7%B1%BB.jpg" class="" title="新建一个类">
-
-<p>声明native方法。这个类是java与C&#x2F;C++交互的中介，方法由java声明，由C&#x2F;C++实现。</p>
+<p>声明native方法。这个类是java与C/C++交互的中介，方法由java声明，由C/C++实现。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">myJNI</span> &#123;</span><br><span class="line">　　<span class="comment">//加载so库</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.loadLibrary(<span class="string">&quot;JniTest&quot;</span>);<span class="comment">//so库名字</span></span><br><span class="line">    &#125;</span><br><span class="line">　　<span class="comment">//native方法</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">native</span> String <span class="title function_">sayHello</span><span class="params">()</span>;<span class="comment">//在so库里增加sayHello()功能</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>在左侧栏右键<code>myJNI.java</code>，复制路径，在AS下面的终端编译<code>myJNI</code>类，生成<code>myJNI.class</code>文件。由于注释出错(?)，所以我把注释去掉了。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javac D:\Java\Android\MyApplication4\app\src\main\java\com\example\myapplication\myJNI.java</span><br></pre></td></tr></table></figure>
-
 <img src="/posts/15be101a/%E7%BC%96%E8%AF%91class%E6%96%87%E4%BB%B6.png" class="" title="生成class文件">
-
 <p>记住包名为<code>com.example.myapplication</code>，类名为<code>myJNI</code>。在AS终端上去到java目录，生成<code>.h</code>头文件。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javah -jni com.example.myapplication.myJNI</span><br></pre></td></tr></table></figure>
-
 <img src="/posts/15be101a/%E7%94%9F%E6%88%90%E5%A4%B4%E6%96%87%E4%BB%B6.png" class="" title="生成头文件">
-
 <p>将生成的头文件拖到cpp目录下，并且将<code>native-lib.cpp</code>强制删去。在cpp目录下新建<code>.c</code>文件。</p>
 <img src="/posts/15be101a/%E6%96%B0%E5%BB%BAmain.jpg" class="" title="新建c文件">
-
 <p>将文件头包括进来，实现sayHello()方法。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;com_example_myapplication_myJNI.h&quot;</span></span></span><br><span class="line">JNIEXPORT jstring JNICALL <span class="title function_">Java_com_example_myapplication_myJNI_sayHello</span><span class="params">(JNIEnv *env, jclass jobj)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> (*env)-&gt;NewStringUTF(env,<span class="string">&quot;hello 52pojie!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>由于我们使用CMake来生成so的, 所以要修改<code>CMakeLists.txt</code>来指定so名称和so的源文件的相对路径。点击上方“大象”同步一下。</p>
 <img src="/posts/15be101a/%E4%BF%AE%E6%94%B9%E5%90%8D%E7%A7%B0.png" class="" title="so名称和so的源文件的相对路径">
-
 <p>完成以上步骤之后，生成release版本的apk，要不然将来想要修改<code>.so</code>文件后不能在模拟器上运行。</p>
 <p>生成的so在<code>app\build\intermediates\cmake\debug\obj\</code>和<code>app\build\intermediates\merged_native_libs\debug\out\lib</code>和<code>app\build\intermediates\stripped_native_libs\debug\out\lib\</code>。为什么相同的东西要分别放在三个地方，不懂。随便一个目录看看：</p>
 <img src="/posts/15be101a/jniso.png" class="" title="libjnitest.so">
-
 <p>发现这几个目录里面都有<code>libJniTest.so</code>，不同处理器使用的文件不一样。雷电模拟器就是x86架构的。</p>
 <ul>
 <li>armeabi-v7a: 第7代及以上的 ARM 处理器。2011年15月以后的生产的大部分Android设备都使用它。</li>
 <li>arm64-v8a: 第8代、64位ARM处理器，很少设备，三星 Galaxy S6是其中之一。</li>
 <li>armeabi: 第5代、第6代的ARM处理器，早期的手机用的比较多。</li>
 <li>x86: 平板、模拟器用得比较多。</li>
-<li>x86_64: 64位的平板。</li>
+<li><p>x86_64: 64位的平板。</p>
+<p>在<code>app/src/main</code>下新建<code>jnilib</code>目录, 并将生成的SO文件拷贝到该文件夹下。</p>
+</li>
 </ul>
-<p> 在<code>app/src/main</code>下新建<code>jnilib</code>目录, 并将生成的SO文件拷贝到该文件夹下。</p>
 <img src="/posts/15be101a/%E6%8B%B7%E8%B4%9Dso.png" class="" title="SO文件拷贝到该文件夹下">
-
 <p>打开<code>MainActivity.java</code>插入一条log来调用so中的<code>sayHello</code>方法，并连接模拟器调试。</p>
 <img src="/posts/15be101a/sayhello.png" class="" title="插入一条log">
-
 <img src="/posts/15be101a/52pj.png" class="" title="插入一条log">
-
 <h1 id="7-IDA破解第一个so"><a href="#7-IDA破解第一个so" class="headerlink" title="7. IDA破解第一个so"></a>7. IDA破解第一个so</h1><h2 id="7-1-预备知识与环境配置"><a href="#7-1-预备知识与环境配置" class="headerlink" title="7.1 预备知识与环境配置"></a>7.1 预备知识与环境配置</h2><p>下载最新版<code>apktool.jar</code>和<code>apktool.bat</code>一起放到<code>C:\Windows</code>目录下，不想下载也可以在AK目录下找到它们，大概在<code>D:\Java\AndroidKiller_v1.3.1\bin\apktool</code>，再放到<code>C:\Windows</code>。不想放到<code>C:\Windows</code>也可以把环境变量设到上面路径中，随你喜欢。反正最后的结果是可以在命令窗口使用apktool。记住两个关键命令：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apktool d test.apk		<span class="comment">//解包</span></span><br><span class="line">apktool b test			<span class="comment">//重打包</span></span><br></pre></td></tr></table></figure>
-
 <img src="/posts/15be101a/%E8%A7%A3%E5%8C%85.png" class="" title="解包">
-
 <img src="/posts/15be101a/%E9%87%8D%E6%89%93%E5%8C%85.png" class="" title="重打包">
-
 <p>重打包后的apk由于没有签名，所以这里需要对重打包后的apk进行签名后才能在手机上安装并运行。打开AK，工具-&gt;APK签名，将要签名的apk拖拉到软件中进行签名，点执行后将会在当前目录生成<code>hello_sign.apk</code>。</p>
 <img src="/posts/15be101a/%E7%AD%BE%E5%90%8D.png" class="" title="签名">
-
 <h2 id="7-2-破解so文件"><a href="#7-2-破解so文件" class="headerlink" title="7.2 破解so文件"></a>7.2 破解so文件</h2><p>打开AS，在<code>Logcat</code>模块连接好模拟器，将<code>.apk</code>文件安装到模拟器上，运行<code>.apk</code>，回到<code>Logcat</code>搜索“52pojie”。</p>
 <img src="/posts/15be101a/52pojie.png" class="" title="调用sayhello方法">
-
 <p>我们的目的是修改这句话。</p>
 <p>在主机上将<code>.apk</code>解包后，进入lib目录，发现有4个目录。</p>
 <img src="/posts/15be101a/lib.png" class="" title="lib目录">
-
 <p>那我们用IDA(这里用IDAv6.6，因为IDAv7.0没有<code>modifyfile</code>插件)打开<code>x86</code>目录下的so文件，Shift + F12打开字符串窗口，Ctrl + F 查找“52pojie”，双击进入找到其内存地址。</p>
 <img src="/posts/15be101a/%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80.png" class="" title="52pojie内存地址">
-
 <p>选中字符串，按照下图操作去到十六进制视图。</p>
-
 
 <p>将我们想写入的内容转换为十六进制。</p>
 <img src="/posts/15be101a/16%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2.png" class="" title="转换为16进制">
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">68 65 6c 6c 6f 20 76 35 6c 65 30 6e 39</span><br></pre></td></tr></table></figure>
-
 <p>回到IDA，选中需要修改的首字节右键-&gt;Edit。</p>
 <img src="/posts/15be101a/16%E8%BF%9B%E5%88%B6%E7%BC%96%E8%BE%91.png" class="" title="编辑字符串">
-
 <p>修改好，再次右键-&gt;Apply changes。</p>
 <p>Edit -&gt; Plugins -&gt; modifyfile -&gt; 确认更改。另存到某处。</p>
 <img src="/posts/15be101a/modifyfile.jpg" class="" title="modifyfile">
-
 <p>如果lib目录中有多种模式，如果修改32位<code>.so</code>则把所有32位处理器目录下的<code>.so</code>都更换为新的<code>.so</code>文件，64位同理。我们只修改的是32位的，所以只要在<code>x86</code>目录下替换即可。</p>
 <p>重新打包并签名。安装在模拟器上，运行。</p>
 <img src="/posts/15be101a/so.png" class="" title="修改so文件成功">
-
 <h1 id="8-IDA爆破签名验证-IDA静态分析"><a href="#8-IDA爆破签名验证-IDA静态分析" class="headerlink" title="8. IDA爆破签名验证(IDA静态分析)"></a>8. IDA爆破签名验证(IDA静态分析)</h1><p>我发现会飞的丑小鸭特别油麦，下面是他为了引出主题写的一个场景，我觉得特别逗就拿过来给你们看看。</p>
 <blockquote>
 <p>李华是一个很有天赋 的Android程序员 他用了半年时间含辛茹苦，挑灯夜战，摧枯拉朽的编写了一款黑宝宝游戏。当然这几个词形容的并不恰当，但是李华确实为了这个apk的上线付出了很多努力。谁知游戏刚一上线就被破解了，生不生气？难不难过？</p>
@@ -1000,52 +926,38 @@
 </blockquote>
 <p>用apktool解包apk后将项目载入AS，在<code>myJNI.smali</code>里有<code>check</code>函数，应该就是验证签名是否一致的函数。</p>
 <img src="/posts/15be101a/check.png" class="" title="check函数">
-
 <p>将<code>libJniTest.so</code>载入IDA，需要注意的是，IDA众多窗口中，有两个窗口与so有关：Exports窗口是导出表，能让外部调用so中的函数；Imports窗口是导入表，能让so调用外部的函数。所以根据上面的信息，so里有check函数，所以check可以被外部调用，应该在导出表里找check函数。</p>
 <img src="/posts/15be101a/exports.png" class="" title="导出表">
-
 <p>双击进去到汇编代码，F5进入反汇编代码。谁能想到<code>armeabi</code>目录下的<code>.so</code>文件需要IDA32才能反编译呢，果断把文件载入IDA32。</p>
 <p>以下两种情况是根据不同版本的IDA对so文件修改的处理。</p>
 <h2 id="IDAv7-0"><a href="#IDAv7-0" class="headerlink" title="IDAv7.0+"></a>IDAv7.0+</h2><p>去到反汇编代码后，看到很多字符串，暂时我们还不知道有什么用，但我们熟悉Log，下面这三条应该是输出Log语句。</p>
 <img src="/posts/15be101a/print.png" class="" title="导出表">
-
 <p>先进去<code>unk_223C</code>看看里面是什么。好吧，就算16进制转文本也翻译不出来。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">4A 4E 49 E8 8E B7 E5 8F 96 E5 88 B0 E7 9A 84 E7 AD BE E5 </span><br><span class="line">J  N  I</span><br><span class="line">90 8D E6 98 AF 25 73</span><br><span class="line">			    %  s</span><br></pre></td></tr></table></figure>
-
 <p>那就在模拟器运行一下用AS获取Log吧。</p>
 <img src="/posts/15be101a/%E8%8E%B7%E5%8F%96%E7%AD%BE%E5%90%8D.png" class="" title="出现Log">
-
 <p>再拿去16进制转文本，这跟上面的16进制代码有半毛钱关系吗？！这里我真不知道怎么回事，哪位大牛来告诉我。</p>
 <img src="/posts/15be101a/16%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%96%87%E6%9C%AC.png" class="" title="16进制转文本">
-
 <p>已知那一大串数字是签名，如果v9与字符串一致，则跳到<code>unk_261A</code>显示“签名一致”，那<code>unk_262E</code>自然就是“签名不一致”，退出程序。我们破解的思路是，就算v9与字符串不一致，也要让它跳到<code>unk_261A</code>去。</p>
 <p>回到汇编视图，在左侧的函数窗口找到<code>check</code>函数双击来到图形化窗口，找到关键跳转。</p>
 <img src="/posts/15be101a/%E6%B1%87%E7%BC%96.png" class="" title="关键跳转">
-
 <p>BNE：数据跳转指令，标志寄存器中Z标志位不等于零时, 跳转到BNE后标签处。<br>BEQ：数据跳转指令，标志寄存器中Z标志位等于零时, 跳转到BEQ后标签处。</p>
 <p>所以我们把<code>BNE</code>修改为<code>BEQ</code>即可。<code>BNE</code>的机器码为<code>D1</code>，<code>BEQ</code>的机器码为<code>D0</code>。按照下图操作修改机器码。</p>
 <img src="/posts/15be101a/%E4%BF%AE%E6%94%B9%E5%AD%97%E8%8A%82.jpg" class="" title="修改字节">
-
 <p>修改完后保存so文件。</p>
 <img src="/posts/15be101a/%E4%BF%9D%E5%AD%98so%E6%96%87%E4%BB%B6.jpg" class="" title="保存so文件">
-
 <img src="/posts/15be101a/bak.png" class="" title="保存备份">
-
 <p>把<code>armeabi</code>和<code>armeabi-v7a</code>下的<code>libJniTest.so</code>替换成修改后的so，再删掉<code>x86</code>目录。打包签名。</p>
 <p>这里为什么要删掉<code>x86</code>目录，可能是因为雷电模拟器是x86架构的，它默认使用<code>x86</code>目录下的<code>libJniTest.so</code>，所以删掉才有可能使用<code>armeabi</code>或<code>armeabi-v7a</code>目录下的<code>libJniTest.so</code>。</p>
 <h2 id="IDAv6-6"><a href="#IDAv6-6" class="headerlink" title="IDAv6.6"></a>IDAv6.6</h2><p>去到反汇编代码后，看到一条很长的字符串，暂时我们还不知道有什么用，但我们熟悉Log，下面这三条应该是输出Log语句。</p>
 <img src="/posts/15be101a/%E5%AD%97%E7%AC%A6%E4%B8%B2.png" class="" title="Log语句">
-
 <p>由于中文乱码，所以设置编码为UTF-8，Options -&gt;  ASCII string style -&gt; Set default encodings -&gt; 8-bit… -&gt; Change -&gt; UTF-8 -&gt; OK。</p>
 <img src="/posts/15be101a/string.png" class="" title="设置编码">
-
 <p>F5重新反编译一下，乱码问题解决。</p>
 <img src="/posts/15be101a/%E8%A7%A3%E5%86%B3%E4%B9%B1%E7%A0%81.png" class="" title="解决编码">
-
 <p>分析一下程序流程，<code>getSignature</code>是获取程序签名，获取的签名与那一长串比较，如果相等则“签名一致”。破解的思路是即使获取的签名与存储的签名不一致，也可以让程序跳到“签名一致”处，本质就是修改跳转指令。</p>
 <p>回到汇编视图，在左侧的函数窗口找到<code>check</code>函数双击，按空格来到图形化窗口，找到关键跳转。</p>
 <img src="/posts/15be101a/%E8%B7%B3%E8%BD%AC.png" class="" title="关键跳转">
-
 <p>BNE：数据跳转指令，标志寄存器中Z标志位不等于零时, 跳转到BNE后标签处。<br>BEQ：数据跳转指令，标志寄存器中Z标志位等于零时, 跳转到BEQ后标签处。</p>
 <p>所以我们把<code>BNE</code>修改为<code>BEQ</code>即可。<code>BNE</code>的机器码为<code>D1</code>，<code>BEQ</code>的机器码为<code>D0</code>。老方法，去到hex dump处修改十六进制代码。保存so文件，删掉<code>x86</code>目录，打包签名。</p>
 <h1 id="9-IDA动态破解登录验证"><a href="#9-IDA动态破解登录验证" class="headerlink" title="9. IDA动态破解登录验证"></a>9. IDA动态破解登录验证</h1><h2 id="9-1-预备知识与环境配置"><a href="#9-1-预备知识与环境配置" class="headerlink" title="9.1 预备知识与环境配置"></a>9.1 预备知识与环境配置</h2><p>jeb工具的使用 <a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-742250-1-1.html">https://www.52pojie.cn/thread-742250-1-1.html</a></p>
@@ -1058,74 +970,52 @@
 <p>adb devices检测不到genymotion模拟器 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_15158911/article/details/75304011">https://blog.csdn.net/qq_15158911/article/details/75304011</a> </p>
 <p>关闭端口：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\dell&gt;netstat -ano | findstr 23946</span><br><span class="line">  TCP    127.0.0.1:23946        0.0.0.0:0              LISTENING       13752</span><br><span class="line"></span><br><span class="line">C:\Users\dell&gt;taskkill -pid 13752 -f</span><br><span class="line">成功: 已终止 PID 为 13752 的进程。</span><br></pre></td></tr></table></figure>
-
 <h2 id="9-2-动态破解登录验证"><a href="#9-2-动态破解登录验证" class="headerlink" title="9.2 动态破解登录验证"></a>9.2 动态破解登录验证</h2><p>拿到一个<code>.apk</code>程序，先在模拟器上安装，运行一下熟悉流程。程序与第8节的几乎一样，但第8节的程序没有<code>android:debuggable=&quot;true&quot;</code>。</p>
-<p>将<code>.apk</code>文件用AK打开，因为需要调试，所以必须保证<code>application</code>标签里的<code> android:debuggable=&quot;true&quot;</code>。</p>
+<p>将<code>.apk</code>文件用AK打开，因为需要调试，所以必须保证<code>application</code>标签里的<code>android:debuggable=&quot;true&quot;</code>。</p>
 <img src="/posts/15be101a/debug.png" class="" title="android:debuggable&#x3D;true">
-
 <p>找到MainActivity入口类，并反编译成java代码。通过静态分析java代码可知，用户在输入用户名和密码后程序会调用Native方法check。</p>
 <img src="/posts/15be101a/13.png" class="" title="MainActivity">
-
 <img src="/posts/15be101a/14.png" class="" title="jni">
-
 <p>解包将<code>libJniTest.so</code>载入IDA分析check方法的具体实现。这个程序有3个lib，具体分析哪个<code>libJniTest.so</code>，看模拟器或真机默认使用哪个so。Genymotion虽然安装了arm架构，但如果有<code>x86</code>的so文件它还是使用<code>x86</code>目录下的。真机是arm架构的，用<code>armeabi-v7a</code>或<code>armeabi</code>都没问题，但修改完后要把两个目录下的so文件都替换成新的。</p>
 <p>将x86目录下的so文件载入IDA，几乎与armeabi目录下的差不多，但汇编代码是我们熟悉的PC逆向，感觉来了！</p>
 <img src="/posts/15be101a/9.2.8.png" class="" title="IDA反编译">
-
 <img src="/posts/15be101a/9.2.9.png" class="" title="汇编代码">
-
 <p>开始动态调试。将<code>IDA_Pro_7.5\dbgsrv</code>目录下的<code>android_x86_server</code> push 到模拟器<code>/data/local/tmp/</code>目录下，给777权限并运行<code>android_x86_server</code>。注意，真机 push <code>android_server</code>。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\dell&gt;adb push D:\CTF\tools\IDA_Pro_v7.5\dbgsrv\android_x86_server /data/local/tmp</span><br><span class="line">D:\CTF\tools\IDA_Pro_v7.5\dbgsrv\android_x86_server: 1 file pushed, 0 skipped. 693.5 MB/s (1130104 bytes in 0.002s)</span><br><span class="line"></span><br><span class="line">C:\Users\dell&gt;adb shell</span><br><span class="line">vbox86p:/ # cd /data/local/tmp</span><br><span class="line">vbox86p:/data/local/tmp # ls -al</span><br><span class="line">total 1900</span><br><span class="line">drwxrwx--x 2 shell shell    4096 2022-03-08 19:53 .</span><br><span class="line">drwxr-x--x 3 root  root     4096 2022-03-07 00:13 ..</span><br><span class="line">-rwxrwxrwx 1 root  root   786868 2020-12-31 11:00 android_server</span><br><span class="line">-rw-rw-rw- 1 root  root  1130104 2020-12-31 11:00 android_x86_server</span><br><span class="line">vbox86p:/data/local/tmp # chmod 777 android_x86_server</span><br><span class="line">vbox86p:/data/local/tmp # ./android_x86_server</span><br><span class="line">IDA Android x86 32-bit remote debug server(ST) v7.5.26. Hex-Rays (c) 2004-2020</span><br><span class="line">Listening on 0.0.0.0:23946...</span><br></pre></td></tr></table></figure>
-
 <p>新开一个cmd，执行端口转发命令：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\dell&gt;adb forward tcp:23946 tcp:23946</span><br><span class="line">23946</span><br></pre></td></tr></table></figure>
-
 <p>模拟器运行该程序，回到刚才打开的IDA，确保已经载入主机该程序的so文件，且与模拟器使用的so文件一致。Debugger -&gt; Select debugger 。选择Linux debugger。</p>
 <img src="/posts/15be101a/9.2.10.png" class="" title="Linux debugger">
-
 <p>Debugger -&gt; Process options ，确认端口号。</p>
 <img src="/posts/15be101a/9.2.11.png" class="" title="Linux 确认端口号">
-
 <p>Debugger -&gt; Attach to process ，找到我们需要附加的包名。</p>
 <img src="/posts/15be101a/9.2.12.png" class="" title="Linux 附加包名">
-
 <p>确认so文件是否一致。</p>
 <img src="/posts/15be101a/9.2.13.png" class="" title="so文件一致">
-
 <p>等它加载，在某个地方停下来，此时，EIP指向停止处。</p>
 <img src="/posts/15be101a/9.2.14.png" class="" title="载入界面">
-
 <p>Ctrl + S找so文件，找到有执行权限且最开始的so文件。</p>
 <img src="/posts/15be101a/9.2.15.png" class="" title="有执行权限的so文件">
-
 <p>或在Modules窗口找so文件，在so文件里找check方法。</p>
 <img src="/posts/15be101a/9.2.16.png" class="" title="汇编代码">
-
 <p>也可以F5查看伪代码，根据伪代码在汇编代码中找到几个跳转语句下断。</p>
 <img src="/posts/15be101a/9.2.17.png" class="" title="下断">
-
 <p>F9运行程序，输入用户名555和密码3333，点击登录，IDA停在第一个断点处。因为我们没有重新编译签名，所以签名是一致的，不跳转，继续往下执行。</p>
 <img src="/posts/15be101a/9.2.18.png" class="" title="第一个断点处">
-
 <p>F8往下执行或F9来到下个断点处，可以看到寄存器窗口ESI指向我们输入的用户名，EDI指向真正的用户名，将两个进行对比，由于不一致，所以跳转实现。第三个断点一样，不再赘述。</p>
 <img src="/posts/15be101a/9.2.19.png" class="" title="第二个断点处">
-
 <p>接下来修改，因为我们修改完so文件，要重新编译打包签名，所以签名校验一定要绕过，用户名和密码也要爆破，所以总共要修改三处跳转。</p>
 <p><code>jz</code>的机器码为74，<code>jnz</code>的机器码为75。选中要修改的字节，Edit -&gt; Patch program -&gt; Change Byte 。</p>
 <img src="/posts/15be101a/9.2.20.png" class="" title="修改程序">
-
 <p>Edit -&gt; Patch program -&gt; Apply patches to input file ，保存so文件。重打包，在AK中签名。模拟器安装程序，验证，登录成功。</p>
 <img src="/posts/15be101a/9.2.21.png" class="" title="运行成功">
-
 <p>注意，我们只修改了x86目录下的so文件，如果想要程序在所有架构都能“登录成功”，必须要修改它所有拥有的so文件。</p>
 <h1 id="10-动态调试反调试apk"><a href="#10-动态调试反调试apk" class="headerlink" title="10. 动态调试反调试apk"></a>10. 动态调试反调试apk</h1><h2 id="10-1-反调试及反反调试"><a href="#10-1-反调试及反反调试" class="headerlink" title="10.1 反调试及反反调试"></a>10.1 反调试及反反调试</h2><h3 id="10-1-1-IDA调试端口检测"><a href="#10-1-1-IDA调试端口检测" class="headerlink" title="10.1.1 IDA调试端口检测"></a>10.1.1 IDA调试端口检测</h3><p>原理：调试器远程调试时，会占用一些固定的端口号，如23946。</p>
 <p>解决方法：修改调试端口号。端口号范围从0到65535，0不使用，1到1023为BSD保留端口，也是系统端口，1024到5000是BSD临时端口，5001到65535为用户自定义端口。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./android_server -p6666</span><br></pre></td></tr></table></figure>
-
 <h3 id="10-1-2-调试器进程名检测"><a href="#10-1-2-调试器进程名检测" class="headerlink" title="10.1.2 调试器进程名检测"></a>10.1.2 调试器进程名检测</h3><p>原理：远程调试要在手机中运行<code>android_server</code>、<code>gdbserver</code>、<code>gdb</code>等进程。</p>
 <p>解决方法：修改调试器server名字。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rename android_server heiboy</span><br></pre></td></tr></table></figure>
-
 <h3 id="10-1-3-ptrace检测"><a href="#10-1-3-ptrace检测" class="headerlink" title="10.1.3 ptrace检测"></a>10.1.3 ptrace检测</h3><p>原理：一个进程只能被ptrace一次，可以自己ptrace自己，如果被调试器ptrace了，自己ptrace肯定ptrace不了，根据返回值进行判断。</p>
 <p>解决方法：</p>
 <ol>
@@ -1134,45 +1024,31 @@
 </ol>
 <h2 id="10-2-反反调试apk"><a href="#10-2-反反调试apk" class="headerlink" title="10.2 反反调试apk"></a>10.2 反反调试apk</h2><p>拿到一个<code>.apk</code>程序，先在AS原生模拟器上安装，运行一下熟悉流程。如果只有arm架构so文件的最好用AS原生模拟器，因为genymotion即使支持arm架构还是调试不了。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb install AliCrackme_2_killer.apk</span><br></pre></td></tr></table></figure>
-
 <img src="/posts/15be101a/9.2.1.png" class="" title="运行程序">
-
-<p>将<code>.apk</code>文件用AK打开，因为需要调试，所以必须保证<code>application</code>标签里有<code> android:debuggable=&quot;true&quot;</code>。如果没有必须加上，重新编译打包，卸载模拟器里的程序，重新安装。</p>
+<p>将<code>.apk</code>文件用AK打开，因为需要调试，所以必须保证<code>application</code>标签里有<code>android:debuggable=&quot;true&quot;</code>。如果没有必须加上，重新编译打包，卸载模拟器里的程序，重新安装。</p>
 <img src="/posts/15be101a/10.1.png" class="" title="android:debuggable&#x3D;true">
-
 <p>找到MainActivity入口类，并反编译成java代码。通过静态分析java代码可知，程序调用了Native方法<code>securityCheck</code>，且放在了<code>libcrackme.so</code>文件中。</p>
 <img src="/posts/15be101a/jni.png" class="" title="MainActivityjava代码">
-
 <p>解包发现只有<code>armeabi</code>目录的<code>libcrackme.so</code>，载入IDA分析<code>securityCheck</code>方法的具体实现，伪代码和汇编代码配合使用。</p>
 <img src="/posts/15be101a/10.2.png" class="" title="汇编代码">
-
 <img src="/posts/15be101a/9.2.2.png" class="" title="伪代码分析">
-
-<p>盲猜 v5 &#x3D;&#x3D; v3，但很遗憾，失败了，所以v3一定是经过某种转换才等于“wojiushidaan”。选中v5后面的v3右键-&gt;Set Ivar Type，通过<code>JNIEnv*</code>还原类似((_DWORD )v3 + 676))格式的指令。</p>
+<p>盲猜 v5 == v3，但很遗憾，失败了，所以v3一定是经过某种转换才等于“wojiushidaan”。选中v5后面的v3右键-&gt;Set Ivar Type，通过<code>JNIEnv*</code>还原类似((_DWORD )v3 + 676))格式的指令。</p>
 <img src="/posts/15be101a/9.2.3.png" class="" title="JNIEnv*">
-
 <img src="/posts/15be101a/9.2.4.png" class="" title="GetStringUTFChars">
-
 <p>要想知道怎么变换，需要动态调试<code>libcrackme.so</code>文件。</p>
 <p>打开cmd，将<code>IDA_Pro_v7.5\dbgsrv</code>目录下的<code>android_server</code> push 到模拟器<code>/data/local/tmp/</code>目录下，给777权限并运行<code>android_server</code>。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\dell&gt;adb push D:\CTF\tools\IDA_Pro_v7.5\dbgsrv\android_server /data/local/tmp</span><br><span class="line">D:\CTF\tools\IDA_Pro_v7.5\dbgsrv\android_server: 1 file pushed, 0 skipped. 494.3 MB/s (589588 bytes in 0.001s)</span><br><span class="line"></span><br><span class="line">C:\Users\dell&gt;adb shell</span><br><span class="line">vbox86p:/ # cd /data/local/tmp</span><br><span class="line">vbox86p:/data/local/tmp # ls -al</span><br><span class="line">total 596</span><br><span class="line">drwxrwx--x 2 shell shell   4096 2022-03-07 09:01 .</span><br><span class="line">drwxr-x--x 3 root  root    4096 2022-03-07 00:13 ..</span><br><span class="line">-rw-rw-rw- 1 root  root  589588 2017-09-14 03:08 android_server</span><br><span class="line">vbox86p:/data/local/tmp # chmod 777 android_server</span><br><span class="line">vbox86p:/data/local/tmp # ./android_server</span><br><span class="line">IDA Android 32-bit remote debug server(ST) v1.22. Hex-Rays (c) 2004-2017</span><br><span class="line">Listening on 0.0.0.0:23946...</span><br></pre></td></tr></table></figure>
-
 <p>新开一个cmd，执行端口转发命令：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\dell&gt;adb forward tcp:23946 tcp:23946</span><br><span class="line">23946</span><br></pre></td></tr></table></figure>
-
 <p>按照第9节的照做一遍，PC指向程序停止处。 Ctrl + S 找到有执行权限的<code>libcrackme.so</code>，在Modules窗口找到的<code>securityCheck</code>函数的图形化界面竟然没有显示“wojiushidaan”，而是“aiyou,bucuoo”。</p>
 <img src="/posts/15be101a/10.3.png" class="" title="汇编代码">
-
 <p>回到汇编代码再函数起始处下断，F9运行，程序直接退出。说明程序有反调试功能。</p>
 <img src="/posts/15be101a/10.7.png" class="" title="下断点">
-
 <p>先不管那么多，输入“aiyou,bucuoo”试试，成功了！</p>
 <img src="/posts/15be101a/10.4.png" class="" title="输入校验码">
-
-<p>好啦好啦你肯定又跟我说我学的是破解！回归正题，反调试的基本原理是这样的：IDA使用android_server在root环境下注入到被调试的进程中，用到的技术是Linux中的ptrace，当Android中的一个进程被另外一个进程ptrace之后，在其status文件中有一个字段TracerPid可以标识是被哪一个进程trace了(Linux中的&#x2F;proc&#x2F;pid&#x2F;status文件)。这里有两个地方是so动态加载完毕前执行的，<code>.init_array</code>是一个so最先加载的一个段信息，时机最早，现在一般so解密操作都是在这里做的；<code>JNI_OnLoad</code>是so被System.loadLibrary调用的时候执行的，它的时机早于native方法的执行。</p>
+<p>好啦好啦你肯定又跟我说我学的是破解！回归正题，反调试的基本原理是这样的：IDA使用android_server在root环境下注入到被调试的进程中，用到的技术是Linux中的ptrace，当Android中的一个进程被另外一个进程ptrace之后，在其status文件中有一个字段TracerPid可以标识是被哪一个进程trace了(Linux中的/proc/pid/status文件)。这里有两个地方是so动态加载完毕前执行的，<code>.init_array</code>是一个so最先加载的一个段信息，时机最早，现在一般so解密操作都是在这里做的；<code>JNI_OnLoad</code>是so被System.loadLibrary调用的时候执行的，它的时机早于native方法的执行。</p>
 <p>反调试机制很可能在<code>JNI_Onload</code>处就让程序退出的，所以我们得先去掉反调试机制，才能继续进行破解。那如何断在<code>JNI_OnLoad</code>函数指令处呢？Debugger -&gt; Debugger options -&gt; 勾选下面三个选项。</p>
 <img src="/posts/15be101a/%E4%B8%89%E9%80%89%E9%A1%B9.png" class="" title="三个选项">
-
 <p>这三个选项意味着：</p>
 <ul>
 <li>第一个：在APK程序入口处停止。</li>
@@ -1181,49 +1057,33 @@
 </ul>
 <p>但是由于被调试程序一运行就会执行static中的语句，因此需要让程序停在加载so文件之前，故可以使用debug方式来启动：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\dell&gt;adb shell am start -D -n com.yaotong.crackme/.MainActivity</span><br><span class="line">Starting: Intent &#123; cmp=com.yaotong.crackme/.MainActivity &#125;</span><br></pre></td></tr></table></figure>
-
 <p>在载入so文件的IDA下点击 Debugger -&gt; Attach to process ，找到我们需要附加的包名。等它加载到PC停止。</p>
 <p>此时，so文件还没有被加载到内存中去，所以还要让程序跑起来。启动 DDMS（进入sdk安装目录<code>\sdk\tools</code>下，运行<code>monitor.bat</code>脚本启动），在DDMS上选择相应进程后，使用指令使apk继续运行，成功后，DDMS上进程将显示绿色，否则是红色。</p>
 <img src="/posts/15be101a/DDMS.png" class="" title="在DDMS上选择相应进程">
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\dell&gt;jdb -connect com.sun.jdi.SocketAttach:port=8700,hostname=localhost</span><br><span class="line">设置未捕获的java.lang.Throwable</span><br><span class="line">设置延迟的未捕获的java.lang.Throwable</span><br><span class="line">正在初始化jdb...</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-
 <img src="/posts/15be101a/DDMS2.png" class="" title="显示绿色">
-
 <p>如果在DDMS中找不到相应进程，点一下重置adb，再选中目标进程，输入命令。</p>
 <img src="/posts/15be101a/reset.jpg" class="" title="重置adb">
-
 <p>点击运行几次，直至弹窗。</p>
 <img src="/posts/15be101a/10.6.png" class="" title="弹窗">
-
 <p>Ctrl + S 看到有执行权限的<code>libcrackme.so</code>文件，在Modulus窗口找到<code>libcrackme.so</code>中的<code>JNI_Oload</code>函数，在函数起始处下断，F9运行。</p>
 <img src="/posts/15be101a/10.6.jpg" class="" title="下断运行">
-
 <p>然后F8步过，来到此位置。经多次调试，运行到<code>BLX R7</code>时会跳到另一段代码处。这段代码的用途是创建线程。</p>
 <img src="/posts/15be101a/10.8.jpg" class="" title="创建线程">
-
-<p>为什么要在<code>JNI_Oload</code>里创建线程呢？很有可能是ptrace检测。<code> thread_create</code>函数在<code>init_array</code>段里，这个函数创建了一个线程循环来读取<code>/proc/pid/status</code>文件下的TracePid的值，如果大于0说明程序正在被调试，退出程序。直接nop掉这行代码试试。arm的<code>ANDEQ R0</code>对应x86的<code>nop</code>，机器码为<code>00 00</code>。</p>
+<p>为什么要在<code>JNI_Oload</code>里创建线程呢？很有可能是ptrace检测。<code>thread_create</code>函数在<code>init_array</code>段里，这个函数创建了一个线程循环来读取<code>/proc/pid/status</code>文件下的TracePid的值，如果大于0说明程序正在被调试，退出程序。直接nop掉这行代码试试。arm的<code>ANDEQ R0</code>对应x86的<code>nop</code>，机器码为<code>00 00</code>。</p>
 <img src="/posts/15be101a/10.9.png" class="" title="nop掉创建线程">
-
 <p>保存，重打包，签名。现在用第9节的方法再试一遍，看是否能在<code>libcrackme.so</code>中的<code>securityCheck</code>方法中断下来。先下断点，再在app中输入密码，点击按钮，IDA成功停在断点处。</p>
 <img src="/posts/15be101a/10.10.png" class="" title="停在断点处">
-
 <p>接下来如何破解？F8步过，运行到此处，查看R0寄存器，存的是输入的“555”。</p>
 <img src="/posts/15be101a/10.11.png" class="" title="R0寄存器">
-
 <img src="/posts/15be101a/10.12.png" class="" title="代码分析">
-
 <p>如果要使输入任何都成功，则需要修改循环里的两个跳转语句。呃不知道为什么这里BNE的机器码不是<code>D1</code>，所以只能全都改为nop语句也是可以的。</p>
 <img src="/posts/15be101a/10.13.png" class="" title="BNE">
-
 <img src="/posts/15be101a/10.14.png" class="" title="nop">
-
 <p>卸载模拟器中旧的app：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb uninstall com.yaotong.crackme</span><br></pre></td></tr></table></figure>
-
 <p>安装新的，运行。无论输入什么都会跳转到成功页面。</p>
 <img src="/posts/15be101a/10.15.png" class="" title="成功">
-
 <h1 id="11-编写Xposed模块"><a href="#11-编写Xposed模块" class="headerlink" title="11. 编写Xposed模块"></a>11. 编写Xposed模块</h1><p>Xpose是一款特殊的安卓应用，诞生于著名的XDA论坛，它的原理是替换安卓系统<code>/system/bin</code>目录下的app_process来控制zygote进程，使得app_pross在启动时会加载<code>XposedBridge.jar</code>，从而实现对zygode进程以及其创建的虚拟机的劫持，最终对系统的某些功能实现接管。</p>
 <p>优点：Xpose可以在我们不破坏apk自身的情况下实现对函数的hook，修改函数的参数和返回值，改变函数的结构并执行我们自己的代码，用好了Xposed可以对我们的逆向过程起到事半功倍的作用。</p>
 <p>缺点：本身不能对so中的函数进行修改，需要结合其他框架。 </p>
@@ -1237,61 +1097,42 @@
 </ul>
 <p>先在AS中创建一个Empty Activity项目，在界面创建一个按钮，实现某种功能。</p>
 <img src="/posts/15be101a/11.8.png" class="" title="增加按钮">
-
 <p>在<code>MainActivity.java</code>中编写实现按钮功能代码。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.xposemk;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> androidx.appcompat.app.AppCompatActivity;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.widget.Button;</span><br><span class="line"><span class="keyword">import</span> android.widget.Toast;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MainActivity</span> <span class="keyword">extends</span> <span class="title class_">AppCompatActivity</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Button mBtn;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(Bundle savedInstanceState)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        mBtn = (Button) findViewById(R.id.btn);</span><br><span class="line">        mBtn.setOnClickListener(<span class="keyword">new</span> <span class="title class_">View</span>.OnClickListener()&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onClick</span><span class="params">(View v)</span>&#123;</span><br><span class="line">                Toast.makeText(MainActivity.<span class="built_in">this</span>, message(), Toast.LENGTH_SHORT).show();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">message</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;红红火火恍恍惚惚&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>连接好模拟器，安装app运行。</p>
 <img src="/posts/15be101a/11.9.png" class="" title="正常运行">
-
 <p>现在通过编写一个Xposed模块修改按钮被点击后显示的弹框信息。</p>
 <p>下载XposedBridgeAPI模块 <a target="_blank" rel="noopener" href="https://github.com/924587628/XposedBridgeAPI">https://github.com/924587628/XposedBridgeAPI</a> ，将下载的API拖进libs文件夹。</p>
 <img src="/posts/15be101a/11.2.png" class="" title="拖进libs文件夹">
-
 <p>右击jar包 -&gt; Add As Library -&gt; OK。</p>
 <p>app -&gt; src -&gt; main -&gt; AndroidManifest.xml ，在<code>application</code>标签中加入Xpose配置信息。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta-data</span><br><span class="line">        android:name=&quot;xposedmodule&quot;</span><br><span class="line">        android:value=&quot;true&quot; /&gt;</span><br><span class="line">&lt;meta-data</span><br><span class="line">        android:name=&quot;xposeddescription&quot;</span><br><span class="line">        android:value=&quot;Easy example&quot; /&gt;</span><br><span class="line">&lt;meta-data</span><br><span class="line">        android:name=&quot;xposedminversion&quot;</span><br><span class="line">        android:value=&quot;89&quot; /&gt;</span><br></pre></td></tr></table></figure>
-
 <img src="/posts/15be101a/11.3.png" class="" title="Xposed">
-
 <p>app -&gt; build.gradle，在dependencies段里修改。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    ...</span><br><span class="line">    compileOnly files(&#x27;libs\\XposedBridgeAPI-89.jar&#x27;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <img src="/posts/15be101a/11.4.png" class="" title="compileOnly">
-
 <p>在<code>MainActivity.java</code>同目录里新建一个<code>hook.java</code>，代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.xposemk;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.IXposedHookLoadPackage;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XC_MethodHook;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XposedBridge;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XposedHelpers;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.callbacks.XC_LoadPackage;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">hook</span> <span class="keyword">implements</span> <span class="title class_">IXposedHookLoadPackage</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handleLoadPackage</span><span class="params">(XC_LoadPackage.LoadPackageParam loadPackageParam)</span> <span class="keyword">throws</span> Throwable&#123;</span><br><span class="line">        <span class="keyword">if</span>(loadPackageParam.packageName.equals(<span class="string">&quot;com.example.xposemk&quot;</span>))&#123;</span><br><span class="line">            XposedBridge.log(<span class="string">&quot;hooking...&quot;</span>);</span><br><span class="line">            <span class="type">Class</span> <span class="variable">cls</span> <span class="operator">=</span> loadPackageParam.classLoader.loadClass(<span class="string">&quot;com.example.xposemk.MainActivity&quot;</span>);</span><br><span class="line">            XposedHelpers.findAndHookMethod(cls, <span class="string">&quot;message&quot;</span>, <span class="keyword">new</span> <span class="title class_">XC_MethodHook</span>()&#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">beforeHookedMethod</span><span class="params">(MethodHookParam param)</span> <span class="keyword">throws</span> Throwable&#123;</span><br><span class="line">                    <span class="built_in">super</span>.beforeHookedMethod(param);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">afterHookedMethod</span><span class="params">(MethodHookParam param)</span> <span class="keyword">throws</span> Throwable&#123;</span><br><span class="line">                    <span class="type">Object</span> <span class="variable">obj</span> <span class="operator">=</span> param.getResult();</span><br><span class="line">                    XposedBridge.log(obj.toString());</span><br><span class="line">                    param.setResult(<span class="string">&quot;biubiubiu&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>右击main，New -&gt; Folder -&gt; Assets Folder。main -&gt; assets 右键 -&gt; New -&gt; file ，新建<code>xposed_init</code>文件，将内容编辑为包名+类名。</p>
 <img src="/posts/15be101a/11.6.png" class="" title="Xposed_init文件">
-
 <img src="/posts/15be101a/11.7.png" class="" title="包名+类名">
-
 <p>模拟器卸载原本的app，重新安装。打开Xposed Installer，在模块栏勾选对应进程。</p>
 <img src="/posts/15be101a/11.11.png" class="" title="Xposed Installer勾选对应进程">
-
 <p>重启模拟器，运行app，发现显示的弹框信息已被修改。</p>
 <img src="/posts/15be101a/11.10.png" class="" title="弹框信息已被修改">
-
 <h1 id="12-Xpose实战"><a href="#12-Xpose实战" class="headerlink" title="12. Xpose实战"></a>12. Xpose实战</h1><p>hook一个函数需要知道以下三点：<br>(1)方法的包名+类名<br>(2)方法名<br>(3)方法的参数类型 </p>
 <img src="/posts/15be101a/12.1.png" class="" title="解锁失败">
-
 <p>用jeb打开apk，查看<code>MainActivity</code>反编译的源码。</p>
 <img src="/posts/15be101a/12.2.png" class="" title="查看源码">
-
 <p>发现有好多a，这里应该是做了简单混淆。那就一个个来看吧。</p>
 <img src="/posts/15be101a/12.3.png" class="" title="简单混淆">
-
 <p><code>com.hfdcxy.android.by.a</code>包中有一个类a，其中有一个方法a和一个属性a。<code>a.a.a</code>的作用是输出Log语句。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hfdcxy.android.by.a;</span><br><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">a</span> &#123;<span class="comment">//类a</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">boolean</span> a;<span class="comment">//属性a</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        a.a = <span class="literal">false</span>;<span class="comment">//属性a一开始为false</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">a</span><span class="params">(String arg1)</span> &#123;<span class="comment">//方法a</span></span><br><span class="line">        <span class="keyword">if</span>(a.a) &#123;<span class="comment">//如果属性a为true，输出Log</span></span><br><span class="line">            Log.i(<span class="string">&quot;Tiger_test&quot;</span>, arg1);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><code>com.hfdcxy.android.by.test</code>包中有一个类a，其中有一个方法a。<code>test.a.a</code>的作用是MD5加密。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hfdcxy.android.by.test;</span><br><span class="line"><span class="keyword">import</span> java.security.MessageDigest;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">a</span> &#123;<span class="comment">//类a</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">a</span><span class="params">(String arg6)</span> &#123;<span class="comment">//方法a</span></span><br><span class="line">        MessageDigest v2;</span><br><span class="line">        <span class="type">int</span> <span class="variable">v1</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            v2 = MessageDigest.getInstance(<span class="string">&quot;MD5&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span>(Exception v0) &#123;</span><br><span class="line">            System.out.println(v0.toString());</span><br><span class="line">            v0.printStackTrace();</span><br><span class="line">            <span class="type">String</span> <span class="variable">v0_1</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">            <span class="keyword">return</span> v0_1;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">char</span>[] v3 = arg6.toCharArray();</span><br><span class="line">        <span class="type">byte</span>[] v4 = <span class="keyword">new</span> <span class="title class_">byte</span>[v3.length];</span><br><span class="line">        <span class="type">int</span> v0_2;</span><br><span class="line">        <span class="keyword">for</span>(v0_2 = <span class="number">0</span>; v0_2 &lt; v3.length; ++v0_2) &#123;</span><br><span class="line">            v4[v0_2] = ((<span class="type">byte</span>)v3[v0_2]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">byte</span>[] v0_3 = v2.digest(v4);</span><br><span class="line">        <span class="type">StringBuffer</span> <span class="variable">v2_1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuffer</span>();</span><br><span class="line">        <span class="keyword">while</span>(v1 &lt; v0_3.length) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">v3_1</span> <span class="operator">=</span> v0_3[v1] &amp; <span class="number">255</span>;</span><br><span class="line">            <span class="keyword">if</span>(v3_1 &lt; <span class="number">16</span>) &#123;</span><br><span class="line">                v2_1.append(<span class="string">&quot;0&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            v2_1.append(Integer.toHexString(v3_1));</span><br><span class="line">            ++v1;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> v2_1.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>因为解锁成功与否的过程没用到<code>b.a</code>，暂时先不分析它。</p>
 <p>重新看这条关键代码，它的意思是v0等于当前手机的<code>android_id</code>经过MD5加密后与固定字符串<code>hfdcxy1011</code>进行拼接后再进行一次MD5加密得到的值截取前6位。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">v0</span> <span class="operator">=</span> a.a(a.a(Settings$System.getString(<span class="built_in">this</span>.a.getContentResolver(), <span class="string">&quot;android_id&quot;</span>)) + <span class="string">&quot;hfdcxy1011&quot;</span>).substring(<span class="number">0</span>, <span class="number">6</span>);</span><br></pre></td></tr></table></figure>
-
 <p>这里有三种方式可以把这个解锁码打印出来：</p>
 <p>(1)我们知道<code>test.a.a</code>方法是最后一层加密，我们可以hook这个a方法把它的返回值打印出来，然后取其前6位为解锁码；</p>
 <p>(2)因为整个apk只有一处对<code>substring</code>的调用，我们可以hook系统函数<code>substring</code>把函数返回值打印出来；</p>
@@ -1300,91 +1141,64 @@
 <p>方法的包名+类名：com.hfdcxy.android.by.test.a<br>方法名：a<br>方法的参数类型：String</p>
 <p>过滤下包名防止Xposed找不到包名对应的类报错，这里的包名是<code>manifest</code>标签下的包名<code>com.ss.android.ugc.aweme</code>。</p>
 <img src="/posts/15be101a/12.4.png" class="" title="包名">
-
 <p>在第11节程序里面的hook类编写hook代码。就是模板，往里塞参数就行。</p>
 <img src="/posts/15be101a/12.5.png" class="" title="hook代码">
-
 <p>连上模拟器，安装app，Xposed Installer勾选相应程序模块，重启模拟器。运行<code>解锁程序.apk</code>，随意输入解锁码，点击解锁。回到AS搜索Log。</p>
 <img src="/posts/15be101a/12.6.png" class="" title="Logcat">
-
 <p>因为<code>test.a.a</code>共调用了两次，第一次<code>MD5(android_id)</code>，第二次<code>MD5(MD5(android_id)+hfdcxy1011)</code>，取最后一次的前6位才是解锁码116f58。</p>
 <p>输入解锁码，进入充值页面。</p>
 <img src="/posts/15be101a/12.7.png" class="" title="解锁成功">
-
 <p>点几下充值金币，再点开启宝箱，发现金币不足。回jeb继续分析代码。我们已经进入“解锁成功”的代码里去，看到里面调用了<code>DrawActivity</code>类。</p>
 <img src="/posts/15be101a/12.8.png" class="" title="DrawActivity">
-
 <p>进去看看。</p>
 <img src="/posts/15be101a/12.9.png" class="" title="DrawActivity">
-
 <p>也就是需要点击9999次才能开启宝箱，达咩！我们的思路是直接hook第一个按钮，修改<code>test.b.a</code>方法，使按一次就有10000金币。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hfdcxy.android.by.test;</span><br><span class="line"><span class="keyword">import</span> android.content.SharedPreferences$Editor;</span><br><span class="line"><span class="keyword">import</span> android.content.SharedPreferences;</span><br><span class="line"><span class="keyword">import</span> android.widget.TextView;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">b</span> &#123;<span class="comment">//类b</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">b</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">a</span><span class="params">(SharedPreferences arg5, TextView arg6, <span class="type">int</span> arg7)</span> &#123;<span class="comment">//方法a，arg7是点击一次增加的金币数</span></span><br><span class="line">        <span class="type">SharedPreferences$Editor</span> <span class="variable">v0</span> <span class="operator">=</span> arg5.edit();</span><br><span class="line">        v0.putInt(<span class="string">&quot;coin&quot;</span>, arg5.getInt(<span class="string">&quot;coin&quot;</span>, <span class="number">0</span>) + arg7);</span><br><span class="line">        v0.commit();</span><br><span class="line">        arg6.setText(String.valueOf(arg5.getInt(<span class="string">&quot;coin&quot;</span>, <span class="number">0</span>)));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>方法的包名+类名：com.hfdcxy.android.by.test.b<br>方法名：a<br>方法的参数类型：SharedPreferences、TextView、int</p>
 <p>编写hook代码：</p>
 <img src="/posts/15be101a/12.10.png" class="" title="hook代码">
-
 <p>同样操作走一次，开启宝箱。</p>
 <img src="/posts/15be101a/12.12.png" class="" title="开启宝箱">
-
 <img src="/posts/15be101a/12.11.png" class="" title="开启宝箱">
-
 <p>我们可以尝试一下获取解锁码的第二第三种方法。</p>
 <p>第二种：<code>substring</code>是一个Java系统内部的方法，百度搜一下它的构造方法。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> String <span class="title function_">substring</span><span class="params">(<span class="type">int</span> beginIndex)</span></span><br><span class="line"></span><br><span class="line">或</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">substring</span><span class="params">(<span class="type">int</span> beginIndex, <span class="type">int</span> endIndex)</span></span><br></pre></td></tr></table></figure>
-
 <p>方法的包名+类名：java.lang.String<br>方法名：substring<br>方法的参数类型：int、int</p>
 <p>编写Xpose代码：</p>
 <img src="/posts/15be101a/12.14.png" class="" title="xpose代码">
-
 <img src="/posts/15be101a/12.13.png" class="" title="解锁码">
-
 <p>哈哈哈好像不止一个，但很容易知道哪个是解锁码，但是下面这样写是不行。</p>
 <p>方法的包名+类名：com.hfdcxy.android.by.test.a.a<br>方法名：substring<br>方法的参数类型：int、int</p>
 <p>第三种：通过<code>a.a.a</code>方法打印Log。因为v0是解锁码的前6位，刚好下一行就是Log输出v0的代码。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">v0</span> <span class="operator">=</span> a.a(a.a(Settings$System.getString(<span class="built_in">this</span>.a.getContentResolver(), <span class="string">&quot;android_id&quot;</span>)) + <span class="string">&quot;hfdcxy1011&quot;</span>).substring(<span class="number">0</span>, <span class="number">6</span>);</span><br><span class="line">com.hfdcxy.android.by.a.a.a(<span class="string">&quot;解锁码&quot;</span> + v0);</span><br></pre></td></tr></table></figure>
-
 <p>方法的包名+类名：com.hfdcxy.android.by.a.a<br>方法名：a<br>方法的参数类型：String</p>
 <img src="/posts/15be101a/12.15.png" class="" title="解锁码">
-
 <h1 id="13-Xpose实战2"><a href="#13-Xpose实战2" class="headerlink" title="13. Xpose实战2"></a>13. Xpose实战2</h1><p>目标：hook修改极品美女找茬游戏中的金币余额为999。</p>
 <p>运行apk，每次评论或分享都可以获得50金币。</p>
 <img src="/posts/15be101a/13.1.png" class="" title="找茬求助界面">
-
-<p>AK查看apk，manifest标签的包名为com.jimmy.beauty.pick，application标签添加android_debugable&#x3D;”true”。</p>
+<p>AK查看apk，manifest标签的包名为com.jimmy.beauty.pick，application标签添加android_debugable=”true”。</p>
 <p>jeb中在smali代码中搜索“金币”，发现它在SOSActivity中。</p>
 <img src="/posts/15be101a/13.2.png" class="" title="100金币">
-
 <p>进入SOSActivity反编译成Java代码，在某个case中发现CommentActivity。</p>
 <img src="/posts/15be101a/13.3.png" class="" title="SOSActivity">
-
 <p>继续进去CommentActivity看看。有个按钮事件，一个是“现在去给”评价，另一个是“以后再说”。修改的思路是将giveComment方法放到“以后再说”，再将giveComment方法里的前3行都去掉，因为那几行代码是构造支付链接。这些都是在AK中修改smali代码完成的。</p>
 <img src="/posts/15be101a/13.4.png" class="" title="giveComment">
-
 <p>进去setMoney方法，一个参数为Context类型，一个参数为int类型。</p>
 <img src="/posts/15be101a/13.5.png" class="" title="setMoney">
-
 <p>此时可以hook这个setMoney方法了。</p>
 <img src="/posts/15be101a/13.6.png" class="" title="hook代码">
-
 <p>连上模拟器，安装app，Xposed Installer勾选相应程序模块，重启模拟器。运行程序，开一局游戏，求助 -&gt; 评论 -&gt; 以后再说，就可以获得999金币！</p>
 <img src="/posts/15be101a/13.7.png" class="" title="hook代码">
-
 <h1 id="14-adb注意事项"><a href="#14-adb注意事项" class="headerlink" title="14. adb注意事项"></a>14. adb注意事项</h1><p>每次打开AS模拟器都会弹出如下图所示的错误：</p>
 <img src="/posts/15be101a/14.1.png" class="" title="错误">
-
-<p>是因为5037端口被占用了。在cmd输入<code> netstat -ano|findstr &quot;5037&quot;</code>查看被哪个进程占用。</p>
+<p>是因为5037端口被占用了。在cmd输入<code>netstat -ano|findstr &quot;5037&quot;</code>查看被哪个进程占用。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\dell&gt;netstat -ano|findstr &quot;5037&quot;</span><br><span class="line">  TCP    [::1]:3425             [::1]:5037             SYN_SENT        18760</span><br></pre></td></tr></table></figure>
-
 <p>输入<code>taskkill -f -pid 18760</code>杀死相应的进程。</p>
 <h1 id="15-Native层hook"><a href="#15-Native层hook" class="headerlink" title="15. Native层hook"></a>15. Native层hook</h1><p>本来想安装Cydia Substrate的，结果这个软件很久没更新了，最高只支持安卓系统4.3的，模拟器和近几年的真机都安装不了，所以换了另一个框架Frida。</p>
 <p><a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-1128884-1-1.html">Frida超详细安装实战教程</a></p>
 <h2 id="15-1-Frida-hook-java"><a href="#15-1-Frida-hook-java" class="headerlink" title="15.1 Frida hook java"></a>15.1 Frida hook java</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> frida  <span class="comment">#导入frida模块</span></span><br><span class="line"><span class="keyword">import</span> sys    <span class="comment">#导入sys模块</span></span><br><span class="line"></span><br><span class="line">jscode = <span class="string">&quot;&quot;&quot;  #从此处开始定义用来Hook的javascript代码</span></span><br><span class="line"><span class="string">    Java.perform(function()&#123;  </span></span><br><span class="line"><span class="string">        var MainActivity = Java.use(&#x27;com.example.testfrida.MainActivity&#x27;); //获得MainActivity类</span></span><br><span class="line"><span class="string">        MainActivity.testFrida.implementation = function()&#123; //Hook testFrida函数，用js自己实现</span></span><br><span class="line"><span class="string">            send(&#x27;Statr! Hook!&#x27;); //发送信息，用于回调python中的函数</span></span><br><span class="line"><span class="string">            return &#x27;Change String!&#x27; //劫持返回值，修改为我们想要返回的字符串</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;);</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">on_message</span>(<span class="params">message,data</span>): <span class="comment">#js中执行send函数后要回调的函数</span></span><br><span class="line">    <span class="built_in">print</span>(message)</span><br><span class="line"></span><br><span class="line">process = frida.get_remote_device().attach(<span class="string">&#x27;com.example.testfrida&#x27;</span>) <span class="comment">#得到设备并劫持进程com.example.testfrida（该开始用get_usb_device函数用来获取设备，但是一直报错找不到设备，改用get_remote_device函数即可解决这个问题）</span></span><br><span class="line">script = process.create_script(jscode) <span class="comment">#创建js脚本</span></span><br><span class="line">script.on(<span class="string">&#x27;message&#x27;</span>,on_message) <span class="comment">#加载回调函数，也就是js中执行send函数规定要执行的python函数</span></span><br><span class="line">script.load() <span class="comment">#加载脚本</span></span><br><span class="line">sys.stdin.read()</span><br></pre></td></tr></table></figure>
-
 <h2 id="15-2-Frida-hook-返回值为int类型"><a href="#15-2-Frida-hook-返回值为int类型" class="headerlink" title="15.2 Frida hook 返回值为int类型"></a>15.2 Frida hook 返回值为int类型</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> frida</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">jscode = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Java.perform(function()&#123;</span></span><br><span class="line"><span class="string">    //下面这一句代码是指定要Hook的so文件名和要Hook的函数名，函数名就是上面IDA导出表中显示的那个函数名</span></span><br><span class="line"><span class="string">    Interceptor.attach(Module.findExportByName(&quot;libfridaso.so&quot;,&quot;Java_com_example_fridaso_FridaSoDefine_FridaSo&quot;),&#123;</span></span><br><span class="line"><span class="string">        //onEnter: function(args)顾名思义就是进入该函数前要执行的代码，其中args是传入的参数，一般so层函数第一个参数都是JniEnv，第二个参数是jclass，从第三个参数开始才是我们java层传入的参数</span></span><br><span class="line"><span class="string">        onEnter: function(args) &#123;</span></span><br><span class="line"><span class="string">            send(&quot;Hook start&quot;);</span></span><br><span class="line"><span class="string">            send(&quot;args[2]=&quot; + args[2]); //打印我们java层第一个传入的参数</span></span><br><span class="line"><span class="string">            send(&quot;args[3]=&quot; + args[3]); //打印我们java层传入的第二个参数</span></span><br><span class="line"><span class="string">        &#125;,</span></span><br><span class="line"><span class="string">        onLeave: function(retval)&#123; //onLeave: function(retval)是该函数执行结束要执行的代码，其中retval参数即是返回值</span></span><br><span class="line"><span class="string">            send(&quot;return:&quot;+retval); //打印返回值</span></span><br><span class="line"><span class="string">            retval.replace(0); //替换返回值为0</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;);</span></span><br><span class="line"><span class="string">&#125;);</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">printMessage</span>(<span class="params">message,data</span>):</span><br><span class="line">    <span class="keyword">if</span> message[<span class="string">&#x27;type&#x27;</span>] == <span class="string">&#x27;send&#x27;</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;&#123;0&#125;&#x27;</span>.<span class="built_in">format</span>(message[<span class="string">&#x27;payload&#x27;</span>]))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(message)</span><br><span class="line"></span><br><span class="line">process = frida.get_remote_device().attach(<span class="string">&#x27;com.example.fridaso&#x27;</span>)</span><br><span class="line">script = process.create_script(jscode)</span><br><span class="line">script.on(<span class="string">&#x27;message&#x27;</span>,printMessage)</span><br><span class="line">script.load()</span><br><span class="line">sys.stdin.read()</span><br></pre></td></tr></table></figure>
-
 <h2 id="15-3-Frida-hook-返回值为String类型"><a href="#15-3-Frida-hook-返回值为String类型" class="headerlink" title="15.3 Frida hook 返回值为String类型"></a>15.3 Frida hook 返回值为String类型</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> frida</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">jscode = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Java.perform(function()&#123;</span></span><br><span class="line"><span class="string">    Interceptor.attach(Module.findExportByName(&quot;libfridaso.so&quot;,&quot;Java_com_example_fridasostring_fridaSoString_FridaSo&quot;),&#123;</span></span><br><span class="line"><span class="string">        onEnter: function(args) &#123;</span></span><br><span class="line"><span class="string">            send(&quot;Hook start&quot;);</span></span><br><span class="line"><span class="string">            send(&quot;args[2]=&quot; + args[2]);</span></span><br><span class="line"><span class="string">        &#125;,</span></span><br><span class="line"><span class="string">        onLeave: function(retval)&#123;</span></span><br><span class="line"><span class="string">            send(&quot;return:&quot;+retval);</span></span><br><span class="line"><span class="string">            var env = Java.vm.getEnv(); //获取env对象，也就是native函数的第一个参数</span></span><br><span class="line"><span class="string">            var jstrings = env.newStringUtf(&quot;tamper&quot;); //因为返回的是字符串指针，使用我们需要构造一个newStringUtf对象，用来代替这个指针</span></span><br><span class="line"><span class="string">            retval.replace(jstrings); //替换返回值</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;);</span></span><br><span class="line"><span class="string">&#125;);</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">printMessage</span>(<span class="params">message,data</span>):</span><br><span class="line">    <span class="keyword">if</span> message[<span class="string">&#x27;type&#x27;</span>] == <span class="string">&#x27;send&#x27;</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;&#123;0&#125;&#x27;</span>.<span class="built_in">format</span>(message[<span class="string">&#x27;payload&#x27;</span>]))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(message)</span><br><span class="line"></span><br><span class="line">process = frida.get_remote_device().attach(<span class="string">&#x27;com.example.fridasostring&#x27;</span>)</span><br><span class="line">script = process.create_script(jscode)</span><br><span class="line">script.on(<span class="string">&#x27;message&#x27;</span>,printMessage)</span><br><span class="line">script.load()</span><br><span class="line">sys.stdin.read()</span><br></pre></td></tr></table></figure>
-
 <h2 id="15-4-Native-hook实战"><a href="#15-4-Native-hook实战" class="headerlink" title="15.4. Native hook实战"></a>15.4. Native hook实战</h2><p><a target="_blank" rel="noopener" href="https://v5le0n9.github.io/post/9f62af2.html#20-ill-intentions">攻防世界 ill-intentions</a></p>
 
     </div>
@@ -1494,7 +1308,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%88%9D%E8%AF%86APK%E3%80%81Dalvik%E5%AD%97%E8%8A%82%E7%A0%81%E4%BB%A5%E5%8F%8ASmali"><span class="nav-text">1. 初识APK、Dalvik字节码以及Smali</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-asset-VS-res"><span class="nav-text">1.1 asset VS. res</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Dalvik%E5%AD%97%E8%8A%82%E7%A0%81"><span class="nav-text">1.2 Dalvik字节码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-Smali"><span class="nav-text">1.3 Smali</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-Smali%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-text">1.3.1 Smali基本语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-%E6%9D%A1%E4%BB%B6%E8%B7%B3%E8%BD%AC%E5%88%86%E6%94%AF"><span class="nav-text">1.3.2 条件跳转分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-3-Smali%E4%B8%AD%E7%9A%84%E5%8C%85%E4%BF%A1%E6%81%AF"><span class="nav-text">1.3.3 Smali中的包信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-4-Smali%E4%B8%AD%E7%9A%84%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="nav-text">1.3.4 Smali中的成员变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-5-Smali%E4%B8%AD%E5%87%BD%E6%95%B0%E7%9A%84%E8%B0%83%E7%94%A8"><span class="nav-text">1.3.5 Smali中函数的调用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#invoke-static"><span class="nav-text">invoke-static</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#invoke-super"><span class="nav-text">invoke-super</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#invoke-direct"><span class="nav-text">invoke-direct</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#invoke-virtual"><span class="nav-text">invoke-virtual</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#invoke-xxxxx-x2F-range"><span class="nav-text">invoke-xxxxx&#x2F;range</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-6-Smali%E4%B8%AD%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E7%9A%84%E7%BB%93%E6%9E%9C%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-text">1.3.6 Smali中函数返回的结果的操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-7-Smali%E4%B8%AD%E5%87%BD%E6%95%B0%E5%AE%9E%E4%BD%93%E5%88%86%E6%9E%90%E2%80%93if%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-text">1.3.7 Smali中函数实体分析–if函数分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-8-Smali%E4%B8%AD%E5%87%BD%E6%95%B0%E5%AE%9E%E4%BD%93%E5%88%86%E6%9E%90%E2%80%93for%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-text">1.3.8 Smali中函数实体分析–for函数分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-9-%E8%AF%BE%E5%90%8E%E4%B9%A0%E9%A2%98"><span class="nav-text">1.3.9 课后习题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-text">1.4 寄存器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-1-%E7%AE%80%E5%8D%95%E5%AF%B9%E8%B1%A1%E5%88%86%E6%9E%90"><span class="nav-text">1.4.1 简单对象分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E7%A0%B4%E8%A7%A3%E7%AC%AC%E4%B8%80%E4%B8%AAAndroid%E7%A8%8B%E5%BA%8F"><span class="nav-text">2. 破解第一个Android程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E7%A0%B4%E8%A7%A3%E7%AC%AC%E4%B8%80%E4%B8%AAAndroid%E6%B8%B8%E6%88%8F"><span class="nav-text">3. 破解第一个Android游戏</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-AS%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95smali%E4%BB%A3%E7%A0%81"><span class="nav-text">4. AS动态调试smali代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E5%9C%A8smali%E4%BB%A3%E7%A0%81%E4%B8%AD%E6%8F%92%E5%85%A5Log"><span class="nav-text">5. 在smali代码中插入Log</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E7%BC%96%E5%86%99%E7%AC%AC%E4%B8%80%E4%B8%AAso"><span class="nav-text">6. 编写第一个so</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-IDA%E7%A0%B4%E8%A7%A3%E7%AC%AC%E4%B8%80%E4%B8%AAso"><span class="nav-text">7. IDA破解第一个so</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86%E4%B8%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">7.1 预备知识与环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-%E7%A0%B4%E8%A7%A3so%E6%96%87%E4%BB%B6"><span class="nav-text">7.2 破解so文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-IDA%E7%88%86%E7%A0%B4%E7%AD%BE%E5%90%8D%E9%AA%8C%E8%AF%81-IDA%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="nav-text">8. IDA爆破签名验证(IDA静态分析)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IDAv7-0"><span class="nav-text">IDAv7.0+</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDAv6-6"><span class="nav-text">IDAv6.6</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-IDA%E5%8A%A8%E6%80%81%E7%A0%B4%E8%A7%A3%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81"><span class="nav-text">9. IDA动态破解登录验证</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#9-1-%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86%E4%B8%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">9.1 预备知识与环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-2-%E5%8A%A8%E6%80%81%E7%A0%B4%E8%A7%A3%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81"><span class="nav-text">9.2 动态破解登录验证</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%8F%8D%E8%B0%83%E8%AF%95apk"><span class="nav-text">10. 动态调试反调试apk</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#10-1-%E5%8F%8D%E8%B0%83%E8%AF%95%E5%8F%8A%E5%8F%8D%E5%8F%8D%E8%B0%83%E8%AF%95"><span class="nav-text">10.1 反调试及反反调试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#10-1-1-IDA%E8%B0%83%E8%AF%95%E7%AB%AF%E5%8F%A3%E6%A3%80%E6%B5%8B"><span class="nav-text">10.1.1 IDA调试端口检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-1-2-%E8%B0%83%E8%AF%95%E5%99%A8%E8%BF%9B%E7%A8%8B%E5%90%8D%E6%A3%80%E6%B5%8B"><span class="nav-text">10.1.2 调试器进程名检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-1-3-ptrace%E6%A3%80%E6%B5%8B"><span class="nav-text">10.1.3 ptrace检测</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-2-%E5%8F%8D%E5%8F%8D%E8%B0%83%E8%AF%95apk"><span class="nav-text">10.2 反反调试apk</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-%E7%BC%96%E5%86%99Xposed%E6%A8%A1%E5%9D%97"><span class="nav-text">11. 编写Xposed模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#12-Xpose%E5%AE%9E%E6%88%98"><span class="nav-text">12. Xpose实战</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#13-Xpose%E5%AE%9E%E6%88%982"><span class="nav-text">13. Xpose实战2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#14-adb%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-text">14. adb注意事项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#15-Native%E5%B1%82hook"><span class="nav-text">15. Native层hook</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#15-1-Frida-hook-java"><span class="nav-text">15.1 Frida hook java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-2-Frida-hook-%E8%BF%94%E5%9B%9E%E5%80%BC%E4%B8%BAint%E7%B1%BB%E5%9E%8B"><span class="nav-text">15.2 Frida hook 返回值为int类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-3-Frida-hook-%E8%BF%94%E5%9B%9E%E5%80%BC%E4%B8%BAString%E7%B1%BB%E5%9E%8B"><span class="nav-text">15.3 Frida hook 返回值为String类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-4-Native-hook%E5%AE%9E%E6%88%98"><span class="nav-text">15.4. Native hook实战</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%88%9D%E8%AF%86APK%E3%80%81Dalvik%E5%AD%97%E8%8A%82%E7%A0%81%E4%BB%A5%E5%8F%8ASmali"><span class="nav-text">1. 初识APK、Dalvik字节码以及Smali</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-asset-VS-res"><span class="nav-text">1.1 asset VS. res</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Dalvik%E5%AD%97%E8%8A%82%E7%A0%81"><span class="nav-text">1.2 Dalvik字节码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-Smali"><span class="nav-text">1.3 Smali</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-Smali%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-text">1.3.1 Smali基本语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-%E6%9D%A1%E4%BB%B6%E8%B7%B3%E8%BD%AC%E5%88%86%E6%94%AF"><span class="nav-text">1.3.2 条件跳转分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-3-Smali%E4%B8%AD%E7%9A%84%E5%8C%85%E4%BF%A1%E6%81%AF"><span class="nav-text">1.3.3 Smali中的包信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-4-Smali%E4%B8%AD%E7%9A%84%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="nav-text">1.3.4 Smali中的成员变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-5-Smali%E4%B8%AD%E5%87%BD%E6%95%B0%E7%9A%84%E8%B0%83%E7%94%A8"><span class="nav-text">1.3.5 Smali中函数的调用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#invoke-static"><span class="nav-text">invoke-static</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#invoke-super"><span class="nav-text">invoke-super</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#invoke-direct"><span class="nav-text">invoke-direct</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#invoke-virtual"><span class="nav-text">invoke-virtual</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#invoke-xxxxx-range"><span class="nav-text">invoke-xxxxx&#x2F;range</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-6-Smali%E4%B8%AD%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E7%9A%84%E7%BB%93%E6%9E%9C%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-text">1.3.6 Smali中函数返回的结果的操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-7-Smali%E4%B8%AD%E5%87%BD%E6%95%B0%E5%AE%9E%E4%BD%93%E5%88%86%E6%9E%90%E2%80%94if%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-text">1.3.7 Smali中函数实体分析—if函数分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-8-Smali%E4%B8%AD%E5%87%BD%E6%95%B0%E5%AE%9E%E4%BD%93%E5%88%86%E6%9E%90%E2%80%94for%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-text">1.3.8 Smali中函数实体分析—for函数分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-9-%E8%AF%BE%E5%90%8E%E4%B9%A0%E9%A2%98"><span class="nav-text">1.3.9 课后习题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-text">1.4 寄存器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-1-%E7%AE%80%E5%8D%95%E5%AF%B9%E8%B1%A1%E5%88%86%E6%9E%90"><span class="nav-text">1.4.1 简单对象分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E7%A0%B4%E8%A7%A3%E7%AC%AC%E4%B8%80%E4%B8%AAAndroid%E7%A8%8B%E5%BA%8F"><span class="nav-text">2. 破解第一个Android程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E7%A0%B4%E8%A7%A3%E7%AC%AC%E4%B8%80%E4%B8%AAAndroid%E6%B8%B8%E6%88%8F"><span class="nav-text">3. 破解第一个Android游戏</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-AS%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95smali%E4%BB%A3%E7%A0%81"><span class="nav-text">4. AS动态调试smali代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E5%9C%A8smali%E4%BB%A3%E7%A0%81%E4%B8%AD%E6%8F%92%E5%85%A5Log"><span class="nav-text">5. 在smali代码中插入Log</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E7%BC%96%E5%86%99%E7%AC%AC%E4%B8%80%E4%B8%AAso"><span class="nav-text">6. 编写第一个so</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-IDA%E7%A0%B4%E8%A7%A3%E7%AC%AC%E4%B8%80%E4%B8%AAso"><span class="nav-text">7. IDA破解第一个so</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86%E4%B8%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">7.1 预备知识与环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-%E7%A0%B4%E8%A7%A3so%E6%96%87%E4%BB%B6"><span class="nav-text">7.2 破解so文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-IDA%E7%88%86%E7%A0%B4%E7%AD%BE%E5%90%8D%E9%AA%8C%E8%AF%81-IDA%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="nav-text">8. IDA爆破签名验证(IDA静态分析)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IDAv7-0"><span class="nav-text">IDAv7.0+</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDAv6-6"><span class="nav-text">IDAv6.6</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-IDA%E5%8A%A8%E6%80%81%E7%A0%B4%E8%A7%A3%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81"><span class="nav-text">9. IDA动态破解登录验证</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#9-1-%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86%E4%B8%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">9.1 预备知识与环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-2-%E5%8A%A8%E6%80%81%E7%A0%B4%E8%A7%A3%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81"><span class="nav-text">9.2 动态破解登录验证</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%8F%8D%E8%B0%83%E8%AF%95apk"><span class="nav-text">10. 动态调试反调试apk</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#10-1-%E5%8F%8D%E8%B0%83%E8%AF%95%E5%8F%8A%E5%8F%8D%E5%8F%8D%E8%B0%83%E8%AF%95"><span class="nav-text">10.1 反调试及反反调试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#10-1-1-IDA%E8%B0%83%E8%AF%95%E7%AB%AF%E5%8F%A3%E6%A3%80%E6%B5%8B"><span class="nav-text">10.1.1 IDA调试端口检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-1-2-%E8%B0%83%E8%AF%95%E5%99%A8%E8%BF%9B%E7%A8%8B%E5%90%8D%E6%A3%80%E6%B5%8B"><span class="nav-text">10.1.2 调试器进程名检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-1-3-ptrace%E6%A3%80%E6%B5%8B"><span class="nav-text">10.1.3 ptrace检测</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-2-%E5%8F%8D%E5%8F%8D%E8%B0%83%E8%AF%95apk"><span class="nav-text">10.2 反反调试apk</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-%E7%BC%96%E5%86%99Xposed%E6%A8%A1%E5%9D%97"><span class="nav-text">11. 编写Xposed模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#12-Xpose%E5%AE%9E%E6%88%98"><span class="nav-text">12. Xpose实战</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#13-Xpose%E5%AE%9E%E6%88%982"><span class="nav-text">13. Xpose实战2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#14-adb%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-text">14. adb注意事项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#15-Native%E5%B1%82hook"><span class="nav-text">15. Native层hook</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#15-1-Frida-hook-java"><span class="nav-text">15.1 Frida hook java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-2-Frida-hook-%E8%BF%94%E5%9B%9E%E5%80%BC%E4%B8%BAint%E7%B1%BB%E5%9E%8B"><span class="nav-text">15.2 Frida hook 返回值为int类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-3-Frida-hook-%E8%BF%94%E5%9B%9E%E5%80%BC%E4%B8%BAString%E7%B1%BB%E5%9E%8B"><span class="nav-text">15.3 Frida hook 返回值为String类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-4-Native-hook%E5%AE%9E%E6%88%98"><span class="nav-text">15.4. Native hook实战</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -1574,12 +1388,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">652k</span>
+    <span title="站点总字数">649k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:53</span>
+    <span title="站点阅读时长">9:50</span>
 </div>
 
         

@@ -264,10 +264,8 @@
       
         <p>不会有人因为这道题所以去学了Android逆向吧？！！是的是我本人，为了能更好看懂Android程序还在寒假学了Java。所以这道题这么久才能跟你们见面。</p>
 <span id="more"></span>
-
 <p>在AK看到apk有lib文件，说明调用了so文件。是arm64-v8a架构的。完蛋了AS模拟器也运行不了arm64-v8a架构的。</p>
 <img src="/posts/8b4ac9a8/1.png" class="" title="jeb简单分析">
-
 <p>先不管了，拖进IDA64看看情况。Native函数有两种定义方法，一种是按照类名函数名静态声明并导出，一种是在<code>JNI_OnLoad</code>里调用<code>vm -&gt; GetEnv -&gt; RegisterNatives</code>动态声明。看一眼它的导出表，发现并没有导出<code>checkSn</code>函数，那么就说明是<code>JNI_OnLoad</code>里动态注册的。</p>
 <p>那…接下来就动态调试啦，要真机调试啊救命！</p>
 
@@ -455,12 +453,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">652k</span>
+    <span title="站点总字数">649k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:53</span>
+    <span title="站点阅读时长">9:50</span>
 </div>
 
         

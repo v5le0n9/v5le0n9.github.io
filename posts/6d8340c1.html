@@ -32,8 +32,8 @@
 <meta property="article:published_time" content="2022-04-05T01:29:27.722Z">
 <meta property="article:modified_time" content="2022-04-05T03:40:11.278Z">
 <meta property="article:author" content="v5le0n9">
-<meta property="article:tag" content="Reverse">
 <meta property="article:tag" content="汇编">
+<meta property="article:tag" content="Reverse">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/posts/6d8340c1/%E6%9D%A1%E4%BB%B6%E7%A0%81.png">
 
@@ -264,8 +264,8 @@
       
         <p>做题知识不够用，我又来学习了。</p>
 <span id="more"></span>
-
 <p>ARM指令集机器编码基本格式：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -276,26 +276,28 @@
 <th>11-0</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>条件码</td>
 <td>指令码</td>
 <td>目的寄存器</td>
 <td>操作数1寄存器</td>
 <td>操作数2</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <img src="/posts/6d8340c1/%E6%9D%A1%E4%BB%B6%E7%A0%81.png" class="" title="条件码">
-
 <h1 id="1-寻址方式"><a href="#1-寻址方式" class="headerlink" title="1. 寻址方式"></a>1. 寻址方式</h1><h2 id="1-1-立即寻址"><a href="#1-1-立即寻址" class="headerlink" title="1.1 立即寻址"></a>1.1 立即寻址</h2><p>操作数包含在指令的32位机器编码中。<code>#</code>表示立即数。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ADD R0,R0,#1		;R0 &lt;- R0 + 1</span><br><span class="line">AND R8,R7,#0xFF		;R8 &lt;- R7 AND 0xFF</span><br></pre></td></tr></table></figure>
-
 <p>问题：32位长立即数的编码问题(合法性问题)</p>
 <p>原因：在指令中，立即数作为操作数2出现，编码格式中仅安排了12位，32位立即数不能直接编码。</p>
 <p>解决：12位编码包括8位常数和4位循环右移值，由8位常数循环右移4位值的2倍得到最后的32位立即数。</p>
 <p>例：MOV R0,#0x0000F200</p>
 <p>机器代码：E3A00CF2</p>
 <p>机器代码含义：E表示无条件，3A是MOV的机器码，00表示R0寄存器，C是4位循环右移值，F2是8位常数。</p>
-<p>方法：0xF2循环右移12*2&#x3D;24位得到原32位数值</p>
+<p>方法：0xF2循环右移12*2=24位得到原32位数值</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -309,7 +311,8 @@
 <th></th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>0000</td>
 <td>0000</td>
 <td>0000</td>
@@ -339,13 +342,14 @@
 <td>0000</td>
 <td>0000</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h2 id="1-2-寄存器寻址"><a href="#1-2-寄存器寻址" class="headerlink" title="1.2 寄存器寻址"></a>1.2 寄存器寻址</h2><p>操作数存放在寄存器中。</p>
 <h3 id="1-2-1-基本方式"><a href="#1-2-1-基本方式" class="headerlink" title="1.2.1 基本方式"></a>1.2.1 基本方式</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ADD R0,R1,R2	;R0 &lt;- R1 + R2</span><br></pre></td></tr></table></figure>
-
 <h3 id="1-2-2-对第二操作数寄存器的移位操作"><a href="#1-2-2-对第二操作数寄存器的移位操作" class="headerlink" title="1.2.2 对第二操作数寄存器的移位操作"></a>1.2.2 对第二操作数寄存器的移位操作</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ADD R3,R2,R1,LSR #2		;R3 &lt;- R2 + R1 / 4</span><br></pre></td></tr></table></figure>
-
 <p>移位方式：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -353,7 +357,8 @@
 <th>含义</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>LSL</td>
 <td>逻辑左移(乘)</td>
 </tr>
@@ -377,14 +382,15 @@
 <td>RRX</td>
 <td>带扩展的循环右移，循环右移1位后左端用C填充，这种方式只移位1位，所以无需指定移位位数</td>
 </tr>
-</tbody></table>
-<h3 id="1-2-3-寄存器间接寻址"><a href="#1-2-3-寄存器间接寻址" class="headerlink" title="1.2.3 寄存器间接寻址"></a>1.2.3 寄存器间接寻址</h3><p>利用寄存器的值作为存储器指针，数据传送类的load&#x2F;store类指令都使用寄存器间接寻址方式。</p>
+</tbody>
+</table>
+</div>
+<h3 id="1-2-3-寄存器间接寻址"><a href="#1-2-3-寄存器间接寻址" class="headerlink" title="1.2.3 寄存器间接寻址"></a>1.2.3 寄存器间接寻址</h3><p>利用寄存器的值作为存储器指针，数据传送类的load/store类指令都使用寄存器间接寻址方式。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LDR R0,[R1]		;R0 &lt;- mem32[R1]</span><br><span class="line">STR R0,[R1]		;mem32[R1] &lt;- R0</span><br></pre></td></tr></table></figure>
-
 <h3 id="1-2-4-基址加偏移地址"><a href="#1-2-4-基址加偏移地址" class="headerlink" title="1.2.4 基址加偏移地址"></a>1.2.4 基址加偏移地址</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">前变址</span><br><span class="line">LDR R0,[R1,#4]		;R0 &lt;- mem32[R1+4]</span><br><span class="line"></span><br><span class="line">自动变址</span><br><span class="line">LDR R0,[R1,#4]!		;R0 &lt;- mem32[R1+4]</span><br><span class="line">					;R1 &lt;- R1 + 4</span><br><span class="line">					</span><br><span class="line">后变址</span><br><span class="line">LDR R0,[R1],#4		;R0 &lt;- mem32[R1]</span><br><span class="line">					;R1 &lt;- R1 + 4</span><br><span class="line">		</span><br><span class="line">寄存器偏移地址</span><br><span class="line">LDR R0,[R1,R2]		;R0 &lt;- mem32[R1+R2]</span><br><span class="line">LDR R0,[R1,R2,LSL #2]	;R0 &lt;- mem32[R1+R2*4] </span><br></pre></td></tr></table></figure>
-
 <h2 id="1-3-多寄存器及块拷贝寻址"><a href="#1-3-多寄存器及块拷贝寻址" class="headerlink" title="1.3 多寄存器及块拷贝寻址"></a>1.3 多寄存器及块拷贝寻址</h2><p>一条指令完成多字数据或数据块的传送。</p>
-<p>基本指令：LDM&#x2F;STM</p>
+<p>基本指令：LDM/STM</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -392,7 +398,8 @@
 <th>含义</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>IA</td>
 <td>操作完后地址递增</td>
 </tr>
@@ -408,87 +415,68 @@
 <td>DB</td>
 <td>地址先减后完成操作</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>多寄存器语法表示：多寄存器用<code>&#123;&#125;</code>包含，连续寄存器使用<code>-</code>间隔，不连续的用<code>,</code>分隔。</p>
 <p>例1：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LDMID R0,&#123;R1-R4,R6&#125;	;R1=[R0],R2=[R0+4],...,R6=[R0+16]</span><br></pre></td></tr></table></figure>
-
 <p>R0作为基址寄存器，其值可自动更新：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LDMID R0!,&#123;R1-R4,R6&#125;</span><br></pre></td></tr></table></figure>
-
 <p>例2：</p>
 <p>LDM指令和STM指令配合实现数据块拷贝：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LDMIA R0,&#123;R1-R5&#125;	;以R0为基址读取五字存储单元数据加载至R1-R5</span><br><span class="line">STMIA R6,&#123;R1-R5&#125;	;将R1-R5中数据依次存入R6为起始地址的存储单元</span><br></pre></td></tr></table></figure>
-
 <h2 id="1-4-堆栈寻址"><a href="#1-4-堆栈寻址" class="headerlink" title="1.4 堆栈寻址"></a>1.4 堆栈寻址</h2><p>存储空间中的数据栈与寄存器组之间的批量数据传输，采用R13(SP)作为堆栈指针，采用FILO(先进后出)的方式工作，<strong>SP指向栈顶</strong>。</p>
-<p>基本指令：LDM&#x2F;STM</p>
+<p>基本指令：LDM/STM</p>
 <p>堆栈组织生成方式：</p>
-<p>FD&#x2F;ED：满递减&#x2F;空递减</p>
-<p>FA&#x2F;EA：满递增&#x2F;空递增</p>
+<p>FD/ED：满递减/空递减</p>
+<p>FA/EA：满递增/空递增</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">STMFD SP!,&#123;R0-R7,LR&#125;	;入栈</span><br><span class="line">LDMFD SP!,&#123;R0-R7,LR&#125;	;弹出堆栈</span><br></pre></td></tr></table></figure>
-
 <p>先将LR入栈，最后才是R0入栈；先R0出栈，最后LR出栈。</p>
 <p>FD相当于多寄存器寻址的DB。</p>
 <p>事实上，堆栈寻址与多寄存器寻址均可操作堆栈，在需要保存特定某些寄存器值时，采用STM进行压栈，采用LDM操作弹出堆栈。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">保存数据</span><br><span class="line">STMDB SP!,&#123;R0-R12,LR&#125;</span><br><span class="line"></span><br><span class="line">弹出数据</span><br><span class="line">LDMIA SP!,&#123;R0-R12,LR&#125;</span><br></pre></td></tr></table></figure>
-
 <h2 id="1-5-相对寻址"><a href="#1-5-相对寻址" class="headerlink" title="1.5 相对寻址"></a>1.5 相对寻址</h2><p>将程序计数器PC作为基址寄存器，指令中的地址标号字段作为偏移量进行寻址，跳转指令采用相对寻址方式。</p>
-<h1 id="2-ARM指令集"><a href="#2-ARM指令集" class="headerlink" title="2. ARM指令集"></a>2. ARM指令集</h1><h2 id="2-1-存储器访问-L-x2F-S-指令"><a href="#2-1-存储器访问-L-x2F-S-指令" class="headerlink" title="2.1 存储器访问(L&#x2F;S)指令"></a>2.1 存储器访问(L&#x2F;S)指令</h2><p>常规：</p>
+<h1 id="2-ARM指令集"><a href="#2-ARM指令集" class="headerlink" title="2. ARM指令集"></a>2. ARM指令集</h1><h2 id="2-1-存储器访问-L-S-指令"><a href="#2-1-存储器访问-L-S-指令" class="headerlink" title="2.1 存储器访问(L/S)指令"></a>2.1 存储器访问(L/S)指令</h2><p>常规：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LDR R2,[R5]				;将R5为地址的存储单元中数据加载至R2（读）</span><br><span class="line">STR R1,[R0,#0X04]		;mem32[R0+4] &lt;- R1（写）</span><br></pre></td></tr></table></figure>
-
 <p> 传送数据类型：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LDRB R3,[R2],#1		;以R2为地址读取1字节数据至R3，R2 = R2 + 1</span><br><span class="line">STRH R1,[R0,#2]!	;半字传送，传送R1中低2字节数据至R0+2为地址的存储单元，R0更新</span><br></pre></td></tr></table></figure>
-
 <p>多寄存器补充：在非用户或系统模式下，可出现<code>^</code>后缀，若LDM指令寄存器列表中包含PC，则会额外将SPSR拷贝。</p>
 <h2 id="2-2-数据处理类指令"><a href="#2-2-数据处理类指令" class="headerlink" title="2.2 数据处理类指令"></a>2.2 数据处理类指令</h2><h3 id="2-2-1-数据传送指令"><a href="#2-2-1-数据传送指令" class="headerlink" title="2.2.1 数据传送指令"></a>2.2.1 数据传送指令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MOV R1,R0			;R1 &lt;- R0</span><br><span class="line">MOV R1,R0,LSL #3	;R1 &lt;- R0*8</span><br><span class="line">MVN R0,#0			;立即数0取反传送至R0，R0=-1</span><br></pre></td></tr></table></figure>
-
 <h3 id="2-2-2-算数逻辑运算指令"><a href="#2-2-2-算数逻辑运算指令" class="headerlink" title="2.2.2 算数逻辑运算指令"></a>2.2.2 算数逻辑运算指令</h3><p>例1：64位整数加法</p>
-<p>R0&#x2F;R1与R2&#x2F;R3分别存放两个加数的低&#x2F;高32位，R4&#x2F;R5存放结果的低&#x2F;高32位。</p>
+<p>R0/R1与R2/R3分别存放两个加数的低/高32位，R4/R5存放结果的低/高32位。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ADDS R4,R0,R2	;带S后缀结果影响CPSR的标志位C</span><br><span class="line">ADC R5,R1,R3	;带进位的加法，C标志位参与运算</span><br></pre></td></tr></table></figure>
-
 <p>例2：64位整数减</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SUBS R4,R0,R2</span><br><span class="line">SBC R5,R1,R3</span><br></pre></td></tr></table></figure>
-
 <p>例3：逆向减法</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RSB R0,R1,R2	;R0=R2-R1</span><br><span class="line">RSC R0,R1,R2	;在上行指令基础上再减C标志位的反码</span><br></pre></td></tr></table></figure>
-
 <p>例4：逻辑运算</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AND R0,R0,#3	;保持R0的0、1位，其余清零</span><br><span class="line">ORR R0,R0,#3	;置位R0的0、1位，其余不变</span><br><span class="line">EOR R0,R0,#3	;反转R0的0、1位，其余不变</span><br><span class="line">BIC R0,R0,#3	;清零R0的0、1位，其余不变</span><br></pre></td></tr></table></figure>
-
 <p>例5：比较指令</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CMP R1,R0	;R1-R0，结果影响CPSR中的标志位，但不保留运算结果</span><br><span class="line">CMN R0,#1	;判断R0的值是否为1的补码，是则Z置位</span><br><span class="line">;CMN指令将操作1寄存器减去操作数2的负值</span><br></pre></td></tr></table></figure>
-
 <p>例6：测试指令</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">TST R1,#3	;按位与，结果影响CPSR中的标志位</span><br><span class="line">TEQ R1,R2	;按位异或，结果影响CPSR中的标志位</span><br></pre></td></tr></table></figure>
-
 <p>上述比较与测试指令可与带S后缀的算数逻辑运算指令对比，如TEQ与EORS对比，其运算操作一致，但运算指令保留结果，比较测试指令只修改CPSR中标志位，不保留运算结果。</p>
 <p>例7：乘法指令</p>
 <p>MUL：32位乘法</p>
 <p>MLA：三操作数乘法，将操作数1与操作数2相乘，结果加第三个操作数，存入目的寄存器</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MLA Rd,Rm,Rs,Rn			;Rd &lt;- Rm*Rs+Rn</span><br></pre></td></tr></table></figure>
-
 <p>规则：Rd和Rm不能是同一寄存器</p>
 <p>形成两个矢量的标量积的例子：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">	mov r11,#20				;r11 &lt;- 20</span><br><span class="line">	mov r10,#0				;r10 &lt;- 0</span><br><span class="line">loop:</span><br><span class="line">	ldr r0,[r8],#4			;r0 &lt;- mem32[r8]</span><br><span class="line">							;r8 &lt;- r8 + 4</span><br><span class="line">	ldr r1,[r9],#4			;r1 &lt;- mem32[r9]</span><br><span class="line">							;r9 &lt;- r9 + 4</span><br><span class="line">	mla r10,r0,r1,r10		;r10 &lt;- r0*r1+r10</span><br><span class="line">	subs r11,r11,#1			;r11 &lt;- r11 - 1</span><br><span class="line">	bne loop				;在Z标志位为0时跳转执行</span><br></pre></td></tr></table></figure>
-
 <h3 id="2-2-3-数据交换指令"><a href="#2-2-3-数据交换指令" class="headerlink" title="2.2.3 数据交换指令"></a>2.2.3 数据交换指令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SWP R1,R1[R0]		;需要中间人</span><br></pre></td></tr></table></figure>
-
 <h2 id="2-3-跳转指令"><a href="#2-3-跳转指令" class="headerlink" title="2.3 跳转指令"></a>2.3 跳转指令</h2><p>跳转指令用于控制程序的走向，可完成从当前指令向前或向后的32MB的地址空间跳转，包括基本跳转指令(无条件跳转)B，带返回的跳转指令BL，带状态切换(ARM与Thumb之间)的跳转指令BX，带返回和状态切换的跳转指令BLX。</p>
 <p>ARM指令地址间隔为4，Thumb指令地址间隔为2。</p>
 <p>例：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">BL LABEL	;程序无条件跳转至LABEL处执行</span><br><span class="line">			;同时将当前的PC值保存至R14中</span><br><span class="line"></span><br><span class="line">用B指令完成类似功能</span><br><span class="line">MOV LR,PC</span><br><span class="line">B LABEL</span><br></pre></td></tr></table></figure>
-
 <p>跳转范围不受限制的方式：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LDR PC,=LABEL</span><br></pre></td></tr></table></figure>
-
 <p>BEQ：相等就跳</p>
 <p>NEQ：不相等就跳</p>
 <h2 id="2-4-程序状态寄存器访问指令"><a href="#2-4-程序状态寄存器访问指令" class="headerlink" title="2.4 程序状态寄存器访问指令"></a>2.4 程序状态寄存器访问指令</h2><p>当前程序状态寄存器可分为4个8位独立域：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CPSR[31:24]：_f(标志域)</span><br><span class="line">CPSR[23:16]：_s(状态域)</span><br><span class="line">CPSR[15:8]：_x(扩展域)</span><br><span class="line">CPSR[7:0]：_c(控制域)</span><br></pre></td></tr></table></figure>
-
 <p>例：清CPSR标志位，先读到寄存器里去再进行修改，修改完后用MSR指令赋值给标志位。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MRS R0,CPSR		;R0 &lt;- CPSR</span><br><span class="line">BIC R0,R0,#0xF0000000	;清高四位</span><br><span class="line">MSR CPSR_f,R0		;CPSR_f &lt;- R0</span><br></pre></td></tr></table></figure>
-
 
     </div>
 
@@ -519,8 +507,8 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/Reverse/" rel="tag"><i class="fa fa-tag"></i> Reverse</a>
               <a href="/tags/%E6%B1%87%E7%BC%96/" rel="tag"><i class="fa fa-tag"></i> 汇编</a>
+              <a href="/tags/Reverse/" rel="tag"><i class="fa fa-tag"></i> Reverse</a>
           </div>
 
         
@@ -592,7 +580,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F"><span class="nav-text">1. 寻址方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E7%AB%8B%E5%8D%B3%E5%AF%BB%E5%9D%80"><span class="nav-text">1.1 立即寻址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E5%AF%84%E5%AD%98%E5%99%A8%E5%AF%BB%E5%9D%80"><span class="nav-text">1.2 寄存器寻址</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-%E5%9F%BA%E6%9C%AC%E6%96%B9%E5%BC%8F"><span class="nav-text">1.2.1 基本方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-%E5%AF%B9%E7%AC%AC%E4%BA%8C%E6%93%8D%E4%BD%9C%E6%95%B0%E5%AF%84%E5%AD%98%E5%99%A8%E7%9A%84%E7%A7%BB%E4%BD%8D%E6%93%8D%E4%BD%9C"><span class="nav-text">1.2.2 对第二操作数寄存器的移位操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-3-%E5%AF%84%E5%AD%98%E5%99%A8%E9%97%B4%E6%8E%A5%E5%AF%BB%E5%9D%80"><span class="nav-text">1.2.3 寄存器间接寻址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-4-%E5%9F%BA%E5%9D%80%E5%8A%A0%E5%81%8F%E7%A7%BB%E5%9C%B0%E5%9D%80"><span class="nav-text">1.2.4 基址加偏移地址</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E5%A4%9A%E5%AF%84%E5%AD%98%E5%99%A8%E5%8F%8A%E5%9D%97%E6%8B%B7%E8%B4%9D%E5%AF%BB%E5%9D%80"><span class="nav-text">1.3 多寄存器及块拷贝寻址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E5%A0%86%E6%A0%88%E5%AF%BB%E5%9D%80"><span class="nav-text">1.4 堆栈寻址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-%E7%9B%B8%E5%AF%B9%E5%AF%BB%E5%9D%80"><span class="nav-text">1.5 相对寻址</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-ARM%E6%8C%87%E4%BB%A4%E9%9B%86"><span class="nav-text">2. ARM指令集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E5%AD%98%E5%82%A8%E5%99%A8%E8%AE%BF%E9%97%AE-L-x2F-S-%E6%8C%87%E4%BB%A4"><span class="nav-text">2.1 存储器访问(L&#x2F;S)指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E7%B1%BB%E6%8C%87%E4%BB%A4"><span class="nav-text">2.2 数据处理类指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%81%E6%8C%87%E4%BB%A4"><span class="nav-text">2.2.1 数据传送指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-%E7%AE%97%E6%95%B0%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E6%8C%87%E4%BB%A4"><span class="nav-text">2.2.2 算数逻辑运算指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-%E6%95%B0%E6%8D%AE%E4%BA%A4%E6%8D%A2%E6%8C%87%E4%BB%A4"><span class="nav-text">2.2.3 数据交换指令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E8%B7%B3%E8%BD%AC%E6%8C%87%E4%BB%A4"><span class="nav-text">2.3 跳转指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-%E7%A8%8B%E5%BA%8F%E7%8A%B6%E6%80%81%E5%AF%84%E5%AD%98%E5%99%A8%E8%AE%BF%E9%97%AE%E6%8C%87%E4%BB%A4"><span class="nav-text">2.4 程序状态寄存器访问指令</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F"><span class="nav-text">1. 寻址方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E7%AB%8B%E5%8D%B3%E5%AF%BB%E5%9D%80"><span class="nav-text">1.1 立即寻址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E5%AF%84%E5%AD%98%E5%99%A8%E5%AF%BB%E5%9D%80"><span class="nav-text">1.2 寄存器寻址</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-%E5%9F%BA%E6%9C%AC%E6%96%B9%E5%BC%8F"><span class="nav-text">1.2.1 基本方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-%E5%AF%B9%E7%AC%AC%E4%BA%8C%E6%93%8D%E4%BD%9C%E6%95%B0%E5%AF%84%E5%AD%98%E5%99%A8%E7%9A%84%E7%A7%BB%E4%BD%8D%E6%93%8D%E4%BD%9C"><span class="nav-text">1.2.2 对第二操作数寄存器的移位操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-3-%E5%AF%84%E5%AD%98%E5%99%A8%E9%97%B4%E6%8E%A5%E5%AF%BB%E5%9D%80"><span class="nav-text">1.2.3 寄存器间接寻址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-4-%E5%9F%BA%E5%9D%80%E5%8A%A0%E5%81%8F%E7%A7%BB%E5%9C%B0%E5%9D%80"><span class="nav-text">1.2.4 基址加偏移地址</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E5%A4%9A%E5%AF%84%E5%AD%98%E5%99%A8%E5%8F%8A%E5%9D%97%E6%8B%B7%E8%B4%9D%E5%AF%BB%E5%9D%80"><span class="nav-text">1.3 多寄存器及块拷贝寻址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E5%A0%86%E6%A0%88%E5%AF%BB%E5%9D%80"><span class="nav-text">1.4 堆栈寻址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-%E7%9B%B8%E5%AF%B9%E5%AF%BB%E5%9D%80"><span class="nav-text">1.5 相对寻址</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-ARM%E6%8C%87%E4%BB%A4%E9%9B%86"><span class="nav-text">2. ARM指令集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E5%AD%98%E5%82%A8%E5%99%A8%E8%AE%BF%E9%97%AE-L-S-%E6%8C%87%E4%BB%A4"><span class="nav-text">2.1 存储器访问(L&#x2F;S)指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E7%B1%BB%E6%8C%87%E4%BB%A4"><span class="nav-text">2.2 数据处理类指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%81%E6%8C%87%E4%BB%A4"><span class="nav-text">2.2.1 数据传送指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-%E7%AE%97%E6%95%B0%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E6%8C%87%E4%BB%A4"><span class="nav-text">2.2.2 算数逻辑运算指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-%E6%95%B0%E6%8D%AE%E4%BA%A4%E6%8D%A2%E6%8C%87%E4%BB%A4"><span class="nav-text">2.2.3 数据交换指令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E8%B7%B3%E8%BD%AC%E6%8C%87%E4%BB%A4"><span class="nav-text">2.3 跳转指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-%E7%A8%8B%E5%BA%8F%E7%8A%B6%E6%80%81%E5%AF%84%E5%AD%98%E5%99%A8%E8%AE%BF%E9%97%AE%E6%8C%87%E4%BB%A4"><span class="nav-text">2.4 程序状态寄存器访问指令</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -672,12 +660,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">652k</span>
+    <span title="站点总字数">649k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:53</span>
+    <span title="站点阅读时长">9:50</span>
 </div>
 
         
