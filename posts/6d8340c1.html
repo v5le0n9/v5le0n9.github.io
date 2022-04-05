@@ -5,19 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 6.1.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
 
 <link rel="stylesheet" href="/css/main.css">
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":{"gitalk":{"order":-2}}},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="做题知识不够用，我又来学习了。">
@@ -122,9 +123,24 @@
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
 
   </li>
   </ul>
@@ -137,10 +153,9 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/v5le0n9" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -158,7 +173,7 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/posts/6d8340c1.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="v5le0n9">
       <meta itemprop="description" content="v5le0n9's garden">
     </span>
@@ -441,6 +456,26 @@
     
     
     
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="v5le0n9 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="v5le0n9 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -516,12 +551,14 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">1. 寻址方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E7%AB%8B%E5%8D%B3%E5%AF%BB%E5%9D%80"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 立即寻址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E5%AF%84%E5%AD%98%E5%99%A8%E5%AF%BB%E5%9D%80"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 寄存器寻址</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-%E5%9F%BA%E6%9C%AC%E6%96%B9%E5%BC%8F"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1 基本方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-%E5%AF%B9%E7%AC%AC%E4%BA%8C%E6%93%8D%E4%BD%9C%E6%95%B0%E5%AF%84%E5%AD%98%E5%99%A8%E7%9A%84%E7%A7%BB%E4%BD%8D%E6%93%8D%E4%BD%9C"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.2 对第二操作数寄存器的移位操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-3-%E5%AF%84%E5%AD%98%E5%99%A8%E9%97%B4%E6%8E%A5%E5%AF%BB%E5%9D%80"><span class="nav-number">1.2.3.</span> <span class="nav-text">1.2.3 寄存器间接寻址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-4-%E5%9F%BA%E5%9D%80%E5%8A%A0%E5%81%8F%E7%A7%BB%E5%9C%B0%E5%9D%80"><span class="nav-number">1.2.4.</span> <span class="nav-text">1.2.4 基址加偏移地址</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E5%A4%9A%E5%AF%84%E5%AD%98%E5%99%A8%E5%8F%8A%E5%9D%97%E6%8B%B7%E8%B4%9D%E5%AF%BB%E5%9D%80"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 多寄存器及块拷贝寻址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E5%A0%86%E6%A0%88%E5%AF%BB%E5%9D%80"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 堆栈寻址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-%E7%9B%B8%E5%AF%B9%E5%AF%BB%E5%9D%80"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 相对寻址</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-ARM%E6%8C%87%E4%BB%A4%E9%9B%86"><span class="nav-number">2.</span> <span class="nav-text">2. ARM指令集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E5%AD%98%E5%82%A8%E5%99%A8%E8%AE%BF%E9%97%AE-L-x2F-S-%E6%8C%87%E4%BB%A4"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 存储器访问(L&#x2F;S)指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E7%B1%BB%E6%8C%87%E4%BB%A4"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 数据处理类指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%81%E6%8C%87%E4%BB%A4"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 数据传送指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-%E7%AE%97%E6%95%B0%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E6%8C%87%E4%BB%A4"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 算数逻辑运算指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-%E6%95%B0%E6%8D%AE%E4%BA%A4%E6%8D%A2%E6%8C%87%E4%BB%A4"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.2.3 数据交换指令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E8%B7%B3%E8%BD%AC%E6%8C%87%E4%BB%A4"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 跳转指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-%E7%A8%8B%E5%BA%8F%E7%8A%B6%E6%80%81%E5%AF%84%E5%AD%98%E5%99%A8%E8%AE%BF%E9%97%AE%E6%8C%87%E4%BB%A4"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 程序状态寄存器访问指令</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F"><span class="nav-text">1. 寻址方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E7%AB%8B%E5%8D%B3%E5%AF%BB%E5%9D%80"><span class="nav-text">1.1 立即寻址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E5%AF%84%E5%AD%98%E5%99%A8%E5%AF%BB%E5%9D%80"><span class="nav-text">1.2 寄存器寻址</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-%E5%9F%BA%E6%9C%AC%E6%96%B9%E5%BC%8F"><span class="nav-text">1.2.1 基本方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-%E5%AF%B9%E7%AC%AC%E4%BA%8C%E6%93%8D%E4%BD%9C%E6%95%B0%E5%AF%84%E5%AD%98%E5%99%A8%E7%9A%84%E7%A7%BB%E4%BD%8D%E6%93%8D%E4%BD%9C"><span class="nav-text">1.2.2 对第二操作数寄存器的移位操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-3-%E5%AF%84%E5%AD%98%E5%99%A8%E9%97%B4%E6%8E%A5%E5%AF%BB%E5%9D%80"><span class="nav-text">1.2.3 寄存器间接寻址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-4-%E5%9F%BA%E5%9D%80%E5%8A%A0%E5%81%8F%E7%A7%BB%E5%9C%B0%E5%9D%80"><span class="nav-text">1.2.4 基址加偏移地址</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E5%A4%9A%E5%AF%84%E5%AD%98%E5%99%A8%E5%8F%8A%E5%9D%97%E6%8B%B7%E8%B4%9D%E5%AF%BB%E5%9D%80"><span class="nav-text">1.3 多寄存器及块拷贝寻址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E5%A0%86%E6%A0%88%E5%AF%BB%E5%9D%80"><span class="nav-text">1.4 堆栈寻址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-%E7%9B%B8%E5%AF%B9%E5%AF%BB%E5%9D%80"><span class="nav-text">1.5 相对寻址</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-ARM%E6%8C%87%E4%BB%A4%E9%9B%86"><span class="nav-text">2. ARM指令集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E5%AD%98%E5%82%A8%E5%99%A8%E8%AE%BF%E9%97%AE-L-x2F-S-%E6%8C%87%E4%BB%A4"><span class="nav-text">2.1 存储器访问(L&#x2F;S)指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E7%B1%BB%E6%8C%87%E4%BB%A4"><span class="nav-text">2.2 数据处理类指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%81%E6%8C%87%E4%BB%A4"><span class="nav-text">2.2.1 数据传送指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-%E7%AE%97%E6%95%B0%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E6%8C%87%E4%BB%A4"><span class="nav-text">2.2.2 算数逻辑运算指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-%E6%95%B0%E6%8D%AE%E4%BA%A4%E6%8D%A2%E6%8C%87%E4%BB%A4"><span class="nav-text">2.2.3 数据交换指令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E8%B7%B3%E8%BD%AC%E6%8C%87%E4%BB%A4"><span class="nav-text">2.3 跳转指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-%E7%A8%8B%E5%BA%8F%E7%8A%B6%E6%80%81%E5%AF%84%E5%AD%98%E5%99%A8%E8%AE%BF%E9%97%AE%E6%8C%87%E4%BB%A4"><span class="nav-text">2.4 程序状态寄存器访问指令</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="v5le0n9"
+      src="/images/avatar.png">
   <p class="site-author-name" itemprop="name">v5le0n9</p>
   <div class="site-description" itemprop="description">v5le0n9's garden</div>
 </div>
@@ -536,20 +573,37 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
+          
         <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/Leong_Vinson" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;Leong_Vinson" rel="noopener" target="_blank"><i class="fab fa-cuttlefish fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/v5le0n9" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;v5le0n9" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:v5le0n9@163.com" title="E-Mail → mailto:v5le0n9@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
@@ -605,6 +659,8 @@
 
 <script src="/js/next-boot.js"></script>
 
+<script src="/js/bookmark.js"></script>
+
 
 
 
@@ -623,6 +679,8 @@
 
 
 
+
+  
 
   
 
