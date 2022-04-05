@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>感知机学习算法 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="机器学习的第一个作业，写完纸质还有时间，那就用Python写算法试试咯，老师说后面有真正的实验报告，先用Python写一下熟悉熟悉，回顾一下前几天学的Python吧。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="感知机学习算法">
+<meta property="og:url" content="http://example.com/posts/2670ba0d.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="机器学习的第一个作业，写完纸质还有时间，那就用Python写算法试试咯，老师说后面有真正的实验报告，先用Python写一下熟悉熟悉，回顾一下前几天学的Python吧。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-04-05T01:29:28.242Z">
+<meta property="article:modified_time" content="2022-03-21T03:28:32.007Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="机器学习">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-感知机学习算法" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/posts/2670ba0d.html" class="article-date">
+  <time class="dt-published" datetime="2022-04-05T01:29:28.242Z" itemprop="datePublished">2022-04-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      感知机学习算法
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>机器学习的第一个作业，写完纸质还有时间，那就用Python写算法试试咯，老师说后面有真正的实验报告，先用Python写一下熟悉熟悉，回顾一下前几天学的Python吧。</p>
+<span id="more"></span>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#感知机学习算法</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ganzhiji</span>(<span class="params">lst,n,w,b</span>):</span><br><span class="line">    result = [-<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">while</span>(<span class="string">&#x27;&#x27;</span>.join(<span class="built_in">str</span>(result)).count(<span class="string">&#x27;-&#x27;</span>)!=<span class="number">0</span>):</span><br><span class="line">        result.clear()</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> lst:</span><br><span class="line">            <span class="built_in">sum</span> = x[<span class="number">2</span>] * (w[<span class="number">0</span>]*x[<span class="number">0</span>] + w[<span class="number">1</span>]*x[<span class="number">1</span>] + b)</span><br><span class="line">            result.append(<span class="built_in">sum</span>)</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">sum</span> &gt; <span class="number">0</span>:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;对(&#123;0&#125;,&#123;1&#125;)T&quot;</span>.<span class="built_in">format</span>(x[<span class="number">0</span>],x[<span class="number">1</span>]))</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;y(wx + b) = &#123;0&#125;(&#123;1&#125;*&#123;2&#125; + &#123;3&#125;*&#123;4&#125; + &#123;5&#125;) &gt; 0&quot;</span>.<span class="built_in">format</span>(x[<span class="number">2</span>],w[<span class="number">0</span>],x[<span class="number">0</span>],w[<span class="number">1</span>],x[<span class="number">1</span>],b), end=<span class="string">&quot;，&quot;</span>)</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;(&#123;0&#125;,&#123;1&#125;)T被正确分类&quot;</span>.<span class="built_in">format</span>(x[<span class="number">0</span>], x[<span class="number">1</span>]))</span><br><span class="line">                <span class="built_in">print</span>()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;对(&#123;0&#125;,&#123;1&#125;)T&quot;</span>.<span class="built_in">format</span>(x[<span class="number">0</span>],x[<span class="number">1</span>]))</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;y(wx + b) = &#123;0&#125;(&#123;1&#125;*&#123;2&#125; + &#123;3&#125;*&#123;4&#125; + &#123;5&#125;) &lt;= 0&quot;</span>.<span class="built_in">format</span>(x[<span class="number">2</span>],w[<span class="number">0</span>],x[<span class="number">0</span>],w[<span class="number">1</span>],x[<span class="number">1</span>],b), end=<span class="string">&quot;，&quot;</span>)</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;(&#123;0&#125;,&#123;1&#125;)T未被正确分类，更新w和b&quot;</span>.<span class="built_in">format</span>(x[<span class="number">0</span>], x[<span class="number">1</span>]))</span><br><span class="line">                w[<span class="number">0</span>] = w[<span class="number">0</span>] + n*x[<span class="number">2</span>]*(x[<span class="number">0</span>])</span><br><span class="line">                w[<span class="number">1</span>] = w[<span class="number">1</span>] + n*x[<span class="number">2</span>]*(x[<span class="number">1</span>])</span><br><span class="line">                b = b + n*x[<span class="number">2</span>]</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;w = (&#123;0&#125;,&#123;1&#125;)T, b = &#123;2&#125;&quot;</span>.<span class="built_in">format</span>(w[<span class="number">0</span>],w[<span class="number">1</span>],b))</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;得到线性模型：&#123;0&#125;x(1) + &#123;1&#125;x(2) + &#123;2&#125;&quot;</span>.<span class="built_in">format</span>(w[<span class="number">0</span>],w[<span class="number">1</span>],b))</span><br><span class="line">                <span class="built_in">print</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment">#lst = [[4,3,1],[4,4,1],[3,1,-1]]</span></span><br><span class="line">    <span class="comment">#n = 1</span></span><br><span class="line">    w = [<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line">    b = <span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;该算法默认权值w和偏置b都从0开始&quot;</span>)</span><br><span class="line">    lst = []</span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">True</span>):</span><br><span class="line">        z = <span class="built_in">input</span>(<span class="string">&quot;输入数据集，比如(x,y)=[3,1,-1]输入3 1 -1，输入end结束：&quot;</span>)</span><br><span class="line">        x_list = z.split(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;&#x27;</span>.join(x_list) == <span class="string">&quot;end&quot;</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(x_list)):</span><br><span class="line">            x_list[i] = <span class="built_in">int</span>(x_list[i])</span><br><span class="line">        lst.append(x_list)</span><br><span class="line">    n = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;算法的学习率为(0&lt;n&lt;=1)：&quot;</span>))</span><br><span class="line">    ganzhiji(lst,n,w,b)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/posts/2670ba0d.html" data-id="cl1lgrwir003wokhqapcpe1sh" data-title="感知机学习算法" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/posts/9f62af2.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          攻防世界 Android逆向合集
+        
+      </div>
+    </a>
+  
+  
+    <a href="/posts/15be101a.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Android逆向入门教程</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android%E9%80%86%E5%90%91/">Android逆向</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Windows%E9%80%86%E5%90%91/">Windows逆向</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%BC%8F%E6%B4%9E%E6%B8%97%E9%80%8F/">漏洞渗透</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%BC%E5%90%88/">综合</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Killer/" rel="tag">Android Killer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDA/" rel="tag">IDA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OllyDbg/" rel="tag">OllyDbg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reverse/" rel="tag">Reverse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x64dbg/" rel="tag">x64dbg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%BE%E7%88%B1%E7%A0%B4%E8%A7%A3%E5%9F%B9%E8%AE%AD/" rel="tag">吾爱破解培训</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B1%87%E7%BC%96/" rel="tag">汇编</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3/" rel="tag">脱壳</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android-Killer/" style="font-size: 11.67px;">Android Killer</a> <a href="/tags/CTF/" style="font-size: 16.67px;">CTF</a> <a href="/tags/IDA/" style="font-size: 15px;">IDA</a> <a href="/tags/Java/" style="font-size: 11.67px;">Java</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/OllyDbg/" style="font-size: 20px;">OllyDbg</a> <a href="/tags/PHP/" style="font-size: 11.67px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Reverse/" style="font-size: 18.33px;">Reverse</a> <a href="/tags/Web/" style="font-size: 13.33px;">Web</a> <a href="/tags/x64dbg/" style="font-size: 13.33px;">x64dbg</a> <a href="/tags/%E5%90%BE%E7%88%B1%E7%A0%B4%E8%A7%A3%E5%9F%B9%E8%AE%AD/" style="font-size: 20px;">吾爱破解培训</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 11.67px;">机器学习</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 10px;">汇编</a> <a href="/tags/%E8%84%B1%E5%A3%B3/" style="font-size: 10px;">脱壳</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/posts/9589547b.html">黑客丛林之旅小游戏</a>
+          </li>
+        
+          <li>
+            <a href="/posts/5a99a36.html">攻防世界 逆向高手进阶区</a>
+          </li>
+        
+          <li>
+            <a href="/posts/9f62af2.html">攻防世界 Android逆向合集</a>
+          </li>
+        
+          <li>
+            <a href="/posts/2670ba0d.html">感知机学习算法</a>
+          </li>
+        
+          <li>
+            <a href="/posts/15be101a.html">Android逆向入门教程</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

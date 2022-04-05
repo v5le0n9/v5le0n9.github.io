@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>k-近邻算法 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="这周又来个新作业，k-近邻算法手算很容易，但用代码实现确实有点困难了。只能在网上找找参考：https:&#x2F;&#x2F;github.com&#x2F;zlxy9892&#x2F;ml_code&#x2F;blob&#x2F;master&#x2F;basic_algorithm&#x2F;knn 看能不能看懂牛牛们写的算法吧。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="k-近邻算法">
+<meta property="og:url" content="http://example.com/posts/e955b133.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="这周又来个新作业，k-近邻算法手算很容易，但用代码实现确实有点困难了。只能在网上找找参考：https:&#x2F;&#x2F;github.com&#x2F;zlxy9892&#x2F;ml_code&#x2F;blob&#x2F;master&#x2F;basic_algorithm&#x2F;knn 看能不能看懂牛牛们写的算法吧。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/posts/e955b133/1.png">
+<meta property="og:image" content="http://example.com/posts/e955b133/2.png">
+<meta property="og:image" content="http://example.com/posts/e955b133/3.png">
+<meta property="article:published_time" content="2022-04-05T01:29:27.812Z">
+<meta property="article:modified_time" content="2022-03-24T01:52:30.651Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="机器学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/posts/e955b133/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-k-近邻算法" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/posts/e955b133.html" class="article-date">
+  <time class="dt-published" datetime="2022-04-05T01:29:27.812Z" itemprop="datePublished">2022-04-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      k-近邻算法
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>这周又来个新作业，k-近邻算法手算很容易，但用代码实现确实有点困难了。只能在网上找找参考：<a target="_blank" rel="noopener" href="https://github.com/zlxy9892/ml_code/blob/master/basic_algorithm/knn">https://github.com/zlxy9892/ml_code/blob/master/basic_algorithm/knn</a> 看能不能看懂牛牛们写的算法吧。</p>
+<span id="more"></span>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="comment"># knn.py</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> operator</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">KNN</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">	<span class="comment">#取3个近邻点</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, k=<span class="number">3</span></span>):</span><br><span class="line">        self.k = k</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">fit</span>(<span class="params">self, x, y</span>):</span><br><span class="line">        self.x = x</span><br><span class="line">        self.y = y</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_square_distance</span>(<span class="params">self, v1, v2</span>):</span><br><span class="line">        <span class="keyword">return</span> np.<span class="built_in">sum</span>(np.square(v1-v2))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_vote</span>(<span class="params">self, ys</span>):</span><br><span class="line">        ys_unique = np.unique(ys)</span><br><span class="line">        vote_dict = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> y <span class="keyword">in</span> ys:</span><br><span class="line">            <span class="keyword">if</span> y <span class="keyword">not</span> <span class="keyword">in</span> vote_dict.keys():</span><br><span class="line">                vote_dict[y] = <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                vote_dict[y] += <span class="number">1</span></span><br><span class="line">        sorted_vote_dict = <span class="built_in">sorted</span>(vote_dict.items(), key=operator.itemgetter(<span class="number">1</span>), reverse=<span class="literal">True</span>)</span><br><span class="line">        <span class="keyword">return</span> sorted_vote_dict[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">predict</span>(<span class="params">self, x</span>):</span><br><span class="line">        y_pred = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(x)):</span><br><span class="line">            dist_arr = [self._square_distance(x[i], self.x[j]) <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(self.x))]</span><br><span class="line">            sorted_index = np.argsort(dist_arr)</span><br><span class="line">            top_k_index = sorted_index[:self.k]</span><br><span class="line">            y_pred.append(self._vote(ys=self.y[top_k_index]))</span><br><span class="line">        <span class="keyword">return</span> np.array(y_pred)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">score</span>(<span class="params">self, y_true=<span class="literal">None</span>, y_pred=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="keyword">if</span> y_true <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">and</span> y_pred <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            y_pred = self.predict(self.x)</span><br><span class="line">            y_true = self.y</span><br><span class="line">        score = <span class="number">0.0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(y_true)):</span><br><span class="line">            <span class="keyword">if</span> y_true[i] == y_pred[i]:</span><br><span class="line">                score += <span class="number">1</span></span><br><span class="line">        score /= <span class="built_in">len</span>(y_true)</span><br><span class="line">        <span class="keyword">return</span> score</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="comment"># train.py</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> knn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># data generation</span></span><br><span class="line">np.random.seed(<span class="number">314</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建第一个数据集</span></span><br><span class="line">data_size_1 = <span class="number">300</span></span><br><span class="line">x1_1 = np.random.normal(loc=<span class="number">5.0</span>, scale=<span class="number">1.0</span>, size=data_size_1)</span><br><span class="line">x2_1 = np.random.normal(loc=<span class="number">4.0</span>, scale=<span class="number">1.0</span>, size=data_size_1)</span><br><span class="line">y_1 = [<span class="number">0</span> <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(data_size_1)]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建第二个数据集</span></span><br><span class="line">data_size_2 = <span class="number">400</span></span><br><span class="line">x1_2 = np.random.normal(loc=<span class="number">10.0</span>, scale=<span class="number">2.0</span>, size=data_size_2)</span><br><span class="line">x2_2 = np.random.normal(loc=<span class="number">8.0</span>, scale=<span class="number">2.0</span>, size=data_size_2)</span><br><span class="line">y_2 = [<span class="number">1</span> <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(data_size_2)]</span><br><span class="line"></span><br><span class="line">x1 = np.concatenate((x1_1, x1_2), axis=<span class="number">0</span>)</span><br><span class="line">x2 = np.concatenate((x2_1, x2_2), axis=<span class="number">0</span>)</span><br><span class="line">x = np.hstack((x1.reshape(-<span class="number">1</span>,<span class="number">1</span>), x2.reshape(-<span class="number">1</span>,<span class="number">1</span>)))</span><br><span class="line">y = np.concatenate((y_1, y_2), axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">data_size_all = data_size_1+data_size_2</span><br><span class="line">shuffled_index = np.random.permutation(data_size_all)</span><br><span class="line">x = x[shuffled_index]</span><br><span class="line">y = y[shuffled_index]</span><br><span class="line"></span><br><span class="line">split_index = <span class="built_in">int</span>(data_size_all*<span class="number">0.7</span>)</span><br><span class="line">x_train = x[:split_index]</span><br><span class="line">y_train = y[:split_index]</span><br><span class="line">x_test = x[split_index:]</span><br><span class="line">y_test = y[split_index:]</span><br><span class="line"></span><br><span class="line"><span class="comment"># visualize data</span></span><br><span class="line">plt.scatter(x_train[:,<span class="number">0</span>], x_train[:,<span class="number">1</span>], c=y_train, marker=<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">plt.show()</span><br><span class="line">plt.scatter(x_test[:,<span class="number">0</span>], x_test[:,<span class="number">1</span>], c=y_test, marker=<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># data preprocessing</span></span><br><span class="line">x_train = (x_train - np.<span class="built_in">min</span>(x_train, axis=<span class="number">0</span>)) / (np.<span class="built_in">max</span>(x_train, axis=<span class="number">0</span>) - np.<span class="built_in">min</span>(x_train, axis=<span class="number">0</span>))</span><br><span class="line">x_test = (x_test - np.<span class="built_in">min</span>(x_test, axis=<span class="number">0</span>)) / (np.<span class="built_in">max</span>(x_test, axis=<span class="number">0</span>) - np.<span class="built_in">min</span>(x_test, axis=<span class="number">0</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># knn classifier</span></span><br><span class="line">clf = KNN(k=<span class="number">3</span>)</span><br><span class="line">clf.fit(x_train, y_train)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;train accuracy: &#123;:.3&#125;&#x27;</span>.<span class="built_in">format</span>(clf.score()))</span><br><span class="line"></span><br><span class="line">y_test_pred = clf.predict(x_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;test accuracy: &#123;:.3&#125;&#x27;</span>.<span class="built_in">format</span>(clf.score(y_test, y_test_pred)))</span><br></pre></td></tr></table></figure>
+
+<p>很高级，完全看不懂。</p>
+<img src="/posts/e955b133/1.png" class="" title="图形1">
+
+<img src="/posts/e955b133/2.png" class="" title="图形2">
+
+<img src="/posts/e955b133/3.png" class="" title="结果">
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/posts/e955b133.html" data-id="cl1lgrwhy000lokhqgrmz3505" data-title="k-近邻算法" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/posts/76c5464c.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          monyer闯关小游戏
+        
+      </div>
+    </a>
+  
+  
+    <a href="/posts/8df0ec14.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Java学习</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android%E9%80%86%E5%90%91/">Android逆向</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Windows%E9%80%86%E5%90%91/">Windows逆向</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%BC%8F%E6%B4%9E%E6%B8%97%E9%80%8F/">漏洞渗透</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%BC%E5%90%88/">综合</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Killer/" rel="tag">Android Killer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDA/" rel="tag">IDA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OllyDbg/" rel="tag">OllyDbg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reverse/" rel="tag">Reverse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x64dbg/" rel="tag">x64dbg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%BE%E7%88%B1%E7%A0%B4%E8%A7%A3%E5%9F%B9%E8%AE%AD/" rel="tag">吾爱破解培训</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B1%87%E7%BC%96/" rel="tag">汇编</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3/" rel="tag">脱壳</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android-Killer/" style="font-size: 11.67px;">Android Killer</a> <a href="/tags/CTF/" style="font-size: 16.67px;">CTF</a> <a href="/tags/IDA/" style="font-size: 15px;">IDA</a> <a href="/tags/Java/" style="font-size: 11.67px;">Java</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/OllyDbg/" style="font-size: 20px;">OllyDbg</a> <a href="/tags/PHP/" style="font-size: 11.67px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Reverse/" style="font-size: 18.33px;">Reverse</a> <a href="/tags/Web/" style="font-size: 13.33px;">Web</a> <a href="/tags/x64dbg/" style="font-size: 13.33px;">x64dbg</a> <a href="/tags/%E5%90%BE%E7%88%B1%E7%A0%B4%E8%A7%A3%E5%9F%B9%E8%AE%AD/" style="font-size: 20px;">吾爱破解培训</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 11.67px;">机器学习</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 10px;">汇编</a> <a href="/tags/%E8%84%B1%E5%A3%B3/" style="font-size: 10px;">脱壳</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/posts/9589547b.html">黑客丛林之旅小游戏</a>
+          </li>
+        
+          <li>
+            <a href="/posts/5a99a36.html">攻防世界 逆向高手进阶区</a>
+          </li>
+        
+          <li>
+            <a href="/posts/9f62af2.html">攻防世界 Android逆向合集</a>
+          </li>
+        
+          <li>
+            <a href="/posts/2670ba0d.html">感知机学习算法</a>
+          </li>
+        
+          <li>
+            <a href="/posts/15be101a.html">Android逆向入门教程</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

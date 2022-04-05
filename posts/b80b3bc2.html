@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>创建留言板 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="&#x2F;&#x2F;在Ubuntu环境下后端用MySQL，前端用HTML和PHP 12sudo su	&#x2F;&#x2F;进入根目录mysql -uroot -p123456	&#x2F;&#x2F;进入MySQL  数据库和文件一定要在同一主机，并且将文件放在&#x2F;var&#x2F;www&#x2F;html下，打开文件要走apache，即要在URL上输入路径，不能直接打开本地的html文件。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="创建留言板">
+<meta property="og:url" content="http://example.com/posts/b80b3bc2.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="&#x2F;&#x2F;在Ubuntu环境下后端用MySQL，前端用HTML和PHP 12sudo su	&#x2F;&#x2F;进入根目录mysql -uroot -p123456	&#x2F;&#x2F;进入MySQL  数据库和文件一定要在同一主机，并且将文件放在&#x2F;var&#x2F;www&#x2F;html下，打开文件要走apache，即要在URL上输入路径，不能直接打开本地的html文件。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-04-05T01:29:28.002Z">
+<meta property="article:modified_time" content="2021-11-16T07:54:24.261Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-创建留言板" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/posts/b80b3bc2.html" class="article-date">
+  <time class="dt-published" datetime="2022-04-05T01:29:28.002Z" itemprop="datePublished">2022-04-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      创建留言板
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>&#x2F;&#x2F;在Ubuntu环境下后端用MySQL，前端用HTML和PHP</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo su	//进入根目录</span><br><span class="line">mysql -uroot -p123456	//进入MySQL</span><br></pre></td></tr></table></figure>
+
+<p>数据库和文件一定要在同一主机，并且将文件放在&#x2F;var&#x2F;www&#x2F;html下，打开文件要走apache，即要在URL上输入路径，不能直接打开本地的html文件。</p>
+<span id="more"></span>
+
+<h1 id="1-创建数据库和基本表"><a href="#1-创建数据库和基本表" class="headerlink" title="1. 创建数据库和基本表"></a>1. 创建数据库和基本表</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">create database commentDB;</span><br><span class="line">use commentDB;</span><br><span class="line">create table user(</span><br><span class="line">    username char(20),</span><br><span class="line">    password char(20) not null,</span><br><span class="line">    email char(30),</span><br><span class="line">    primary key(username));</span><br><span class="line">create table u_c(</span><br><span class="line">    username char(20) not null,</span><br><span class="line">    comment varchar(100),</span><br><span class="line">    foreign key(username) references user(username));</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-设置注册界面"><a href="#2-设置注册界面" class="headerlink" title="2. 设置注册界面"></a>2. 设置注册界面</h1><p>register.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>用户注册<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">action</span>=<span class="string">&quot;register.php&quot;</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--用post方法提交表单不会将用户输入的信息显示在URL上--&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--点击提交按钮后执行register.php--&gt;</span></span><br><span class="line">            用户名：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">            密码：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">            邮箱：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;email&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;填写邮箱便于重置密码&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--type为password，用户输入不会显示实际字符，用黑圆点代替--&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--name是给这个输入起个名字，在php中要用到--&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--还想设置带*号是必填，用户名和密码是必填，但不会--&gt;</span></span><br><span class="line">     		<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;注册&quot;</span>&gt;</span>       </span><br><span class="line">        <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>register.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">//创建连接</span></span><br><span class="line"><span class="variable">$conn</span> = <span class="title function_ invoke__">mysqli_connect</span>(<span class="string">&quot;localhost&quot;</span>,<span class="string">&quot;root&quot;</span>,<span class="string">&quot;123456&quot;</span>);</span><br><span class="line"><span class="comment">//检测连接</span></span><br><span class="line"><span class="keyword">if</span>(!<span class="variable">$conn</span>)</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;连接失败：&quot;</span>.<span class="title function_ invoke__">mysqli_error</span>(<span class="variable">$conn</span>));</span><br><span class="line"><span class="title function_ invoke__">mysqli_query</span>(<span class="variable">$conn</span>, <span class="string">&quot;set names utf8&quot;</span>);<span class="comment">//设置编码，防止中文乱码</span></span><br><span class="line"><span class="variable">$username</span> = <span class="variable">$_POST</span>[<span class="string">&quot;username&quot;</span>];<span class="comment">//$_POST[]里面的参数即为html中的name</span></span><br><span class="line"><span class="variable">$password</span> = <span class="variable">$_POST</span>[<span class="string">&quot;password&quot;</span>];</span><br><span class="line"><span class="variable">$email</span> = <span class="variable">$_POST</span>[<span class="string">&quot;email&quot;</span>];</span><br><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;insert into user&quot;</span>.<span class="string">&quot;(username, password, email)&quot;</span>.<span class="string">&quot;values&quot;</span>.<span class="string">&quot;(&#x27;<span class="subst">$username</span>&#x27;,&#x27;<span class="subst">$password</span>&#x27;,&#x27;<span class="subst">$email</span>&#x27;)&quot;</span>;<span class="comment">//编写插入语句</span></span><br><span class="line"><span class="title function_ invoke__">mysqli_select_db</span>(<span class="variable">$conn</span>,<span class="string">&#x27;commentDB&#x27;</span>);<span class="comment">//选择数据库</span></span><br><span class="line"><span class="variable">$retval</span> = <span class="title function_ invoke__">mysqli_query</span>(<span class="variable">$conn</span>, <span class="variable">$sql</span>);<span class="comment">//执行插入语句</span></span><br><span class="line"><span class="keyword">if</span>(!<span class="variable">$retval</span>)</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&#x27;插入数据失败:&#x27;</span>.<span class="title function_ invoke__">mysqli_error</span>(<span class="variable">$conn</span>));</span><br><span class="line"><span class="title function_ invoke__">setcookie</span>(<span class="string">&quot;username&quot;</span>, <span class="variable">$username</span>);</span><br><span class="line"><span class="title function_ invoke__">mysqli_close</span>(<span class="variable">$conn</span>);<span class="comment">//关闭数据库连接</span></span><br><span class="line"><span class="title function_ invoke__">header</span>(<span class="string">&quot;location:comment.html&quot;</span>);<span class="comment">//跳转至评论界面</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="3-设置登录界面"><a href="#3-设置登录界面" class="headerlink" title="3. 设置登录界面"></a>3. 设置登录界面</h1><p>login.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>用户登录<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">action</span>=<span class="string">&quot;login.php&quot;</span>&gt;</span></span><br><span class="line">            用户名：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">            密码：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;登录&quot;</span>&gt;</span>       </span><br><span class="line">        <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;register.html&quot;</span>&gt;</span>注册<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>login.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$conn</span> = <span class="title function_ invoke__">mysqli_connect</span>(<span class="string">&quot;localhost&quot;</span>,<span class="string">&quot;root&quot;</span>,<span class="string">&quot;123456&quot;</span>);</span><br><span class="line"><span class="keyword">if</span>(!<span class="variable">$conn</span>)</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;连接失败：&quot;</span>.<span class="title function_ invoke__">mysqli_error</span>(<span class="variable">$conn</span>));</span><br><span class="line"><span class="title function_ invoke__">mysqli_query</span>(<span class="variable">$conn</span>, <span class="string">&quot;set names utf8&quot;</span>);</span><br><span class="line"><span class="variable">$username</span> = <span class="variable">$_POST</span>[<span class="string">&quot;username&quot;</span>];</span><br><span class="line"><span class="variable">$password</span> = <span class="variable">$_POST</span>[<span class="string">&quot;password&quot;</span>];</span><br><span class="line"><span class="comment">//判断用户密码是否为空</span></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$username</span> == <span class="string">&quot;&quot;</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&#x27;&lt;script&gt;alert(&quot;请输入用户名！&quot;);&lt;/script&gt;&#x27;</span>;</span><br><span class="line">    <span class="keyword">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(<span class="variable">$password</span> == <span class="string">&quot;&quot;</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&#x27;&lt;script&gt;alert(&quot;请输入密码！&quot;);&lt;/script&gt;&#x27;</span>;</span><br><span class="line">    <span class="keyword">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//检测数据库中用户是否存在</span></span><br><span class="line"><span class="title function_ invoke__">mysqli_select_db</span>(<span class="variable">$conn</span>,<span class="string">&#x27;commentDB&#x27;</span>);</span><br><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;select username, password from user where username=&#x27;<span class="subst">$username</span>&#x27; and password=&#x27;<span class="subst">$password</span>&#x27;;&quot;</span>;</span><br><span class="line"><span class="variable">$result</span> = <span class="title function_ invoke__">mysqli_query</span>(<span class="variable">$conn</span>, <span class="variable">$sql</span>);</span><br><span class="line"><span class="variable">$flag</span> = <span class="title function_ invoke__">mysqli_fetch_array</span>(<span class="variable">$result</span>);</span><br><span class="line"><span class="comment">//登录成功跳转评论页面</span></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$flag</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="title function_ invoke__">setcookie</span>(<span class="string">&quot;username&quot;</span>, <span class="variable">$username</span>);<span class="comment">//将登录信息放入cookie</span></span><br><span class="line">    <span class="title function_ invoke__">header</span>(<span class="string">&quot;location:comment.html&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&#x27;&lt;script&gt;alert(&quot;用户名或密码错误！&quot;);&lt;/script&gt;&#x27;</span>;</span><br><span class="line"><span class="title function_ invoke__">mysqli_close</span>(<span class="variable">$conn</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="4-设置留言板界面"><a href="#4-设置留言板界面" class="headerlink" title="4. 设置留言板界面"></a>4. 设置留言板界面</h1><p>comment.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>留言板<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">action</span>=<span class="string">&quot;comment.php&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span>&gt;</span>留言板<span class="tag">&lt;<span class="name">textarea</span> <span class="attr">name</span>=<span class="string">&quot;comment&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;留言&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>comment.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$conn</span> = <span class="title function_ invoke__">mysqli_connect</span>(<span class="string">&quot;localhost&quot;</span>,<span class="string">&quot;root&quot;</span>,<span class="string">&quot;123456&quot;</span>);</span><br><span class="line"><span class="keyword">if</span>(!<span class="variable">$conn</span>)</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;连接失败：&quot;</span>.<span class="title function_ invoke__">mysqli_error</span>(<span class="variable">$conn</span>));</span><br><span class="line"><span class="title function_ invoke__">mysqli_query</span>(<span class="variable">$conn</span>, <span class="string">&quot;set names utf8&quot;</span>);</span><br><span class="line"><span class="variable">$username</span> = <span class="variable">$_COOKIE</span>[<span class="string">&quot;username&quot;</span>];</span><br><span class="line"><span class="variable">$comment</span> = <span class="variable">$_POST</span>[<span class="string">&quot;comment&quot;</span>];</span><br><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;insert into u_c&quot;</span>.<span class="string">&quot;(username, comment)&quot;</span>.<span class="string">&quot;values&quot;</span>.<span class="string">&quot;(&#x27;<span class="subst">$username</span>&#x27;,&#x27;<span class="subst">$comment</span>&#x27;)&quot;</span>;</span><br><span class="line"><span class="title function_ invoke__">mysqli_select_db</span>(<span class="variable">$conn</span>,<span class="string">&#x27;commentDB&#x27;</span>);<span class="comment">//选择数据库</span></span><br><span class="line"><span class="variable">$retval</span> = <span class="title function_ invoke__">mysqli_query</span>(<span class="variable">$conn</span>, <span class="variable">$sql</span>);<span class="comment">//执行插入语句</span></span><br><span class="line"><span class="keyword">if</span>(!<span class="variable">$retval</span>)</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&#x27;插入数据失败:&#x27;</span>.<span class="title function_ invoke__">mysqli_error</span>(<span class="variable">$conn</span>));</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&#x27;&lt;script&gt;alert(&quot;留言成功！&quot;);&lt;/script&gt;&#x27;</span>;</span><br><span class="line"><span class="title function_ invoke__">mysqli_close</span>(<span class="variable">$conn</span>);<span class="comment">//关闭数据库连接</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/posts/b80b3bc2.html" data-id="cl1lgrwi0000qokhq0stgaxnm" data-title="创建留言板" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/posts/8b4ac9a8.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          吾爱破解2022春节——Android中级题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/posts/54924480.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Web渗透</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android%E9%80%86%E5%90%91/">Android逆向</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Windows%E9%80%86%E5%90%91/">Windows逆向</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%BC%8F%E6%B4%9E%E6%B8%97%E9%80%8F/">漏洞渗透</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%BC%E5%90%88/">综合</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Killer/" rel="tag">Android Killer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDA/" rel="tag">IDA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OllyDbg/" rel="tag">OllyDbg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reverse/" rel="tag">Reverse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x64dbg/" rel="tag">x64dbg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%BE%E7%88%B1%E7%A0%B4%E8%A7%A3%E5%9F%B9%E8%AE%AD/" rel="tag">吾爱破解培训</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B1%87%E7%BC%96/" rel="tag">汇编</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3/" rel="tag">脱壳</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android-Killer/" style="font-size: 11.67px;">Android Killer</a> <a href="/tags/CTF/" style="font-size: 16.67px;">CTF</a> <a href="/tags/IDA/" style="font-size: 15px;">IDA</a> <a href="/tags/Java/" style="font-size: 11.67px;">Java</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/OllyDbg/" style="font-size: 20px;">OllyDbg</a> <a href="/tags/PHP/" style="font-size: 11.67px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Reverse/" style="font-size: 18.33px;">Reverse</a> <a href="/tags/Web/" style="font-size: 13.33px;">Web</a> <a href="/tags/x64dbg/" style="font-size: 13.33px;">x64dbg</a> <a href="/tags/%E5%90%BE%E7%88%B1%E7%A0%B4%E8%A7%A3%E5%9F%B9%E8%AE%AD/" style="font-size: 20px;">吾爱破解培训</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 11.67px;">机器学习</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 10px;">汇编</a> <a href="/tags/%E8%84%B1%E5%A3%B3/" style="font-size: 10px;">脱壳</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/posts/9589547b.html">黑客丛林之旅小游戏</a>
+          </li>
+        
+          <li>
+            <a href="/posts/5a99a36.html">攻防世界 逆向高手进阶区</a>
+          </li>
+        
+          <li>
+            <a href="/posts/9f62af2.html">攻防世界 Android逆向合集</a>
+          </li>
+        
+          <li>
+            <a href="/posts/2670ba0d.html">感知机学习算法</a>
+          </li>
+        
+          <li>
+            <a href="/posts/15be101a.html">Android逆向入门教程</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>monyer闯关小游戏 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="梦之光芒  查看源码，发现有个链接链接到first.php，进入第1关 1-http:&#x2F;&#x2F;monyer.com&#x2F;game&#x2F;game1&#x2F;first.php">
+<meta property="og:type" content="article">
+<meta property="og:title" content="monyer闯关小游戏">
+<meta property="og:url" content="http://example.com/posts/76c5464c.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="梦之光芒  查看源码，发现有个链接链接到first.php，进入第1关 1-http:&#x2F;&#x2F;monyer.com&#x2F;game&#x2F;game1&#x2F;first.php">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-04-05T01:29:27.842Z">
+<meta property="article:modified_time" content="2022-03-17T06:09:12.873Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Web">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-monyer" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/posts/76c5464c.html" class="article-date">
+  <time class="dt-published" datetime="2022-04-05T01:29:27.842Z" itemprop="datePublished">2022-04-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%BB%BC%E5%90%88/">综合</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      monyer闯关小游戏
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><a target="_blank" rel="noopener" href="http://monyer.com/game/game1">梦之光芒</a> </p>
+<p>查看源码，发现有个链接链接到first.php，进入第1关</p>
+<p>1-<a target="_blank" rel="noopener" href="http://monyer.com/game/game1/first.php">http://monyer.com/game/game1/first.php</a></p>
+<span id="more"></span>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">check</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">if</span>(<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;txt&#x27;</span>).<span class="property">value</span>==<span class="string">&quot;  &quot;</span>)&#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span>=<span class="string">&quot;hello.php&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">        &#125;<span class="keyword">else</span>&#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="title function_">alert</span>(<span class="string">&quot;密码错误&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>发现密码是两个空格，意思就是说我们在id&#x3D;txt那一栏填入两个空格，就可以跳转到hello.php；或者直接改URL到hello.php</p>
+<p>2-<a target="_blank" rel="noopener" href="http://monyer.com/game/game1/hello.php">http://monyer.com/game/game1/hello.php</a></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="property">oncontextmenu</span>=<span class="keyword">function</span>(<span class="params"></span>)&#123;<span class="keyword">return</span> <span class="literal">false</span>&#125;;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> a,b,c,d,e,f,g;</span></span><br><span class="line"><span class="language-javascript">    a = <span class="number">3.14</span>;</span></span><br><span class="line"><span class="language-javascript">    b = a * <span class="number">2</span>;</span></span><br><span class="line"><span class="language-javascript">    c = a + b;</span></span><br><span class="line"><span class="language-javascript">    d = c / b + a;</span></span><br><span class="line"><span class="language-javascript">    e = c - d * b + a;</span></span><br><span class="line"><span class="language-javascript">    f = e + d / c -b * a;</span></span><br><span class="line"><span class="language-javascript">    g = f * e - d + c * b + a;</span></span><br><span class="line"><span class="language-javascript">    a = g * g;</span></span><br><span class="line"><span class="language-javascript">    a = <span class="title class_">Math</span>.<span class="title function_">floor</span>(a);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">check</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">if</span>(<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;txt&quot;</span>).<span class="property">value</span>==a)&#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span>=a + <span class="string">&quot;.php&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">        &#125;<span class="keyword">else</span>&#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="title function_">alert</span>(<span class="string">&quot;密码错误&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">return</span> <span class="literal">false</span>;</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Math.floor()向下取整，JavaScript的**&#x2F;**运算符算到小数<code>5/2=2.5</code>。</p>
+<p>把那一串代码改改随便拿去哪个语言环境跑跑得出结果。</p>
+<p>3-<a target="_blank" rel="noopener" href="http://monyer.com/game/game1/424178.php">http://monyer.com/game/game1/424178.php</a></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript">   </span></span><br><span class="line"><span class="language-javascript">  <span class="built_in">eval</span>(<span class="title class_">String</span>.<span class="title function_">fromCharCode</span>(<span class="number">102</span>,<span class="number">117</span>,<span class="number">110</span>,<span class="number">99</span>,<span class="number">116</span>,<span class="number">105</span>,<span class="number">111</span>,<span class="number">110</span>,<span class="number">32</span>,<span class="number">99</span>,<span class="number">104</span>,<span class="number">101</span>,<span class="number">99</span>,<span class="number">107</span>,<span class="number">40</span>,<span class="number">41</span>,<span class="number">123</span>,<span class="number">13</span>,<span class="number">10</span>,<span class="number">09</span>,<span class="number">118</span>,<span class="number">97</span>,<span class="number">114</span>,<span class="number">32</span>,<span class="number">97</span>,<span class="number">32</span>,<span class="number">61</span>,<span class="number">32</span>,<span class="number">39</span>,<span class="number">100</span>,<span class="number">52</span>,<span class="number">103</span>,<span class="number">39</span>,<span class="number">59</span>,<span class="number">13</span>,<span class="number">10</span>,<span class="number">09</span>,<span class="number">105</span>,<span class="number">102</span>,<span class="number">40</span>,<span class="number">100</span>,<span class="number">111</span>,<span class="number">99</span>,<span class="number">117</span>,<span class="number">109</span>,<span class="number">101</span>,<span class="number">110</span>,<span class="number">116</span>,<span class="number">46</span>,<span class="number">103</span>,<span class="number">101</span>,<span class="number">116</span>,<span class="number">69</span>,<span class="number">108</span>,<span class="number">101</span>,<span class="number">109</span>,<span class="number">101</span>,<span class="number">110</span>,<span class="number">116</span>,<span class="number">66</span>,<span class="number">121</span>,<span class="number">73</span>,<span class="number">100</span>,<span class="number">40</span>,<span class="number">39</span>,<span class="number">116</span>,<span class="number">120</span>,<span class="number">116</span>,<span class="number">39</span>,<span class="number">41</span>,<span class="number">46</span>,<span class="number">118</span>,<span class="number">97</span>,<span class="number">108</span>,<span class="number">117</span>,<span class="number">101</span>,<span class="number">61</span>,<span class="number">61</span>,<span class="number">97</span>,<span class="number">41</span>,<span class="number">123</span>,<span class="number">13</span>,<span class="number">10</span>,<span class="number">09</span>,<span class="number">09</span>,<span class="number">119</span>,<span class="number">105</span>,<span class="number">110</span>,<span class="number">100</span>,<span class="number">111</span>,<span class="number">119</span>,<span class="number">46</span>,<span class="number">108</span>,<span class="number">111</span>,<span class="number">99</span>,<span class="number">97</span>,<span class="number">116</span>,<span class="number">105</span>,<span class="number">111</span>,<span class="number">110</span>,<span class="number">46</span>,<span class="number">104</span>,<span class="number">114</span>,<span class="number">101</span>,<span class="number">102</span>,<span class="number">61</span>,<span class="number">97</span>,<span class="number">43</span>,<span class="number">34</span>,<span class="number">46</span>,<span class="number">112</span>,<span class="number">104</span>,<span class="number">112</span>,<span class="number">34</span>,<span class="number">59</span>,<span class="number">13</span>,<span class="number">10</span>,<span class="number">09</span>,<span class="number">125</span>,<span class="number">101</span>,<span class="number">108</span>,<span class="number">115</span>,<span class="number">101</span>,<span class="number">123</span>,<span class="number">13</span>,<span class="number">10</span>,<span class="number">09</span>,<span class="number">09</span>,<span class="number">97</span>,<span class="number">108</span>,<span class="number">101</span>,<span class="number">114</span>,<span class="number">116</span>,<span class="number">40</span>,<span class="number">34</span>,<span class="number">23494</span>,<span class="number">30721</span>,<span class="number">38169</span>,<span class="number">35823</span>,<span class="number">34</span>,<span class="number">41</span>,<span class="number">59</span>,<span class="number">13</span>,<span class="number">10</span>,<span class="number">09</span>,<span class="number">125</span>,<span class="number">13</span>,<span class="number">10</span>,<span class="number">125</span>));</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>fromCharCode()将Unicode编码转为一个字符，静态 <strong><code>String.fromCharCode()</code></strong> 方法返回由指定的 UTF-16 代码单元序列创建的字符串。将里面的代码找个在线JavaScript一转，摇身一变代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">String</span>.<span class="title function_">fromCharCode</span>(<span class="number">102</span>,<span class="number">117</span>,<span class="number">110</span>,<span class="number">99</span>,<span class="number">116</span>,<span class="number">105</span>,<span class="number">111</span>,<span class="number">110</span>,<span class="number">32</span>,<span class="number">99</span>,<span class="number">104</span>,<span class="number">101</span>,<span class="number">99</span>,<span class="number">107</span>,<span class="number">40</span>,<span class="number">41</span>,<span class="number">123</span>,<span class="number">13</span>,<span class="number">10</span>,<span class="number">09</span>,<span class="number">118</span>,<span class="number">97</span>,<span class="number">114</span>,<span class="number">32</span>,<span class="number">97</span>,<span class="number">32</span>,<span class="number">61</span>,<span class="number">32</span>,<span class="number">39</span>,<span class="number">100</span>,<span class="number">52</span>,<span class="number">103</span>,<span class="number">39</span>,<span class="number">59</span>,<span class="number">13</span>,<span class="number">10</span>,<span class="number">09</span>,<span class="number">105</span>,<span class="number">102</span>,<span class="number">40</span>,<span class="number">100</span>,<span class="number">111</span>,<span class="number">99</span>,<span class="number">117</span>,<span class="number">109</span>,<span class="number">101</span>,<span class="number">110</span>,<span class="number">116</span>,<span class="number">46</span>,<span class="number">103</span>,<span class="number">101</span>,<span class="number">116</span>,<span class="number">69</span>,<span class="number">108</span>,<span class="number">101</span>,<span class="number">109</span>,<span class="number">101</span>,<span class="number">110</span>,<span class="number">116</span>,<span class="number">66</span>,<span class="number">121</span>,<span class="number">73</span>,<span class="number">100</span>,<span class="number">40</span>,<span class="number">39</span>,<span class="number">116</span>,<span class="number">120</span>,<span class="number">116</span>,<span class="number">39</span>,<span class="number">41</span>,<span class="number">46</span>,<span class="number">118</span>,<span class="number">97</span>,<span class="number">108</span>,<span class="number">117</span>,<span class="number">101</span>,<span class="number">61</span>,<span class="number">61</span>,<span class="number">97</span>,<span class="number">41</span>,<span class="number">123</span>,<span class="number">13</span>,<span class="number">10</span>,<span class="number">09</span>,<span class="number">09</span>,<span class="number">119</span>,<span class="number">105</span>,<span class="number">110</span>,<span class="number">100</span>,<span class="number">111</span>,<span class="number">119</span>,<span class="number">46</span>,<span class="number">108</span>,<span class="number">111</span>,<span class="number">99</span>,<span class="number">97</span>,<span class="number">116</span>,<span class="number">105</span>,<span class="number">111</span>,<span class="number">110</span>,<span class="number">46</span>,<span class="number">104</span>,<span class="number">114</span>,<span class="number">101</span>,<span class="number">102</span>,<span class="number">61</span>,<span class="number">97</span>,<span class="number">43</span>,<span class="number">34</span>,<span class="number">46</span>,<span class="number">112</span>,<span class="number">104</span>,<span class="number">112</span>,<span class="number">34</span>,<span class="number">59</span>,<span class="number">13</span>,<span class="number">10</span>,<span class="number">09</span>,<span class="number">125</span>,<span class="number">101</span>,<span class="number">108</span>,<span class="number">115</span>,<span class="number">101</span>,<span class="number">123</span>,<span class="number">13</span>,<span class="number">10</span>,<span class="number">09</span>,<span class="number">09</span>,<span class="number">97</span>,<span class="number">108</span>,<span class="number">101</span>,<span class="number">114</span>,<span class="number">116</span>,<span class="number">40</span>,<span class="number">34</span>,<span class="number">23494</span>,<span class="number">30721</span>,<span class="number">38169</span>,<span class="number">35823</span>,<span class="number">34</span>,<span class="number">41</span>,<span class="number">59</span>,<span class="number">13</span>,<span class="number">10</span>,<span class="number">09</span>,<span class="number">125</span>,<span class="number">13</span>,<span class="number">10</span>,<span class="number">125</span>));</span><br><span class="line">---------------------------------------------------</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">check</span>(<span class="params"></span>)&#123;</span><br><span class="line">	<span class="keyword">var</span> a = <span class="string">&#x27;d4g&#x27;</span>;</span><br><span class="line">	<span class="keyword">if</span>(<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;txt&#x27;</span>).<span class="property">value</span>==a)&#123;</span><br><span class="line">		<span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span>=a+<span class="string">&quot;.php&quot;</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="title function_">alert</span>(<span class="string">&quot;密码错误&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>4-<a target="_blank" rel="noopener" href="http://monyer.com/game/game1/d4g.php">http://monyer.com/game/game1/d4g.php</a></p>
+<p>输入<code>d4g</code>时，看到URL转到<code>d4g.php</code>又很快回到了第3关的URL，那只能抓包来看看它返回了什么东西。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;content-type&quot;</span> <span class="attr">content</span>=<span class="string">&quot;text/html; charset=UTF-8&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;robots&quot;</span> <span class="attr">content</span>=<span class="string">&quot;noindex,nofollow&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;refresh&quot;</span> <span class="attr">content</span>=<span class="string">&quot;0;url=424178.php&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>梦之光芒/Monyer——Monyer&#x27;s Game(第4关)<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="built_in">eval</span>(<span class="keyword">function</span>(<span class="params">p,a,c,k,e,d</span>)&#123;e=<span class="keyword">function</span>(<span class="params">c</span>)&#123;<span class="keyword">return</span> c.<span class="title function_">toString</span>(<span class="number">36</span>)&#125;;<span class="keyword">if</span>(!<span class="string">&#x27;&#x27;</span>.<span class="title function_">replace</span>(<span class="regexp">/^/</span>,<span class="title class_">String</span>))&#123;<span class="keyword">while</span>(c--)d[c.<span class="title function_">toString</span>(a)]=k[c]||c.<span class="title function_">toString</span>(a);k=[<span class="keyword">function</span>(<span class="params">e</span>)&#123;<span class="keyword">return</span> d[e]&#125;];e=<span class="keyword">function</span>(<span class="params"></span>)&#123;<span class="keyword">return</span><span class="string">&#x27;\\w+&#x27;</span>&#125;;c=<span class="number">1</span>&#125;;<span class="keyword">while</span>(c--)<span class="keyword">if</span>(k[c])p=p.<span class="title function_">replace</span>(<span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">&#x27;\\b&#x27;</span>+<span class="title function_">e</span>(c)+<span class="string">&#x27;\\b&#x27;</span>,<span class="string">&#x27;g&#x27;</span>),k[c]);<span class="keyword">return</span> p&#125;(<span class="string">&#x27;a=&quot;e&quot;;d c()&#123;b(9.8(\&#x27;7\&#x27;).6==a)&#123;5.4.3=a+&quot;.2&quot;&#125;1&#123;0(&quot;密码错误&quot;)&#125;&#125;&#x27;</span>,<span class="number">15</span>,<span class="number">15</span>,<span class="string">&#x27;alert|else|php|href|location|window|value|txt|getElementById|document||if|check|function|3bhe&#x27;</span>.<span class="title function_">split</span>(<span class="string">&#x27;|&#x27;</span>),<span class="number">0</span>,&#123;&#125;))</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>欢迎您来到第4关<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>请输入密码进入第5关：</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;txt&quot;</span> <span class="attr">value</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">onClick</span>=<span class="string">&quot;check()&quot;</span> <span class="attr">value</span>=<span class="string">&quot;提交&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="built_in">eval</span>(<span class="string">&quot;\141\75\141\56\164\157\125\160\160\145\162\103\141\163\145\50\51\53\61\73&quot;</span>);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到有两段script，分别将两段script解密：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="built_in">eval</span>(<span class="keyword">function</span>(<span class="params">p,a,c,k,e,d</span>)&#123;e=<span class="keyword">function</span>(<span class="params">c</span>)&#123;<span class="keyword">return</span> c.<span class="title function_">toString</span>(<span class="number">36</span>)&#125;;<span class="keyword">if</span>(!<span class="string">&#x27;&#x27;</span>.<span class="title function_">replace</span>(<span class="regexp">/^/</span>,<span class="title class_">String</span>))&#123;<span class="keyword">while</span>(c--)d[c.<span class="title function_">toString</span>(a)]=k[c]||c.<span class="title function_">toString</span>(a);k=[<span class="keyword">function</span>(<span class="params">e</span>)&#123;<span class="keyword">return</span> d[e]&#125;];e=<span class="keyword">function</span>(<span class="params"></span>)&#123;<span class="keyword">return</span><span class="string">&#x27;\\w+&#x27;</span>&#125;;c=<span class="number">1</span>&#125;;<span class="keyword">while</span>(c--)<span class="keyword">if</span>(k[c])p=p.<span class="title function_">replace</span>(<span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">&#x27;\\b&#x27;</span>+<span class="title function_">e</span>(c)+<span class="string">&#x27;\\b&#x27;</span>,<span class="string">&#x27;g&#x27;</span>),k[c]);<span class="keyword">return</span> p&#125;(<span class="string">&#x27;a=&quot;e&quot;;d c()&#123;b(9.8(\&#x27;7\&#x27;).6==a)&#123;5.4.3=a+&quot;.2&quot;&#125;1&#123;0(&quot;密码错误&quot;)&#125;&#125;&#x27;</span>,<span class="number">15</span>,<span class="number">15</span>,<span class="string">&#x27;alert|else|php|href|location|window|value|txt|getElementById|document||if|check|function|3bhe&#x27;</span>.<span class="title function_">split</span>(<span class="string">&#x27;|&#x27;</span>),<span class="number">0</span>,&#123;&#125;))</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">----------------------------------------------------</span><br><span class="line">console.log(function(p,a,c,k,e,d)&#123;e=function(c)&#123;return c.toString(36)&#125;;if(!&#x27;&#x27;.replace(/^/,String))&#123;while(c--)d[c.toString(a)]=k[c]||c.toString(a);k=[function(e)&#123;return d[e]&#125;];e=function()&#123;return&#x27;\\w+&#x27;&#125;;c=1&#125;;while(c--)if(k[c])p=p.replace(new RegExp(&#x27;\\b&#x27;+e(c)+&#x27;\\b&#x27;,&#x27;g&#x27;),k[c]);return p&#125;(&#x27;a=&quot;e&quot;;d c()&#123;b(9.8(\&#x27;7\&#x27;).6==a)&#123;5.4.3=a+&quot;.2&quot;&#125;1&#123;0(&quot;密码错误&quot;)&#125;&#125;&#x27;,15,15,&#x27;alert|else|php|href|location|window|value|txt|getElementById|document||if|check|function|3bhe&#x27;.split(&#x27;|&#x27;),0,&#123;&#125;));</span><br><span class="line">-----------------------------------------------------</span><br><span class="line">a=&quot;3bhe&quot;;function check()&#123;if(document.getElementById(&#x27;txt&#x27;).value==a)&#123;window.location.href=a+&quot;.php&quot;&#125;else&#123;alert(&quot;密码错误&quot;)&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在URL上跟上<code>3bhe.php</code>不行，再来看下第二段JS：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="built_in">eval</span>(<span class="string">&quot;\141\75\141\56\164\157\125\160\160\145\162\103\141\163\145\50\51\53\61\73&quot;</span>);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">-----------------------------------------------------</span><br><span class="line">console.log(&quot;\141\75\141\56\164\157\125\160\160\145\162\103\141\163\145\50\51\53\61\73&quot;);</span><br><span class="line">-----------------------------------------------------</span><br><span class="line">a=a.toUpperCase()+1;</span><br></pre></td></tr></table></figure>
+
+<p> toUpperCase() 方法用于把字符串转换为大写。 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a=<span class="string">&quot;3bhe&quot;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a.<span class="title function_">toUpperCase</span>()+<span class="number">1</span>)</span><br><span class="line">-----------------------------------------------------</span><br><span class="line">3BHE1</span><br></pre></td></tr></table></figure>
+
+<p>URL跟上<code>3BHE1.php</code>成功跳转到第5关</p>
+<p>5-<a target="_blank" rel="noopener" href="http://monyer.com/game/game1/3BHE1.php">http://monyer.com/game/game1/3BHE1.php</a></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">check</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span> = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;txt&quot;</span>).<span class="property">value</span> + <span class="string">&quot;.php&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>页面提示说藏在了页面里，就按F12到处找，看到消息头的响应头里这样一句话：<code>monyer: the password for the next level is asdf</code>；或者抓包在响应报文里也可以看到。</p>
+<p>6-<a target="_blank" rel="noopener" href="http://monyer.com/game/game1/asdf.php">http://monyer.com/game/game1/asdf.php</a></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">function</span> <span class="title function_">check</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">	  	<span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span>=<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;txt&#x27;</span>).<span class="property">value</span> + <span class="string">&quot;7.php&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">	&#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在图片里找线索，主要是考信息搜索，从图片看出有magazine，用引号将从图片知道的内容包起来搜索，容易找到一家seventeen杂志。</p>
+<p>7-<a target="_blank" rel="noopener" href="http://monyer.com/game/game1/seventeen7.php">http://monyer.com/game/game1/seventeen7.php</a></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">function</span> <span class="title function_">check</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">	  	<span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span>=<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;txt&#x27;</span>).<span class="property">value</span> + <span class="string">&quot;.php&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">	&#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>它给了几个提示，是关于社工的(感觉我什么都不能信了怎么办)</p>
+<blockquote>
+<p>提示1：这关需要简单的社会工程学，请联想本关特点进入下一关。</p>
+<p>提示2：不要被你的所见、经验及习惯蒙蔽了你的双眼，看不到的正是你想要的。</p>
+<p>提示3：与社会工程学相仿的是暴力破解，所以Monyer给你MD5：5e023995fb3f5e840ee684784f8f0799（小于10的数字+字母）</p>
+</blockquote>
+<p>它说联想本关，我就顺其自然地想到<code>eighteen8</code>但出现了Not Found，去解密了MD5发现也是<code>eighteen8</code>，我只能看看抓包能有什么效果，还是<code>eighteen8</code>，看它会不会有啥302跳转啥的，结果一抓发现Not Found是假的！我再回头看发现它的title就写着第8关，我因为看到Not Found就没注意到title。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;content-type&quot;</span> <span class="attr">content</span>=<span class="string">&quot;text/html; charset=UTF-8&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;robots&quot;</span> <span class="attr">content</span>=<span class="string">&quot;noindex,nofollow&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>第8关<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Not Found<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>The requested URL /eighteen8.php was not found on this server.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Additionally, a 404 Not Found</span><br><span class="line">        error was encountered while trying to use an ErrorDocument to handle the request.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">style</span>=<span class="string">&quot;display:none&quot;</span>&gt;</span></span><br><span class="line">    第8关</span><br><span class="line"></span><br><span class="line">    朋友您好，第8关欢迎您！</span><br><span class="line">    我对您的聪明才智感到惊讶！</span><br><span class="line">    相信我，现在世界上85%以上的人都在你之下，</span><br><span class="line">    所以你可以大步向前，义无反顾地进行你的事业了。</span><br><span class="line">    因为只要你肯努力，不畏惧挫折，这个世界上没有难倒你的事。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    那么继续我们的约定，我将告诉你第9关的入口：</span><br><span class="line"></span><br><span class="line">    10000以内所有质数和.php</span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>8-<a target="_blank" rel="noopener" href="http://monyer.com/game/game1/eighteen8.php">http://monyer.com/game/game1/eighteen8.php</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="comment">#求10000以内的质数和，借大佬的代码一用</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">zhishu</span>(<span class="params">num=<span class="literal">None</span></span>):</span><br><span class="line">    <span class="keyword">if</span> num <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">or</span> num == <span class="number">1</span> <span class="keyword">or</span> num &lt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    i = <span class="number">2</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">if</span> i == num:</span><br><span class="line">            <span class="keyword">return</span> num</span><br><span class="line">        <span class="keyword">elif</span> num % i != <span class="number">0</span>:</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">        <span class="keyword">elif</span> num % i == <span class="number">0</span> <span class="keyword">and</span> num != i:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sum_zhishu</span>():</span><br><span class="line">    <span class="built_in">sum</span> = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10001</span>):</span><br><span class="line">        <span class="built_in">sum</span> += zhishu(i)</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(sum_zhishu())</span><br><span class="line"><span class="comment">#5736396</span></span><br></pre></td></tr></table></figure>
+
+<p>直接在URL上改<code>5736396.php</code></p>
+<p>9-<a target="_blank" rel="noopener" href="http://monyer.com/game/game1/5736396.php">http://monyer.com/game/game1/5736396.php</a></p>
+<p>认认真真看了美女许久一无所获，图片下载下来用notepad++打开发现最后有信息。</p>
+<blockquote>
+<p>那句广告词叫什么来着？<br>对，“在这里，在这里，在这里……”<br>恭喜你！<br>第十关密码为：MonyerLikeYou_the10level<br>从现在开始涉及到少许的动态东西，但你都可以按提示线索完成的！<br>相信自己，没错的！</p>
+</blockquote>
+<p>10-<a target="_blank" rel="noopener" href="https://www.monyer.com/game/game1/MonyerLikeYou_the10level.php">https://www.monyer.com/game/game1/MonyerLikeYou_the10level.php</a></p>
+<blockquote>
+<p> 当前用户身份为simpleuser 不是admin，无法显示下一关密码 </p>
+</blockquote>
+<p>抓包，改cookie中的username为admin，GET地址就是第10关的地址。</p>
+<p>页面跳转<a target="_blank" rel="noopener" href="https://www.monyer.com/game/game1/admin.php">https://www.monyer.com/game/game1/admin.php</a></p>
+<blockquote>
+<p> 好聪明哦！下一关密码为：doyouknow </p>
+</blockquote>
+<p>11-<a target="_blank" rel="noopener" href="https://www.monyer.com/game/game1/doyouknow.php?action=show_login_false">https://www.monyer.com/game/game1/doyouknow.php?action=show_login_false</a></p>
+<blockquote>
+<p> 你的session不是passer，不能查看下一关密码 </p>
+</blockquote>
+<p>session在哪找不到，我把URL的false改为true就可以通过了。</p>
+<blockquote>
+<p> 您的session为passer，所以您可以查看下一关密码：smartboy </p>
+</blockquote>
+<p>12-<a target="_blank" rel="noopener" href="https://www.monyer.com/game/game1/smartboy.php">https://www.monyer.com/game/game1/smartboy.php</a></p>
+<blockquote>
+<p>JTRBJTU0JTYzJTdBJTRBJTU0JTVBJTQ3JTRBJTU0JTU5JTc5JTRBJTU0JTU5JTMxJTRBJTU0JTU5JTc4JTRBJTU0JTYzJTMxJTRBJTU0JTYzJTMwJTRBJTU0JTU5JTM1JTRBJTU0JTU5JTMyJTRBJTU0JTYzJTMxJTRBJTU0JTVBJTQ0JTRBJTU0JTRBJTQ2JTRBJTU0JTYzJTc3JTRBJTU0JTU5JTM0JTRBJTU0JTYzJTc3</p>
+</blockquote>
+<p>有大小写、数字，猜测base64解码：</p>
+<blockquote>
+<p>%4A%54%63%7A%4A%54%5A%47%4A%54%59%79%4A%54%59%31%4A%54%59%78%4A%54%63%31%4A%54%63%30%4A%54%59%35%4A%54%59%32%4A%54%63%31%4A%54%5A%44%4A%54%4A%46%4A%54%63%77%4A%54%59%34%4A%54%63%77</p>
+</blockquote>
+<p>URL解码：</p>
+<blockquote>
+<p>JTczJTZGJTYyJTY1JTYxJTc1JTc0JTY5JTY2JTc1JTZDJTJFJTcwJTY4JTcw</p>
+</blockquote>
+<p>base64解码：</p>
+<blockquote>
+<p>%73%6F%62%65%61%75%74%69%66%75%6C%2E%70%68%70</p>
+</blockquote>
+<p>URL解码：</p>
+<blockquote>
+<p>sobeautiful.php</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;?&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;pwd&quot;</span> <span class="attr">value</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;提交&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在以上源码中改为<code>action=&quot;sobeautiful.php&quot;</code>，再次点提交，进到13关。</p>
+<p>13-<a target="_blank" rel="noopener" href="https://www.monyer.com/game/game1/sobeautiful.php">https://www.monyer.com/game/game1/sobeautiful.php</a></p>
+<blockquote>
+<p> 本页禁止盗链！ </p>
+</blockquote>
+<p>顺便一说，如果直接在URL上改sobeautiful.php就会出现上面提示，进了第13关又没全进，反正就是做不了题。</p>
+<p>查看源码：</p>
+<figure class="highlight plaintext"><figcaption><span>basic</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">dim connect</span><br><span class="line">Response.Expires=0 &#x27;系统数据库连接</span><br><span class="line">Set connect=Server.CreateObject(&quot;ADODB.Connection&quot;)</span><br><span class="line">connect.Open &quot;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=&quot; &amp; server.MapPath(&quot;/Database.mdb&quot;) &amp; &quot;;Mode=ReadWrite|Share Deny None;Persist Security Info=False&quot;</span><br><span class="line"></span><br><span class="line">set rss=server.createobject(&quot;adodb.recordset&quot;)</span><br><span class="line">sqlstr=&quot;select password,pwd from [user] where pwd=&#x27;&quot;&amp;request(&quot;pwd&quot;)&amp;&quot;&#x27;&quot;</span><br><span class="line">rss.open sqlstr,connect,1,1</span><br><span class="line">if rss.bof and rss.eof then</span><br><span class="line">  response.write(&quot;密码错误&quot;)</span><br><span class="line">else</span><br><span class="line">  response.write(rss(&quot;password&quot;))</span><br><span class="line">end if</span><br><span class="line">rss.close</span><br><span class="line">set rss=nothing</span><br><span class="line">connect.close</span><br><span class="line">set connect=nothing</span><br></pre></td></tr></table></figure>
+
+<p>可知我们填入的”pwd”放进select语句查询，可以试试SQL注入。</p>
+<p>试<code>&#39; or 1=1</code>就试出来了密码：whatyouneverknow</p>
+<p>14-<a target="_blank" rel="noopener" href="https://www.monyer.com/game/game1/whatyouneverknow.php">https://www.monyer.com/game/game1/whatyouneverknow.php</a></p>
+<p>下载下来是一个exe文件，打开要我们输入16位注册码。先把它放进IDA看看，只有一个函数，用ID5反编译不了，有可能是被加壳了。用查壳软件<code>exeinfope</code>看看，被加了upx壳。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">upx -d crackme.exe //脱壳</span><br></pre></td></tr></table></figure>
+
+<p>脱壳后再放进IDA，好大的文件。。。试一下动态调试用OD，载入文件后右键-&gt;中文搜索引擎-&gt;智能搜索，在文本字符串中可以看到<code>ipasscrackme.asp</code>文件。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">check</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span> = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;txt&quot;</span>).<span class="property">value</span> + <span class="string">&quot;.php&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>由于它后面规定了是以<code>.php</code>结尾，所以改为<code>ipasscrackme.php</code></p>
+<p>15-<a target="_blank" rel="noopener" href="http://monyer.com/game/game1/ipasscrackme.php">http://monyer.com/game/game1/ipasscrackme.php</a> </p>
+<blockquote>
+<p>你最终没能把cookies设为admin </p>
+</blockquote>
+<p>最后抓包将cookies设为admin就可以了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cookie: username=admin; PHPSESSID=967sro4f61krddtkgkihm6jj68</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/posts/76c5464c.html" data-id="cl1lgrwi1000rokhq24nl1o56" data-title="monyer闯关小游戏" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web/" rel="tag">Web</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/posts/784f7e1d.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          .Net逆向教程
+        
+      </div>
+    </a>
+  
+  
+    <a href="/posts/e955b133.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">k-近邻算法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android%E9%80%86%E5%90%91/">Android逆向</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Windows%E9%80%86%E5%90%91/">Windows逆向</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%BC%8F%E6%B4%9E%E6%B8%97%E9%80%8F/">漏洞渗透</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%BC%E5%90%88/">综合</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Killer/" rel="tag">Android Killer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDA/" rel="tag">IDA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OllyDbg/" rel="tag">OllyDbg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reverse/" rel="tag">Reverse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x64dbg/" rel="tag">x64dbg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%BE%E7%88%B1%E7%A0%B4%E8%A7%A3%E5%9F%B9%E8%AE%AD/" rel="tag">吾爱破解培训</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B1%87%E7%BC%96/" rel="tag">汇编</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3/" rel="tag">脱壳</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android-Killer/" style="font-size: 11.67px;">Android Killer</a> <a href="/tags/CTF/" style="font-size: 16.67px;">CTF</a> <a href="/tags/IDA/" style="font-size: 15px;">IDA</a> <a href="/tags/Java/" style="font-size: 11.67px;">Java</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/OllyDbg/" style="font-size: 20px;">OllyDbg</a> <a href="/tags/PHP/" style="font-size: 11.67px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Reverse/" style="font-size: 18.33px;">Reverse</a> <a href="/tags/Web/" style="font-size: 13.33px;">Web</a> <a href="/tags/x64dbg/" style="font-size: 13.33px;">x64dbg</a> <a href="/tags/%E5%90%BE%E7%88%B1%E7%A0%B4%E8%A7%A3%E5%9F%B9%E8%AE%AD/" style="font-size: 20px;">吾爱破解培训</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 11.67px;">机器学习</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 10px;">汇编</a> <a href="/tags/%E8%84%B1%E5%A3%B3/" style="font-size: 10px;">脱壳</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/posts/9589547b.html">黑客丛林之旅小游戏</a>
+          </li>
+        
+          <li>
+            <a href="/posts/5a99a36.html">攻防世界 逆向高手进阶区</a>
+          </li>
+        
+          <li>
+            <a href="/posts/9f62af2.html">攻防世界 Android逆向合集</a>
+          </li>
+        
+          <li>
+            <a href="/posts/2670ba0d.html">感知机学习算法</a>
+          </li>
+        
+          <li>
+            <a href="/posts/15be101a.html">Android逆向入门教程</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

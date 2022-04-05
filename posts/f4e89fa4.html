@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>BUUCTF 逆向合集 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="前面很容易就解出来的题我就没放上来，都已经做过这么多题了，相信对你们来说也是so easy。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BUUCTF 逆向合集">
+<meta property="og:url" content="http://example.com/posts/f4e89fa4.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前面很容易就解出来的题我就没放上来，都已经做过这么多题了，相信对你们来说也是so easy。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/posts/f4e89fa4/1.1.png">
+<meta property="og:image" content="http://example.com/posts/f4e89fa4/1.2.png">
+<meta property="og:image" content="http://example.com/posts/f4e89fa4/1.3.png">
+<meta property="og:image" content="http://example.com/posts/f4e89fa4/2.1.png">
+<meta property="og:image" content="http://example.com/posts/f4e89fa4/3.1.png">
+<meta property="og:image" content="http://example.com/posts/f4e89fa4/3.2.png">
+<meta property="og:image" content="http://example.com/posts/f4e89fa4/5.1.png">
+<meta property="og:image" content="http://example.com/posts/f4e89fa4/6.1.png">
+<meta property="og:image" content="http://example.com/posts/f4e89fa4/6.2.png">
+<meta property="og:image" content="http://example.com/posts/f4e89fa4/6.3.png">
+<meta property="og:image" content="http://example.com/posts/f4e89fa4/6.4.png">
+<meta property="og:image" content="http://example.com/posts/f4e89fa4/6.5.png">
+<meta property="og:image" content="http://example.com/posts/f4e89fa4/6.6.png">
+<meta property="og:image" content="http://example.com/posts/f4e89fa4/6.7.png">
+<meta property="og:image" content="http://example.com/posts/f4e89fa4/6.8.png">
+<meta property="og:image" content="http://example.com/posts/f4e89fa4/7.1.png">
+<meta property="og:image" content="http://example.com/posts/f4e89fa4/8.1.png">
+<meta property="og:image" content="http://example.com/posts/f4e89fa4/8.2.png">
+<meta property="og:image" content="http://example.com/posts/f4e89fa4/8.3.png">
+<meta property="og:image" content="http://example.com/posts/f4e89fa4/10.1.png">
+<meta property="og:image" content="http://example.com/posts/f4e89fa4/10.2.png">
+<meta property="article:published_time" content="2022-04-05T01:29:27.792Z">
+<meta property="article:modified_time" content="2022-04-04T12:59:21.292Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Reverse">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/posts/f4e89fa4/1.1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-BUUCTF_逆向" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/posts/f4e89fa4.html" class="article-date">
+  <time class="dt-published" datetime="2022-04-05T01:29:27.792Z" itemprop="datePublished">2022-04-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Windows%E9%80%86%E5%90%91/">Windows逆向</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      BUUCTF 逆向合集
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>前面很容易就解出来的题我就没放上来，都已经做过这么多题了，相信对你们来说也是so easy。</p>
+<span id="more"></span>
+
+<h1 id="1-SimpleRev"><a href="#1-SimpleRev" class="headerlink" title="1. SimpleRev"></a>1. SimpleRev</h1><p>可能做题做多了脑子抽了，这道题其实很容易结果我好久都没解出来。好吧，那你就是第1题啦。</p>
+<p>ELF文件，载入IDA。</p>
+<img src="/posts/f4e89fa4/1.1.png" class="" title="IDA分析">
+
+<img src="/posts/f4e89fa4/1.2.png" class="" title="IDA分析">
+
+<p>但长长整型转换的字符串是小端存储的，所以还要逆序！！这个超级容易错，我出来的flag不对就是因为这个！！</p>
+<img src="/posts/f4e89fa4/1.3.png" class="" title="IDA分析">
+
+<p>由于逆向v1有点困难，所以我们就不逆向算法了，直接将ASCII码表里所有字符按照原本算法进行匹配。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">text = <span class="built_in">list</span>(<span class="string">&quot;killshadow&quot;</span>)</span><br><span class="line">key = <span class="built_in">list</span>(<span class="string">&quot;ADSFKNDCLS&quot;</span>)</span><br><span class="line">ans = <span class="string">&quot;&quot;</span></span><br><span class="line">v5 = <span class="built_in">len</span>(key)</span><br><span class="line">v3 = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(v5):</span><br><span class="line">    <span class="keyword">if</span> key[v3%v5]&gt;<span class="string">&#x27;@&#x27;</span> <span class="keyword">and</span> key[v3%v5]&lt;=<span class="string">&#x27;Z&#x27;</span>:</span><br><span class="line">        key[i] = <span class="built_in">chr</span>(<span class="built_in">ord</span>(key[v3%v5]) + <span class="number">32</span>)</span><br><span class="line">        v3 += <span class="number">1</span></span><br><span class="line">        <span class="built_in">print</span>(key[i],end=<span class="string">&quot;&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(v5):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>,<span class="number">128</span>):</span><br><span class="line">        <span class="keyword">if</span> (j&gt;<span class="number">64</span> <span class="keyword">and</span> j&lt;<span class="number">91</span>) <span class="keyword">or</span> (j&gt;<span class="number">96</span> <span class="keyword">and</span> j&lt;<span class="number">123</span>):</span><br><span class="line">            <span class="keyword">if</span> (j-<span class="number">39</span>-<span class="built_in">ord</span>(key[v3%v5])+<span class="number">97</span>)%<span class="number">26</span>+<span class="number">97</span> == <span class="built_in">ord</span>(text[i]):</span><br><span class="line">                v3 += <span class="number">1</span></span><br><span class="line">                ans += <span class="built_in">chr</span>(j)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"><span class="built_in">print</span>(ans)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">adsfkndcls</span></span><br><span class="line"><span class="string">KLDQCUDFZO</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;KLDQCUDFZO&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-luck-guy"><a href="#2-luck-guy" class="headerlink" title="2. luck_guy"></a>2. luck_guy</h1><p>无壳，64位ELF，载入IDA分析一下。随着main函数进入关键函数。</p>
+<img src="/posts/f4e89fa4/2.1.png" class="" title="IDA分析">
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将f2串加上0x，再放入列表</span></span><br><span class="line">tmp_list = []</span><br><span class="line">index = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> index &lt; <span class="number">15</span>:</span><br><span class="line">	tmp = <span class="built_in">eval</span>(<span class="string">&#x27;0x&#x27;</span> + f2[index:index+<span class="number">2</span>])</span><br><span class="line">	tmp_list.append(tmp)</span><br><span class="line">	index += <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(tmp_list)):</span><br><span class="line">	<span class="keyword">if</span> i % <span class="number">2</span> == <span class="number">1</span>:</span><br><span class="line">		tmp_list[i] = tmp_list[i] - <span class="number">2</span></span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		tmp_list[i] = tmp_list[i] - <span class="number">1</span></span><br><span class="line">	ans += <span class="built_in">chr</span>(tmp_list[i])</span><br><span class="line"><span class="built_in">print</span>(ans)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">GXY&#123;do_not_hate_me&#125;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;do_not_hate_me&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-刮开有奖"><a href="#3-刮开有奖" class="headerlink" title="3. 刮开有奖"></a>3. 刮开有奖</h1><img src="/posts/f4e89fa4/3.1.png" class="" title="IDA分析">
+
+<p>v4解出来是<code>jMp</code>，v5解出来是<code>WP1</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">String[2] = &#x27;W&#x27;</span><br><span class="line">String[3] = &#x27;P&#x27;</span><br><span class="line">String[4] = &#x27;1&#x27;</span><br><span class="line">String[5] = &#x27;j&#x27;</span><br><span class="line">String[6] = &#x27;M&#x27;</span><br><span class="line">String[7] = &#x27;p&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>接下来算String[0]和String[1]，发现如果直接代入上面的值，却得String[0]&#x3D;<code>|</code>，String[1]&#x3D;<code>C</code>，String[2]&#x3D;<code>a</code>，String[3]&#x3D;<code>@</code>。所以v7~v16应该是做了某些变换。sub_4010F0就是做变换的函数。</p>
+<img src="/posts/f4e89fa4/3.2.png" class="" title="IDA分析">
+
+<p>进去看它代码，有do…while…语句和递归，由于我用Python一直出错，可能是我逻辑出现了问题，所以最后还是用C照搬它的代码吧。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">sub_4010F0</span><span class="params">(<span class="type">char</span> * a1, <span class="type">int</span> a2, <span class="type">int</span> a3)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> result; <span class="comment">// eax</span></span><br><span class="line">    <span class="type">int</span> i; <span class="comment">// esi</span></span><br><span class="line">    <span class="type">int</span> v5; <span class="comment">// ecx</span></span><br><span class="line">    <span class="type">int</span> v6; <span class="comment">// edx</span></span><br><span class="line"></span><br><span class="line">    result = a3;</span><br><span class="line">    <span class="keyword">for</span> (i = a2; i &lt;= a3; a2 = i)</span><br><span class="line">    &#123;</span><br><span class="line">        v5 = i;</span><br><span class="line">        v6 = a1[i];</span><br><span class="line">        <span class="keyword">if</span> (a2 &lt; result &amp;&amp; i &lt; result)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">do</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (v6 &gt; a1[result])</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (i &gt;= result)</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    ++i;</span><br><span class="line">                    a1[v5] = a1[result];</span><br><span class="line">                    <span class="keyword">if</span> (i &gt;= result)</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">while</span> (a1[i] &lt;= v6)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">if</span> (++i &gt;= result)</span><br><span class="line">                            <span class="keyword">goto</span> LABEL_13;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (i &gt;= result)</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    v5 = i;</span><br><span class="line">                    a1[result] = a1[i];</span><br><span class="line">                &#125;</span><br><span class="line">                --result;</span><br><span class="line">            &#125; <span class="keyword">while</span> (i &lt; result);</span><br><span class="line">        &#125;</span><br><span class="line">    LABEL_13:</span><br><span class="line">        a1[result] = v6;</span><br><span class="line">        sub_4010F0(a1, a2, i - <span class="number">1</span>);</span><br><span class="line">        result = a3;</span><br><span class="line">        ++i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> a1[<span class="number">12</span>] = &#123; <span class="number">90</span>,<span class="number">74</span>,<span class="number">83</span>,<span class="number">69</span>,<span class="number">67</span>,<span class="number">97</span>,<span class="number">78</span>,<span class="number">72</span>,<span class="number">51</span>,<span class="number">110</span>,<span class="number">103</span> &#125;;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, a1);</span><br><span class="line">    sub_4010F0(a1, <span class="number">0</span>, <span class="number">10</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>, a1);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">ZJSECaNH3ng</span></span><br><span class="line"><span class="comment">3CEHJNSZagn</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>呜呜呜不得不说，C真香啊，弄了我好久的Python，C一下就出来了，气人！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String[0] = &#x27;3&#x27; + 34 = &#x27;U&#x27;</span><br><span class="line">String[1] = &#x27;J&#x27;</span><br><span class="line">String[2] = &#x27;W&#x27;</span><br><span class="line">String[3] = &#x27;P&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>验证一下，String[2]和String[3]与上面Base64解密解出来的是一致的，所以是正确答案。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;UJWP1jMp&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="4-pyre"><a href="#4-pyre" class="headerlink" title="4. pyre"></a>4. pyre</h1><p>下载下来是<code>.pyc</code>文件，这个是 Python 程序编译后得到的字节码文件，找一个<a target="_blank" rel="noopener" href="https://tool.lu/pyc/">python反编译的网站</a>即可转化为python代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># visit https://tool.lu/pyc/ for more information</span></span><br><span class="line"><span class="built_in">print</span> <span class="string">&#x27;Welcome to Re World!&#x27;</span></span><br><span class="line"><span class="built_in">print</span> <span class="string">&#x27;Your input1 is your flag~&#x27;</span></span><br><span class="line">l = <span class="built_in">len</span>(input1)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(l):</span><br><span class="line">    num = ((input1[i] + i) % <span class="number">128</span> + <span class="number">128</span>) % <span class="number">128</span></span><br><span class="line">    code += num</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(l - <span class="number">1</span>):</span><br><span class="line">    code[i] = code[i] ^ code[i + <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span> code</span><br><span class="line">code = [</span><br><span class="line">    <span class="string">&#x27;\x1f&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;\x12&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;\x1d&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;(&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;4&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;\x01&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;\x06&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;\x14&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;4&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;,&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;\x1b&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;U&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;?&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;o&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;6&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;*&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;:&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;\x01&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;D&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;;&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;%&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;\x13&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>我们要做的工作就是将它逆向回去。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> string</span><br><span class="line">code = [</span><br><span class="line">    <span class="string">&#x27;\x1f&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;\x12&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;\x1d&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;(&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;4&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;\x01&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;\x06&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;\x14&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;4&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;,&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;\x1b&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;U&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;?&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;o&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;6&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;*&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;:&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;\x01&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;D&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;;&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;%&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;\x13&#x27;</span>]</span><br><span class="line">l = <span class="built_in">len</span>(code)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(l-<span class="number">2</span>,<span class="number">0</span>,-<span class="number">1</span>):</span><br><span class="line">    code[i] = <span class="built_in">chr</span>(<span class="built_in">ord</span>(code[i]) ^ <span class="built_in">ord</span>(code[i + <span class="number">1</span>]))</span><br><span class="line"><span class="built_in">input</span> = string.printable</span><br><span class="line">ans = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(l):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">input</span>:</span><br><span class="line">        <span class="keyword">if</span> code[i] == <span class="built_in">chr</span>(((<span class="built_in">ord</span>(j) + i) % <span class="number">128</span> + <span class="number">128</span>) % <span class="number">128</span>):</span><br><span class="line">            ans += j</span><br><span class="line"><span class="built_in">print</span> (ans)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">WHT&#123;Just_Re_1s_Ha66y!&#125;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;Just_Re_1s_Ha66y!&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="5-rsa"><a href="#5-rsa" class="headerlink" title="5. rsa"></a>5. rsa</h1><p>一道像密码题的逆向题。解压出来有两个文件，一个公钥文件和一个加密文件。</p>
+<img src="/posts/f4e89fa4/5.1.png" class="" title="文件">
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_57291352/article/details/117716772">rsa第一种解法</a>，通过解析公钥获得n和e，再将n分解成p和q，然后用Python中的rsa和gmpy2库解密。</p>
+<p>rsa第二种解法，用RsaCtfTool直接解。<a target="_blank" rel="noopener" href="https://blog.csdn.net/Rational_HYJ/article/details/105688728">kali安装RsaCtfTool</a>，安装好后进入其目录在终端输入命令：<code>python3 RsaCtfTool.py --publickey pub.key --uncipherfile flag.enc</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">┌──(v5le0n9㉿kali)-[~/RsaCtfTool]</span><br><span class="line">└─$ python3 RsaCtfTool.py --publickey pub.key --uncipherfile flag.enc    1 ⨯</span><br><span class="line">private argument is not set, the private key will not be displayed, even if recovered.                                                                    </span><br><span class="line"></span><br><span class="line">[*] Testing key pub.key.</span><br><span class="line">[*] Performing system_primes_gcd attack on pub.key.</span><br><span class="line">100%|███████████████████████████████| 7007/7007 [00:00&lt;00:00, 1370394.86it/s]</span><br><span class="line">[*] Performing fibonacci_gcd attack on pub.key.</span><br><span class="line">100%|████████████████████████████████| 9999/9999 [00:00&lt;00:00, 302473.41it/s]</span><br><span class="line">[*] Performing pastctfprimes attack on pub.key.</span><br><span class="line">100%|█████████████████████████████████| 113/113 [00:00&lt;00:00, 2246238.64it/s]</span><br><span class="line">[*] Performing smallq attack on pub.key.</span><br><span class="line">[*] Performing factordb attack on pub.key.</span><br><span class="line">[*] Attack success with factordb method !</span><br><span class="line"></span><br><span class="line">Results for pub.key:</span><br><span class="line"></span><br><span class="line">Unciphered data :</span><br><span class="line">HEX : 0x00029d207b7a521e08e4e6180600666c61677b646563727970745f3235367d0a</span><br><span class="line">INT (big endian) : 4618144028027957675862906963888332345633248954043303780331531906089123082</span><br><span class="line">INT (little endian) : 4744358497414744401850218354568232353073084770228403473305939615805528146432</span><br><span class="line">utf-16 : Ȁ₝穻Ṓᣦ汦条摻捥祲瑰㉟㘵੽</span><br><span class="line">STR : b&#x27;\x00\x02\x9d &#123;zR\x1e\x08\xe4\xe6\x18\x06\x00flag&#123;decrypt_256&#125;\n&#x27;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;decrypt_256&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="6-CrackRTF"><a href="#6-CrackRTF" class="headerlink" title="6. CrackRTF"></a>6. CrackRTF</h1><img src="/posts/f4e89fa4/6.1.png" class="" title="IDA分析">
+
+<img src="/posts/f4e89fa4/6.2.png" class="" title="IDA分析">
+
+<p>查看一下<code>CryptCreateHash</code>函数原型：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">BOOL CRYPTFUNC <span class="title function_">CryptCreateHash</span><span class="params">( </span></span><br><span class="line"><span class="params">  HCRYPTPROV hProv,		<span class="comment">//句柄</span></span></span><br><span class="line"><span class="params">  ALG_ID Algid, 		<span class="comment">//算法id</span></span></span><br><span class="line"><span class="params">  HCRYPTKEY hKey, 		<span class="comment">//必须为0</span></span></span><br><span class="line"><span class="params">  DWORD dwFlags, 		<span class="comment">//标志值</span></span></span><br><span class="line"><span class="params">  HCRYPTHASH* phHash	<span class="comment">//存储哈希值的地址</span></span></span><br><span class="line"><span class="params">)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Algid在这里查：<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/alg-id">https://docs.microsoft.com/en-us/windows/win32/seccrypto/alg-id</a> ，发现0x8004是SHA1加密算法。</p>
+<img src="/posts/f4e89fa4/6.3.png" class="" title="SHA加密算法">
+
+<p>此时可以通过Python的hashlib包对前6位进行爆破。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line">flag2 = <span class="string">&quot;@DBApp&quot;</span></span><br><span class="line"><span class="comment"># 字符串转换为整型大于100000，长度为6，所以最大为999999</span></span><br><span class="line"><span class="comment"># atoi只有字符串全为数字才能转换</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100000</span>,<span class="number">999999</span>):</span><br><span class="line">    h2 = hashlib.sha1((<span class="built_in">str</span>(i)+flag2).encode())</span><br><span class="line">    flags = h2.hexdigest()</span><br><span class="line">    <span class="comment"># hashlib解密后是小写，所以要转换为小写</span></span><br><span class="line">    <span class="keyword">if</span> <span class="string">&quot;6E32D0943418C2C33385BC35A1470250DD8923A9&quot;</span>.lower() == flags:</span><br><span class="line">            <span class="built_in">print</span> (<span class="built_in">str</span>(i)+flag2)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">123321@DBApp</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>所以前6位为<code>123321</code>。继续分析密码2。</p>
+<img src="/posts/f4e89fa4/6.4.png" class="" title="IDA分析">
+
+<p>进入401019，又是加密函数，0x8003是MD5加密。但这时不能用上面方法解决了，因为它的范围太大了，不只是数字组合还有字母组合还有数字字母组合，所以爆破这方法不可行。</p>
+<p>我们看到还调用了一个40100F的函数，可以进去看看。</p>
+<img src="/posts/f4e89fa4/6.5.png" class="" title="IDA分析">
+
+<img src="/posts/f4e89fa4/6.6.png" class="" title="IDA分析">
+
+<p>既然需要知道资源数据，我们在<a target="_blank" rel="noopener" href="https://v5le0n9.github.io/post/7cd35487.html#4-%E4%BF%AE%E6%94%B9%E7%89%88%E6%9D%83%E5%92%8C%E8%B5%84%E6%BA%90">吾爱破解培训第三课</a>里就用过很多查看或修改资源的工具，比如：Restorator、ResEdit、ResourceHacker等。</p>
+<p>我们用ResourceHacker打开exe文件，找到AAA类型的资源数据。</p>
+<img src="/posts/f4e89fa4/6.7.png" class="" title="资源数据">
+
+<p>整个字符串一共18位，但后12位我们已经知道了，所以只要异或前6位即可。资源数据前6位为<code>05 7D 41 15 26 01</code>。而rtf文件的前6位是什么呢？我们已经知道CreateFileA新建一个0字节的文件，也就是说rtf的文件头也是我们写入的，而头文件是文件最开始的数据，所以我们需要rtf文件头的前6位。</p>
+<p>创建一个<code>.rtf</code>文件，在里面写点东西。拖进WinHex查看文件头。(不写直接拖进WinHex为空，任何文件任何格式创建了不写都是如此)</p>
+<img src="/posts/f4e89fa4/6.8.png" class="" title="rtf文件格式">
+
+<p>那么现在可以编写逆向脚本了：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">rtf = [<span class="number">0x7b</span>,<span class="number">0x5c</span>,<span class="number">0x72</span>,<span class="number">0x74</span>,<span class="number">0x66</span>,<span class="number">0x31</span>]</span><br><span class="line">res = [<span class="number">0x05</span>,<span class="number">0x7d</span>,<span class="number">0x41</span>,<span class="number">0x15</span>,<span class="number">0x26</span>,<span class="number">0x01</span>]</span><br><span class="line">ans = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(rtf)):</span><br><span class="line">    ans += <span class="built_in">chr</span>(rtf[i] ^ res[i])</span><br><span class="line"><span class="built_in">print</span>(ans)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">~!3a@0</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>所以这6位应该为<code>~!3a@0</code>。运行程序，依次输入密码1和密码2，会在当前目录生成一个dbapp.rtf文件，打开就是flag。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Flag&#123;N0_M0re_Free_Bugs&#125;</span><br><span class="line">flag&#123;N0_M0re_Free_Bugs&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="7-login"><a href="#7-login" class="headerlink" title="7. login"></a>7. login</h1><p>这道题应该算是Web逆向吧？</p>
+<img src="/posts/f4e89fa4/7.1.png" class="" title="js分析">
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> c &lt;= <span class="string">&#x27;Z&#x27;</span>:</span><br><span class="line">    tmp = <span class="number">90</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    tmp = <span class="number">122</span></span><br><span class="line">c2 = <span class="built_in">ord</span>(c) + <span class="number">13</span></span><br><span class="line"><span class="keyword">if</span> tmp &gt;= c2:</span><br><span class="line">    result = c2</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    result = c2 - <span class="number">26</span></span><br></pre></td></tr></table></figure>
+
+<p>不知不觉，get到遍历可打印字符的香了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> string</span><br><span class="line">flag = <span class="built_in">list</span>(<span class="string">&quot;PyvragFvqrYbtvafNerRnfl@syner-ba.pbz&quot;</span>)</span><br><span class="line">ans = flag</span><br><span class="line"><span class="built_in">input</span> = string.printable</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(flag)):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">input</span>:</span><br><span class="line">        <span class="keyword">if</span> (j &lt;= <span class="string">&#x27;Z&#x27;</span> <span class="keyword">and</span> j &gt;= <span class="string">&#x27;A&#x27;</span>) <span class="keyword">or</span> (j &lt;= <span class="string">&#x27;z&#x27;</span> <span class="keyword">and</span> j &gt;= <span class="string">&#x27;a&#x27;</span>):</span><br><span class="line">            <span class="keyword">if</span> j &lt;= <span class="string">&#x27;Z&#x27;</span>:</span><br><span class="line">                tmp = <span class="number">90</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                tmp = <span class="number">122</span></span><br><span class="line">            j2 = <span class="built_in">ord</span>(j) + <span class="number">13</span></span><br><span class="line">            <span class="keyword">if</span> tmp &gt;= j2:</span><br><span class="line">                result = j2</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                result = j2 - <span class="number">26</span></span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">chr</span>(result) == flag[i]:</span><br><span class="line">                ans[i] = j</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(ans)):</span><br><span class="line">    <span class="built_in">print</span>(ans[i],end=<span class="string">&quot;&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>()</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">ClientSideLoginsAreEasy@flare-on.com</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;ClientSideLoginsAreEasy@flare-on.com&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="8-easyRE"><a href="#8-easyRE" class="headerlink" title="8. easyRE"></a>8. easyRE</h1><p>下载下来是ELF文件，直接载入IDA看看吧。</p>
+<p>太多函数的话直接找字符串，大家都会了吧？不会寄几拣生，懒得写了。</p>
+<img src="/posts/f4e89fa4/8.1.png" class="" title="IDA分析">
+
+<img src="/posts/f4e89fa4/8.2.png" class="" title="IDA分析">
+
+<p>我们算出v18后再加上3个0字符也进行base64算法10次试试，发现与<code>off_6CC090</code>内存中的数据不一样！！</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line">flag = <span class="built_in">list</span>(<span class="string">&quot;Iodl&gt;Qnb(ocy&quot;</span>)</span><br><span class="line">flag.append(<span class="number">127</span>)</span><br><span class="line">flag.extend(<span class="string">&quot;y.i&quot;</span>)</span><br><span class="line">flag.append(<span class="number">127</span>)</span><br><span class="line">flag.extend(<span class="string">&quot;d`3w&#125;wek9&#123;iy=~yL@EC&quot;</span>)</span><br><span class="line">v18 = flag</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(flag)):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(flag[i],<span class="built_in">int</span>):</span><br><span class="line">        v18[i] = <span class="built_in">chr</span>(flag[i] ^ i)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        v18[i] = <span class="built_in">chr</span>(<span class="built_in">ord</span>(flag[i]) ^ i)</span><br><span class="line">    <span class="built_in">print</span>(v18[i],end=<span class="string">&quot;&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>()</span><br><span class="line">v18.append(<span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">v18.append(<span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">v18.append(<span class="string">&#x27;0&#x27;</span>)</span><br><span class="line"><span class="built_in">str</span>=<span class="string">&#x27;&#x27;</span>.join(v18)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">str</span>)</span><br><span class="line">bs = base64.b64encode(<span class="built_in">str</span>.encode(<span class="string">&quot;utf-8&quot;</span>))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">9</span>):</span><br><span class="line">    bs = base64.b64encode(bs)</span><br><span class="line"><span class="built_in">print</span>(bs)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">Info:The first four chars are `flag`</span></span><br><span class="line"><span class="string">Info:The first four chars are `flag`000</span></span><br><span class="line"><span class="string">b&#x27;Vm0wd2QyVkZOVWRXV0doVVYwZDRWRmx0ZEhkVU1WcDBUVmM1VjFadGVIbFhhMk0xVmpGYWRHVkdiR0ZXVjJoeVdWZDRZV014WkhGUmJVWlhWakZLU1ZkV1dsWmxSbGw0V2toV2FGSnNjSEJXTUdSdlpWWmtWMWR0ZEZSTlZUVklWbTAxUjFWdFNrZFhiR2hhWWtkU2RsWldXbXRYUjFKSVVteG9hVlpyV1hwV1JscGhWakZrU0ZOcmFGWmlSMmhoV1d0YWQxUkdjRmRYYkhCc1VtMVNNRnBGV2xOVWJGcDFVV3h3VjFZemFIWmFSRXBIVWpGT2RWWnNTbWhsYlhob1YxZDBhMkl5VW5OV2JrNVlZbGhTV0ZSV1pEQk9iR3hXVjJzNVZXSkdjRlpXYlhSelZqRmFSbUV6YUZkaGEzQklWbXBHVDFkWFRrZFRiV3hvWld4YVdsWXhaREJaVm14V1RVaG9hbEpYYUhOVmFrNVRWMFphZEdONlJsaGlSM2hYVmpJeE1HRkdXbkppZWtwYVYwaENSRll3V2xwbGJGWnpZVVp3YUdFeGNIbFdWRUpoVkRKU1YxUnVTbEJXYlZKUFZXMDFRMWRzV1hoWGJYUk9VakZHTkZZeWRHdGhWazVIVTI1T1ZtSllUWGhXTUZwelkyeGtkRkp0ZUZkaVJsa3hWa1phVTFFeVJrWk5XRTVZWW0xb1YxWnRlRXRXTVZaSFVsUnNVVlZVTURrPQ==&#x27;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>好吧思路错了，v21与v18根本没关系，那我们将内存中的数据解码10次看看是什么。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line">bs = <span class="string">&#x27;Vm0wd2VHUXhTWGhpUm1SWVYwZDRWVll3Wkc5WFJsbDNXa1pPVlUxV2NIcFhhMk0xVmpKS1NHVkdXbFpOYmtKVVZtcEtTMUl5VGtsaVJtUk9ZV3hhZVZadGVHdFRNVTVYVW01T2FGSnRVbGhhVjNoaFZWWmtWMXBFVWxSTmJFcElWbTAxVDJGV1NuTlhia0pXWWxob1dGUnJXbXRXTVZaeVdrWm9hVlpyV1hwV1IzaGhXVmRHVjFOdVVsWmlhMHBZV1ZSR1lWZEdVbFZTYlhSWFRWWndNRlZ0TVc5VWJGcFZWbXR3VjJKSFVYZFdha1pXWlZaT2NtRkhhRk5pVjJoWVYxZDBhMVV3TlhOalJscFlZbGhTY1ZsclduZGxiR1J5VmxSR1ZXSlZjRWhaTUZKaFZqSktWVkZZYUZkV1JWcFlWV3BHYTFkWFRrZFRiV3hvVFVoQ1dsWXhaRFJpTWtsM1RVaG9hbEpYYUhOVmJUVkRZekZhY1ZKcmRGTk5Wa3A2VjJ0U1ExWlhTbFpqUldoYVRVWndkbFpxUmtwbGJVWklZVVprYUdFeGNHOVhXSEJIWkRGS2RGSnJhR2hTYXpWdlZGVm9RMlJzV25STldHUlZUVlpXTlZadE5VOVdiVXBJVld4c1dtSllUWGhXTUZwell6RmFkRkpzVWxOaVNFSktWa1phVTFFeFduUlRhMlJxVWxad1YxWnRlRXRXTVZaSFVsUnNVVlZVTURrPQ==&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">    bs = <span class="built_in">str</span>(base64.b64decode(bs), <span class="string">&quot;utf-8&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(bs)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">https://bbs.pediy.com/thread-254172.htm</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>竟然是一个网址。写主动防御。听君一席话，胜读十年书。所以怎么找呢？这么多函数坑死我了。找有运算操作的，最后在<code>4009C6</code>下面一个函数<code>400D35</code>找到了有<code>f</code>和<code>g</code>字样的东西，进行某些运算。</p>
+<img src="/posts/f4e89fa4/8.3.png" class="" title="IDA分析">
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">v1 = <span class="built_in">list</span>(<span class="string">&quot;flag&quot;</span>)</span><br><span class="line">b6cc = [<span class="number">0x40</span>,<span class="number">0x35</span>,<span class="number">0x20</span>,<span class="number">0x56</span>,<span class="number">0x5d</span>,<span class="number">0x18</span>,<span class="number">0x22</span>,<span class="number">0x45</span>,<span class="number">0x17</span>,<span class="number">0x2f</span>,<span class="number">0x24</span>,<span class="number">0x6e</span>,<span class="number">0x62</span>,<span class="number">0x3c</span>,<span class="number">0x27</span>,<span class="number">0x54</span>,<span class="number">0x48</span>,<span class="number">0x6c</span>,<span class="number">0x24</span>,<span class="number">0x6e</span>,<span class="number">0x72</span>,<span class="number">0x3c</span>,<span class="number">0x32</span>,<span class="number">0x45</span>,<span class="number">0x5b</span>]</span><br><span class="line">ans = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    v1[i] = <span class="built_in">ord</span>(v1[i]) ^ b6cc[i]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(b6cc)):</span><br><span class="line">    ans += <span class="built_in">chr</span>(b6cc[i] ^ v1[i%<span class="number">4</span>])</span><br><span class="line"><span class="built_in">print</span>(ans)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">flag&#123;Act1ve_Defen5e_Test&#125;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="9-GUET-CTF2019-re"><a href="#9-GUET-CTF2019-re" class="headerlink" title="9. [GUET-CTF2019]re"></a>9. [GUET-CTF2019]re</h1><p>ELF文件，有UPX壳。ELF脱UPX壳在Linux下执行脱壳命令与Windows一致。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">v5le0n9@ubuntu:~/Desktop$ upx -d re</span><br><span class="line">                       Ultimate Packer for eXecutables</span><br><span class="line">                          Copyright (C) 1996 - 2013</span><br><span class="line">UPX 3.91        Markus Oberhumer, Laszlo Molnar &amp; John Reiser   Sep 30th 2013</span><br><span class="line"></span><br><span class="line">        File size         Ratio      Format      Name</span><br><span class="line">   --------------------   ------   -----------   -----------</span><br><span class="line">    841042 &lt;-    304524   36.21%  linux/ElfAMD   re</span><br><span class="line"></span><br><span class="line">Unpacked 1 file.</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">ans = <span class="string">&quot;&quot;</span></span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">166163712</span>//<span class="number">1629056</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">731332800</span>//<span class="number">6771600</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">357245568</span>//<span class="number">3682944</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">1074393000</span>//<span class="number">10431000</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">489211344</span>//<span class="number">3977328</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">518971936</span>//<span class="number">5138336</span>)</span><br><span class="line">ans += <span class="string">&quot; &quot;</span></span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">406741500</span>//<span class="number">7532250</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">294236496</span>//<span class="number">5551632</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">177305856</span>//<span class="number">3409728</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">650683500</span>//<span class="number">13013670</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">298351053</span>//<span class="number">6088797</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">386348487</span>//<span class="number">7884663</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">438258597</span>//<span class="number">8944053</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">249527520</span>//<span class="number">5198490</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">445362764</span>//<span class="number">4544518</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">981182160</span>//<span class="number">10115280</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">174988800</span>//<span class="number">3645600</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">493042704</span>//<span class="number">9667504</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">257493600</span>//<span class="number">5364450</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">767478780</span>//<span class="number">13464540</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">312840624</span>//<span class="number">5488432</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">1404511500</span>//<span class="number">14479500</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">316139670</span>//<span class="number">6451830</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">619005024</span>//<span class="number">6252576</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">372641472</span>//<span class="number">7763364</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">373693320</span>//<span class="number">7327320</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">498266640</span>//<span class="number">8741520</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">452465676</span>//<span class="number">8871876</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">208422720</span>//<span class="number">4086720</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">515592000</span>//<span class="number">9374400</span>)</span><br><span class="line">ans += <span class="built_in">chr</span>(<span class="number">719890500</span>//<span class="number">5759124</span>)</span><br><span class="line"><span class="built_in">print</span>(ans)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">flag&#123;e 65421110ba03099a1c039337&#125;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>牛牛们说缺的那个是字符1，我在想难道是IDA优化问题导致的？还是说出题人就想我们爆破？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;e165421110ba03099a1c039337&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="10-SUCTF2019-SignIn"><a href="#10-SUCTF2019-SignIn" class="headerlink" title="10. [SUCTF2019]SignIn"></a>10. [SUCTF2019]SignIn</h1><p>ELF文件，载入IDA。</p>
+<img src="/posts/f4e89fa4/10.1.png" class="" title="IDA分析">
+
+<p>发现了什么姐妹们，有幂模运算，也有RSA标志性公钥65537，这还不是RSA加密算法？？<a target="_blank" rel="noopener" href="https://v5le0n9.github.io/post/855b12c4.html">RSA算法描述与攻击方法</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">n = v4 = 103461035900816914121390101299049044413950405173712170434161686539878160984549</span><br><span class="line">e = v5 = 65537</span><br><span class="line">c = v7 = 0xad939ff59f6e70bcbfad406f2494993757eee98b91bc244184a377520d06fc35</span><br></pre></td></tr></table></figure>
+
+<p>将n拿去 <a target="_blank" rel="noopener" href="http://factordb.com/">http://factordb.com</a> 分解一下，发现可以分解，得出p和q的值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">p = 282164587459512124844245113950593348271</span><br><span class="line">q = 366669102002966856876605669837014229419</span><br></pre></td></tr></table></figure>
+
+<p>然后用RSA解密脚本直接得出私钥d，进而得到明文m。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line">n = <span class="number">103461035900816914121390101299049044413950405173712170434161686539878160984549</span></span><br><span class="line">p = <span class="number">282164587459512124844245113950593348271</span></span><br><span class="line">q = <span class="number">366669102002966856876605669837014229419</span></span><br><span class="line">e = <span class="number">65537</span></span><br><span class="line"></span><br><span class="line">d = gmpy2.invert(e,(p-<span class="number">1</span>)*(q-<span class="number">1</span>))</span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;d = &quot;</span> + <span class="built_in">str</span>(d))</span><br><span class="line"><span class="comment">#d为私钥</span></span><br><span class="line">c = <span class="number">0xad939ff59f6e70bcbfad406f2494993757eee98b91bc244184a377520d06fc35</span></span><br><span class="line">m = gmpy2.powmod(c,d,n)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;m = &quot;</span> + <span class="built_in">str</span>(m))</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">d = 91646299298871237857836940212608056141193465208586711901499120163393577626813</span></span><br><span class="line"><span class="string">m = 185534734614696481020381637136165435809958101675798337848243069</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>下一步就是进入sub_96A函数查看算法。</p>
+<img src="/posts/f4e89fa4/10.2.png" class="" title="IDA分析">
+
+<p>所以这个函数很有可能是字符串转换成十六进制，因为我们输入的就是字符串形式，返回值v9是以十六进制的形式存入v6的。将m转换为字符串：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line">m = <span class="number">185534734614696481020381637136165435809958101675798337848243069</span></span><br><span class="line"><span class="comment"># 先将它转化为16进制再去掉开头的0x，unhexlify与a2b_hex功能一致，作用是从16进制字符串中返回二进制数据，再用utf-8解码</span></span><br><span class="line"><span class="built_in">print</span>(binascii.unhexlify(<span class="built_in">hex</span>(m)[<span class="number">2</span>:]).decode(encoding=<span class="string">&quot;utf-8&quot;</span>))</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">suctf&#123;Pwn_@_hundred_years&#125;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/posts/f4e89fa4.html" data-id="cl1lgrwhp0003okhqfrxve67e" data-title="BUUCTF 逆向合集" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Reverse/" rel="tag">Reverse</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/posts/8df0ec14.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Java学习
+        
+      </div>
+    </a>
+  
+  
+    <a href="/posts/17c1c819.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Bugku Android逆向合集</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android%E9%80%86%E5%90%91/">Android逆向</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Windows%E9%80%86%E5%90%91/">Windows逆向</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%BC%8F%E6%B4%9E%E6%B8%97%E9%80%8F/">漏洞渗透</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%BC%E5%90%88/">综合</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Killer/" rel="tag">Android Killer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDA/" rel="tag">IDA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OllyDbg/" rel="tag">OllyDbg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reverse/" rel="tag">Reverse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x64dbg/" rel="tag">x64dbg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%BE%E7%88%B1%E7%A0%B4%E8%A7%A3%E5%9F%B9%E8%AE%AD/" rel="tag">吾爱破解培训</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B1%87%E7%BC%96/" rel="tag">汇编</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3/" rel="tag">脱壳</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android-Killer/" style="font-size: 11.67px;">Android Killer</a> <a href="/tags/CTF/" style="font-size: 16.67px;">CTF</a> <a href="/tags/IDA/" style="font-size: 15px;">IDA</a> <a href="/tags/Java/" style="font-size: 11.67px;">Java</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/OllyDbg/" style="font-size: 20px;">OllyDbg</a> <a href="/tags/PHP/" style="font-size: 11.67px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Reverse/" style="font-size: 18.33px;">Reverse</a> <a href="/tags/Web/" style="font-size: 13.33px;">Web</a> <a href="/tags/x64dbg/" style="font-size: 13.33px;">x64dbg</a> <a href="/tags/%E5%90%BE%E7%88%B1%E7%A0%B4%E8%A7%A3%E5%9F%B9%E8%AE%AD/" style="font-size: 20px;">吾爱破解培训</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 11.67px;">机器学习</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 10px;">汇编</a> <a href="/tags/%E8%84%B1%E5%A3%B3/" style="font-size: 10px;">脱壳</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/posts/9589547b.html">黑客丛林之旅小游戏</a>
+          </li>
+        
+          <li>
+            <a href="/posts/5a99a36.html">攻防世界 逆向高手进阶区</a>
+          </li>
+        
+          <li>
+            <a href="/posts/9f62af2.html">攻防世界 Android逆向合集</a>
+          </li>
+        
+          <li>
+            <a href="/posts/2670ba0d.html">感知机学习算法</a>
+          </li>
+        
+          <li>
+            <a href="/posts/15be101a.html">Android逆向入门教程</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

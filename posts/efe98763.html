@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>第十课——x64平台脱壳与破解实战 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="由于吾爱虚拟机是32位的，运行不了64位程序，所以这节课用物理机来操作。 1. 课程例子拿到程序，先运行一下熟悉流程，再查壳，发现有MPRESS壳(压缩壳)。压缩壳在壳段开始的时候做的第一件事往往是pushad(保存寄存器)，在壳段结束的时候做的最后一件事是popad(还原寄存器)，所以我们可以用ESP定律脱压缩壳。但在64位的程序下，一般不会这么做。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第十课——x64平台脱壳与破解实战">
+<meta property="og:url" content="http://example.com/posts/efe98763.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="由于吾爱虚拟机是32位的，运行不了64位程序，所以这节课用物理机来操作。 1. 课程例子拿到程序，先运行一下熟悉流程，再查壳，发现有MPRESS壳(压缩壳)。压缩壳在壳段开始的时候做的第一件事往往是pushad(保存寄存器)，在壳段结束的时候做的最后一件事是popad(还原寄存器)，所以我们可以用ESP定律脱压缩壳。但在64位的程序下，一般不会这么做。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/posts/efe98763/%E6%9F%A5%E5%A3%B3.png">
+<meta property="og:image" content="http://example.com/posts/efe98763/%E5%9C%B0%E5%9D%80.png">
+<meta property="og:image" content="http://example.com/posts/efe98763/jnz.png">
+<meta property="og:image" content="http://example.com/posts/efe98763/nop.png">
+<meta property="og:image" content="http://example.com/posts/efe98763/%E8%BE%93%E5%87%BA%E7%AA%97%E5%8F%A3.png">
+<meta property="article:published_time" content="2022-04-05T01:29:28.152Z">
+<meta property="article:modified_time" content="2021-12-11T13:50:38.258Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="IDA">
+<meta property="article:tag" content="吾爱破解培训">
+<meta property="article:tag" content="x64dbg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/posts/efe98763/%E6%9F%A5%E5%A3%B3.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-吾爱破解培训第十讲" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/posts/efe98763.html" class="article-date">
+  <time class="dt-published" datetime="2022-04-05T01:29:28.152Z" itemprop="datePublished">2022-04-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Windows%E9%80%86%E5%90%91/">Windows逆向</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      第十课——x64平台脱壳与破解实战
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>由于吾爱虚拟机是32位的，运行不了64位程序，所以这节课用物理机来操作。</p>
+<h1 id="1-课程例子"><a href="#1-课程例子" class="headerlink" title="1. 课程例子"></a>1. 课程例子</h1><p>拿到程序，先运行一下熟悉流程，再查壳，发现有MPRESS壳(压缩壳)。压缩壳在壳段开始的时候做的第一件事往往是<code>pushad</code>(保存寄存器)，在壳段结束的时候做的最后一件事是<code>popad</code>(还原寄存器)，所以我们可以用ESP定律脱压缩壳。但在64位的程序下，一般不会这么做。</p>
+<span id="more"></span>
+
+<img src="/posts/efe98763/%E6%9F%A5%E5%A3%B3.png" class="" title="查壳">
+
+<p>将程序载入x64dbg，F9运行，去到标准的MPRESS的入口地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">000000014001B0C0 | 57                       | push rdi                                |</span><br><span class="line">000000014001B0C1 | 56                       | push rsi                                |</span><br><span class="line">000000014001B0C2 | 53                       | push rbx                                |</span><br><span class="line">000000014001B0C3 | 51                       | push rcx                                |</span><br><span class="line">000000014001B0C4 | 52                       | push rdx                                | rdx:EntryPoint</span><br><span class="line">000000014001B0C5 | 41:50                    | push r8                                |</span><br></pre></td></tr></table></figure>
+
+<p>既然有push，那肯定也有pop，找到下面这几句指令，也就找到出口了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pop r8</span><br><span class="line">pop rdx</span><br><span class="line">pop rcx</span><br><span class="line">pop rbx</span><br><span class="line">pop rsi</span><br><span class="line">pop rdi</span><br></pre></td></tr></table></figure>
+
+<p>但现在找不到，因为MPRESS把壳段跳到OEP的那部分代码给压缩了，要等它解压到那部分代码才能找到。</p>
+<p>暂时先不管，单步跟踪试一下，到达一个跨区段的跳转<code>14001BBA7</code>。下面是空代码，上面有pop指令(但不是pop上面那几句)，很像UPX。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">000000014001BB9A | 41:5F                    | pop r15                                 |</span><br><span class="line">000000014001BB9C | 41:5E                    | pop r14                                 |</span><br><span class="line">000000014001BB9E | 41:5D                    | pop r13                                 |</span><br><span class="line">000000014001BBA0 | 41:5C                    | pop r12                                 |</span><br><span class="line">000000014001BBA2 | 5F                       | pop rdi                                 |</span><br><span class="line">000000014001BBA3 | 5E                       | pop rsi                                 |</span><br><span class="line">000000014001BBA4 | 5D                       | pop rbp                                 |</span><br><span class="line">000000014001BBA5 | 5B                       | pop rbx                                 |</span><br><span class="line">000000014001BBA6 | C3                       | ret                                     |</span><br><span class="line">000000014001BBA7 | E9 1F00FFFF              | jmp demo.14000BBCB                      |</span><br><span class="line">000000014001BBAC | 54                       | push rsp                                |</span><br><span class="line">000000014001BBAD | 54                       | push rsp                                |</span><br><span class="line">000000014001BBAE | FE                       | ???                                     |</span><br><span class="line">000000014001BBAF | FF                       | ???                                     |</span><br><span class="line">000000014001BBB0 | FF                       | ???                                     |</span><br><span class="line">000000014001BBB1 | FF                       | ???                                     |</span><br><span class="line">000000014001BBB2 | FF                       | ???                                     |</span><br><span class="line">000000014001BBB3 | FF00                     | inc dword ptr ds:[rax]                  |</span><br><span class="line">000000014001BBB5 | 0000                     | add byte ptr ds:[rax],al                |</span><br><span class="line">000000014001BBB7 | 004D 73                  | add byte ptr ss:[rbp+73],cl             |</span><br><span class="line">000000014001BBBA | 0000                     | add byte ptr ds:[rax],al                |</span><br><span class="line">000000014001BBBC | 0000                     | add byte ptr ds:[rax],al                |</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">41 5F 41 5E 41 5D 41 5C 5F 5E 5D 5B C3</span><br></pre></td></tr></table></figure>
+
+<p>执行完<code>jmp</code>后，MPRESS完成了第一次解压。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">000000014000BBCB | 48:83EC 28               | sub rsp,28                              |</span><br><span class="line">000000014000BBCF | 48:0300                  | add rax,qword ptr ds:[rax]              |</span><br><span class="line">000000014000BBD2 | 0AC0                     | or al,al                                |</span><br><span class="line">000000014000BBD4 | 0F85 85000000            | jne demo.14000BC5F                      |</span><br><span class="line">000000014000BBDA | 48:2D 00100000           | sub rax,1000                            |</span><br></pre></td></tr></table></figure>
+
+<p>继续单步，到下面这一步跑飞，重载，再次运行到这里时F7进去这个call指令。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">000000014000BBFB | E8 09000000              | call demo.14000BC09                     |;进去</span><br></pre></td></tr></table></figure>
+
+<p>再次跑飞，再进去单步</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">000000014000BC14 | E8 0F000000              | call demo.14000BC28                     |;进去</span><br></pre></td></tr></table></figure>
+
+<p>运行到此处，这几条pop与开头几条push对应，并且<code>jmp</code>是个大跳转。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">000000014000BCD5 | 41:58                    | pop r8                                  |</span><br><span class="line">000000014000BCD7 | 5A                       | pop rdx                                 |</span><br><span class="line">000000014000BCD8 | 59                       | pop rcx                                 |</span><br><span class="line">000000014000BCD9 | 5B                       | pop rbx                                 |</span><br><span class="line">000000014000BCDA | 5E                       | pop rsi                                 |</span><br><span class="line">000000014000BCDB | 5F                       | pop rdi                                 |</span><br><span class="line">000000014000BCDC | E9 4F54FFFF              | jmp demo.140001130                      |</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">41 58 5A 59 5B 5E 5F</span><br></pre></td></tr></table></figure>
+
+<p>执行这个跳转，这里就是64位的VS2013编译出来的OEP。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">0000000140001130 | 48:83EC 28               | sub rsp,28                              | OEP</span><br><span class="line">0000000140001134 | E8 7B180000              | call demo.1400029B4                     |</span><br><span class="line">0000000140001139 | 48:83C4 28               | add rsp,28                              |</span><br><span class="line">000000014000113D | E9 02000000              | jmp demo.140001144                      |</span><br><span class="line">0000000140001142 | CC                       | int3                                    |</span><br><span class="line">0000000140001143 | CC                       | int3                                    |</span><br></pre></td></tr></table></figure>
+
+<p>用Scylla将程序dump再fix dump，完成脱壳。</p>
+<p>用脚本找OEP</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">erun</span><br><span class="line">find rip,&quot;415F415E415D415C5F5E5D5BC3&quot;		//搜索二进制</span><br><span class="line">mov first_jmp,$result						//first_jmp=41(first_jmp指向pop r15那一行)						</span><br><span class="line">add first_jmp,D								//first_jmp=first_jmp+D=E9(加上0xD个偏移到达jmp)</span><br><span class="line">bp first_jmp								//在jmp下断</span><br><span class="line">erun										//运行</span><br><span class="line">bc											//取消断点</span><br><span class="line">sti											//F8</span><br><span class="line">find rip,&quot;41585A595B5E5F&quot;</span><br><span class="line">mov second_jmp,$result</span><br><span class="line">add second_jmp,7</span><br><span class="line">bp second_jmp</span><br><span class="line">erun</span><br><span class="line">bc</span><br><span class="line">sti											//OEP</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+
+<p>在脚本窗口中，右键-&gt;载入脚本，按空格直接运行脚本。</p>
+<p>很简单的一个破解，搜索字符串改个跳转即可，右键-&gt;补丁-&gt;修补文件，后缀名自己加上。</p>
+<p>如果是追码也很简单</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">000000014000104C | FF15 CEB10000            | call qword ptr ds:[&lt;&amp;GetDlgItemTextA&gt;]  |</span><br><span class="line">0000000140001052 | 48:8D15 C7470100         | lea rdx,qword ptr ds:[140015820]        |</span><br><span class="line">0000000140001059 | 48:8D0D 88020100         | lea rcx,qword ptr ds:[1400112E8]        | 00000001400112E8:&quot;Fuck L4Nce&quot;</span><br><span class="line">0000000140001060 | E8 9B040000              | call demo_dump_scy.140001500            |</span><br><span class="line">0000000140001065 | 48:8BCB                  | mov rcx,rbx                             |</span><br><span class="line">0000000140001068 | 85C0                     | test eax,eax                            |</span><br><span class="line">000000014000106A | 75 13                    | jne demo_dump_scy.14000107F             |</span><br><span class="line">000000014000106C | 45:33C9                  | xor r9d,r9d                             |</span><br><span class="line">000000014000106F | 4C:8D05 7E020100         | lea r8,qword ptr ds:[1400112F4]         | r8:&amp;&quot;吚x\n€|$@&quot;, 00000001400112F4:&quot;Boom!&quot;</span><br><span class="line">0000000140001076 | 48:8D15 83020100         | lea rdx,qword ptr ds:[140011300]        | 0000000140011300:&quot;Congratulations! You have successfully fucked L4Nce&quot;</span><br><span class="line">000000014000107D | EB 14                    | jmp demo_dump_scy.140001093             |</span><br><span class="line">000000014000107F | 41:B9 10000000           | mov r9d,10                              |</span><br><span class="line">0000000140001085 | 4C:8D05 AC020100         | lea r8,qword ptr ds:[140011338]         | r8:&amp;&quot;吚x\n€|$@&quot;, 0000000140011338:&quot;Boomshakalaka&quot;</span><br><span class="line">000000014000108C | 48:8D15 B5020100         | lea rdx,qword ptr ds:[140011348]        | 0000000140011348:&quot;You Failed!&quot;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>GetDlgItemTextA</code>函数下断，这个是获取我们输入的字符串。两次F9运行至主程序，输入假码提交，停在断点处。接下来单步</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">000000014000104C | FF15 CEB10000            | call qword ptr ds:[&lt;&amp;GetDlgItemTextA&gt;]  |</span><br><span class="line">0000000140001052 | 48:8D15 C7470100         | lea rdx,qword ptr ds:[140015820]        | rdx:&quot;hhhhhhh&quot;, 0000000140015820:&quot;hhhhhhh&quot;</span><br><span class="line">0000000140001059 | 48:8D0D 88020100         | lea rcx,qword ptr ds:[1400112E8]        | rcx:&quot;Fuck L4Nce&quot;, 00000001400112E8:&quot;Fuck L4Nce&quot;</span><br><span class="line">0000000140001060 | E8 9B040000              | call demo_dump_scy.140001500            |</span><br><span class="line">0000000140001065 | 48:8BCB                  | mov rcx,rbx                             | rcx:&quot;Fuck L4Nce&quot;</span><br><span class="line">0000000140001068 | 85C0                     | test eax,eax                            |</span><br><span class="line">000000014000106A | 75 13                    | jne demo_dump_scy.14000107F             |</span><br><span class="line">000000014000106C | 45:33C9                  | xor r9d,r9d                             |</span><br><span class="line">000000014000106F | 4C:8D05 7E020100         | lea r8,qword ptr ds:[1400112F4]         | 00000001400112F4:&quot;Boom!&quot;</span><br><span class="line">0000000140001076 | 48:8D15 83020100         | lea rdx,qword ptr ds:[140011300]        | rdx:&quot;hhhhhhh&quot;, 0000000140011300:&quot;Congratulations! You have successfully fucked L4Nce&quot;</span><br></pre></td></tr></table></figure>
+
+<p>很明显就是我们输入的字符串与<code>Fuck L4Nce</code>比较。</p>
+<p>如果想在64位下做补丁工具，推荐用IDA。将脱完壳的程序载入IDA，在Options-&gt;General勾选地址前缀和填上要显示的字节个数。</p>
+<img src="/posts/efe98763/%E5%9C%B0%E5%9D%80.png" class="" title="地址和字节">
+
+<p>在汇编窗口找到成功与失败的分岔路。</p>
+<img src="/posts/efe98763/jnz.png" class="" title="分岔路">
+
+<p>选中<code>jnz</code>指令，在界面上Edit-&gt;Patch program-&gt;Assemble，将jnz改为nop，由于jnz有两个字节，所以要连续修改两个nop。或者Edit-&gt;Patch program-&gt;Change word，写入0x9090。</p>
+<img src="/posts/efe98763/nop.png" class="" title="nop掉">
+
+<p>现在可以看到，上面那块与左边那块合并了，而右边那块被独立出来，没有箭头指向右边那块了。</p>
+<p>然后Edit-&gt;Patch program-&gt;Apply patches to input file，输出窗口提示应用成功。</p>
+<img src="/posts/efe98763/%E8%BE%93%E5%87%BA%E7%AA%97%E5%8F%A3.png" class="" title="输出窗口">
+
+<p>课后作业几乎与课程例子一模一样，所以不记笔记了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/posts/efe98763.html" data-id="cl1lgrwi8001iokhqe3t2cv9r" data-title="第十课——x64平台脱壳与破解实战" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IDA/" rel="tag">IDA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/x64dbg/" rel="tag">x64dbg</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%90%BE%E7%88%B1%E7%A0%B4%E8%A7%A3%E5%9F%B9%E8%AE%AD/" rel="tag">吾爱破解培训</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/posts/65ab04eb.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          第四课——去程序自校验
+        
+      </div>
+    </a>
+  
+  
+    <a href="/posts/4b9d65e0.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">第八九课——深入浅出探讨脱壳细节</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android%E9%80%86%E5%90%91/">Android逆向</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Windows%E9%80%86%E5%90%91/">Windows逆向</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%BC%8F%E6%B4%9E%E6%B8%97%E9%80%8F/">漏洞渗透</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%BC%E5%90%88/">综合</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Killer/" rel="tag">Android Killer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDA/" rel="tag">IDA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OllyDbg/" rel="tag">OllyDbg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reverse/" rel="tag">Reverse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x64dbg/" rel="tag">x64dbg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%BE%E7%88%B1%E7%A0%B4%E8%A7%A3%E5%9F%B9%E8%AE%AD/" rel="tag">吾爱破解培训</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B1%87%E7%BC%96/" rel="tag">汇编</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3/" rel="tag">脱壳</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android-Killer/" style="font-size: 11.67px;">Android Killer</a> <a href="/tags/CTF/" style="font-size: 16.67px;">CTF</a> <a href="/tags/IDA/" style="font-size: 15px;">IDA</a> <a href="/tags/Java/" style="font-size: 11.67px;">Java</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/OllyDbg/" style="font-size: 20px;">OllyDbg</a> <a href="/tags/PHP/" style="font-size: 11.67px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Reverse/" style="font-size: 18.33px;">Reverse</a> <a href="/tags/Web/" style="font-size: 13.33px;">Web</a> <a href="/tags/x64dbg/" style="font-size: 13.33px;">x64dbg</a> <a href="/tags/%E5%90%BE%E7%88%B1%E7%A0%B4%E8%A7%A3%E5%9F%B9%E8%AE%AD/" style="font-size: 20px;">吾爱破解培训</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 11.67px;">机器学习</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 10px;">汇编</a> <a href="/tags/%E8%84%B1%E5%A3%B3/" style="font-size: 10px;">脱壳</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/posts/9589547b.html">黑客丛林之旅小游戏</a>
+          </li>
+        
+          <li>
+            <a href="/posts/5a99a36.html">攻防世界 逆向高手进阶区</a>
+          </li>
+        
+          <li>
+            <a href="/posts/9f62af2.html">攻防世界 Android逆向合集</a>
+          </li>
+        
+          <li>
+            <a href="/posts/2670ba0d.html">感知机学习算法</a>
+          </li>
+        
+          <li>
+            <a href="/posts/15be101a.html">Android逆向入门教程</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
