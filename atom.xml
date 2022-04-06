@@ -335,9 +335,9 @@
     <category term="Windows逆向" scheme="http://example.com/categories/Windows%E9%80%86%E5%90%91/"/>
     
     
-    <category term="脱壳" scheme="http://example.com/tags/%E8%84%B1%E5%A3%B3/"/>
-    
     <category term="吾爱破解培训" scheme="http://example.com/tags/%E5%90%BE%E7%88%B1%E7%A0%B4%E8%A7%A3%E5%9F%B9%E8%AE%AD/"/>
+    
+    <category term="脱壳" scheme="http://example.com/tags/%E8%84%B1%E5%A3%B3/"/>
     
   </entry>
   
