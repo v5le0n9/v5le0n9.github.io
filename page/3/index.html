@@ -912,6 +912,95 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/de6e58e0.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="v5le0n9">
+      <meta itemprop="description" content="v5le0n9's garden">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="v5le0n9's garden">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/de6e58e0.html" class="post-title-link" itemprop="url">x86汇编基础</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-11 13:16:29 / 修改时间：13:22:19" itemprop="dateCreated datePublished" datetime="2022-04-11T13:16:29+08:00">2022-04-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">Windows逆向</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>25k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>23 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>很久之前看王爽老师的《汇编语言》写的笔记，可能不太准确，先做个存档吧。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/de6e58e0.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/posts/1c971db4.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -935,10 +1024,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-04-10 14:27:13 / 修改时间：14:44:50" itemprop="dateCreated datePublished" datetime="2022-04-10T14:27:13+08:00">2022-04-10</time>
+              <time title="创建时间：2022-04-10 14:27:13" itemprop="dateCreated datePublished" datetime="2022-04-10T14:27:13+08:00">2022-04-10</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-11 13:03:17" itemprop="dateModified" datetime="2022-04-11T13:03:17+08:00">2022-04-11</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -1161,7 +1256,7 @@
 <p>nc表示netcat</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc node4.buuoj.cn 28487</span><br></pre></td></tr></table></figure>
 <p>使用file查看文件信息，checksec查看文件保护信息。</p>
-<img src="/posts/undefined/checksec.png" class="" title="文件信息">
+<img src="/posts/1c971db4/checksec.png" class="" title="文件信息">
 <p>利用gdb调试ELF文件：</p>
 <div class="table-container">
 <table>
@@ -1271,7 +1366,7 @@
 <ul>
 <li>整体类似Shellcode注入</li>
 </ul>
-<img src="/posts/undefined/7.2.1.png" class="" title="静动态链接">
+<img src="/posts/1c971db4/7.2.1.png" class="" title="静动态链接">
 <p>静态链接的ELF文件在IDA的函数窗口全是一片白，没有粉色的动态链接。</p>
 <p>利用ROPgadget工具，自行生成ROP链。</p>
 <h2 id="7-3-PLT表和GOT表"><a href="#7-3-PLT表和GOT表" class="headerlink" title="7.3 PLT表和GOT表"></a>7.3 PLT表和GOT表</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_52126646/article/details/119494939">GOT表和PLT表</a></p>
@@ -1391,7 +1486,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1455,12 +1550,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">669k</span>
+    <span title="站点总字数">694k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">10:08</span>
+    <span title="站点阅读时长">10:31</span>
 </div>
 
         
