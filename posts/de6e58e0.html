@@ -28,16 +28,16 @@
 <meta property="og:site_name" content="v5le0n9&#39;s garden">
 <meta property="og:description" content="很久之前看王爽老师的《汇编语言》写的笔记，可能不太准确，先做个存档吧。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="f:/markdown图片/汇编语言/汇编指令举例.png">
-<meta property="og:image" content="f:/markdown图片/汇编语言/段前缀.PNG">
-<meta property="og:image" content="f:/markdown图片/汇编语言/ASCII二进制十六进制.jpg">
-<meta property="og:image" content="f:/markdown图片/汇编语言/寻址方式小结.png">
+<meta property="og:image" content="http://example.com/posts/de6e58e0/%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4%E4%B8%BE%E4%BE%8B.png">
+<meta property="og:image" content="http://example.com/posts/de6e58e0/%E6%AE%B5%E5%89%8D%E7%BC%80.PNG">
+<meta property="og:image" content="http://example.com/posts/de6e58e0/ASCII%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6.jpg">
+<meta property="og:image" content="http://example.com/posts/de6e58e0/%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F%E5%B0%8F%E7%BB%93.png">
 <meta property="article:published_time" content="2022-04-11T05:16:29.411Z">
-<meta property="article:modified_time" content="2022-04-11T05:23:04.542Z">
+<meta property="article:modified_time" content="2022-04-11T05:43:13.844Z">
 <meta property="article:author" content="v5le0n9">
 <meta property="article:tag" content="汇编">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="f:/markdown图片/汇编语言/汇编指令举例.png">
+<meta name="twitter:image" content="http://example.com/posts/de6e58e0/%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4%E4%B8%BE%E4%BE%8B.png">
 
 <link rel="canonical" href="http://example.com/posts/de6e58e0.html">
 
@@ -220,7 +220,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-04-11 13:16:29 / 修改时间：13:23:04" itemprop="dateCreated datePublished" datetime="2022-04-11T13:16:29+08:00">2022-04-11</time>
+              <time title="创建时间：2022-04-11 13:16:29 / 修改时间：13:43:13" itemprop="dateCreated datePublished" datetime="2022-04-11T13:16:29+08:00">2022-04-11</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -373,7 +373,7 @@
 </table>
 </div>
 <p>AH和AL可以看成是一个字型数据的高8位和低8位，也可以看成是两个独立的字节型数据。</p>
-<h2 id="2-2-几条汇编指令"><a href="#2-2-几条汇编指令" class="headerlink" title="2.2 几条汇编指令"></a>2.2 几条汇编指令</h2><p><img src="F:\markdown图片\汇编语言\汇编指令举例.png" alt="汇编指令举例"></p>
+<h2 id="2-2-几条汇编指令"><a href="#2-2-几条汇编指令" class="headerlink" title="2.2 几条汇编指令"></a>2.2 几条汇编指令</h2><img src="/posts/de6e58e0/%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4%E4%B8%BE%E4%BE%8B.png" class="" title="汇编指令举例">
 <p>汇编指令不区分大小写。</p>
 <p>原AX=0000H，BX=0000H</p>
 <div class="table-container">
@@ -536,7 +536,7 @@
 <p>（2）如果在”[]“里用寄存器，比如bx，间接给出内存单元的偏移地址，则段地址默认在ds中。当然也可以显式地给出段地址所在的段寄存器。</p>
 <h2 id="5-2-一段安全的空间"><a href="#5-2-一段安全的空间" class="headerlink" title="5.2 一段安全的空间"></a>5.2 一段安全的空间</h2><p>我们需要直接向一段内存中写入内容，这段内存空间不应存放系统或其他程序的数据或代码，否则写入操作很可能引发错误。DOS方式下，一般情况，0:200~0:2ff空间中没有系统或其他程序的数据或代码。</p>
 <h2 id="5-3-loop和-bx-的联合应用"><a href="#5-3-loop和-bx-的联合应用" class="headerlink" title="5.3 loop和[bx]的联合应用"></a>5.3 loop和[bx]的联合应用</h2><p>在循环中，源始单元ffff:X和目标单元0020:X的偏移地址X是变量，可以用bx来存放。</p>
-<h2 id="5-4-段前缀"><a href="#5-4-段前缀" class="headerlink" title="5.4 段前缀"></a>5.4 段前缀</h2><p><img src="F:\markdown图片\汇编语言\段前缀.PNG" alt="段前缀"></p>
+<h2 id="5-4-段前缀"><a href="#5-4-段前缀" class="headerlink" title="5.4 段前缀"></a>5.4 段前缀</h2><img src="/posts/de6e58e0/%E6%AE%B5%E5%89%8D%E7%BC%80.PNG" class="" title="段前缀">
 <h1 id="6-包含多个段的程序"><a href="#6-包含多个段的程序" class="headerlink" title="6. 包含多个段的程序"></a>6. 包含多个段的程序</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line">code segment</span><br><span class="line">	dw 0123h,0456h,0789h,0abch,0defh,0fedh,0cbah,0987h</span><br><span class="line">	mov bx,0</span><br><span class="line">	mov ax,0</span><br><span class="line">	</span><br><span class="line">	mov cx,8</span><br><span class="line">s:add ax,cs:[bx]</span><br><span class="line">	add bx,2</span><br><span class="line">	loop s</span><br><span class="line">	</span><br><span class="line">	mov ax,4c00h</span><br><span class="line">	int 21h</span><br><span class="line">code ends</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 <p>dw即define word，定义字型数据。</p>
 <p>程序在运行的时候CS中存放代码段的段地址，所以可以从CS中得到它们的段地址。dw定义的数据处于代码段的最开始，所以偏移地址为0，这8个数据就在代码段的偏移0、2、4、6、8、A、C、E处。程序运行时，它们的地址就是cs:0, cs:2, cs:4, cs:6, cs:8, cs:a, cs:c, cs:e。</p>
@@ -555,7 +555,7 @@
 <h2 id="7-3-以字符形式给出的数据"><a href="#7-3-以字符形式给出的数据" class="headerlink" title="7.3 以字符形式给出的数据"></a>7.3 以字符形式给出的数据</h2><p>在汇编程序中，用’’的方式指明数据是以字符的形式给出的，编译器将它们转化为相对应的ASCII码。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code,ds:data</span><br><span class="line">data segment</span><br><span class="line">	db &#x27;unIX&#x27;</span><br><span class="line">	db &#x27;foRK&#x27;</span><br><span class="line">data ends</span><br><span class="line">code segment</span><br><span class="line">start:	mov al,&#x27;a&#x27;</span><br><span class="line">		mov bl,&#x27;b&#x27;</span><br><span class="line">		mov ax,4c00h</span><br><span class="line">		int 21h</span><br><span class="line">code ends</span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
 <h2 id="7-4-大小写转换的问题"><a href="#7-4-大小写转换的问题" class="headerlink" title="7.4 大小写转换的问题"></a>7.4 大小写转换的问题</h2><p>在codesg中填写代码，将tadasg中的第一个字符串转化为大写，第二个字符串转化为小写。</p>
-<p><img src="F:\markdown图片\汇编语言\ASCII二进制十六进制.jpg" alt="ASCII二进制十六进制"></p>
+<img src="/posts/de6e58e0/ASCII%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6.jpg" class="" title="ASCII码表">
 <p>方法一：小写字母的ASCII码值比大写字母的ASCII码值大20H。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">assume cs:codesg,ds:datasg</span><br><span class="line">datasg segment</span><br><span class="line">	db &#x27;BaSiC&#x27;</span><br><span class="line">	db &#x27;iNfOrMaTiOn&#x27;</span><br><span class="line">datasg ends</span><br><span class="line">codesg segment</span><br><span class="line">start:	mov ax,datasg</span><br><span class="line">		mov ds,ax</span><br><span class="line">		mov bx,0</span><br><span class="line">		mov cx,5</span><br><span class="line">	s:	mov al,[bx]</span><br><span class="line">		如果(al)&gt;61H,则为小写字母的ASCII码,则:sub al,20h</span><br><span class="line">		mov [bx],al</span><br><span class="line">		inc bx</span><br><span class="line">		loop s</span><br><span class="line">codesg ends</span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
 <p>方法二：大写字母的第6位全为0，小写字母的第6位全为1。</p>
@@ -626,7 +626,7 @@
 <li>寄存器</li>
 <li>段地址(SA)和偏移地址(EA)</li>
 </ol>
-<h3 id="8-2-2-寻址方式"><a href="#8-2-2-寻址方式" class="headerlink" title="8.2.2 寻址方式"></a>8.2.2 寻址方式</h3><p><img src="F:\markdown图片\汇编语言\寻址方式小结.png" alt="寻址方式小结"></p>
+<h3 id="8-2-2-寻址方式"><a href="#8-2-2-寻址方式" class="headerlink" title="8.2.2 寻址方式"></a>8.2.2 寻址方式</h3><img src="/posts/de6e58e0/%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F%E5%B0%8F%E7%BB%93.png" class="" title="寻址方式">
 <h2 id="8-3-数据的长度"><a href="#8-3-数据的长度" class="headerlink" title="8.3 数据的长度"></a>8.3 数据的长度</h2><p>8086CPU可以处理两种尺寸的数据，byte和word。</p>
 <ol>
 <li>通过寄存器名指明要处理的数据的尺寸</li>
@@ -1293,7 +1293,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1306,7 +1306,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1357,12 +1357,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">695k</span>
+    <span title="站点总字数">690k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">10:31</span>
+    <span title="站点阅读时长">10:27</span>
 </div>
 
         
