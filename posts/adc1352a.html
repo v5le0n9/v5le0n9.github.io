@@ -28,21 +28,21 @@
 <meta property="og:site_name" content="v5le0n9&#39;s garden">
 <meta property="og:description" content="以后我们很长时间都要与Windows PE病毒打交道，所以在这里就先了解下它的分类及感染方式吧。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/posts/undefined/3.1.1.png">
-<meta property="og:image" content="http://example.com/posts/undefined/3.3.1.png">
-<meta property="og:image" content="http://example.com/posts/undefined/3.3.2.png">
-<meta property="og:image" content="http://example.com/posts/undefined/3.3.3.png">
-<meta property="og:image" content="http://example.com/posts/undefined/3.3.4.png">
-<meta property="og:image" content="http://example.com/posts/undefined/4.1.1.png">
-<meta property="og:image" content="http://example.com/posts/undefined/5.2.1.png">
-<meta property="og:image" content="http://example.com/posts/undefined/5.2.2.png">
-<meta property="og:image" content="http://example.com/posts/undefined/5.2.3.png">
-<meta property="og:image" content="http://example.com/posts/undefined/5.2.3.png">
+<meta property="og:image" content="http://example.com/posts/adc1352a/3.1.1.png">
+<meta property="og:image" content="http://example.com/posts/adc1352a/3.3.1.png">
+<meta property="og:image" content="http://example.com/posts/adc1352a/3.3.2.png">
+<meta property="og:image" content="http://example.com/posts/adc1352a/3.3.3.png">
+<meta property="og:image" content="http://example.com/posts/adc1352a/3.3.4.png">
+<meta property="og:image" content="http://example.com/posts/adc1352a/4.1.1.png">
+<meta property="og:image" content="http://example.com/posts/adc1352a/5.2.1.png">
+<meta property="og:image" content="http://example.com/posts/adc1352a/5.2.2.png">
+<meta property="og:image" content="http://example.com/posts/adc1352a/5.2.3.png">
+<meta property="og:image" content="http://example.com/posts/adc1352a/5.2.3.png">
 <meta property="article:published_time" content="2022-05-22T00:36:31.469Z">
-<meta property="article:modified_time" content="2022-05-22T13:25:31.228Z">
+<meta property="article:modified_time" content="2022-05-23T04:43:09.761Z">
 <meta property="article:author" content="v5le0n9">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/posts/undefined/3.1.1.png">
+<meta name="twitter:image" content="http://example.com/posts/adc1352a/3.1.1.png">
 
 <link rel="canonical" href="http://example.com/posts/adc1352a.html">
 
@@ -223,10 +223,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-05-22 08:36:31 / 修改时间：21:25:31" itemprop="dateCreated datePublished" datetime="2022-05-22T08:36:31+08:00">2022-05-22</time>
+              <time title="创建时间：2022-05-22 08:36:31" itemprop="dateCreated datePublished" datetime="2022-05-22T08:36:31+08:00">2022-05-22</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-23 12:43:09" itemprop="dateModified" datetime="2022-05-23T12:43:09+08:00">2022-05-23</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -297,7 +303,7 @@
 </ul>
 <h2 id="2-2-系统感染"><a href="#2-2-系统感染" class="headerlink" title="2.2 系统感染"></a>2.2 系统感染</h2><p>将代码或程序寄生在Windows操作系统，该类病毒越来越多，它不感染具体文件，但是它会在操作系统中保存自己的实体，同时也可以通过系统启动的方法来获得控制权。传播途径包括即时通信软件、U盘、光盘、电子邮件、网络共享等。</p>
 <h1 id="3-传统文件感染型"><a href="#3-传统文件感染型" class="headerlink" title="3. 传统文件感染型"></a>3. 传统文件感染型</h1><h2 id="3-1-感染思路"><a href="#3-1-感染思路" class="headerlink" title="3.1 感染思路"></a>3.1 感染思路</h2><p>如下图所示，左边是一个正常的PE文件，右边是PE病毒感染该程序时的修改，病毒代码以新节的形式附在程序最后面。我们知道PE文件是由多个节组成的，病毒代码为了融入目标程序会以节的形式，同时修改PE文件头。</p>
-<img src="/posts/undefined/3.1.1.png" class="" title="传统文件感染">
+<img src="/posts/adc1352a/3.1.1.png" class="" title="传统文件感染">
 <p>对感染来说，它一方面需要使得宿主具备自己的功能，另一方面也不破坏宿主程序的功能。所以病毒代码执行完毕之后，它必须将控制权交还给宿主，以免自己被发现。</p>
 <ul>
 <li>优点：被感染后的程序主体依然是目标程序，不影响目标程序图标，隐蔽性稍好。</li>
@@ -317,17 +323,17 @@
 <li>shellcode类似：通常需要注入远程系统，但这段代码在远程系统什么位置有时不能确定，另外远程系统的环境有时也不能准确感知，故需要使用重定位和API函数自动获取</li>
 </ul>
 <p>如下图所示，左边是病毒的RVA，其地址为<code>004010xx</code>；右图是当这段代码插入到另一个Host文件后，变量的实际位置和预期位置出现了差异，而重定位的关键是知道这个差异值是多少，后续遇到的各种变量或地址都可以通过这种差异方式校正。</p>
-<img src="/posts/undefined/3.3.1.png" class="" title="重定位原因">
+<img src="/posts/adc1352a/3.3.1.png" class="" title="重定位原因">
 <p>但是根据Host特征逐一硬编码这种方式并不可取，繁琐且未必准确，所以采用另一种方法，那就是病毒代码运行过程中自我重定位。</p>
 <p>假设一个变量相对于病毒起始位置的偏移是9h，那么只要通过求得病毒插入到被感染对象后的病毒起始位置 + 这个变量相对于病毒起始位置的偏移 = 变量在被感染对象中的位置。</p>
 <p><strong>那么如何求得插入感染对象后的病毒起始位置呢？</strong>由于每个被感染对象的大小都不一样，所以病毒插入到被感染对象后的起始位置也是不一样的。</p>
 <p>首先我们要知道一些前置知识。call指令的作用是将下一条指令的地址压入堆栈，然后设置eip寄存器指向要跳转的地址。比如下面这两条指令：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">00C9AF58   .  E8 93020000   call Crackme_.00C9B1F0</span><br><span class="line">00C9AF5D   .  6A 01         push 0x1</span><br></pre></td></tr></table></figure>
 <p>F7进入函数，此时堆栈窗口栈顶数据为<code>00C9AF5D</code>，也就是call指令的下一条指令的地址；eip寄存器显示<code>00C9B1F0</code>，也就是指向要跳转的地址。</p>
-<img src="/posts/undefined/3.3.2.png" class="" title="call指令的作用">
+<img src="/posts/adc1352a/3.3.2.png" class="" title="call指令的作用">
 <p>ebp是基址指针寄存器，总是指向系统栈最上面栈帧的底部。eip是指令指针寄存器，存放要执行的下一条指令的地址。</p>
 <p>我们已经知道了call指令的功能，接下来就是利用call指令求得插入感染对象后的病毒起始位置。<strong>所以怎么利用？？变量delta也是在病毒里面的啊，与Var1有什么区别</strong></p>
-<img src="/posts/undefined/3.3.3.png" class="" title="利用call指令">
+<img src="/posts/adc1352a/3.3.3.png" class="" title="利用call指令">
 <h3 id="3-3-2-API函数自获取"><a href="#3-3-2-API函数自获取" class="headerlink" title="3.3.2 API函数自获取"></a>3.3.2 API函数自获取</h3><p>PE文件函数节的功能：当调用外部DLL中的API函数时，通过导入函数节这种关系定义出来，系统加载时就能加载对应的DLL文件并找到相应的API函数，再将地址写入到PE文件的导入函数表中，程序运行时就知道从导入函数表中取地址进行调用，这是正常的PE文件运行过程。通常函数节是由目标程序作者编写。</p>
 <p>但对于病毒程序来说，它是一段代码，当它感染另外一个程序时，它是否能修改目标程序的导入函数节，而使得其可以服务病毒代码呢？理论上是可以的，但非常复杂，因为要在导入函数节添加东西一定会导致其它结构的变化，需要做很多的修正工作，这也可能破坏原有功能。所以对于病毒来说，它需要自己去获取API函数地址，并且没有导入函数节的支撑，但它又必须要使用很多API函数来实现病毒功能。</p>
 <ul>
@@ -356,7 +362,7 @@
 <li>栈中特定高端地址的数据</li>
 </ul>
 <p>注意：不同操作系统存在差别。</p>
-<img src="/posts/undefined/3.3.4.png" class="" title="程序入口代码栈顶存储的地址">
+<img src="/posts/adc1352a/3.3.4.png" class="" title="程序入口代码栈顶存储的地址">
 <p><strong>这个还是没说明白，看有没有合适的例子吧</strong></p>
 <h3 id="3-3-3-目标程序遍历搜索"><a href="#3-3-3-目标程序遍历搜索" class="headerlink" title="3.3.3 目标程序遍历搜索"></a>3.3.3 目标程序遍历搜索</h3><p>通常以PE文件格式的文件(如EXE、DLL、SCR等)作为感染目标，其关键点为全盘查找或者部分盘符查找，遍历算法包括递归或非递归。在对目标进行搜索时，通常调用两个API函数：<code>FindFirstFile()</code>和<code>FindNextFile()</code>。</p>
 <p>搜索目标进行感染算法如下：</p>
@@ -405,7 +411,7 @@
 </ol>
 <h1 id="4-捆绑释放型"><a href="#4-捆绑释放型" class="headerlink" title="4. 捆绑释放型"></a>4. 捆绑释放型</h1><p>捆绑释放型感染实现起来比较简单，目前很大一部分病毒程序都采用这种方法。捆绑释放型病毒感染时将目标Host程序作为数据存储在病毒体内，当执行病毒程序时，它先执行病毒程序，然后还原并执行Host文件，从而保证被感染的程序本身能正常运行，不会引起异样。</p>
 <p>熊猫烧香就属于这一类病毒。如下图，左边是一个正常程序，感染后(右边)会将病毒放在前面，正常程序放在后面。程序运行时，病毒会拿到控制权，但是程序图标会显示前面的病毒程序，这也是一个明显的被感染特征。</p>
-<img src="/posts/undefined/4.1.1.png" class="" title="捆绑释放型病毒">
+<img src="/posts/adc1352a/4.1.1.png" class="" title="捆绑释放型病毒">
 <ul>
 <li>优点：编写简单、效率高，可感染自校验程序</li>
 <li>缺点：被感染后的程序主体是病毒程序，易被发现(程序叠加+释放执行)，程序图标问题</li>
@@ -451,15 +457,15 @@
 <li>各类网络应用(迅雷、BT等)</li>
 </ul>
 <p>邮件蠕虫越来越常见，其中以邮件附件的形式进行传播较多。附件中可能包含病毒包括exe文件、rar文件、pdf文件、doc文件、xls文件、jpg文件、chm文件等。下图是一个包含病毒的邮件附件，显示为一个word文档，后缀名doc，图标显示也是word。但它的真实后缀是scr(屏保)，它其实是利用了一种技术，在文件名里插入翻转字符，然后将翻转字符之后的其它字符进行了翻转，它的完整文件名应该是“5月TW行lmcod.scr”。这也是一种欺骗性很强的攻击手法。</p>
-<img src="/posts/undefined/5.2.1.png" class="" title="包含病毒的邮件附件">
+<img src="/posts/adc1352a/5.2.1.png" class="" title="包含病毒的邮件附件">
 <p>再补充一个通过可移动存储设备传播的非感染式病毒，即<code>Autorun.inf</code>。下图显示了<code>Autorun.inf</code>文件，如果文件存在U盘根目录，当我们双击这个U盘时，它就会触发对应的病毒，如果选择U盘盘符右键打开或打开资源管理器，这时进入的也是病毒程序。当然下面的演示是计算器程序。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[AutoRun]</span><br><span class="line">open=mspaint.exe</span><br><span class="line">shell\open=打开(&amp;O)</span><br><span class="line">shell\open\Command=calc.exe</span><br><span class="line">shell\open\Default=1</span><br><span class="line">shell\explore=资源管理器(&amp;X)</span><br><span class="line">shell\explore\Command=calc.exe</span><br></pre></td></tr></table></figure>
-<img src="/posts/undefined/5.2.2.png" class="" title="Autorun.inf">
+<img src="/posts/adc1352a/5.2.2.png" class="" title="Autorun.inf">
 <p>还有一类是伪装的文件夹，如下图所示的<code>photo.exe</code>文件，当Windows操作系统默认不显示<code>.exe</code>时，它就能伪装成文件夹，当我们双击之后就会运行病毒，同时可以打开某个文件夹进行隐蔽。</p>
-<img src="/posts/undefined/5.2.3.png" class="" title="photo.exe">
+<img src="/posts/adc1352a/5.2.3.png" class="" title="photo.exe">
 <p>最后，补充“摆渡”知识点，这种攻击行为经常发生在一些具有特殊目的病毒程序身上。期望通过可移动的媒介来渗透一些平时不联网的电脑中，并从中获取数据，利用摆渡的方式植入病毒或木马到内网，比较典型的案例就是Stuxnet。</p>
 <p>下图展示了Stuxnet震网事件的漏洞利用过程和启动方式，传统的Autorun方式很容易被禁止掉，而Stuxnet利用的是lnk漏洞（MS10-046），它会在目标U盘下放入lnk快捷方式及病毒程序（如DLL文件）。不管通过什么方式进入U盘，lnk文件都会被解析从而触发漏洞，导致U盘中的病毒程序被执行。</p>
-<img src="/posts/undefined/5.2.3.png" class="" title="Stuxnet震网事件">
+<img src="/posts/adc1352a/5.2.3.png" class="" title="Stuxnet震网事件">
 
     </div>
 
@@ -498,7 +504,10 @@
     <a href="/posts/8ba499c5.html" rel="prev" title="逆向分析基础">
       <i class="fa fa-chevron-left"></i> 逆向分析基础
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/posts/5ec21076.html" rel="next" title="勒索病毒中的加解密原理">
+      勒索病毒中的加解密原理 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -574,7 +583,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">43</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
