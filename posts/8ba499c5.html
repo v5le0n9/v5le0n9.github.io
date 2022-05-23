@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":{"gitalk":{"order":-2}},"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"content.json"};
+  </script>
+
+  <meta name="description" content="现在就要跟随 Eastmount 老师学习系统安全与恶意代码分析了，是的，终于要真正的系统地学习了~加油小凉！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="逆向分析基础">
+<meta property="og:url" content="http://example.com/posts/8ba499c5.html">
+<meta property="og:site_name" content="v5le0n9&#39;s garden">
+<meta property="og:description" content="现在就要跟随 Eastmount 老师学习系统安全与恶意代码分析了，是的，终于要真正的系统地学习了~加油小凉！">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/posts/undefined/%E5%AD%A6%E4%B9%A0%E6%8A%80%E8%83%BD%E5%9B%BE.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.1.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.1.1.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.1.2.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.1.3.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.1.4.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.1.5.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.1.6.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.1.7.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.1.8.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.1.9.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.1.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.2.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.3.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.4.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.5.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.6.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.7.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.8.png">
+<meta property="og:image" content="http://example.com/posts/undefined/4.1.1.png">
+<meta property="og:image" content="http://example.com/posts/undefined/4.1.2.png">
+<meta property="og:image" content="http://example.com/posts/undefined/4.1.3.png">
+<meta property="og:image" content="http://example.com/posts/undefined/4.1.4.png">
+<meta property="og:image" content="http://example.com/posts/undefined/4.1.5.png">
+<meta property="og:image" content="http://example.com/posts/undefined/5.1.1.png">
+<meta property="og:image" content="http://example.com/posts/undefined/5.1.2.png">
+<meta property="og:image" content="http://example.com/posts/undefined/5.1.3.jpg">
+<meta property="og:image" content="http://example.com/posts/undefined/5.1.4.png">
+<meta property="og:image" content="http://example.com/posts/undefined/5.1.5.png">
+<meta property="og:image" content="http://example.com/posts/undefined/5.2.1.png">
+<meta property="og:image" content="http://example.com/posts/undefined/5.2.2.png">
+<meta property="og:image" content="http://example.com/posts/undefined/5.2.3.png">
+<meta property="og:image" content="http://example.com/posts/undefined/5.2.5.png">
+<meta property="og:image" content="http://example.com/posts/undefined/5.2.4.png">
+<meta property="og:image" content="http://example.com/posts/undefined/5.2.6.png">
+<meta property="og:image" content="http://example.com/posts/undefined/5.2.7.png">
+<meta property="og:image" content="http://example.com/posts/undefined/5.2.8.png">
+<meta property="article:published_time" content="2022-05-21T00:41:19.909Z">
+<meta property="article:modified_time" content="2022-05-23T04:37:55.978Z">
+<meta property="article:author" content="v5le0n9">
+<meta property="article:tag" content="逆向分析">
+<meta property="article:tag" content="恶意代码分析">
+<meta property="article:tag" content="系统安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/posts/undefined/%E5%AD%A6%E4%B9%A0%E6%8A%80%E8%83%BD%E5%9B%BE.png">
+
+<link rel="canonical" href="http://example.com/posts/8ba499c5.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>逆向分析基础 | v5le0n9's garden</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="v5le0n9's garden" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">v5le0n9's garden</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">小凉的秘密基地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/v5le0n9" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/8ba499c5.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="v5le0n9">
+      <meta itemprop="description" content="v5le0n9's garden">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="v5le0n9's garden">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          逆向分析基础
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-21 08:41:19" itemprop="dateCreated datePublished" datetime="2022-05-21T08:41:19+08:00">2022-05-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-23 12:37:55" itemprop="dateModified" datetime="2022-05-23T12:37:55+08:00">2022-05-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">Windows逆向</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>现在就要跟随 <a target="_blank" rel="noopener" href="https://blog.csdn.net/Eastmount">Eastmount</a> 老师学习系统安全与恶意代码分析了，是的，终于要真正的系统地学习了~加油小凉！</p>
+<span id="more"></span>
+<h1 id="1-逆向分析学习路线"><a href="#1-逆向分析学习路线" class="headerlink" title="1. 逆向分析学习路线"></a>1. 逆向分析学习路线</h1><img src="/posts/undefined/%E5%AD%A6%E4%B9%A0%E6%8A%80%E8%83%BD%E5%9B%BE.png" class="" title="逆向分析学习路线">
+<h1 id="2-逆向分析的典型应用"><a href="#2-逆向分析的典型应用" class="headerlink" title="2. 逆向分析的典型应用"></a>2. 逆向分析的典型应用</h1><h2 id="2-1-病毒分析"><a href="#2-1-病毒分析" class="headerlink" title="2.1 病毒分析"></a>2.1 病毒分析</h2><p>逆向分析主要是剖析病毒，包括：</p>
+<ul>
+<li>获取病毒传播方法，遏制病毒传播</li>
+<li>获取病毒隐藏手段，根除病毒</li>
+<li>获取功能目的，溯源定位攻击者</li>
+</ul>
+<h2 id="2-2-游戏保护"><a href="#2-2-游戏保护" class="headerlink" title="2.2 游戏保护"></a>2.2 游戏保护</h2><p>这个主要是用来做游戏外挂。比如修改攻击力、防御值、金币等。</p>
+<h2 id="2-3-漏洞挖掘"><a href="#2-3-漏洞挖掘" class="headerlink" title="2.3 漏洞挖掘"></a>2.3 漏洞挖掘</h2><p>逆向应用还包括漏洞挖掘和漏洞利用，其中黑客挖掘漏洞的常用方法为：</p>
+<ul>
+<li>通过分析开源软件的源代码，获取漏洞</li>
+<li>通过分析产品本身，获取漏洞</li>
+<li>通过分析可以利用漏洞的软件样本</li>
+<li>通过比较软件前后补丁的差异</li>
+</ul>
+<p>比如官方软件在网上有安全更新，关注安全行情和漏洞公告的行当或企业会对比官方的补丁，在拿到官方升级后的软件，他们会对两个软件流程作比较，分析补丁补了哪里，再详细分析为什么多了这个检测。注意，官方公告通常会非常简略(补丁号、造成后果、影响范围)。比如某个MP3播放器在播放某个冷门格式的音频文件时，会触发一个远程溢出问题，我们就需要去逆向分析，下载升级前后版本做流程对比。</p>
+<h2 id="2-4-电子取证"><a href="#2-4-电子取证" class="headerlink" title="2.4 电子取证"></a>2.4 电子取证</h2><p>通过样本试图找出是谁(Who)、在什么时间(When)、在哪里(Where)、怎样地(How)进行了什么(What)(非法)活动。</p>
+<h2 id="2-5-无文档学习"><a href="#2-5-无文档学习" class="headerlink" title="2.5 无文档学习"></a>2.5 无文档学习</h2><p>表示没有源码的情况下获取程序信息，称为竞品分析。假设某个公司对同行的产品很感兴趣，想知道为什么他们的算法比我们好，然后需要去分析和算法还原，这也是逆向分析的主要应用。</p>
+<h1 id="3-扫雷游戏逆向分析"><a href="#3-扫雷游戏逆向分析" class="headerlink" title="3. 扫雷游戏逆向分析"></a>3. 扫雷游戏逆向分析</h1><img src="/posts/undefined/2.1.png" class="" title="扫雷">
+<p>扫雷中肯定有雷区的定义，作为程序员，你会怎样定义有雷或无雷，或者插旗子状态呢？我们会使用一个二维数组来存储。那么，什么时候肯定会访问这个二维数组呢？在绘制整个游戏区、点击方格的时候都会访问到。</p>
+<p>在绘制游戏区时，Windows编程有个关键函数<code>BeginPaint()</code>，它为指定窗口进行绘图工作的准备，并用将和绘图有关的信息填充到一个<code>PAINTSTRUCT</code>结构中，所以它将是一个突破口。</p>
+<p>在逆向分析中，动态分析和静态分析非常多，动静结合也是常用的分析手段。</p>
+<ul>
+<li>静态分析：程序并未运行，通过分析文件的结构(格式)获取其内部原理。</li>
+<li>动态分析：在程序的运行过程中，分析其内部原理。</li>
+<li>灰盒分析：既不静态也不动态调试，通过一堆监控软件(注册表监控、文件监控、进程监控、敏感API监控)在虚拟机中跑程序，再分析恶意软件的大体行为，并形成病毒分析报告。</li>
+</ul>
+<p>至于哪种方法更好？具体问题具体分析。如果分析扫雷，因为没有危害可以动态调试，但如果是WannaCry蠕虫，就不能在真机上动态调试。同时，很多安全公司为了及时响应各种安全事件，会把样本自动上传到服务器中，他们每天会收到成千上万的恶意样本，但可能存在某些未知样本只上传部分的原因，比如某个未知样本是个动态链接库，此时没有运行条件，只能进行静态分析或者模拟接口分析。</p>
+<h2 id="3-1-OD动态分析"><a href="#3-1-OD动态分析" class="headerlink" title="3.1 OD动态分析"></a>3.1 OD动态分析</h2><p>我们采用动态分析的方法分析扫雷程序。之前我们猜测游戏中存在一个二维数组，当我们显示界面时会访问这个二维数组，并且调用<code>BeginPaint()</code>函数来显示页面，所以接下来需要找到调用<code>BeginPaint()</code>的位置。</p>
+<p>将程序载入OD，Ctrl + N 查找当前模块中的名称，输入<code>BeginPaint</code>，右键 -&gt; 在每个参考上设置断点。</p>
+<img src="/posts/undefined/2.1.1.png" class="" title="查找BeginPaint">
+<p>Alt + B 去到断点窗口，发现只有一个。F9 运行程序至断点处，此时程序界面还没出来。</p>
+<img src="/posts/undefined/2.1.2.png" class="" title="去到BeginPaint被调用的汇编代码处">
+<p>发现<code>BeginPaint()</code>函数下面还有一个<code>EndPaint()</code>，表示绘图结束，也就是游戏结束。所以这两个函数之间的数据就是我们玩游戏的过程。两个系统函数之间只有一个程序函数<code>01002AC3()</code>，选中该行 Enter 跟随该函数。</p>
+<img src="/posts/undefined/2.1.3.png" class="" title="去到BeginPaint被调用的汇编代码处">
+<p>发现这里面也有几个程序函数，一个个看后发现只有<code>010026A7()</code>里有双重循环，也就是构成二维数组的基本条件。</p>
+<p>当然，这种方法太过草率也太耗费时间了，如果遇到大一点的程序，工作量还是挺大的。可以使用另一种方法。当我们在玩扫雷时，它的界面并没有闪烁，所以怀疑使用了双缓存技术。</p>
+<p>双缓存是在缓存中一次性绘制，再把绘制的结果返回到界面上。比如要在屏幕上绘制一个圆、正方形、直线，需要调用GDI的显示函数，操作显卡画一个圆，再画一个正方形、一条直线，需要访问硬件3次，此时依赖硬件的访问速度。为了减少硬件操作，我们在内存中把需要绘制的图像准备好，一切妥当后再提交给硬件显示。</p>
+<p><code>BitBlt()</code>函数是将内存中的数据提交到显示器上，该函数对指定的源设备环境区域中的像素进行位块转换，以传送到目标设备环境。同样方法查找<code>BitBlt()</code>函数，设置断点，运行，程序停在了<code>010026A7()</code>函数里的<code>BitBlt()</code>函数中。需要注意的是，调用<code>BitBlt()</code>函数有两处地方，为了验证这里是否是我们要找的地方，可以单步调试看看游戏界面情况。</p>
+<img src="/posts/undefined/2.1.4.png" class="" title="单步数次执行的界面情况">
+<p>绘制一个个方块的过程，也就是初始化“有雷”和“无雷”的过程，说明我们之前找的地方没错。</p>
+<p>另一处调用<code>BitBlt()</code>函数，是点击方块时，绘制该方块是“数字”还是“雷”的过程。这时候只是将这个过程显示在用户界面上，对我们来说只是一个验证作用。</p>
+<p><code>010026A7()</code>函数里的<code>BitBlt()</code>函数在界面初始化“有雷”和“无雷”，那肯定将这些数据存在了某个地方。接下来就是分析这双重循环。</p>
+<img src="/posts/undefined/2.1.5.png" class="" title="分析双重循环">
+<img src="/posts/undefined/2.1.6.png" class="" title="分析双重循环">
+<img src="/posts/undefined/2.1.7.png" class="" title="分析双重循环">
+<p>经过<code>mov al,byte ptr ds:[ebx+esi]</code>可以知道al的值是取数据段寄存器中以ebx为基址，esi为偏移的地址的内容。</p>
+<img src="/posts/undefined/2.1.8.png" class="" title="分析双重循环">
+<p>所以ebx存的就是“有雷”和“无雷”二维数组的首地址。我们知道，一行有9个方块，根据规律可以猜测，<code>10</code>作为边界，<code>0F</code>表示空，<code>8F</code>就是雷。</p>
+<p>将所有断点取消，数据窗口 Ctrl + G 定位到地址<code>01005360</code>，验证猜测。</p>
+<p>注意，如果第一次点击的就是雷的话，会改变雷的位置(可能是避免倒霉孩子没有游戏体验吧)。如果方块中是旗子显示<code>8E</code>，方块中是空白显示<code>40</code>，方块中是1则显示<code>41</code>，2是<code>42</code>，以此类推。雷被点中后将<code>8F</code>改为<code>CC</code>，将剩余的雷改为<code>8A</code>。经过多次游戏，证实了上面的猜测。</p>
+<img src="/posts/undefined/2.1.9.png" class="" title="分析双重循环">
+<h2 id="3-2-逆向辅助工具CE"><a href="#3-2-逆向辅助工具CE" class="headerlink" title="3.2 逆向辅助工具CE"></a>3.2 逆向辅助工具CE</h2><p>Cheat Engine又称CE修改器，是一款内存修改编辑工具。可以通过Cheat Engine来修改游戏中的内存数据、人物属性、金币数值等等。</p>
+<p>我们现在的目的是利用CE获取第一个方块的地址，验证与在OD找的是否一致。运行扫雷，打开CE，附加扫雷进程。在OD中看，一个字节存储在一个方块中，所以将数值类型设为“字节”，扫描类型设为“未知的初始数值”，首次扫描。</p>
+<img src="/posts/undefined/2.2.1.png" class="" title="CE使用">
+<img src="/posts/undefined/2.2.2.png" class="" title="CE使用">
+<p>此时显示1056768个数据。接着点击第一个方块，该方块由<code>0F</code>变为<code>40</code>，所以在扫描类型中选择“变动的数值”，再次扫描。</p>
+<img src="/posts/undefined/2.2.3.png" class="" title="CE使用">
+<p>点击扫雷，由于第一个方块不再变化数值，所以选择“未变动的数值”进行筛选，再次扫描，连续几次，发现数据的个数一直在变小，说明经过几轮筛选逐渐缩小范围。如果出现地雷则选择“未变动的数值”，再次扫描。</p>
+<img src="/posts/undefined/2.2.4.png" class="" title="CE使用">
+<p>点击笑脸重新开始游戏，此时第一个方块从<code>40</code>变为<code>0F</code>，所以扫描类型修改为“变动的数值”，再次扫描。</p>
+<p>重复上述步骤，直到结果为1。</p>
+<img src="/posts/undefined/2.2.5.png" class="" title="CE使用">
+<p>这个地址刚好是我们在OD中找的第一个方块的地址。</p>
+<img src="/posts/undefined/2.2.6.png" class="" title="CE使用">
+<img src="/posts/undefined/2.2.7.png" class="" title="CE使用">
+<p>第二步验证扫雷的边界。自定义扫雷的高度为9，扫出来有1627个数据。再次定义高度为16，从9变到16的数据有4个。再次定义高度为24，从16变到24的有2个。因为边界需要两个值来定义，所以就是<code>01005338</code>和<code>010056A8</code>。</p>
+<img src="/posts/undefined/2.2.8.png" class="" title="CE使用">
+<p>同样筛选出存储宽度的地址，分别是<code>01005334</code>和<code>010056AC</code>。筛选出雷数的存储地址为<code>01005330</code>。</p>
+<p>后面就可以利用这些地址开始学习研究了，比如一秒实现扫雷等。</p>
+<h1 id="4-吕布传游戏逆向分析"><a href="#4-吕布传游戏逆向分析" class="headerlink" title="4. 吕布传游戏逆向分析"></a>4. 吕布传游戏逆向分析</h1><p>关于NPC说话太慢，找到快速跳过对话的方法。</p>
+<p>将<code>Ekd5.exe</code>载入OD，查找当前模块中的名称，查看调用了哪些函数。发现程序竟然有几个钩子函数。</p>
+<img src="/posts/undefined/4.1.1.png" class="" title="查看调用函数">
+<p>钩子函数是Windows消息处理机制的一部分，通过设置“钩子”，应用程序可以在系统级对所有消息、事件进行过滤，访问在正常情况下无法访问的消息。钩子的本质是一段用以处理系统消息的程序，通过系统调用，把它挂入系统。</p>
+<ul>
+<li>SetWindowsHookEx：设置钩子函数</li>
+<li>CallNextHookEx：将钩子信息传递到当前钩子链中的下一个子程，一个钩子程序可以调用这个函数之前或之后处理钩子信息</li>
+<li>UnhookWindowsHookEx：上一个函数<code>SetWindowsHookEx()</code>的返回值，钩子在使用完之后需要用该函数卸载</li>
+</ul>
+<p>在每个<code>SetWindowsHookEx()</code>处下断，一共两处。运行，停在了<code>00429EF7</code>处。可以看到该钩子函数是通过键盘输入触发，回调函数的地址为<code>0040D307</code>，也就是触发后会去到该地址处。</p>
+<p>Ctrl + G 去到该地址处，下断，运行。游戏载入，随意从键盘上输入。</p>
+<img src="/posts/undefined/4.1.2.png" class="" title="游戏界面">
+<p>此时触发钩子函数，使汇编去到<code>0040D307</code>处。我输入的是“a”，运行到cmp指令时，eax存的值就是“a”的ASCII码的十六进制形式，与<code>0x20</code>(空格)进行对比，往下看还有与<code>0x30</code>(“0”)、<code>0x35</code>(“5”)对比的。</p>
+<img src="/posts/undefined/4.1.3.png" class="" title="eax对比">
+<p>先看<code>0x20</code>。重载运行，在键盘按下空格键。对比通过，进入<code>00406A33</code>函数，这个函数里有一个创建线程函数，线程在<code>00406A7F</code>处。继续跟随到该地址，下断运行。</p>
+<img src="/posts/undefined/4.1.4.png" class="" title="创建线程函数">
+<p>在<code>00406A7F</code>函数中，有两个<code>PostMessage()</code>函数，该函数的作用是将一条消息放入消息队列中。一个是“鼠标按下”，另一个是“鼠标弹起”，中间还有个<code>sleep()</code>函数，这个过程是模拟玩家点击鼠标的操作。</p>
+<img src="/posts/undefined/4.1.5.png" class="" title="PostMessage函数">
+<p>那么，我们就找到了一个快速跳过对话的方法，就是按空格键。要想取消快速对话，同样也是按空格键。<code>ds:[0x500E02]</code>中存储着跳过与否的值，“1”表示快速跳过，“0”表示不跳过。</p>
+<p><code>0x30</code>(“0”)、<code>0x35</code>(“5”)没什么用的，可能只是过滤玩家的不合法输入。</p>
+<h1 id="5-植物大战僵尸游戏逆向分析"><a href="#5-植物大战僵尸游戏逆向分析" class="headerlink" title="5. 植物大战僵尸游戏逆向分析"></a>5. 植物大战僵尸游戏逆向分析</h1><h2 id="5-1-CE逆向修改阳光值"><a href="#5-1-CE逆向修改阳光值" class="headerlink" title="5.1 CE逆向修改阳光值"></a>5.1 CE逆向修改阳光值</h2><p>修改阳光值首先要知道存储阳光值的地址在哪里。通过CE找到该地址，为<code>25B42938</code>。</p>
+<img src="/posts/undefined/5.1.1.png" class="" title="CE查找存储阳光值的地址">
+<p>打开资源管理器，查看这个游戏的进程ID，为12064。</p>
+<img src="/posts/undefined/5.1.2.png" class="" title="CE查找存储阳光值的地址">
+<p>在修改阳光值之前，要先确定我们要修改值的窗口是哪一个，可以通过API函数<code>FindWindow()</code>来查找。这个函数检索处理顶级窗口的类名和窗口名称匹配指定的字符串，这个函数不搜索子窗口。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HWND <span class="title function_">FindWindow</span><span class="params">(</span></span><br><span class="line"><span class="params">    LPCSTR lpClassName,</span></span><br><span class="line"><span class="params">    LPCSTR lpWindowName</span></span><br><span class="line"><span class="params">)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>lpClassName：指向一个以NULL字符结尾的、用来指定类名的字符串或一个可以确定类名字符串的原子。如果该参数为null时，将会寻找任何与<code>lpWindowName</code>参数匹配的窗口。</li>
+<li>lpWindowName：指向一个以NULL字符结尾的、用来指定窗口名（即窗口标题）的字符串。如果此参数为null，则匹配所有窗口名。</li>
+</ul>
+<p><code>FindWindow()</code>需要传入两个参数，即窗口的类型和窗口的标题。这里可以用到Visual Studio中的Spy++工具来查看在本机中运行的窗口的相关信息。</p>
+<img src="/posts/undefined/5.1.3.jpg" class="" title="CE查找存储阳光值的地址">
+<img src="/posts/undefined/5.1.4.png" class="" title="CE查找存储阳光值的地址">
+<p>句柄为<code>00600BEE</code>，标题为<code>Plants vs. Zombies 1.2.0.1073 RELEASE</code>，类为<code>MainWindow</code>。</p>
+<p>当然，每次运行的句柄和进程ID都不一样，千万不要把这两个值写死，而是通过API函数自动获取这些信息。</p>
+<p>接下来介绍几个等下要用到的API函数：</p>
+<ul>
+<li>通过<code>GetWindowThreadProcessld()</code>函数找到进程ID。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DWORD <span class="title function_">GetWindowThreadProcessld</span><span class="params">(</span></span><br><span class="line"><span class="params">	HWND hwnd,                   <span class="comment">//窗口句柄</span></span></span><br><span class="line"><span class="params">	LPDWORD lpdwProcessld        <span class="comment">//接收进程标识的32位值的地址</span></span></span><br><span class="line"><span class="params">)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过<code>OpenProcess()</code>函数打开一个已存在的进程对象，并返回进程的句柄。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HANDLE <span class="title function_">OpenProcess</span><span class="params">(</span></span><br><span class="line"><span class="params">	DWORD dwDesiredAccess,   <span class="comment">//渴望得到的访问权限（标志）</span></span></span><br><span class="line"><span class="params">	BOOL bInheritHandle,     <span class="comment">//是否继承句柄</span></span></span><br><span class="line"><span class="params">	DWORD dwProcessId        <span class="comment">//进程标示符</span></span></span><br><span class="line"><span class="params">)</span>;</span><br></pre></td></tr></table></figure>
+<p><code>dwDesiredAccess</code>可分为以下几种：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>字段值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PROCESS_ALL_ACCESS</td>
+<td>获取所有权限</td>
+</tr>
+<tr>
+<td>PROCESS_CREATE_PROCESS</td>
+<td>创建进程</td>
+</tr>
+<tr>
+<td>PROCESS_CREATE_THREAD</td>
+<td>创建线程</td>
+</tr>
+<tr>
+<td>PROCESS_DUP_HANDLE</td>
+<td>使用DuplicateHandle()函数复制一个新句柄</td>
+</tr>
+<tr>
+<td>PROCESS_QUERY_INFORMATION</td>
+<td>获取进程的令牌、退出码和优先级等信息</td>
+</tr>
+<tr>
+<td>PROCESS_QUERY_LIMITED_INFORMATION</td>
+<td>获取进程特定的某个信息</td>
+</tr>
+<tr>
+<td>PROCESS_SET_INFORMATION</td>
+<td>设置进程的某种信息</td>
+</tr>
+<tr>
+<td>PROCESS_SET_QUOTA</td>
+<td>使用SetProcessWorkingSetSize()函数设置内存限制</td>
+</tr>
+<tr>
+<td>PROCESS_SUSPEND_RESUME</td>
+<td>暂停或者恢复一个进程</td>
+</tr>
+<tr>
+<td>PROCESS_TERMINATE</td>
+<td>使用Terminate()函数终止进程</td>
+</tr>
+<tr>
+<td>PROCESS_VM_OPERATION</td>
+<td>在进程的地址空间执行操作</td>
+</tr>
+<tr>
+<td>PROCESS_VM_READ</td>
+<td>使用ReadProcessMemory()函数在进程中读取内存</td>
+</tr>
+<tr>
+<td>PROCESS_VM_WRITE</td>
+<td>使用WriteProcessMemory()函数在进程中写入内存</td>
+</tr>
+<tr>
+<td>SYNCHRONIZE</td>
+<td>使用wait()函数等待进程终止</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>通过<code>WriteProcessMemory()</code>函数写入某一进程的内存区域。注意，直接写入会出现“Access Violation”错误，故需此函数入口区必须可以访问，否则操作失败。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">BOOL <span class="title function_">WriteProcessMemory</span><span class="params">(</span></span><br><span class="line"><span class="params">	HANDLE hProcess,                 <span class="comment">//由OpenProcess返回的进程句柄</span></span></span><br><span class="line"><span class="params">	LPVOID lpBaseAddress,            <span class="comment">//要写入的内存首地址</span></span></span><br><span class="line"><span class="params">	LPVOID lpBuffer,                 <span class="comment">//指向数据当前存放的地址</span></span></span><br><span class="line"><span class="params">	DWORD nSize,                     <span class="comment">//数据的长度</span></span></span><br><span class="line"><span class="params">	LPDWORD lpNumberOfBytesWritten</span></span><br><span class="line"><span class="params">)</span>;</span><br></pre></td></tr></table></figure>
+<p>完整代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//输入值作为修改阳光参数</span></span><br><span class="line">	<span class="type">int</span> x;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;x);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//进程ID</span></span><br><span class="line">	DWORD pid;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//1.找到游戏窗口 窗口类型、窗口标题</span></span><br><span class="line">	HWND hwnd = FindWindow(<span class="literal">NULL</span>, <span class="string">L&quot;Plants vs. Zombies 1.2.0.1073 RELEASE&quot;</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//2.通过窗口找到进程ID</span></span><br><span class="line">	GetWindowThreadProcessId(hwnd, &amp;pid);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//3.通过进程id打开进程</span></span><br><span class="line">	HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//4.通过打开进程修改游戏内容</span></span><br><span class="line">	WriteProcessMemory(hProcess, (LPVOID)<span class="number">0x25B42938</span>, (LPVOID)&amp;x, <span class="keyword">sizeof</span>(x), &amp;pid);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>芜湖实现阳光自由了~</p>
+<img src="/posts/undefined/5.1.5.png" class="" title="CE查找存储阳光值的地址">
+<p>经多次实验发现，每次存储阳光值的地址都不同，所以每次都需要用CE找到其地址再进行修改。</p>
+<p>注意，如果游戏存在地址保护的情况，可以尝试注入进行修改。(我还没到那种水平，遇到再说)</p>
+<h2 id="5-2-OD逆向自动拾取阳光"><a href="#5-2-OD逆向自动拾取阳光" class="headerlink" title="5.2 OD逆向自动拾取阳光"></a>5.2 OD逆向自动拾取阳光</h2><p>拾取阳光的关键是点击鼠标，点击到阳光，阳光值会增加。所以我们希望在阳光出现的时候触发点击阳光事件，初步预测涉及两个call：</p>
+<ul>
+<li>阳光出现call</li>
+<li>判断是否点击到阳光然后增加阳光值call</li>
+</ul>
+<p>使用CE定位阳光值地址，选中该地址右键 -&gt; 找出是什么改写了这个地址。当再次拾取阳光时，阳光值从75变到了100，同时CE的小窗口出现了一条记录。</p>
+<img src="/posts/undefined/5.2.1.png" class="" title="OD逆向自动拾取阳光">
+<p>选中这条记录，下面会出现相关的汇编指令和当前寄存器的值。eax寄存器存的就是每次拾取阳光增加的数值25。</p>
+<img src="/posts/undefined/5.2.2.png" class="" title="OD逆向自动拾取阳光">
+<p>CE的工作到这里就结束了，接下来将游戏载入OD，定位到<code>0043A7F5</code>处，下断运行。当鼠标点击拾取阳光后，程序停在断点处。</p>
+<img src="/posts/undefined/5.2.3.png" class="" title="OD逆向自动拾取阳光">
+<p>在查看上面的一连串跳转指令中，发现有个jnz跳过了“增加阳光值”的操作。但给它下断运行，捡了几次阳光，都没有经过这个跳转指令，所以暂时先不管它。</p>
+<img src="/posts/undefined/5.2.5.png" class="" title="OD逆向自动拾取阳光">
+<p>往上拉拉发现<code>0043A7F5</code>所在的函数的功能仅仅是改变数据段中的阳光值。Ctrl + F9 执行到返回，F7 去到它的上一层函数。发现这个jnz指令有可能会绕过增加阳光值call，给它下个断点，运行几次。</p>
+<img src="/posts/undefined/5.2.4.png" class="" title="OD逆向自动拾取阳光">
+<p>发现阳光每往左上方移一段路程就要经过这个jnz指令，直到阳光到达指定位置才进入增加阳光值的call。</p>
+<img src="/posts/undefined/5.2.6.png" class="" title="OD逆向自动拾取阳光">
+<p>那这个jnz指令可以不管它，把它的断点取消。继续返回到父函数，看到有一个jnz指令可以跳到增加阳光call，下断运行。(那些call + jmp指令我们基本不会去动的，否则很容易导致程序运行出错)</p>
+<img src="/posts/undefined/5.2.7.png" class="" title="OD逆向自动拾取阳光">
+<p>此时阳光已经出现了，但jnz跳转没有实现，也就是还不能进入增加阳光call。</p>
+<img src="/posts/undefined/5.2.8.png" class="" title="OD逆向自动拾取阳光">
+<p>那怎样才能进入呢？对玩家来说，肯定是要用鼠标点击阳光才能增加阳光值。也就是触发鼠标点击阳光事件才能让jnz跳转指令实现。那我们要实现自动拾取功能，也就是鼠标不点击阳光也能使阳光值增加，怎么办？让这个jnz指令失去它的判断功能，改为无条件跳转指令jmp。</p>
+<p>然后就会发现阳光一出现就被迅速移到指定位置，增加阳光值啦~</p>
+<p>(注意，新手教程一定要点击一下阳光才能继续游戏)</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="v5le0n9 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="v5le0n9 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/" rel="tag"><i class="fa fa-tag"></i> 逆向分析</a>
+              <a href="/tags/%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/" rel="tag"><i class="fa fa-tag"></i> 恶意代码分析</a>
+              <a href="/tags/%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8/" rel="tag"><i class="fa fa-tag"></i> 系统安全</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/4dec66bb.html" rel="prev" title="PE结构">
+      <i class="fa fa-chevron-left"></i> PE结构
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/adc1352a.html" rel="next" title="Windows PE病毒分类及感染方式">
+      Windows PE病毒分类及感染方式 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF"><span class="nav-text">1. 逆向分析学习路线</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E7%9A%84%E5%85%B8%E5%9E%8B%E5%BA%94%E7%94%A8"><span class="nav-text">2. 逆向分析的典型应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E7%97%85%E6%AF%92%E5%88%86%E6%9E%90"><span class="nav-text">2.1 病毒分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%B8%B8%E6%88%8F%E4%BF%9D%E6%8A%A4"><span class="nav-text">2.2 游戏保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98"><span class="nav-text">2.3 漏洞挖掘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81"><span class="nav-text">2.4 电子取证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-%E6%97%A0%E6%96%87%E6%A1%A3%E5%AD%A6%E4%B9%A0"><span class="nav-text">2.5 无文档学习</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%89%AB%E9%9B%B7%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%E5%88%86%E6%9E%90"><span class="nav-text">3. 扫雷游戏逆向分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-OD%E5%8A%A8%E6%80%81%E5%88%86%E6%9E%90"><span class="nav-text">3.1 OD动态分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E9%80%86%E5%90%91%E8%BE%85%E5%8A%A9%E5%B7%A5%E5%85%B7CE"><span class="nav-text">3.2 逆向辅助工具CE</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E5%90%95%E5%B8%83%E4%BC%A0%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%E5%88%86%E6%9E%90"><span class="nav-text">4. 吕布传游戏逆向分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E6%A4%8D%E7%89%A9%E5%A4%A7%E6%88%98%E5%83%B5%E5%B0%B8%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%E5%88%86%E6%9E%90"><span class="nav-text">5. 植物大战僵尸游戏逆向分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-CE%E9%80%86%E5%90%91%E4%BF%AE%E6%94%B9%E9%98%B3%E5%85%89%E5%80%BC"><span class="nav-text">5.1 CE逆向修改阳光值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-OD%E9%80%86%E5%90%91%E8%87%AA%E5%8A%A8%E6%8B%BE%E5%8F%96%E9%98%B3%E5%85%89"><span class="nav-text">5.2 OD逆向自动拾取阳光</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="v5le0n9"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">v5le0n9</p>
+  <div class="site-description" itemprop="description">v5le0n9's garden</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/Leong_Vinson" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;Leong_Vinson" rel="noopener" target="_blank"><i class="fab fa-cuttlefish fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/v5le0n9" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;v5le0n9" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:v5le0n9@163.com" title="E-Mail → mailto:v5le0n9@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">v5le0n9</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">902k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">13:40</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '7c58e80079a2457b610d',
+      clientSecret: 'fc16b1b0fdfb278016ebe41c20f3743c3c927466',
+      repo        : 'comments.github.io',
+      owner       : 'v5le0n9',
+      admin       : ['v5le0n9'],
+      id          : 'fc7224e11e2ed3465bd532b6bf7ef338',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
