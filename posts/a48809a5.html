@@ -87,8 +87,13 @@
 <meta property="og:image" content="http://example.com/posts/a48809a5/5.2.10.png">
 <meta property="og:image" content="http://example.com/posts/a48809a5/5.2.11.png">
 <meta property="og:image" content="http://example.com/posts/a48809a5/5.2.12.png">
+<meta property="og:image" content="http://example.com/posts/a48809a5/5.2.13.png">
+<meta property="og:image" content="http://example.com/posts/a48809a5/5.2.14.png">
+<meta property="og:image" content="http://example.com/posts/a48809a5/5.2.15.png">
+<meta property="og:image" content="http://example.com/posts/a48809a5/5.3.1.png">
+<meta property="og:image" content="http://example.com/posts/a48809a5/5.3.2.png">
 <meta property="article:published_time" content="2022-05-28T06:59:44.232Z">
-<meta property="article:modified_time" content="2022-05-31T03:55:29.404Z">
+<meta property="article:modified_time" content="2022-06-01T00:41:50.785Z">
 <meta property="article:author" content="v5le0n9">
 <meta property="article:tag" content="样本分析">
 <meta name="twitter:card" content="summary">
@@ -281,7 +286,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-31 11:55:29" itemprop="dateModified" datetime="2022-05-31T11:55:29+08:00">2022-05-31</time>
+                <time title="修改时间：2022-06-01 08:41:50" itemprop="dateModified" datetime="2022-06-01T08:41:50+08:00">2022-06-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -306,14 +311,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>16k</span>
+              <span>17k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>15 分钟</span>
+              <span>16 分钟</span>
             </span>
 
         </div>
@@ -502,7 +507,7 @@
 <li>查找系统以<code>.html</code>和<code>.asp</code>为后缀的文件并在里面插入iframe，该网页中包含在病毒程序，一旦用户使用了未安装补丁的IE浏览器访问该网页就可能感染该病毒。</li>
 <li>删除扩展名为gho的文件，该文件是系统备份工具GHOST的备份文件，这样可使用户的系统备份文件丢失。</li>
 </ul>
-<h1 id="5-动静结合分析样本"><a href="#5-动静结合分析样本" class="headerlink" title="5. 动静结合分析样本"></a>5. 动静结合分析样本</h1><p>栈上给局部变量分配空间的时候，栈是向下增长的，而栈上的数组、字符串、结构体等却是向上增长的。理解这一点可以帮助识别栈上的变量。</p>
+<h1 id="5-动静结合分析样本——病毒初始化"><a href="#5-动静结合分析样本——病毒初始化" class="headerlink" title="5. 动静结合分析样本——病毒初始化"></a>5. 动静结合分析样本——病毒初始化</h1><p>栈上给局部变量分配空间的时候，栈是向下增长的，而栈上的数组、字符串、结构体等却是向上增长的。理解这一点可以帮助识别栈上的变量。</p>
 <p>在分析病毒之前，首先需要调用工具检查病毒是否带壳，如果带壳还需要先进行脱壳操作。程序无壳，采用Borland Delphi 6.0-7.0编写的32位EXE文件。</p>
 <img src="/posts/a48809a5/5.1.1.png" class="" title="查壳">
 <p>先将样本载入IDA，查看伪代码。</p>
@@ -674,7 +679,28 @@
 <img src="/posts/a48809a5/5.2.11.png" class="" title="sub_403ED4()函数分析">
 <img src="/posts/a48809a5/5.2.12.png" class="" title="sub_403ED4()函数分析">
 <p>跳转未实现，需要进入<code>sub_4041FC()</code>函数进行分析。</p>
-
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __usercall sub_4041FC@&lt;eax&gt;(<span class="type">char</span> **a1@&lt;eax&gt;, <span class="type">int</span> a2@&lt;edx&gt;, <span class="type">int</span> a3@&lt;ecx&gt;)</span><br></pre></td></tr></table></figure>
+<p>eax中存的内容是ecx的值的地址。进去发现有4个子函数：<code>sub_402560()</code>、<code>sub_403D08()</code>、<code>sub_402650()</code>、<code>sub_403C44()</code>。后面三个前面已经分析过了，分别是分配一定大小的内存空间、字符串拷贝、初始化寄存器。</p>
+<p>现在看<code>sub_402560()</code>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_DWORD *__usercall sub_402560@&lt;eax&gt;(_DWORD *result@&lt;eax&gt;, <span class="type">int</span> a2@&lt;edx&gt;)</span><br></pre></td></tr></table></figure>
+<img src="/posts/a48809a5/5.2.13.png" class="" title="sub_402560()函数分析">
+<p>进去里面发现又是对临界资源的操作，可以不管，回到父函数<code>sub_403ED4()</code>。</p>
+<p>下面这个call又调用了<code>sub_402650()</code>字符串拷贝函数。</p>
+<img src="/posts/a48809a5/5.2.14.png" class="" title="sub_403ED4()函数分析">
+<p>在循环处下多几个断点，查看在循环的过程中地址B10068附近数据的变化。</p>
+<img src="/posts/a48809a5/5.2.15.png" class="" title="循环分析">
+<p>发现在地址40CC94的那一串字符与“xboy”异或后变成“武汉男生感染下载者”，存在了地址B10088中。</p>
+<h3 id="5-2-3-sub-403C98"><a href="#5-2-3-sub-403C98" class="headerlink" title="5.2.3 sub_403C98"></a>5.2.3 sub_403C98</h3><p>是5.1分析过的函数，不再赘述。</p>
+<h3 id="5-2-4-sub-403C68"><a href="#5-2-4-sub-403C68" class="headerlink" title="5.2.4 sub_403C68"></a>5.2.4 sub_403C68</h3><p>也是进行了一些原子操作，不用管。</p>
+<h3 id="5-2-5-总结"><a href="#5-2-5-总结" class="headerlink" title="5.2.5 总结"></a>5.2.5 总结</h3><p>这个函数最主要部分就是循环，“xboy”与那奇怪的字符串异或后变成“武汉男生感染下载者”，说明进行了解密，不妨将<code>sub_405360()</code>函数更名为<code>DecodeString()</code>。</p>
+<h2 id="5-3-sub-404018函数分析"><a href="#5-3-sub-404018函数分析" class="headerlink" title="5.3 sub_404018函数分析"></a>5.3 sub_404018函数分析</h2><p>这个函数也是用户自定义调用约定，第一个参数存入eax，第二个参数存入edx，返回值存入eax。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __usercall sub_404018@&lt;eax&gt;(<span class="type">int</span> result@&lt;eax&gt;, <span class="type">int</span> a2@&lt;edx&gt;)</span><br></pre></td></tr></table></figure>
+<img src="/posts/a48809a5/5.3.1.png" class="" title="sub_404018()函数分析">
+<img src="/posts/a48809a5/5.3.2.png" class="" title="sub_404018()函数分析">
+<p>结合来看，不难猜测这个函数的功能是字符串比较。将该函数更名为<code>CMPString()</code>。</p>
+<p>至此，病毒的初始化全过程已经进入尾声了。不得不说，分析样本真的好累啊，分析了两天才分析完样本的初始化。接下来分析紧接着的三个函数是熊猫烧香病毒最重要的功能。</p>
+<h1 id="6-动静结合分析样本——病毒释放机理"><a href="#6-动静结合分析样本——病毒释放机理" class="headerlink" title="6. 动静结合分析样本——病毒释放机理"></a>6. 动静结合分析样本——病毒释放机理</h1><p>继续看主函数的<code>sub_408024()</code>、<code>sub_()</code>、<code>sub_()</code>，这三个是熊猫烧香的核心函数。</p>
+<h2 id="6-1-sub-408024函数分析"><a href="#6-1-sub-408024函数分析" class="headerlink" title="6.1 sub_408024函数分析"></a>6.1 sub_408024函数分析</h2>
     </div>
 
     
@@ -776,7 +802,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E7%86%8A%E7%8C%AB%E7%83%A7%E9%A6%99%E7%9A%84%E5%89%8D%E5%9B%A0%E5%90%8E%E6%9E%9C"><span class="nav-text">1. 熊猫烧香的前因后果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%A0%B7%E6%9C%AC%E8%A1%8C%E4%B8%BA%E5%88%86%E6%9E%90"><span class="nav-text">2. 样本行为分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E8%87%AA%E5%90%AF%E5%8A%A8%E6%96%B9%E5%BC%8F"><span class="nav-text">2.1 自启动方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%84%9F%E6%9F%93%E4%B8%8E%E4%BC%A0%E6%92%AD%E6%96%B9%E5%BC%8F"><span class="nav-text">2.2 感染与传播方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E8%87%AA%E6%88%91%E9%9A%90%E8%97%8F"><span class="nav-text">2.3 自我隐藏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-%E7%A0%B4%E5%9D%8F%E5%8A%9F%E8%83%BD"><span class="nav-text">2.4 破坏功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%A0%B7%E6%9C%AC%E8%BF%90%E8%A1%8C%E5%8F%8A%E6%9F%A5%E6%9D%80%E9%98%B2%E5%BE%A1"><span class="nav-text">3. 样本运行及查杀防御</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E6%8E%92%E6%9F%A5%E5%8F%AF%E7%96%91%E8%BF%9B%E7%A8%8B"><span class="nav-text">3.1 排查可疑进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E6%A3%80%E6%9F%A5%E5%90%AF%E5%8A%A8%E9%A1%B9"><span class="nav-text">3.2 检查启动项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E5%88%A0%E9%99%A4%E7%97%85%E6%AF%92"><span class="nav-text">3.3 删除病毒</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Procmon%E6%A3%80%E6%B5%8B%E7%97%85%E6%AF%92%E8%A1%8C%E4%B8%BA"><span class="nav-text">4. Procmon检测病毒行为</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="nav-text">4.1 软件介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-%E7%97%85%E6%AF%92%E8%A1%8C%E4%B8%BA%E6%A3%80%E6%B5%8B"><span class="nav-text">4.2 病毒行为检测</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E5%8A%A8%E9%9D%99%E7%BB%93%E5%90%88%E5%88%86%E6%9E%90%E6%A0%B7%E6%9C%AC"><span class="nav-text">5. 动静结合分析样本</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-sub-403C98%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-text">5.1 sub_403C98函数分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-1-sub-403D08"><span class="nav-text">5.1.1 sub_403D08</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-2-sub-402650"><span class="nav-text">5.1.2 sub_402650</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-3-sub-402540"><span class="nav-text">5.1.3 sub_402540</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-4-%E6%80%BB%E7%BB%93"><span class="nav-text">5.1.4 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-sub-405360%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-text">5.2 sub_405360函数分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-1-sub-403ECC"><span class="nav-text">5.2.1 sub_403ECC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-2-%E8%BF%9B%E5%85%A5%E5%BE%AA%E7%8E%AF"><span class="nav-text">5.2.2 进入循环</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2-1-sub-403E2C"><span class="nav-text">5.2.2.1 sub_403E2C</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2-2-sub-403ED4"><span class="nav-text">5.2.2.2 sub_403ED4</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E7%86%8A%E7%8C%AB%E7%83%A7%E9%A6%99%E7%9A%84%E5%89%8D%E5%9B%A0%E5%90%8E%E6%9E%9C"><span class="nav-text">1. 熊猫烧香的前因后果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%A0%B7%E6%9C%AC%E8%A1%8C%E4%B8%BA%E5%88%86%E6%9E%90"><span class="nav-text">2. 样本行为分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E8%87%AA%E5%90%AF%E5%8A%A8%E6%96%B9%E5%BC%8F"><span class="nav-text">2.1 自启动方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%84%9F%E6%9F%93%E4%B8%8E%E4%BC%A0%E6%92%AD%E6%96%B9%E5%BC%8F"><span class="nav-text">2.2 感染与传播方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E8%87%AA%E6%88%91%E9%9A%90%E8%97%8F"><span class="nav-text">2.3 自我隐藏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-%E7%A0%B4%E5%9D%8F%E5%8A%9F%E8%83%BD"><span class="nav-text">2.4 破坏功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%A0%B7%E6%9C%AC%E8%BF%90%E8%A1%8C%E5%8F%8A%E6%9F%A5%E6%9D%80%E9%98%B2%E5%BE%A1"><span class="nav-text">3. 样本运行及查杀防御</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E6%8E%92%E6%9F%A5%E5%8F%AF%E7%96%91%E8%BF%9B%E7%A8%8B"><span class="nav-text">3.1 排查可疑进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E6%A3%80%E6%9F%A5%E5%90%AF%E5%8A%A8%E9%A1%B9"><span class="nav-text">3.2 检查启动项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E5%88%A0%E9%99%A4%E7%97%85%E6%AF%92"><span class="nav-text">3.3 删除病毒</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Procmon%E6%A3%80%E6%B5%8B%E7%97%85%E6%AF%92%E8%A1%8C%E4%B8%BA"><span class="nav-text">4. Procmon检测病毒行为</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="nav-text">4.1 软件介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-%E7%97%85%E6%AF%92%E8%A1%8C%E4%B8%BA%E6%A3%80%E6%B5%8B"><span class="nav-text">4.2 病毒行为检测</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E5%8A%A8%E9%9D%99%E7%BB%93%E5%90%88%E5%88%86%E6%9E%90%E6%A0%B7%E6%9C%AC%E2%80%94%E2%80%94%E7%97%85%E6%AF%92%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-text">5. 动静结合分析样本——病毒初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-sub-403C98%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-text">5.1 sub_403C98函数分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-1-sub-403D08"><span class="nav-text">5.1.1 sub_403D08</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-2-sub-402650"><span class="nav-text">5.1.2 sub_402650</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-3-sub-402540"><span class="nav-text">5.1.3 sub_402540</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-4-%E6%80%BB%E7%BB%93"><span class="nav-text">5.1.4 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-sub-405360%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-text">5.2 sub_405360函数分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-1-sub-403ECC"><span class="nav-text">5.2.1 sub_403ECC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-2-%E8%BF%9B%E5%85%A5%E5%BE%AA%E7%8E%AF"><span class="nav-text">5.2.2 进入循环</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2-1-sub-403E2C"><span class="nav-text">5.2.2.1 sub_403E2C</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2-2-sub-403ED4"><span class="nav-text">5.2.2.2 sub_403ED4</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-3-sub-403C98"><span class="nav-text">5.2.3 sub_403C98</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-4-sub-403C68"><span class="nav-text">5.2.4 sub_403C68</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-5-%E6%80%BB%E7%BB%93"><span class="nav-text">5.2.5 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-sub-404018%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-text">5.3 sub_404018函数分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E5%8A%A8%E9%9D%99%E7%BB%93%E5%90%88%E5%88%86%E6%9E%90%E6%A0%B7%E6%9C%AC%E2%80%94%E2%80%94%E7%97%85%E6%AF%92%E9%87%8A%E6%94%BE%E6%9C%BA%E7%90%86"><span class="nav-text">6. 动静结合分析样本——病毒释放机理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-sub-408024%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-text">6.1 sub_408024函数分析</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -856,12 +882,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">939k</span>
+    <span title="站点总字数">940k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">14:14</span>
+    <span title="站点阅读时长">14:15</span>
 </div>
 
         
