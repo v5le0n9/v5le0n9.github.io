@@ -92,8 +92,18 @@
 <meta property="og:image" content="http://example.com/posts/a48809a5/5.2.15.png">
 <meta property="og:image" content="http://example.com/posts/a48809a5/5.3.1.png">
 <meta property="og:image" content="http://example.com/posts/a48809a5/5.3.2.png">
+<meta property="og:image" content="http://example.com/posts/a48809a5/6.1.1.png">
+<meta property="og:image" content="http://example.com/posts/a48809a5/6.1.2.png">
+<meta property="og:image" content="http://example.com/posts/a48809a5/6.1.3.png">
+<meta property="og:image" content="http://example.com/posts/a48809a5/6.1.4.png">
+<meta property="og:image" content="http://example.com/posts/a48809a5/6.1.5.png">
+<meta property="og:image" content="http://example.com/posts/a48809a5/6.1.6.png">
+<meta property="og:image" content="http://example.com/posts/a48809a5/6.1.7.png">
+<meta property="og:image" content="http://example.com/posts/a48809a5/6.1.8.png">
+<meta property="og:image" content="http://example.com/posts/a48809a5/6.1.9.png">
+<meta property="og:image" content="http://example.com/posts/a48809a5/6.1.10.png">
 <meta property="article:published_time" content="2022-05-28T06:59:44.232Z">
-<meta property="article:modified_time" content="2022-06-01T00:41:50.785Z">
+<meta property="article:modified_time" content="2022-06-06T14:57:39.139Z">
 <meta property="article:author" content="v5le0n9">
 <meta property="article:tag" content="样本分析">
 <meta name="twitter:card" content="summary">
@@ -286,7 +296,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-06-01 08:41:50" itemprop="dateModified" datetime="2022-06-01T08:41:50+08:00">2022-06-01</time>
+                <time title="修改时间：2022-06-06 22:57:39" itemprop="dateModified" datetime="2022-06-06T22:57:39+08:00">2022-06-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -311,14 +321,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>17k</span>
+              <span>21k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>16 分钟</span>
+              <span>19 分钟</span>
             </span>
 
         </div>
@@ -561,6 +571,8 @@
 </li>
 <li><p>寄存器对可以像这样 \<edx:eax\> 用冒号的形式指定</p>
 </li>
+<li><p><strong>由调用者清理堆栈</strong></p>
+</li>
 </ul>
 <p>该函数的第8行代码有一个API函数，原型为：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HMODULE <span class="title function_">GetModuleHandleA</span><span class="params">(</span></span><br><span class="line"><span class="params">  [in, optional] LPCSTR lpModuleName</span></span><br><span class="line"><span class="params">)</span>;</span><br></pre></td></tr></table></figure>
@@ -660,6 +672,7 @@
 <p>进入到<code>sub_403ECC()</code>后，eax的值从字符串变为0x20。</p>
 <img src="/posts/a48809a5/5.2.5.png" class="" title="sub_403ECC()函数分析">
 <p>想弄清楚这个0x20是怎么来的，结果发现样本载入OD时数据窗口就已经存有了0x20。再仔细看数据窗口，结合“xboy”前4个字节的值是4，不难猜测那一串字符的前4个字节的值0x20是字符串的长度。所以这个函数勉强可以算为求字符串的长度。</p>
+<p>其实，凡是由Delphi编写的程序，它会在字符串-4的位置保存这个字符串的长度。</p>
 <h3 id="5-2-2-进入循环"><a href="#5-2-2-进入循环" class="headerlink" title="5.2.2 进入循环"></a>5.2.2 进入循环</h3><p>这里面有几个陌生的指令，先学习一下。</p>
 <p>cdq：使用eax的最高位扩展edx的所有位，将eax扩展为64位，edx:eax</p>
 <p>div：无符号除法，被除数为eax，结果的商存放在eax中，余数存放在edx中</p>
@@ -699,8 +712,104 @@
 <img src="/posts/a48809a5/5.3.2.png" class="" title="sub_404018()函数分析">
 <p>结合来看，不难猜测这个函数的功能是字符串比较。将该函数更名为<code>CMPString()</code>。</p>
 <p>至此，病毒的初始化全过程已经进入尾声了。不得不说，分析样本真的好累啊，分析了两天才分析完样本的初始化。接下来分析紧接着的三个函数是熊猫烧香病毒最重要的功能。</p>
-<h1 id="6-动静结合分析样本——病毒释放机理"><a href="#6-动静结合分析样本——病毒释放机理" class="headerlink" title="6. 动静结合分析样本——病毒释放机理"></a>6. 动静结合分析样本——病毒释放机理</h1><p>继续看主函数的<code>sub_408024()</code>、<code>sub_()</code>、<code>sub_()</code>，这三个是熊猫烧香的核心函数。</p>
-<h2 id="6-1-sub-408024函数分析"><a href="#6-1-sub-408024函数分析" class="headerlink" title="6.1 sub_408024函数分析"></a>6.1 sub_408024函数分析</h2>
+<h1 id="6-动静结合分析样本——病毒释放机理"><a href="#6-动静结合分析样本——病毒释放机理" class="headerlink" title="6. 动静结合分析样本——病毒释放机理"></a>6. 动静结合分析样本——病毒释放机理</h1><p>继续看主函数的<code>sub_408024()</code>、<code>sub_40CA5C()</code>、<code>sub_40C97C()</code>，这三个是熊猫烧香的核心函数。</p>
+<h2 id="6-1-sub-408024函数分析"><a href="#6-1-sub-408024函数分析" class="headerlink" title="6.1 sub_408024函数分析"></a>6.1 sub_408024函数分析</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __thiscall <span class="title function_">sub_408024</span><span class="params">(<span class="type">void</span> *this)</span></span><br></pre></td></tr></table></figure>
+<p><code>__thiscall</code>的主要特征是：</p>
+<ul>
+<li>由被调用者清除堆栈</li>
+<li>参数从右往左依次入栈</li>
+<li>this指针通过ECX传递，而不是用栈</li>
+</ul>
+<p>在这个函数中，有非常多的子函数，接下来逐一分析。</p>
+<h3 id="6-1-1-sub-40277C"><a href="#6-1-1-sub-40277C" class="headerlink" title="6.1.1 sub_40277C"></a>6.1.1 sub_40277C</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __usercall sub_40277C@&lt;eax&gt;(<span class="type">int</span> a1@&lt;eax&gt;, _DWORD *a2@&lt;edx&gt;)</span><br></pre></td></tr></table></figure>
+<img src="/posts/a48809a5/6.1.1.png" class="" title="sub_40277C()函数分析">
+<img src="/posts/a48809a5/6.1.2.png" class="" title="sub_40277C()函数分析">
+<p><code>sub_40277C()</code>函数中有两个API函数：<code>GetModuleFileName()</code>和<code>GetCommandLine()</code>。</p>
+<p><code>GetModuleFileName()</code>的功能是获取当前进程已加载模块的文件的完整路径，该模块必须由当前进程加载。如果想要获取另一个已加载模块的文件路径，可以使用<code>GetModuleFileNameEx()</code>函数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">DWORD WINAPI <span class="title function_">GetModuleFileName</span><span class="params">(</span></span><br><span class="line"><span class="params">    _In_opt_  HMODULE hModule,</span></span><br><span class="line"><span class="params">    _Out_     LPTSTR lpFilename,</span></span><br><span class="line"><span class="params">    _In_      DWORD nSize</span></span><br><span class="line"><span class="params">)</span>;</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<ul>
+<li>hModule：Long类型，一个模块的句柄。可以是一个DLL模块，或者是一个应用程序的实例句柄。如果该参数为NULL，该函数返回该应用程序全路径。</li>
+<li>lpFileName：String类型，指定一个字串缓冲区，要在其中容纳文件的用NULL字符中止的路径名，<code>hModule</code>模块就是从这个文件装载进来的。</li>
+<li>nSize：Long类型，装载到缓冲区<code>lpFileName</code>的最大字符数量。</li>
+</ul>
+<p>返回值：Long，如执行成功，返回复制到<code>lpFileName</code>的实际字符数量；零表示失败。使用<code>GetLastError()</code>可以打印错误信息。</p>
+<p><code>GetCommandLine()</code>的功能是获得指向当前命令行缓冲区的一个指针。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LPTSTR <span class="title function_">GetCommandLine</span><span class="params">(<span class="type">void</span>)</span>;</span><br></pre></td></tr></table></figure>
+<p>无参数，返回值是一个指向当前进程的命令行字符串的指针。</p>
+<p>当执行完<code>GetModuleFileName()</code>函数后，在数据窗口可以看到该程序的绝对路径，并且绕过了<code>GetCommandLine()</code>。根据地址402792那一行的jnz跳转指令可知，<code>sub_40277C()</code>的功能是要么获取当前程序绝对路径，要么获取当前命令行缓冲区的指针。</p>
+<img src="/posts/a48809a5/6.1.3.png" class="" title="sub_40277C()函数分析">
+<p>将该函数重命名为<code>GetFilePathAndName()</code>。</p>
+<h3 id="6-1-2-sub-405684"><a href="#6-1-2-sub-405684" class="headerlink" title="6.1.2 sub_405684"></a>6.1.2 sub_405684</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_DWORD *__usercall sub_405684@&lt;eax&gt;(<span class="type">int</span> a1@&lt;eax&gt;, <span class="type">int</span> a2@&lt;edx&gt;)</span><br></pre></td></tr></table></figure>
+<img src="/posts/a48809a5/6.1.4.png" class="" title="sub_405684()函数分析">
+<p>进入<code>sub_405684()</code>函数，发现一个小循环，遇到斜杠、反斜杠或冒号则跳出循环。它的目的要么是想不包含病毒文件名的路径，要么想获取样本的名字。</p>
+<img src="/posts/a48809a5/6.1.5.png" class="" title="sub_405684()函数分析">
+<p>来到地址4056D8时，这三个寄存器存的值的含义如下：</p>
+<p>EAX存的是绝对路径；ECX存的是在绝对路径中程序名的索引值；EDX被置为1，暂时不知道有什么含义。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_DWORD *__userpurge sub_40412C@&lt;eax&gt;(<span class="type">int</span> a1@&lt;eax&gt;, <span class="type">int</span> a2@&lt;edx&gt;, <span class="type">int</span> a3@&lt;ecx&gt;, _DWORD *a4)</span><br></pre></td></tr></table></figure>
+<p><code>__userpurge</code>和<code>__usercall</code>一样，都是用户自定义函数调用约定，唯一的区别是<code>__userpurge</code>表示<strong>由被调用者清理堆栈</strong>。</p>
+<p>进入<code>sub_40412C()</code>函数，有两个子函数分别是<code>sub_403D34()</code>和<code>sub_403C44()</code>，这两个函数前面都有分析过，<code>sub_403D34()</code>分配一定大小的内存空间，进行字符串拷贝。<code>sub_403C44()</code>初始化寄存器。</p>
+<img src="/posts/a48809a5/6.1.6.png" class="" title="sub_40412C()函数分析">
+<p>发现<code>sub_405684()</code>其实是想获取不包含病毒文件名的路径，将它更名为<code>GetFilePath()</code>。</p>
+<h4 id="6-1-2-1-局部变量"><a href="#6-1-2-1-局部变量" class="headerlink" title="6.1.2.1 局部变量"></a>6.1.2.1 局部变量</h4><p>在<code>sub_405684()</code>函数里，可以看到一些局部变量。比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0040568C  |.  8945 FC       mov [local.1],eax</span><br><span class="line">0040568F  |.  8B45 FC       mov eax,[local.1]</span><br></pre></td></tr></table></figure>
+<p>[local.1]表示第一个局部变量，存放在栈里的[ebp-4]的位置。</p>
+<img src="/posts/a48809a5/6.1.7.png" class="" title="sub_405684()函数分析">
+<p>以此类推，[local.2]存放在[ebp-8]的位置。</p>
+<p>如果想让它直接显示与ebp的偏移，可在选项 -&gt; 调试设置 -&gt; 分析1 -&gt; 取消勾选“显示函数中的参数及局部变量”。或者选中相应行，按空格键查看汇编代码。</p>
+<img src="/posts/a48809a5/6.1.8.png" class="">
+<h3 id="6-1-3-sub-403ED4"><a href="#6-1-3-sub-403ED4" class="headerlink" title="6.1.3 sub_403ED4"></a>6.1.3 sub_403ED4</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> **__usercall sub_403ED4@&lt;eax&gt;(<span class="type">char</span> **result@&lt;eax&gt;, <span class="type">char</span> *a2@&lt;edx&gt;)</span><br></pre></td></tr></table></figure>
+<img src="/posts/a48809a5/6.1.9.png" class="" title="sub_403ED4()函数分析">
+<p>这个函数在5.2.2.2也分析过，但当时只是初始化，了解得很笼统。但结合实例很容易分析出来这是一个字符串拼接函数。</p>
+<img src="/posts/a48809a5/6.1.10.png" class="" title="sub_403ED4()函数分析">
+<p>将<code>sub_403ED4()</code>更名为<code>StringCat()</code>。</p>
+<h3 id="6-1-4-sub-4057A4"><a href="#6-1-4-sub-4057A4" class="headerlink" title="6.1.4 sub_4057A4"></a>6.1.4 sub_4057A4</h3><p>进入无需传参的<code>sub_4057A4()</code>，有一个子函数<code>sub_40573C()</code>也无需传参，继续进入，发现有4个API函数。</p>
+<p><code>FindFirstFile()</code>查找指定目录的第一个文件或目录并返回它的句柄。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HANDLE <span class="title function_">FindFirstFileA</span><span class="params">(</span></span><br><span class="line"><span class="params">  [in]  LPCSTR             lpFileName,</span></span><br><span class="line"><span class="params">  [out] LPWIN32_FIND_DATA  lpFindFileData</span></span><br><span class="line"><span class="params">)</span>;</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<ul>
+<li>lpFileName：指向字符串的指针，用于指定一个有效的目录。</li>
+<li>lpFindFileData：指向一个<code>WIN32_FIND_DATA</code>的指针，用于存放找到文件或目录的信息。</li>
+</ul>
+<p>返回值：</p>
+<ul>
+<li>如果成功，则返回找到文件或目录的句柄。在<code>FindNextFile()</code>和<code>FindClose()</code>函数中会用到此句柄。</li>
+<li>如果失败，返回<code>INVALID_HANDLE_VALUE</code>。要获得更多的信息调用<code>GetLastError()</code>函数。</li>
+</ul>
+<p><code>FindClose()</code>用于关闭由<code>FindFirstFile()</code>函数创建的一个搜索句柄。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">BOOL <span class="title function_">FindClose</span><span class="params">(</span></span><br><span class="line"><span class="params">    HANDLE hFindFile <span class="comment">// file search handle</span></span></span><br><span class="line"><span class="params">)</span>;</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<ul>
+<li>hFindFile：<code>FindFirstFile()</code>创建的句柄。</li>
+</ul>
+<p>返回值：</p>
+<ul>
+<li>调用成功，返回一个非0值。</li>
+<li>失败，返回0，可利用<code>GetLastError()</code>来得到错误信息。</li>
+</ul>
+<p><code>FileTimeToLocalFileTime()</code>将一个FILETIME结构转换成本地时间。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">BOOL <span class="title function_">FileTimeToLocalFileTime</span><span class="params">(</span></span><br><span class="line"><span class="params">  [in]  <span class="type">const</span> FILETIME* lpFileTime,</span></span><br><span class="line"><span class="params">  [out] LPFILETIME lpLocalFileTime</span></span><br><span class="line"><span class="params">)</span>;</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<ul>
+<li>lpFileTime：指向FILETIME结构，其中包含要转换为本地文件时间的基于UTC的文件时间。</li>
+<li>lpLocalFileTime：指向FILETIME结构的指针，以接收转换后的本地文件时间。</li>
+</ul>
+<p>返回值：非0表示成功，0表示失败。</p>
+<p><code>FileTimeToDosDateTime()</code>将一个 FILETIME 值转换成 MS-DOS 日期和时间值。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">BOOL <span class="title function_">FileTimeToDosDateTime</span><span class="params">(</span></span><br><span class="line"><span class="params">  [in]  <span class="type">const</span> FILETIME *lpFileTime,</span></span><br><span class="line"><span class="params">  [out] LPWORD         lpFatDate,</span></span><br><span class="line"><span class="params">  [out] LPWORD         lpFatTime</span></span><br><span class="line"><span class="params">)</span>;</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<ul>
+<li><p>lpFileTime：指向 FILETIME 结构的指针，其中包含要转换为 MS-DOS 日期和时间格式的文件时间。</p>
+</li>
+<li><p>lpFatDate：指向接收MS-DOS日期的变量的指针。日期是以下格式的压缩值。</p>
+<p>| 比特 | 说明                                                |<br>| —— | —————————————————————————- |<br>| 0-4  | Day of the month (1–31)                             |<br>| 5-8  | Month (1 = January, 2 = February, etc.)             |<br>| 9-15 | Year offset from 1980 (add 1980 to get actual year) |</p>
+</li>
+<li><p>lpFatTime：指向接收MS-DOS时间的变量的指针。时间是以下格式的压缩值。</p>
+<p>| 比特 | 说明                           |<br>| —— | ——————————————— |<br>| 0-4  | 秒除以2                        |<br>| 5-8  | Minute (0–59)                  |<br>| 9-15 | Hour (0–23 on a 24-hour clock) |</p>
+</li>
+</ul>
+<p>返回值：非0表示成功，0表示失败。</p>
+
     </div>
 
     
@@ -805,7 +914,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E7%86%8A%E7%8C%AB%E7%83%A7%E9%A6%99%E7%9A%84%E5%89%8D%E5%9B%A0%E5%90%8E%E6%9E%9C"><span class="nav-text">1. 熊猫烧香的前因后果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%A0%B7%E6%9C%AC%E8%A1%8C%E4%B8%BA%E5%88%86%E6%9E%90"><span class="nav-text">2. 样本行为分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E8%87%AA%E5%90%AF%E5%8A%A8%E6%96%B9%E5%BC%8F"><span class="nav-text">2.1 自启动方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%84%9F%E6%9F%93%E4%B8%8E%E4%BC%A0%E6%92%AD%E6%96%B9%E5%BC%8F"><span class="nav-text">2.2 感染与传播方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E8%87%AA%E6%88%91%E9%9A%90%E8%97%8F"><span class="nav-text">2.3 自我隐藏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-%E7%A0%B4%E5%9D%8F%E5%8A%9F%E8%83%BD"><span class="nav-text">2.4 破坏功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%A0%B7%E6%9C%AC%E8%BF%90%E8%A1%8C%E5%8F%8A%E6%9F%A5%E6%9D%80%E9%98%B2%E5%BE%A1"><span class="nav-text">3. 样本运行及查杀防御</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E6%8E%92%E6%9F%A5%E5%8F%AF%E7%96%91%E8%BF%9B%E7%A8%8B"><span class="nav-text">3.1 排查可疑进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E6%A3%80%E6%9F%A5%E5%90%AF%E5%8A%A8%E9%A1%B9"><span class="nav-text">3.2 检查启动项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E5%88%A0%E9%99%A4%E7%97%85%E6%AF%92"><span class="nav-text">3.3 删除病毒</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Procmon%E6%A3%80%E6%B5%8B%E7%97%85%E6%AF%92%E8%A1%8C%E4%B8%BA"><span class="nav-text">4. Procmon检测病毒行为</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="nav-text">4.1 软件介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-%E7%97%85%E6%AF%92%E8%A1%8C%E4%B8%BA%E6%A3%80%E6%B5%8B"><span class="nav-text">4.2 病毒行为检测</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E5%8A%A8%E9%9D%99%E7%BB%93%E5%90%88%E5%88%86%E6%9E%90%E6%A0%B7%E6%9C%AC%E2%80%94%E2%80%94%E7%97%85%E6%AF%92%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-text">5. 动静结合分析样本——病毒初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-sub-403C98%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-text">5.1 sub_403C98函数分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-1-sub-403D08"><span class="nav-text">5.1.1 sub_403D08</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-2-sub-402650"><span class="nav-text">5.1.2 sub_402650</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-3-sub-402540"><span class="nav-text">5.1.3 sub_402540</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-4-%E6%80%BB%E7%BB%93"><span class="nav-text">5.1.4 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-sub-405360%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-text">5.2 sub_405360函数分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-1-sub-403ECC"><span class="nav-text">5.2.1 sub_403ECC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-2-%E8%BF%9B%E5%85%A5%E5%BE%AA%E7%8E%AF"><span class="nav-text">5.2.2 进入循环</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2-1-sub-403E2C"><span class="nav-text">5.2.2.1 sub_403E2C</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2-2-sub-403ED4"><span class="nav-text">5.2.2.2 sub_403ED4</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-3-sub-403C98"><span class="nav-text">5.2.3 sub_403C98</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-4-sub-403C68"><span class="nav-text">5.2.4 sub_403C68</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-5-%E6%80%BB%E7%BB%93"><span class="nav-text">5.2.5 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-sub-404018%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-text">5.3 sub_404018函数分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E5%8A%A8%E9%9D%99%E7%BB%93%E5%90%88%E5%88%86%E6%9E%90%E6%A0%B7%E6%9C%AC%E2%80%94%E2%80%94%E7%97%85%E6%AF%92%E9%87%8A%E6%94%BE%E6%9C%BA%E7%90%86"><span class="nav-text">6. 动静结合分析样本——病毒释放机理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-sub-408024%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-text">6.1 sub_408024函数分析</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E7%86%8A%E7%8C%AB%E7%83%A7%E9%A6%99%E7%9A%84%E5%89%8D%E5%9B%A0%E5%90%8E%E6%9E%9C"><span class="nav-text">1. 熊猫烧香的前因后果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%A0%B7%E6%9C%AC%E8%A1%8C%E4%B8%BA%E5%88%86%E6%9E%90"><span class="nav-text">2. 样本行为分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E8%87%AA%E5%90%AF%E5%8A%A8%E6%96%B9%E5%BC%8F"><span class="nav-text">2.1 自启动方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%84%9F%E6%9F%93%E4%B8%8E%E4%BC%A0%E6%92%AD%E6%96%B9%E5%BC%8F"><span class="nav-text">2.2 感染与传播方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E8%87%AA%E6%88%91%E9%9A%90%E8%97%8F"><span class="nav-text">2.3 自我隐藏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-%E7%A0%B4%E5%9D%8F%E5%8A%9F%E8%83%BD"><span class="nav-text">2.4 破坏功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%A0%B7%E6%9C%AC%E8%BF%90%E8%A1%8C%E5%8F%8A%E6%9F%A5%E6%9D%80%E9%98%B2%E5%BE%A1"><span class="nav-text">3. 样本运行及查杀防御</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E6%8E%92%E6%9F%A5%E5%8F%AF%E7%96%91%E8%BF%9B%E7%A8%8B"><span class="nav-text">3.1 排查可疑进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E6%A3%80%E6%9F%A5%E5%90%AF%E5%8A%A8%E9%A1%B9"><span class="nav-text">3.2 检查启动项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E5%88%A0%E9%99%A4%E7%97%85%E6%AF%92"><span class="nav-text">3.3 删除病毒</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Procmon%E6%A3%80%E6%B5%8B%E7%97%85%E6%AF%92%E8%A1%8C%E4%B8%BA"><span class="nav-text">4. Procmon检测病毒行为</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="nav-text">4.1 软件介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-%E7%97%85%E6%AF%92%E8%A1%8C%E4%B8%BA%E6%A3%80%E6%B5%8B"><span class="nav-text">4.2 病毒行为检测</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E5%8A%A8%E9%9D%99%E7%BB%93%E5%90%88%E5%88%86%E6%9E%90%E6%A0%B7%E6%9C%AC%E2%80%94%E2%80%94%E7%97%85%E6%AF%92%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-text">5. 动静结合分析样本——病毒初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-sub-403C98%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-text">5.1 sub_403C98函数分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-1-sub-403D08"><span class="nav-text">5.1.1 sub_403D08</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-2-sub-402650"><span class="nav-text">5.1.2 sub_402650</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-3-sub-402540"><span class="nav-text">5.1.3 sub_402540</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-4-%E6%80%BB%E7%BB%93"><span class="nav-text">5.1.4 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-sub-405360%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-text">5.2 sub_405360函数分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-1-sub-403ECC"><span class="nav-text">5.2.1 sub_403ECC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-2-%E8%BF%9B%E5%85%A5%E5%BE%AA%E7%8E%AF"><span class="nav-text">5.2.2 进入循环</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2-1-sub-403E2C"><span class="nav-text">5.2.2.1 sub_403E2C</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2-2-sub-403ED4"><span class="nav-text">5.2.2.2 sub_403ED4</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-3-sub-403C98"><span class="nav-text">5.2.3 sub_403C98</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-4-sub-403C68"><span class="nav-text">5.2.4 sub_403C68</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-5-%E6%80%BB%E7%BB%93"><span class="nav-text">5.2.5 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-sub-404018%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-text">5.3 sub_404018函数分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E5%8A%A8%E9%9D%99%E7%BB%93%E5%90%88%E5%88%86%E6%9E%90%E6%A0%B7%E6%9C%AC%E2%80%94%E2%80%94%E7%97%85%E6%AF%92%E9%87%8A%E6%94%BE%E6%9C%BA%E7%90%86"><span class="nav-text">6. 动静结合分析样本——病毒释放机理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-sub-408024%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-text">6.1 sub_408024函数分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-1-sub-40277C"><span class="nav-text">6.1.1 sub_40277C</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-2-sub-405684"><span class="nav-text">6.1.2 sub_405684</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-2-1-%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F"><span class="nav-text">6.1.2.1 局部变量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-3-sub-403ED4"><span class="nav-text">6.1.3 sub_403ED4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-4-sub-4057A4"><span class="nav-text">6.1.4 sub_4057A4</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -885,12 +994,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">945k</span>
+    <span title="站点总字数">948k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">14:19</span>
+    <span title="站点阅读时长">14:22</span>
 </div>
 
         
