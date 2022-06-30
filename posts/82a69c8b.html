@@ -21,17 +21,24 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":{"gitalk":{"order":-2}},"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"content.json"};
   </script>
 
-  <meta name="description" content="v5le0n9&#39;s garden">
-<meta property="og:type" content="website">
-<meta property="og:title" content="v5le0n9&#39;s garden">
-<meta property="og:url" content="http://example.com/tags/%E8%84%B1%E5%A3%B3/index.html">
+  <meta name="description" content=".bat文件是DOS下的批处理文件。批处理文件是无格式的文本文件，它包含一条或多条命令。它的文件扩展名为.bat或.cmd。在命令提示下输入批处理文件的名称，或者双击该批处理文件，系统就会调用cmd.exe按照该文件中各个命令出现的顺序依次运行它们。使用批处理文件或脚本，可以简化日常或重复性任务。攻击者通常通过批处理文件的编写来实现多工具的组合入侵、自动入侵及结果提取等功能。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="批处理病毒攻防机理">
+<meta property="og:url" content="http://example.com/posts/82a69c8b.html">
 <meta property="og:site_name" content="v5le0n9&#39;s garden">
-<meta property="og:description" content="v5le0n9&#39;s garden">
+<meta property="og:description" content=".bat文件是DOS下的批处理文件。批处理文件是无格式的文本文件，它包含一条或多条命令。它的文件扩展名为.bat或.cmd。在命令提示下输入批处理文件的名称，或者双击该批处理文件，系统就会调用cmd.exe按照该文件中各个命令出现的顺序依次运行它们。使用批处理文件或脚本，可以简化日常或重复性任务。攻击者通常通过批处理文件的编写来实现多工具的组合入侵、自动入侵及结果提取等功能。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.1.png">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.2.png">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.3.png">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.4.png">
+<meta property="article:published_time" content="2022-06-30T06:13:22.833Z">
+<meta property="article:modified_time" content="2022-06-30T07:38:47.410Z">
 <meta property="article:author" content="v5le0n9">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/posts/undefined/1.1.1.png">
 
-<link rel="canonical" href="http://example.com/tags/%E8%84%B1%E5%A3%B3/">
+<link rel="canonical" href="http://example.com/posts/82a69c8b.html">
 
 
 <script id="page-configurations">
@@ -39,12 +46,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: 脱壳 | v5le0n9's garden</title>
+  <title>批处理病毒攻防机理 | v5le0n9's garden</title>
   
 
 
@@ -181,57 +188,151 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">脱壳
-          <small>标签</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/82a69c8b.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="v5le0n9">
+      <meta itemprop="description" content="v5le0n9's garden">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="v5le0n9's garden">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          批处理病毒攻防机理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-06-30 14:13:22 / 修改时间：15:38:47" itemprop="dateCreated datePublished" datetime="2022-06-30T14:13:22+08:00">2022-06-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">Windows逆向</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>451</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2022</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-04-05T09:29:28+08:00"
-              content="2022-04-05">
-          04-05
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/e2d652c5.html" itemprop="url">
-            <span itemprop="name">第一课——脱壳基础</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
+        <p><code>.bat</code>文件是DOS下的批处理文件。批处理文件是无格式的文本文件，它包含一条或多条命令。它的文件扩展名为<code>.bat</code>或<code>.cmd</code>。在命令提示下输入批处理文件的名称，或者双击该批处理文件，系统就会调用<code>cmd.exe</code>按照该文件中各个命令出现的顺序依次运行它们。使用批处理文件或脚本，可以简化日常或重复性任务。攻击者通常通过批处理文件的编写来实现多工具的组合入侵、自动入侵及结果提取等功能。</p>
+<span id="more"></span>
+<h1 id="1-修改密码和定时关机脚本"><a href="#1-修改密码和定时关机脚本" class="headerlink" title="1. 修改密码和定时关机脚本"></a>1. 修改密码和定时关机脚本</h1><p>编写并运行批处理脚本的基本步骤如下：</p>
+<ol>
+<li>新建文本文档</li>
+<li>输入批处理命令</li>
+<li>将扩展名改为<code>.bat</code></li>
+<li>双击批处理文件运行</li>
+</ol>
+<p>关机命令为<code>shutdown</code>，基本命令为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//现在让系统600s后关机</span><br><span class="line">shutdown -s -t 600</span><br><span class="line"></span><br><span class="line">//终止关闭计算机</span><br><span class="line">shutdown -a</span><br></pre></td></tr></table></figure>
+<img src="/posts/undefined/1.1.1.png" class="" title="关机命令">
+<p>更多有关<code>shutdown</code>的用法可通过CMD查看。</p>
+<img src="/posts/undefined/1.1.2.png" class="" title="shutdown命令用法">
+<p>运用在批处理脚本中，也是一样的。如果需要终止关机需在CMD输入相应命令。</p>
+<img src="/posts/undefined/1.1.3.png" class="" title="关机命令">
+<img src="/posts/undefined/1.1.4.png" class="" title="关机命令">
+<p>了解了基本的批处理脚本的运行方式后，接下来进行一个比较完整的bat脚本制作过程，这些代码对批处理功能熟悉和脚本病毒逆向分析都有帮助。</p>
 
     </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="v5le0n9 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="v5le0n9 支付宝">
+        <p>支付宝</p>
+      </div>
+
   </div>
-  
-  
-  
+</div>
 
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/abe2eb06.html" rel="prev" title="工信部电子五所暑期实习二进制安全研究一面">
+      <i class="fa fa-chevron-left"></i> 工信部电子五所暑期实习二进制安全研究一面
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
 
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -278,6 +379,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81%E5%92%8C%E5%AE%9A%E6%97%B6%E5%85%B3%E6%9C%BA%E8%84%9A%E6%9C%AC"><span class="nav-text">1. 修改密码和定时关机脚本</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -499,6 +601,25 @@
 
   
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '7c58e80079a2457b610d',
+      clientSecret: 'fc16b1b0fdfb278016ebe41c20f3743c3c927466',
+      repo        : 'comments.github.io',
+      owner       : 'v5le0n9',
+      admin       : ['v5le0n9'],
+      id          : 'c3d37cad1cc8145793fd9553879ed78c',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
 
 </body>
 </html>
