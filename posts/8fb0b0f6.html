@@ -29,6 +29,7 @@
 <meta property="og:description" content="在做Android逆向题时就遇到过对APK文件进行签名的题，奇安信面试官跟我说，无论是做哪个平台的逆向，它的大方向、学习路径总是相似的。比如Android逆向有签名、有Hook和注入技术，Windows逆向也是有的。所以这篇笔记就是学习PE文件的数字签名。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/posts/8fb0b0f6/1.1.2.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/3.1.11.png">
 <meta property="og:image" content="http://example.com/posts/8fb0b0f6/1.1.1.png">
 <meta property="og:image" content="http://example.com/posts/8fb0b0f6/1.2.1.png">
 <meta property="og:image" content="http://example.com/posts/8fb0b0f6/1.2.2.png">
@@ -40,8 +41,31 @@
 <meta property="og:image" content="http://example.com/posts/8fb0b0f6/2.1.4.png">
 <meta property="og:image" content="http://example.com/posts/8fb0b0f6/2.1.5.png">
 <meta property="og:image" content="http://example.com/posts/8fb0b0f6/2.1.6.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/3.1.1.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/3.1.2.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/3.1.3.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/3.1.4.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/3.1.5.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/3.1.6.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/3.1.7.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/3.1.8.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/3.1.9.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/3.1.10.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/3.1.11.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/4.1.1.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/4.1.2.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/4.2.1.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/4.2.2.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/5.1.1.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/5.1.2.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/5.1.3.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/5.1.4.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/5.1.5.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/5.1.6.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/5.2.1.png">
+<meta property="og:image" content="http://example.com/posts/8fb0b0f6/5.2.2.png">
 <meta property="article:published_time" content="2022-07-03T03:00:54.381Z">
-<meta property="article:modified_time" content="2022-07-04T02:08:32.835Z">
+<meta property="article:modified_time" content="2022-07-07T05:28:33.738Z">
 <meta property="article:author" content="v5le0n9">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/posts/8fb0b0f6/1.1.2.png">
@@ -233,7 +257,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-04 10:08:32" itemprop="dateModified" datetime="2022-07-04T10:08:32+08:00">2022-07-04</time>
+                <time title="修改时间：2022-07-07 13:28:33" itemprop="dateModified" datetime="2022-07-07T13:28:33+08:00">2022-07-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -258,14 +282,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
+              <span>4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -288,6 +312,7 @@
 <p>PE文件数字签名信息存放在<code>Certificate Table</code>位置，同时PE文件可选文件头<code>DataDirectory</code>第5项记录文件偏移及大小。</p>
 <img src="/posts/8fb0b0f6/1.1.2.png" class="" title="数字签名存放位置">
 <p>使用PEView查看签名前后对比图，可以看到<code>Certificate Table</code>存储相关签名信息。</p>
+<img src="/posts/8fb0b0f6/3.1.11.png" class="" title="数字签名证书">
 <h2 id="1-1-PE文件数字签名及验证过程"><a href="#1-1-PE文件数字签名及验证过程" class="headerlink" title="1.1 PE文件数字签名及验证过程"></a>1.1 PE文件数字签名及验证过程</h2><p>签名：</p>
 <ol>
 <li>软件发布者使用散列算法(如MD5或SHA)计算PE文件的散列值</li>
@@ -336,7 +361,91 @@
 <img src="/posts/8fb0b0f6/2.1.5.png" class="" title="Github网站证书验证过程">
 <p>伪造的恶意证书与Windows系统中的缓存证书有同样的公钥，但Curve项没有在校验范围内，所以可以通过构造自定义Curve来伪造证书，使得证书验证流程依然成立，但通过验证的证书已经不是之前成功验证的安全证书。</p>
 <img src="/posts/8fb0b0f6/2.1.6.png" class="" title="Github网站证书验证过程">
-<h1 id="3-Signtool签名PE文件"><a href="#3-Signtool签名PE文件" class="headerlink" title="3. Signtool签名PE文件"></a>3. Signtool签名PE文件</h1>
+<h1 id="3-Signtool签名PE文件"><a href="#3-Signtool签名PE文件" class="headerlink" title="3. Signtool签名PE文件"></a>3. Signtool签名PE文件</h1><p>PE文件数字签名所使用的工具包括：</p>
+<ul>
+<li><code>makecert.exe</code>：生成数字签名证书</li>
+<li><code>signcode.exe</code>：数字签名工具</li>
+<li><code>test.exe</code>：被数字签名的目标PE文件</li>
+<li><code>test.cer</code>：数字证书文件</li>
+<li><code>test.PVK</code>：数字签名的私钥文件</li>
+</ul>
+<p>假设<code>test.exe</code>是要被数字签名的PE文件，首先我们要通过<code>makecert.exe</code>生成需要的证书，生成两个文件分别是<code>test.cer</code>和<code>test.PVK</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">makecert -$ &quot;individual&quot; -r /sv &quot;test.PVK&quot; /n &quot;CN=Windows,E=microsoft,O=微软&quot; test.cer</span><br></pre></td></tr></table></figure>
+<p>其中，通过<code>makecert.exe</code>生成需要的证书常见参数如下：</p>
+<ul>
+<li>-r：自签名</li>
+<li>-n：证书名称，格式为<code>-n &quot;CN=名称,E=Email,O=组织名称,C=国家,S=省份,P=县城&quot;</code></li>
+<li>-a：指定散列算法，其值必须是MD5(默认值)或SHA1</li>
+<li>-$：指定证书的签名权限，其值必须是<code>commercial</code>(商业软件)或<code>individual</code>(个人软件)</li>
+<li>-b：证书有效期的开始时间，格式为mm/dd/yyyy</li>
+<li>-e：证书有效期的结束时间，格式为mm/dd/yyyy</li>
+</ul>
+<p>创建过程中需要输入私钥密码，这里设置为“v5le0n9”。</p>
+<img src="/posts/8fb0b0f6/3.1.1.png" class="" title="输入私钥密码">
+<img src="/posts/8fb0b0f6/3.1.2.png" class="" title="生成两个文件">
+<p>查看证书信息，如果未信任则需要点击“安装证书”。</p>
+<img src="/posts/8fb0b0f6/3.1.3.png" class="" title="安装证书">
+<img src="/posts/8fb0b0f6/3.1.4.png" class="" title="安装证书">
+<p>利用<code>signcode.exe</code>工具进行数字签名，选择需要签名的<code>test.exe</code>程序。</p>
+<img src="/posts/8fb0b0f6/3.1.5.png" class="" title="数字签名">
+<p>选择自定义选项，然后选择<code>test.cer</code>文件。</p>
+<img src="/posts/8fb0b0f6/3.1.6.png" class="" title="数字签名">
+<p>点击浏览按钮，添加文件<code>test.PVK</code>。哈希算法可以选MD5也可以选sha1。</p>
+<img src="/posts/8fb0b0f6/3.1.7.png" class="" title="数字签名">
+<img src="/posts/8fb0b0f6/3.1.8.png" class="" title="数字签名">
+<p>数据描述可填可不填，时间戳服务器可填可不填，最后弹出签名成功框。</p>
+<img src="/posts/8fb0b0f6/3.1.9.png" class="" title="签名成功">
+<p>此时<code>test.exe</code>文件完成数字签名，打开该EXE文件属性，可以看到签名相关信息。注意，该数字签名正常且颁发者为Windows。</p>
+<img src="/posts/8fb0b0f6/3.1.10.png" class="" title="数字签名证书">
+<p>最后使用PEView软件打开PE文件，可以看到签名前和签名后的结构存在<code>CERTIFICATE Table</code>区别。</p>
+<img src="/posts/8fb0b0f6/3.1.11.png" class="" title="数字签名证书">
+<h1 id="4-PE文件签名数据提取"><a href="#4-PE文件签名数据提取" class="headerlink" title="4. PE文件签名数据提取"></a>4. PE文件签名数据提取</h1><h2 id="4-1-PEView查看签名信息"><a href="#4-1-PEView查看签名信息" class="headerlink" title="4.1 PEView查看签名信息"></a>4.1 PEView查看签名信息</h2><p>使用PEView查看已经签名的<code>test.exe</code>文件，可以看到<code>Certificate Table</code>存储相关签名信息。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">WIN_CERTIFICATE</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    DWORD dwLength;			<span class="comment">//WIN_CERTIFICATE长度</span></span><br><span class="line">    WORD wRevision;			<span class="comment">//证书版本号</span></span><br><span class="line">    WORD wCertificateType;	<span class="comment">//证书类型</span></span><br><span class="line">    BYTE bCertificate[ANYSIZE_ARRAY];	<span class="comment">//SignedData开始位置</span></span><br><span class="line">&#125;WIN_CERTIFICATE, *LPWIN_CERTIFICATE;</span><br></pre></td></tr></table></figure>
+<img src="/posts/8fb0b0f6/4.1.1.png" class="" title="签名信息">
+<p>文件开始位置：00000A00</p>
+<ul>
+<li>表项长度：4字节，头部字段和签名数据的总长度，这里为0x4A0，所以0xA00+0X4A0-1=0xE9F为签名数据结束的位置</li>
+<li>证书版本：2字节，常见0x0200表示<code>WIN_CERT_REVISION_2</code></li>
+<li>证书类型：2字节，常见0x0002表示包含PKCS#7的<code>SignedData</code>结构</li>
+<li>SignedData：包含PE文件Hash值的签名数据、软件发布者公钥，选用的签名及散列算法等(在文件中为ASN.1编码)</li>
+</ul>
+<p>在PE文件可选文件头<code>DataDirectory</code>第5项查看文件签名信息的偏移及大小以验证上述起始地址与大小是否正确。</p>
+<img src="/posts/8fb0b0f6/4.1.2.png" class="" title="签名信息">
+<h2 id="4-2-010Editor提取签名数据"><a href="#4-2-010Editor提取签名数据" class="headerlink" title="4.2 010Editor提取签名数据"></a>4.2 010Editor提取签名数据</h2><p>Ctrl + G 定位到0xA00，从第9个字节开始一直复制到0xE9F，另存为<code>test.dat</code>。</p>
+<img src="/posts/8fb0b0f6/4.2.1.png" class="" title="提取签名数据">
+<img src="/posts/8fb0b0f6/4.2.2.png" class="" title="提取签名数据">
+<p>此时签名信息成功导出，后续需要进行数据分析。</p>
+<h1 id="5-PE文件签名数据分析"><a href="#5-PE文件签名数据分析" class="headerlink" title="5. PE文件签名数据分析"></a>5. PE文件签名数据分析</h1><p>一个PKCS#7 <code>SignedData</code>结构包括PE文件的哈希值、一个被软件出版厂商的私钥创建的签名 和 将软件出版厂商的签名密钥和法人代表进行绑定的X.509 v3证书。PKCS#7 v1.5规范定义了如下关于<code>SignedData</code>的ASN.1(抽象语法符号)结构：</p>
+<img src="/posts/8fb0b0f6/5.1.1.png" class="" title="ASN.1结构">
+<p>注意，导出的<code>test.dat</code>签名数据为ASN.1抽象结构，需要采用ASN1View或ASN1Dump进行解析，其效果如下图所示：</p>
+<img src="/posts/8fb0b0f6/5.1.2.png" class="" title="ASN1Dump">
+<p>用ASN1View导出会出现错误，可能是由于DAT文件后面的5个字节为0，在校验数据大小时出现错误。</p>
+<img src="/posts/8fb0b0f6/5.1.3.png" class="" title="ASN1View">
+<img src="/posts/8fb0b0f6/5.1.4.png" class="" title="最后5字节为0">
+<h2 id="5-1-ASN1Dump分析签名数据"><a href="#5-1-ASN1Dump分析签名数据" class="headerlink" title="5.1 ASN1Dump分析签名数据"></a>5.1 ASN1Dump分析签名数据</h2><p>调用ASN1Dump打开<code>test.dat</code>解析基础数据，每个字段都有对应的flag，比如：</p>
+<ul>
+<li><p>指定<code>SignedData</code>结构</p>
+<p>值为1.2.840.113549.1.7.2，表示采用PKCS#7结构</p>
+</li>
+<li><p>生成签名的哈希算法</p>
+<p>MD5：1.2.840.113549.2.5</p>
+<p>SHA1：1.3.14.3.2.26</p>
+<p>SHA256：2.16.840.1.101.3.4.2.1</p>
+</li>
+<li><p>签名属性</p>
+<p>SPC：1.3.6.1.4.1.311.2.1.4</p>
+</li>
+</ul>
+<img src="/posts/8fb0b0f6/5.1.5.png" class="" title="解析基础数据">
+<p>获取证书颁发者信息，包括md5withRSA签名、证书颁发者、组织、国家及省份。每块数据通常有一个标记变量，标记变量对应有相关值，比如颁发者标记2.5.4.3和颁发者“Windows”、散列算法和散列值等。</p>
+<p>还有其它相关信息，核心数据包括：散列算法、摘要数据、公钥数据、签名后数据。</p>
+<img src="/posts/8fb0b0f6/5.1.6.png" class="" title="其它相关信息">
+<p>注意，RSA签名后的数据和公钥值会还原出第一个hash值，摘要数据和散列算法将计算第二个hash值。如果两个值一致，则表示该PE文件在传输过程中违背篡改或破坏，且受信任；否则已经被破坏。</p>
+<h2 id="5-2-ASN1View提取证书及分析数据"><a href="#5-2-ASN1View提取证书及分析数据" class="headerlink" title="5.2 ASN1View提取证书及分析数据"></a>5.2 ASN1View提取证书及分析数据</h2><p>回顾<code>test.exe</code>的签名信息和证书信息。PE文件的签名算法是SHA1，加密算法是RSA，证书的签名算法是MD5，加密算法也是RSA。</p>
+<img src="/posts/8fb0b0f6/5.2.1.png" class="" title="PE文件签名">
+<img src="/posts/8fb0b0f6/5.2.2.png" class="" title="证书签名">
+<p>使用ASN1View打开<code>test.dat</code>。</p>
+
     </div>
 
     
@@ -434,7 +543,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-text">1. 基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-PE%E6%96%87%E4%BB%B6%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%8F%8A%E9%AA%8C%E8%AF%81%E8%BF%87%E7%A8%8B"><span class="nav-text">1.1 PE文件数字签名及验证过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E6%9F%A5%E7%9C%8B%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D"><span class="nav-text">1.2 查看数字签名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-PE%E6%96%87%E4%BB%B6%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E8%AF%81%E4%B9%A6"><span class="nav-text">1.2.1 PE文件数字签名证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-%E5%BE%AE%E8%BD%AF%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E8%AF%81%E4%B9%A6"><span class="nav-text">1.2.2 微软数字签名证书</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8%E9%A2%86%E5%9F%9F"><span class="nav-text">1.3 数字签名常用算法及应用领域</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Github%E7%BD%91%E7%AB%99%E8%AF%81%E4%B9%A6%E9%AA%8C%E8%AF%81%E8%BF%87%E7%A8%8B"><span class="nav-text">2. Github网站证书验证过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Signtool%E7%AD%BE%E5%90%8DPE%E6%96%87%E4%BB%B6"><span class="nav-text">3. Signtool签名PE文件</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-text">1. 基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-PE%E6%96%87%E4%BB%B6%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%8F%8A%E9%AA%8C%E8%AF%81%E8%BF%87%E7%A8%8B"><span class="nav-text">1.1 PE文件数字签名及验证过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E6%9F%A5%E7%9C%8B%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D"><span class="nav-text">1.2 查看数字签名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-PE%E6%96%87%E4%BB%B6%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E8%AF%81%E4%B9%A6"><span class="nav-text">1.2.1 PE文件数字签名证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-%E5%BE%AE%E8%BD%AF%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E8%AF%81%E4%B9%A6"><span class="nav-text">1.2.2 微软数字签名证书</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8%E9%A2%86%E5%9F%9F"><span class="nav-text">1.3 数字签名常用算法及应用领域</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Github%E7%BD%91%E7%AB%99%E8%AF%81%E4%B9%A6%E9%AA%8C%E8%AF%81%E8%BF%87%E7%A8%8B"><span class="nav-text">2. Github网站证书验证过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Signtool%E7%AD%BE%E5%90%8DPE%E6%96%87%E4%BB%B6"><span class="nav-text">3. Signtool签名PE文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-PE%E6%96%87%E4%BB%B6%E7%AD%BE%E5%90%8D%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96"><span class="nav-text">4. PE文件签名数据提取</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-PEView%E6%9F%A5%E7%9C%8B%E7%AD%BE%E5%90%8D%E4%BF%A1%E6%81%AF"><span class="nav-text">4.1 PEView查看签名信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-010Editor%E6%8F%90%E5%8F%96%E7%AD%BE%E5%90%8D%E6%95%B0%E6%8D%AE"><span class="nav-text">4.2 010Editor提取签名数据</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-PE%E6%96%87%E4%BB%B6%E7%AD%BE%E5%90%8D%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90"><span class="nav-text">5. PE文件签名数据分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-ASN1Dump%E5%88%86%E6%9E%90%E7%AD%BE%E5%90%8D%E6%95%B0%E6%8D%AE"><span class="nav-text">5.1 ASN1Dump分析签名数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-ASN1View%E6%8F%90%E5%8F%96%E8%AF%81%E4%B9%A6%E5%8F%8A%E5%88%86%E6%9E%90%E6%95%B0%E6%8D%AE"><span class="nav-text">5.2 ASN1View提取证书及分析数据</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -514,12 +623,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">987k</span>
+    <span title="站点总字数">990k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">14:57</span>
+    <span title="站点阅读时长">15:01</span>
 </div>
 
         
