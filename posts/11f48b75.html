@@ -28,13 +28,28 @@
 <meta property="og:site_name" content="v5le0n9&#39;s garden">
 <meta property="og:description" content="这篇文章来自深信服的《外部威胁防护和勒索病毒对抗》，对知名安全厂商的威胁防护措施有个基本了解，包括网络安全面临的挑战、如何有效应对挑战、深信服安全建设之道等等。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/posts/undefined/1.1.1.png">
+<meta property="og:image" content="http://example.com/posts/11f48b75/1.1.1.png">
+<meta property="og:image" content="http://example.com/posts/11f48b75/2.1.1.png">
+<meta property="og:image" content="http://example.com/posts/11f48b75/2.1.2.png">
+<meta property="og:image" content="http://example.com/posts/11f48b75/2.2.1.png">
+<meta property="og:image" content="http://example.com/posts/11f48b75/3.1.1.png">
+<meta property="og:image" content="http://example.com/posts/11f48b75/3.1.2.png">
+<meta property="og:image" content="http://example.com/posts/11f48b75/3.1.3.png">
+<meta property="og:image" content="http://example.com/posts/11f48b75/3.1.4.png">
+<meta property="og:image" content="http://example.com/posts/11f48b75/3.2.1.png">
+<meta property="og:image" content="http://example.com/posts/11f48b75/3.2.2.png">
+<meta property="og:image" content="http://example.com/posts/11f48b75/3.3.1.png">
+<meta property="og:image" content="http://example.com/posts/11f48b75/3.3.2.png">
+<meta property="og:image" content="http://example.com/posts/11f48b75/3.3.3.png">
+<meta property="og:image" content="http://example.com/posts/11f48b75/3.3.4.png">
+<meta property="og:image" content="http://example.com/posts/11f48b75/3.3.5.png">
+<meta property="og:image" content="http://example.com/posts/11f48b75/3.3.6.png">
 <meta property="article:published_time" content="2022-07-13T05:46:20.002Z">
-<meta property="article:modified_time" content="2022-07-13T06:13:02.745Z">
+<meta property="article:modified_time" content="2022-07-17T02:35:59.245Z">
 <meta property="article:author" content="v5le0n9">
 <meta property="article:tag" content="系统安全">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/posts/undefined/1.1.1.png">
+<meta name="twitter:image" content="http://example.com/posts/11f48b75/1.1.1.png">
 
 <link rel="canonical" href="http://example.com/posts/11f48b75.html">
 
@@ -215,10 +230,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-07-13 13:46:20 / 修改时间：14:13:02" itemprop="dateCreated datePublished" datetime="2022-07-13T13:46:20+08:00">2022-07-13</time>
+              <time title="创建时间：2022-07-13 13:46:20" itemprop="dateCreated datePublished" datetime="2022-07-13T13:46:20+08:00">2022-07-13</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-17 10:35:59" itemprop="dateModified" datetime="2022-07-17T10:35:59+08:00">2022-07-17</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -242,14 +263,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
+              <span>4.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -266,7 +287,7 @@
 <h1 id="1-网络安全面临的挑战"><a href="#1-网络安全面临的挑战" class="headerlink" title="1. 网络安全面临的挑战"></a>1. 网络安全面临的挑战</h1><p>现在市面上各种勒索病毒、利用服务器资源进行比特币挖矿的病毒、数据库脱库越来越多。那么这些外部威胁如何防护呢？</p>
 <p>首先，介绍几个典型的网络安全事件，包括平昌冬奥会开幕式网站被攻击、中国企业被美俄两国黑客攻击、台积电遭到勒索病毒攻击等等。同时，看到了医疗行业被勒索、思科设备存在高危漏洞、国际黑客攻击我国的系统。</p>
 <p>安全事件频发的今天，我们从中分析为什么会出现这样的状况呢？下图展示了安全事件的演变流程。</p>
-<img src="/posts/undefined/1.1.1.png" class="" title="安全事件的演变流程">
+<img src="/posts/11f48b75/1.1.1.png" class="" title="安全事件的演变流程">
 <ul>
 <li>早期90年代(恶意代码)：国内90年代爆发的是僵尸网络、木马、蠕虫，包括熊猫烧香这种病毒在网络中不断扩散。早期是以恶意代码的方式进行的网络攻击，通过简单IP端口、协议、通信机制等网络要素就能隔离传播途径。</li>
 <li>互联网时代(应用层威胁)：2000年之后进入互联网时代，基于Web的B/S架构的开发越来越多，该阶段衍生出很多面向应用层的高级别威胁，比如通过邮件附件、文件、社交媒体等带来大量病毒入侵企业。此时，仅仅通过IP端口和协议不再适用，如果不能检查其内容会有很多潜藏的病毒，安全事件逐渐向高层次发展。</li>
@@ -279,6 +300,118 @@
 <li>被动响应式防御：企业面临的现状是安全人员并不一定能够把当前攻防趋势研究透彻，安全人员会维护各种各样的安全设备，比如Web安全、数据库安全、终端安全等，海量日志充满了噪声，只能通过被动响应式的威胁防御。</li>
 </ul>
 <p>随之而来的是企业的安全运营工作开展困难，包括统一运营能力缺失、洞悉风险能力缺失、快速响应能力缺失等。当前很多企业并没有这种设备统一管理以及日志统一分析能力，不能有效地聚合成一个安全事件，从而错过最佳的营救时间。</p>
+<h1 id="2-如何有效应对挑战"><a href="#2-如何有效应对挑战" class="headerlink" title="2. 如何有效应对挑战"></a>2. 如何有效应对挑战</h1><p>针对上述问题，当前客户面临的安全问题从外至内如下图所示，其中大部分问题都来自于网络和端点，故分为网络安全问题和终端安全问题。包括：</p>
+<img src="/posts/11f48b75/2.1.1.png" class="" title="当前客户面临的安全问题">
+<p>深信服提出了如下的建设思路：</p>
+<h2 id="2-1-安全需要纵深保护"><a href="#2-1-安全需要纵深保护" class="headerlink" title="2.1 安全需要纵深保护"></a>2.1 安全需要纵深保护</h2><p>加强安全基础性保障建设，通过设备间协同联动在防御机制上形成合力，包括网络保护、终端安全、协同联动。你可能会疑惑，企业购买了防火墙是不是就意味着安全了呢？其实安装了防火墙只是做了访问控制，买了终端只是做了静态的病毒库，而且更新不具备时效性，这种情况应对现在变化的网络很难有效，所以提出了协同联动的机制，网络和终端通过信息共享、威胁情报互换，从而二次校验威胁。</p>
+<p>以勒索病毒为例，为什么传统的防护方案总是失效呢？</p>
+<img src="/posts/11f48b75/2.1.2.png" class="" title="安全需要纵深保护">
+<ul>
+<li><p>第一步，外网到内网的传播</p>
+<p>首先在攻击手段上就有多种方式，包括钓鱼邮件、水坑站点、捆绑下载等。</p>
+</li>
+<li><p>第二步，安装与C&amp;C通信</p>
+<p>当勒索病毒在我们的服务器爆发之后，它通常都会和互联网的主控台建立反向连接，称为C&amp;C互联，接着互联网主控台就会下发一些恶意指令，比如加密文件、回传信息、病毒特征掩饰等。</p>
+</li>
+<li><p>第三步，漏洞利用提权/加密勒索</p>
+<p>程序开始在系统中释放，包括很多操作系统提权操作、代码混淆等。</p>
+</li>
+<li><p>第四步，横向持续扩散</p>
+<p>接着横向传播感染更多的服务器，包括RDP爆破、蠕虫式传播等。</p>
+</li>
+</ul>
+<p>所以传统防火墙如果只是做了业务层的访问控制，杀毒仅覆盖已知的病毒库，那么很可能方案是失效的。</p>
+<h2 id="2-2-安全需要快速处置"><a href="#2-2-安全需要快速处置" class="headerlink" title="2.2 安全需要快速处置"></a>2.2 安全需要快速处置</h2><p>第二个主要是安全管理的能力，包括攻击时间、停留时间、响应时间等检测。从扫描入侵开始，如果设备安全能力足够，越早发现越好。同时，从识别到响应也需要一定的时间，比如样本提取、样本分析等。威胁清除方法包括：登录防火墙查看安全日志、判断威胁等级及严重性、定位疑似IP及电话询问用户、病毒扫描及定位威胁和事件。如何更好、更快地检测威胁尤为重要。</p>
+<img src="/posts/11f48b75/2.2.1.png" class="" title="安全需要快速处置">
+<h2 id="2-3-安全需要能力不断升级，对抗APT风险"><a href="#2-3-安全需要能力不断升级，对抗APT风险" class="headerlink" title="2.3 安全需要能力不断升级，对抗APT风险"></a>2.3 安全需要能力不断升级，对抗APT风险</h2><p>虽然网络设备和端点设备非常依赖样本特征，但如何保障企业现有投资应对未来未知的威胁也非常重要。基于大数据提供动态变化的威胁情报，应用多种创新技术手段加强抵御外部不断变化的高级威胁，包括预测、防御、响应和检测。</p>
+<p>举个例子，我本地看到一个IP，不知道是好是坏，但是我把这个IP传到云端，云端通过庞大的威胁校验机制判断该IP来自哪个国家、曾经攻击过哪些企业、IP关联的黑客家族、文件样本等。云端把IP信息告诉本地设备，从而确定该IP有害并加入黑名单，通过本地设备和云端实时互联，提高威胁情报检测能力，也是当前业界比较热门的方向。</p>
+<p>当然威胁情报提炼会有各种技术，包括人工智能技术、流量分析技术、僵尸网络检测引擎等，最终企业面对勒索病毒、挖矿病毒、0day漏洞等高危攻击，可以持续利用云端大数据情报进行应对。</p>
+<h1 id="3-深信服安全建设之道"><a href="#3-深信服安全建设之道" class="headerlink" title="3. 深信服安全建设之道"></a>3. 深信服安全建设之道</h1><p>具体的建设过程提出了“网络+终端+云端”的体系化建设思路。通过网络终端实现纵深保护，云端和本地结合可视化展现风险及快速处置，并升级能力进行有效防护。日志可以统一发送给云端平台，云端再进行日志分析洞悉威胁，定位位置并给出处理建议。</p>
+<img src="/posts/11f48b75/3.1.1.png" class="" title="深信服安全建设之道">
+<p>下图展示了网、端、云如何保障安全的框架，整个统一安全能力中心包括设备管理、数据分析和威胁处置，结合端点和网络进行双向溯源、智能联动的安全保护，具体能力涉及：</p>
+<ul>
+<li>安全规则更新</li>
+<li>全球威胁情报查询</li>
+<li>勒索病毒响应</li>
+<li>云端沙箱监测分析</li>
+</ul>
+<img src="/posts/11f48b75/3.1.2.png" class="" title="深信服安全建设之道">
+<h2 id="3-1-网的保护"><a href="#3-1-网的保护" class="headerlink" title="3.1 网的保护"></a>3.1 网的保护</h2><p>使用下一代防火墙进行网的保护（L2-L7层网络风险全面防御），具体内容包括：</p>
+<ul>
+<li>响应：联动EDR清除终端病毒、联动封锁攻击源</li>
+<li>检测：黑链检测、Webshell后门检测、失陷主机检测</li>
+<li>防御：Web应用防护、入侵防御模块IPS、SAVE防病毒引擎、URL过滤及应用特征识别、ARP欺骗防御及DDoS防御</li>
+<li>预防：误配置、弱口令、漏洞检查、资产梳理、端口开放检查</li>
+</ul>
+<p>优势如下：</p>
+<ol>
+<li><p>基于人工智能的网络防病毒能力</p>
+<p>通过人工智能有监督学习、无监督学习自动化地监控病毒的微小变化，包括主流及热点病毒防御、人工智能算法抵御未知病毒、不依赖特征更新和资源占用小。</p>
+</li>
+<li><p>全面的Web防御能力</p>
+<p>针对Webshell、网页木马、目录遍历、SQL注入、XSS攻击、跨站请求伪造等各种攻击防御，从而防止企业数据泄露、网页篡改、行政处罚、信誉受损。之前的检测方法是在SQL语句中寻找静态特征，但会存在很多误判或漏判的情况，目前采用基于语法词法分析的算法，从代码的执行含义层面进行分析，从而进行精确判断。</p>
+<img src="/posts/11f48b75/3.1.3.png" class="" title="网的保护">
+</li>
+<li><p>失陷主机的全面检测</p>
+<p>服务器在部署防火墙之前，可能有病毒潜伏了很多年，定期偷改数据。如果能网络侧构建一个反方向的连接流量，由于所有执行指令都需要跟外部主控台做连接，如果能在防火墙或流量侧捕获到这种恶意连接，就表示成功了。</p>
+</li>
+</ol>
+<p>勒索病毒中招不是最可怕的，最可怕的是它会不断高频回联，定期偷数据或进行恶意指令加密服务器的文档。我们可以基于连接的频率、连接的时段进行检测，比如夜间突然连接频率增大，并且连接国外的服务器，此时就表示主机已经失陷，需要在网络侧定义很多域名，告诉终端产品并找到异常进程，最终杀掉该进程即可防御。基于网络流量分析及智能算法，持续检测网络异常风险。</p>
+<img src="/posts/11f48b75/3.1.4.png" class="" title="网的保护">
+<h2 id="3-2-端的保护"><a href="#3-2-端的保护" class="headerlink" title="3.2 端的保护"></a>3.2 端的保护</h2><p>智能检测提供全面的终端保护，具体内容包括：</p>
+<ul>
+<li>响应：文件修复、一键隔离风险、溯源分析</li>
+<li>检测：病毒全局抑制机制、文件实时监控及主动扫描</li>
+<li>防御：恶意程序诱捕及病毒防扩散、勒索及挖矿变种防护、常规及高危病毒防护、东西向微隔离（主机访问控制）</li>
+<li>预防：补丁管理及基线检查</li>
+</ul>
+<p>优势如下：</p>
+<ol>
+<li><p>全面的终端病毒防御能力</p>
+<p>评价一款杀毒软件的好坏主要包括两个指标——病毒检出率、病毒误报率。深信服人工智能杀毒引擎SAVE创新人工智能无特征技术，能准确检测未知病毒，并且其代码执行的病毒检出率较高。</p>
+</li>
+<li><p>东西向微隔离动态防御技术</p>
+<p>病毒和蠕虫通常会传播感染，而东西向访问控制，可以基于主机间访问控制进行主机隔离。</p>
+<img src="/posts/11f48b75/3.2.1.png" class="" title="端的保护">
+</li>
+<li><p>病毒诱捕及全局抑制</p>
+<p>这是另一个创新，会在操作系统的关键路径放置一些伪造的疑似样本，如果鱼钩文件被加密，就认为勒索病毒上钩，把加密的进程特征进行提取，并告知终端管理平台，从而向EDR终端客户端传达，只要发现具有该特征的样本就是勒索病毒。实现单点检测和全局抑制。</p>
+<img src="/posts/11f48b75/3.2.2.png" class="" title="端的保护">
+</li>
+</ol>
+<h2 id="3-3-云的赋能"><a href="#3-3-云的赋能" class="headerlink" title="3.3 云的赋能"></a>3.3 云的赋能</h2><p>云端产品具有网端安全赋能、智能安全运营，具体内容如下：</p>
+<ul>
+<li>能力实时更新：安全规则更新、云端沙箱检测、全球情报联动、动态引擎更新、动态实时赋能</li>
+<li>智能安全运营：统一运维管理、微信告警闭环、统一分析展示、专家在线分析、网端日志聚合</li>
+</ul>
+<p>优势如下：</p>
+<ol>
+<li><p>统一分析与展示信息</p>
+<p>在运营侧，会统一分析与展示信息，安全专家和设备都会做相关的分析。架构如下图所示：</p>
+<img src="/posts/11f48b75/3.3.1.png" class="" title="云的赋能">
+<p>具体效果如下图所示，包括核心资产、安全概括、外部攻击等。</p>
+<img src="/posts/11f48b75/3.3.2.png" class="" title="云的赋能">
+</li>
+<li><p>网端云协同举证、一键处置、智能免疫，简化安全运营</p>
+<p>以勒索病毒为例，服务器会计算夜间外联多少次，以及手段、模式和IP来自的国家；网络侧会定位域名，推送给终端，终端关联发起域名进程的文件，接着进行反向追溯。</p>
+<p>云端大数据会鉴别疑似有害的域名、进程，从而构建风险标签，比如某个进程对应的可能是木马。</p>
+<p>最后进行一键查杀，保证企业安全。</p>
+</li>
+<li><p>风险快速处置闭环</p>
+<p>由于安全人员不会实时监控系统，对于安全事件，我们会和微信端或APP结合，快速处置风险。</p>
+<img src="/posts/11f48b75/3.3.3.png" class="" title="云的赋能">
+</li>
+<li><p>统一运维管理</p>
+<p>包括设备管理大屏幕、智能监控、智能告警、报表分析、远程接入等。</p>
+<img src="/posts/11f48b75/3.3.4.png" class="" title="云的赋能">
+<img src="/posts/11f48b75/3.3.5.png" class="" title="云的赋能">
+</li>
+<li><p>动态实时赋能</p>
+<p>依赖各种社区和平台进行未知威胁动态监测，安全规则更新，包括融合Virustotal、火绒安全、CNVD、瑞星等安全厂商的情报。</p>
+<p>与传统对抗手段的效果对比如下图所示：</p>
+<img src="/posts/11f48b75/3.3.6.png" class="" title="云的赋能">
+</li>
+</ol>
 
     </div>
 
@@ -321,7 +454,10 @@
     <a href="/posts/9784e9fe.html" rel="prev" title="WannaCry勒索病毒分析之Python复现永恒之蓝漏洞实现勒索加密">
       <i class="fa fa-chevron-left"></i> WannaCry勒索病毒分析之Python复现永恒之蓝漏洞实现勒索加密
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/posts/d0c575b3.html" rel="next" title="WannaCry病毒的行为机理分析">
+      WannaCry病毒的行为机理分析 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -381,7 +517,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E9%9D%A2%E4%B8%B4%E7%9A%84%E6%8C%91%E6%88%98"><span class="nav-text">1. 网络安全面临的挑战</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E9%9D%A2%E4%B8%B4%E7%9A%84%E6%8C%91%E6%88%98"><span class="nav-text">1. 网络安全面临的挑战</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%A6%82%E4%BD%95%E6%9C%89%E6%95%88%E5%BA%94%E5%AF%B9%E6%8C%91%E6%88%98"><span class="nav-text">2. 如何有效应对挑战</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E5%AE%89%E5%85%A8%E9%9C%80%E8%A6%81%E7%BA%B5%E6%B7%B1%E4%BF%9D%E6%8A%A4"><span class="nav-text">2.1 安全需要纵深保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E5%AE%89%E5%85%A8%E9%9C%80%E8%A6%81%E5%BF%AB%E9%80%9F%E5%A4%84%E7%BD%AE"><span class="nav-text">2.2 安全需要快速处置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E5%AE%89%E5%85%A8%E9%9C%80%E8%A6%81%E8%83%BD%E5%8A%9B%E4%B8%8D%E6%96%AD%E5%8D%87%E7%BA%A7%EF%BC%8C%E5%AF%B9%E6%8A%97APT%E9%A3%8E%E9%99%A9"><span class="nav-text">2.3 安全需要能力不断升级，对抗APT风险</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%B7%B1%E4%BF%A1%E6%9C%8D%E5%AE%89%E5%85%A8%E5%BB%BA%E8%AE%BE%E4%B9%8B%E9%81%93"><span class="nav-text">3. 深信服安全建设之道</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E7%BD%91%E7%9A%84%E4%BF%9D%E6%8A%A4"><span class="nav-text">3.1 网的保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E7%AB%AF%E7%9A%84%E4%BF%9D%E6%8A%A4"><span class="nav-text">3.2 端的保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E4%BA%91%E7%9A%84%E8%B5%8B%E8%83%BD"><span class="nav-text">3.3 云的赋能</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -397,7 +533,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-count">57</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -466,7 +602,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">15:11</span>
+    <span title="站点阅读时长">15:17</span>
 </div>
 
         
