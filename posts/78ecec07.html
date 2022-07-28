@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":{"gitalk":{"order":-2}},"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="没想到吧，我又润来学安卓了。。。实习就是这样的啦，多点尝试。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android移动安全相关工具">
+<meta property="og:url" content="http://example.com/posts/78ecec07.html">
+<meta property="og:site_name" content="v5le0n9&#39;s garden">
+<meta property="og:description" content="没想到吧，我又润来学安卓了。。。实习就是这样的啦，多点尝试。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.1.jpg">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.2.jpg">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.3.jpg">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.4.jpg">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.5.jpg">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.6.jpg">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.7.jpg">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.8.jpg">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.9.jpg">
+<meta property="article:published_time" content="2022-07-28T14:18:08.225Z">
+<meta property="article:modified_time" content="2022-07-28T14:30:02.356Z">
+<meta property="article:author" content="v5le0n9">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/posts/undefined/1.1.1.jpg">
+
+<link rel="canonical" href="http://example.com/posts/78ecec07.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Android移动安全相关工具 | v5le0n9's garden</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="v5le0n9's garden" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">v5le0n9's garden</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">小凉的秘密基地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/v5le0n9" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/78ecec07.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="v5le0n9">
+      <meta itemprop="description" content="v5le0n9's garden">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="v5le0n9's garden">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android移动安全相关工具
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-28 22:18:08 / 修改时间：22:30:02" itemprop="dateCreated datePublished" datetime="2022-07-28T22:18:08+08:00">2022-07-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">Android逆向</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>18k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>17 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>没想到吧，我又润来学安卓了。。。实习就是这样的啦，多点尝试。</p>
+<span id="more"></span>
+<h1 id="1-MobSF"><a href="#1-MobSF" class="headerlink" title="1. MobSF"></a>1. MobSF</h1><p>MobSF是Mobile Security Framework的缩写，是一个移动端应用安全问题检测的框架和工具，它适用于Android/iOS/Windows，能够执行动态和静态的恶意软件的分析和检测，无论是二进制方式还是压缩的源代码都可以进行检测。静态分析适用于安卓、苹果应用程序，而动态分析暂时只支持安卓应用程序。</p>
+<p>详细安装教程可看官方文档：<a target="_blank" rel="noopener" href="https://mobsf.github.io/docs/#/zh-cn/">https://mobsf.github.io/docs/#/zh-cn/</a></p>
+<p>注：Python版本按照上面官方文档下载，安装Python 3.10会出错。</p>
+<p>将APK文件（比如：迅雷安卓移动端）上传到MobSF，并等待它自动分析。分析完成后MobSF后界面如下：</p>
+<img src="/posts/undefined/1.1.1.jpg" class="" title="MobSF静态分析界面">
+<h2 id="1-1-基本信息"><a href="#1-1-基本信息" class="headerlink" title="1.1 基本信息"></a>1.1 基本信息</h2><p>在基本信息那一栏，可以看到该APK的安全得分、文件信息和App信息等。App信息包括了包名和Main Activity等。基本信息中还会给出Activities、Services、Receivers、Providers这四大组件的数目，以及可导出组件的数目。（可导出组件是较为严重的安全漏洞，因此这里单独列出了可导出组件的数目）</p>
+<img src="/posts/undefined/1.1.2.jpg" class="" title="基本信息">
+<h2 id="1-2-扫描信息和反编译代码"><a href="#1-2-扫描信息和反编译代码" class="headerlink" title="1.2 扫描信息和反编译代码"></a>1.2 扫描信息和反编译代码</h2><img src="/posts/undefined/1.1.3.jpg" class="" title="扫描信息">
+<p>可以对APK进行重扫，也可以开始动态分析。动态分析就需要Genymotion模拟器或者真机辅助。点击动态分析，MobSF会将该APK下载至安卓设备中，但目前的APK和真机大多是ARM架构的，所以下载至真机应该没多大问题。但Genymotion是x86架构的，下载ARM架构的APK会导致下载失败。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[ERROR] 26/Jul/2022 15:19:56 - This APK cannot be installed. Is this APK compatible the Android VM/Emulator?</span><br><span class="line">adb install failed</span><br><span class="line">[ERROR] 26/Jul/2022 15:19:56 - Internal Server Error: /android_dynamic/d165c0577f92a5ea85d964d853c6e15d</span><br><span class="line">ERROR:django.request:Internal Server Error: /android_dynamic/d165c0577f92a5ea85d964d853c6e15d</span><br></pre></td></tr></table></figure>
+<p>解决方法是下载安装转换工具<a target="_blank" rel="noopener" href="https://github.com/m9rco/Genymotion_ARM_Translation">Genymotion_ARM_Translation</a>，目前只更新到Android 9.0，所以使用的模拟器安卓版本不能太高。据自己的模拟器系统版本下载对应的ZIP包，然后将包直接拖入到模拟器安装，安装完成后重启模拟器即可。</p>
+<p>在MobSF中连接安卓设备，重新选择动态分析，此时成功下载迅雷，进入动态调试界面。</p>
+<img src="/posts/undefined/1.1.4.jpg" class="" title="动态分析">
+<p>同时在Dynamic Analyzer那一栏可以看到APK在模拟器中的安装路径。</p>
+<img src="/posts/undefined/1.1.5.jpg" class="" title="动态分析">
+<p>呃动态分析好像也是MobSF自动分析的。动态分析主要功能如下：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>功能菜单</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Show/Stop Screen</td>
+<td>开启/关闭屏幕</td>
+</tr>
+<tr>
+<td>Install/Remove MobSF RootCA</td>
+<td>安装/卸载MobSF证书</td>
+</tr>
+<tr>
+<td>Set/Unset HTTP(s) Proxy</td>
+<td>设置/取消HTTP(s)代理</td>
+</tr>
+<tr>
+<td>TLS/SSL Security Tester</td>
+<td>TLS/SSL安全测试</td>
+</tr>
+<tr>
+<td>Exported Activity Tester</td>
+<td>测试导出类型的Activity</td>
+</tr>
+<tr>
+<td>Activity Tester</td>
+<td>测试Activity</td>
+</tr>
+<tr>
+<td>Get Dependencies</td>
+<td>获取依赖项</td>
+</tr>
+<tr>
+<td>Take a Screenshot</td>
+<td>截屏</td>
+</tr>
+<tr>
+<td>Logcat Stream</td>
+<td>日志流信息</td>
+</tr>
+<tr>
+<td>Generate Report</td>
+<td>生成动态分析报告</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>如果APK比较大，在Activity Tester测试时等待时间会比较漫长。</p>
+<p>在反编译代码那一个框里可以查看并下载App的Java代码，或者查看并下载Smali代码，再或者查看Manifest文件。另外，在这部分中也可以动态分析。</p>
+<h2 id="1-3-签名者证书"><a href="#1-3-签名者证书" class="headerlink" title="1.3 签名者证书"></a>1.3 签名者证书</h2><p>这部分主要说明了对该APK签名的签名者信息。</p>
+<img src="/posts/undefined/1.1.6.jpg" class="" title="签名者信息">
+<h2 id="1-4-权限信息"><a href="#1-4-权限信息" class="headerlink" title="1.4 权限信息"></a>1.4 权限信息</h2><p>在权限信息中，罗列了被检测App在Manifest文件中申请的所有权限，并标出了每个权限的危险指数，对于有安全隐患的权限标记为危险。在每个权限后面都加上了该权限的作用简介，并对其功能及安全风险进行了描述。</p>
+<img src="/posts/undefined/1.1.7.jpg" class="" title="权限信息">
+<p>以android.permission.ACCESS_COARSE_LOCATION为例：</p>
+<p>MobSF检测到App请求了这一权限，这项权限用于获取设备的粗略位置信息。MobSF将其标记为dangerous，即认为这项权限是有安全风险的。在描述中介绍了这一权限的功能，可以通过基站定位等方式获取用户位置，恶意程序可以通过该权限来获取用户的大致位置。</p>
+<h2 id="1-5-安卓API"><a href="#1-5-安卓API" class="headerlink" title="1.5 安卓API"></a>1.5 安卓API</h2><img src="/posts/undefined/1.1.8.jpg" class="" title="安卓API">
+<p>上传为安卓应用时展示，列举了被检测App调用的所有安卓API，并给出了调用API的代码的位置，这一功能在代码研究分析时比较实用，但在安全检测分析中实际作用并不大。</p>
+<h2 id="1-6-Browsable-Activities"><a href="#1-6-Browsable-Activities" class="headerlink" title="1.6 Browsable Activities"></a>1.6 Browsable Activities</h2><p>browsable的意思就是浏览器在特定条件下可以打开用户的activity。（这个不太懂）</p>
+<h2 id="1-7-安全分析"><a href="#1-7-安全分析" class="headerlink" title="1.7 安全分析"></a>1.7 安全分析</h2><p>安全分析是MobSF的最重要部分，分为六个分析点，分别是网络安全、Manifest分析、源码分析、二进制分析、NIAP分析和文件分析。</p>
+<img src="/posts/undefined/1.1.9.jpg" class="" title="安全分析">
+<h1 id="2-Unicorn"><a href="#2-Unicorn" class="headerlink" title="2. Unicorn"></a>2. Unicorn</h1><p>Unicorn基于qemu开发，是一个轻量级、多平台、多架构的CPU模拟器框架，可以跨平台执行Arm, Arm64 (Armv8), M68K, Mips, Sparc, &amp; X86 (include X86_64)等指令集的原生程序，让我们更好地关注CPU操作，忽略机器设备的差异。</p>
+<p>Unicorn安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install unicorn</span><br></pre></td></tr></table></figure>
+<h2 id="2-1-Unicorn的编写"><a href="#2-1-Unicorn的编写" class="headerlink" title="2.1 Unicorn的编写"></a>2.1 Unicorn的编写</h2><p>对于利用Unicorn编写的代码思路一般为：设置好参数-&gt;加载模拟的代码-&gt;添加hook-&gt;run。</p>
+<h3 id="2-1-1-设置参数并加载模拟执行的代码"><a href="#2-1-1-设置参数并加载模拟执行的代码" class="headerlink" title="2.1.1 设置参数并加载模拟执行的代码"></a>2.1.1 设置参数并加载模拟执行的代码</h3><p>头文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> unicorn <span class="keyword">import</span> *<span class="comment">#调用unicorn库</span></span><br><span class="line"><span class="keyword">from</span> unicorn.x86_const <span class="keyword">import</span> *<span class="comment">#我们构造的是x86寄存器，所以还需要使用一些x86寄存器的常量，所以还要调用这个库，同理如果是x64的话就改成unicorn.x64_const</span></span><br></pre></td></tr></table></figure>
+<p>Uc类初始化：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#mu = Uc(arch, mode)</span></span><br><span class="line"><span class="comment">#这个Uc类接受两个参数分别是硬件架构(arch)和硬件模式(mode)，在这个样例中我们选用的是X86体系结构和32位代码</span></span><br><span class="line">mu = Uc(UC_ARCH_X86, UC_MODE_32)</span><br></pre></td></tr></table></figure>
+<p>arch和mode相关常量有：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">arch:UC_ARCH_ARM、UC_ARCH_ARM64、UC_ARCH_M68K、UC_ARCH_MAX、UC_ARCH_MIPS、UC_ARCH_PPC、UC_ARCH_SPARC、UC_ARCH_X86</span><br><span class="line"></span><br><span class="line">mode:UC_MODE_16、UC_MODE_32、UC_MODE_64、UC_MODE_ARM、UC_MODE_BIG_ENDIAN、UC_MODE_LITTLE_ENDIAN、UC_MODE_MCLASS、UC_MODE_MICRO、UC_MODE_MIPS3、UC_MODE_MIPS32、UC_MODE_MIPS32R6、UC_MODE_MIPS64、UC_MODE_PPC32、UC_MODE_PPC64、UC_MODE_QPX、UC_MODE_SPARC32、UC_MODE_SPARC64、UC_MODE_THUMB、UC_MODE_V8、UC_MODE_V9</span><br></pre></td></tr></table></figure>
+<p>定义虚拟地址：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ADDRESS = <span class="number">0x1000000</span><span class="comment">#注意一定要与0x1000对齐</span></span><br></pre></td></tr></table></figure>
+<p>映射代码内存，所有CPU操作都只能访问此内存，默认权限为rwx。<code>mem_map()</code>函数要求 address 和 size 参数都与0x1000对齐，否则会报UC_ERR_ARG异常。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mu.mem_map(ADDRESS, <span class="number">2</span>*<span class="number">1024</span>*<span class="number">1024</span>)<span class="comment">#接受两个参数，分别是地址和大小，要注意地址与大小一定都要是0x1000对齐</span></span><br></pre></td></tr></table></figure>
+<p>把要模拟的代码加载到我们刚刚映射的内存上，<code>mem_write()</code>函数的第二个参数只支持python的byte数组。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#这个有两种实现方式第一种是直接把调试代码写在此代码中，还有一种就是调用此代码外的二进制代码</span></span><br><span class="line"><span class="comment">#第一种:</span></span><br><span class="line">x86_CODE = <span class="string">b&#x27;\x41\x4a&#x27;</span><span class="comment">#这两个x86的指令为“INC ecx”（+1指令）和“DEC edx”（-1指令）</span></span><br><span class="line">mu.mem_write(ADDRESS, x86_CODE)</span><br><span class="line"></span><br><span class="line"><span class="comment">#第二种:</span></span><br><span class="line">mu.mem_write(ADDRESS, <span class="built_in">open</span>(<span class="string">&#x27;./test&#x27;</span>).read())</span><br></pre></td></tr></table></figure>
+<h3 id="2-1-2-添加指令级的Hook"><a href="#2-1-2-添加指令级的Hook" class="headerlink" title="2.1.2 添加指令级的Hook"></a>2.1.2 添加指令级的Hook</h3><p>这个有点像单步调试的感觉，在begin…end范围内的每一条指令被执行前都会调用callback。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mu.hook_add(UC_HOOK_CODE, hook_code, begin=ADDRESS, end=ADDRESS)</span><br></pre></td></tr></table></figure>
+<p><code>hook_code()</code>是Python自带的函数，类似于C语言中的<code>printf()</code>。<code>hook_code()</code>用来跟踪指令的，仅打印指令执行的地址和长度信息。实际应用中可配合capstone反汇编引擎玩一些更骚的操作。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># callback for tracing instructions</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hook_code</span>(<span class="params">uc, address, size, user_data</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;&gt;&gt;&gt; Tracing instruction at 0x%x, instruction size = 0x%x&quot;</span> %(address, size))</span><br></pre></td></tr></table></figure>
+<p><code>UC_HOOK_CODE</code>的callback中可以修改PC或EIP等寄存器来改变程序运行流程。实际上，Unicorn调试器的单步调试就是以这个为基础实现的。</p>
+<h3 id="2-1-3-启动虚拟机"><a href="#2-1-3-启动虚拟机" class="headerlink" title="2.1.3 启动虚拟机"></a>2.1.3 启动虚拟机</h3><p>我们已经映射内存并将数据写入到内存，并设置好执行Hook以监视指令是否正常执行，但是虚拟机还没有启动，所以需要用<code>emu_start()</code>函数来启动虚拟机。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mu.emu_start(ADDRESS, ADDRESS + <span class="built_in">len</span>(x86_CODE))</span><br><span class="line"><span class="comment">#这个函数本来是有四个参数的，分别是需要模拟代码的初始地址、结束地址、模拟的时间、模拟的指令数量，我们通常忽略后面两个参数，这样就会在无限的时间中模拟无限数量的指令</span></span><br><span class="line"><span class="comment">#mu.emu_start(self, begin, until, timeout=0, count=0)</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-1-4-获取和修改寄存器内容"><a href="#2-1-4-获取和修改寄存器内容" class="headerlink" title="2.1.4 获取和修改寄存器内容"></a>2.1.4 获取和修改寄存器内容</h3><p>当然对于调试，最重要的就是可以查看和修改寄存器的值，Unicorn也提供了这样的功能：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mu.reg_write(UC_X86_REG_ECX, <span class="number">0x1234</span>)</span><br><span class="line">mu.reg_write(UC_X86_REG_EDX, <span class="number">0x7890</span>)</span><br><span class="line"><span class="comment">#这个函数接受两个参数，分别是寄存器地址（这个在常量中有）、要写入的内容</span></span><br><span class="line">r_ecx = mu.reg_read(UC_X86_REG_ECX)</span><br><span class="line">r_edx = mu.reg_read(UC_X86_REG_EDX)</span><br><span class="line"><span class="comment">#这个函数只接受一个参数，那就是寄存器地址，返回这个寄存器的内容</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-1-5-上述样例的完整代码"><a href="#2-1-5-上述样例的完整代码" class="headerlink" title="2.1.5 上述样例的完整代码"></a>2.1.5 上述样例的完整代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> unicorn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> unicorn.x86_const <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hook_code</span>(<span class="params">uc, address, size, user_data</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;&gt;&gt;&gt; Tracing instruction at 0x%x, instruction size = 0x%x&quot;</span> %(address, size))</span><br><span class="line">    </span><br><span class="line">mu = Uc(UC_ARCH_X86, UC_MODE_32)</span><br><span class="line">ADDRESS = <span class="number">0x1000000</span></span><br><span class="line">mu.mem_map(ADDRESS, <span class="number">2</span>*<span class="number">1024</span>*<span class="number">1024</span>)</span><br><span class="line">x86_CODE = <span class="string">b&#x27;\x41\x4a&#x27;</span></span><br><span class="line">r_ecx = mu.reg_read(UC_X86_REG_ECX)</span><br><span class="line">r_edx = mu.reg_read(UC_X86_REG_EDX)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;&gt;&gt;&gt; ecx:&#x27;</span>, r_ecx)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;&gt;&gt;&gt; edx:&#x27;</span>, r_edx)</span><br><span class="line">mu.reg_write(UC_X86_REG_ECX, <span class="number">0x1234</span>)</span><br><span class="line">mu.reg_write(UC_X86_REG_EDX, <span class="number">0x7890</span>)</span><br><span class="line">r_ecx = mu.reg_read(UC_X86_REG_ECX)</span><br><span class="line">r_edx = mu.reg_read(UC_X86_REG_EDX)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;&gt;&gt;&gt; ecx:&#x27;</span>, r_ecx)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;&gt;&gt;&gt; edx:&#x27;</span>, r_edx)</span><br><span class="line">mu.mem_write(ADDRESS, x86_CODE)</span><br><span class="line">mu.hook_add(UC_HOOK_CODE, hook_code, begin=ADDRESS, end=ADDRESS)</span><br><span class="line">mu.emu_start(ADDRESS, ADDRESS + <span class="built_in">len</span>(x86_CODE))</span><br><span class="line">r_ecx = mu.reg_read(UC_X86_REG_ECX)</span><br><span class="line">r_edx = mu.reg_read(UC_X86_REG_EDX)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;&gt;&gt;&gt; ecx:&#x27;</span>, r_ecx)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;&gt;&gt;&gt; edx:&#x27;</span>, r_edx)</span><br></pre></td></tr></table></figure>
+<p>运行试试：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\v5le0n9\Desktop&gt; python unicorn.py</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;unicorn.py&quot;, line 1, in &lt;module&gt;</span><br><span class="line">    from unicorn import *</span><br><span class="line">  File &quot;C:\Users\v5le0n9\Desktop\unicorn.py&quot;, line 2, in &lt;module&gt;</span><br><span class="line">    from unicorn.x86_const import *</span><br><span class="line">ModuleNotFoundError: No module named &#x27;unicorn.x86_const&#x27;; &#x27;unicorn&#x27; is not a package</span><br><span class="line">PS C:\Users\v5le0n9\Desktop&gt;</span><br></pre></td></tr></table></figure>
+<p>运行错误，这里是一个点，不能将测试文件命名为<code>unicorn.py</code>，因为Unicorn模块中就有一个PY文件叫<code>unicorn.py</code>，导致文件冲突。此时应该修改测试文件名，再次运行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\v5le0n9\Desktop&gt;python unicorn_test.py</span><br><span class="line">&gt;&gt;&gt; ecx: 0</span><br><span class="line">&gt;&gt;&gt; edx: 0</span><br><span class="line">&gt;&gt;&gt; ecx: 4660</span><br><span class="line">&gt;&gt;&gt; edx: 30864</span><br><span class="line">&gt;&gt;&gt; Tracing instruction at 0x1000000, instruction size = 0x1</span><br><span class="line">&gt;&gt;&gt; ecx: 4661</span><br><span class="line">&gt;&gt;&gt; edx: 30863</span><br></pre></td></tr></table></figure>
+<h2 id="2-2-Capstone反汇编"><a href="#2-2-Capstone反汇编" class="headerlink" title="2.2 Capstone反汇编"></a>2.2 Capstone反汇编</h2><p>Unicorn 并没有反汇编功能，虽然它的内部一定有与反汇编相关的代码。我们只能自己想办法反汇编。Unicorn 有一个兄弟，它叫Capstone。Capstone是一款支持多种处理器和开发语言的反汇编框架。我将使用Capstone 作为调试模块的反汇编器。</p>
+<p>Capstone安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install capstone</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-1-Capstone例子"><a href="#2-2-1-Capstone例子" class="headerlink" title="2.2.1 Capstone例子"></a>2.2.1 Capstone例子</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> capstone <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> capstone.arm <span class="keyword">import</span> *</span><br><span class="line"> </span><br><span class="line">CODE = <span class="string">b&quot;\xf1\x02\x03\x0e\x00\x00\xa0\xe3\x02\x30\xc1\xe7\x00\x00\x53\xe3&quot;</span></span><br><span class="line"> </span><br><span class="line">md = Cs(CS_ARCH_ARM, CS_MODE_ARM)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> md.disasm(CODE, <span class="number">0x1000</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;%x:\t%s\t%s&quot;</span> %(i.address, i.mnemonic, i.op_str))</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\v5le0n9\Desktop&gt;python capstone_test.py</span><br><span class="line">1000:   mcreq   p2, #0, r0, c3, c1, #7</span><br><span class="line">1004:   mov     r0, #0</span><br><span class="line">1008:   strb    r3, [r1, r2]</span><br><span class="line">100c:   cmp     r3, #0</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-2-UnicornDebbuger调试器"><a href="#2-2-2-UnicornDebbuger调试器" class="headerlink" title="2.2.2 UnicornDebbuger调试器"></a>2.2.2 UnicornDebbuger调试器</h3><p>无名大佬写的调试器，直接拿来用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> unicorn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> unicorn <span class="keyword">import</span> arm_const</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> hexdump</span><br><span class="line"><span class="keyword">import</span> capstone <span class="keyword">as</span> cp</span><br><span class="line"> </span><br><span class="line">BPT_EXECUTE = <span class="number">1</span></span><br><span class="line">BPT_MEMREAD = <span class="number">2</span></span><br><span class="line">UDBG_MODE_ALL = <span class="number">1</span></span><br><span class="line">UDBG_MODE_FAST = <span class="number">2</span></span><br><span class="line"> </span><br><span class="line">REG_ARM = &#123;arm_const.UC_ARM_REG_R0: <span class="string">&quot;R0&quot;</span>,</span><br><span class="line">           arm_const.UC_ARM_REG_R1: <span class="string">&quot;R1&quot;</span>,</span><br><span class="line">           arm_const.UC_ARM_REG_R2: <span class="string">&quot;R2&quot;</span>,</span><br><span class="line">           arm_const.UC_ARM_REG_R3: <span class="string">&quot;R3&quot;</span>,</span><br><span class="line">           arm_const.UC_ARM_REG_R4: <span class="string">&quot;R4&quot;</span>,</span><br><span class="line">           arm_const.UC_ARM_REG_R5: <span class="string">&quot;R5&quot;</span>,</span><br><span class="line">           arm_const.UC_ARM_REG_R6: <span class="string">&quot;R6&quot;</span>,</span><br><span class="line">           arm_const.UC_ARM_REG_R7: <span class="string">&quot;R7&quot;</span>,</span><br><span class="line">           arm_const.UC_ARM_REG_R8: <span class="string">&quot;R8&quot;</span>,</span><br><span class="line">           arm_const.UC_ARM_REG_R9: <span class="string">&quot;R9&quot;</span>,</span><br><span class="line">           arm_const.UC_ARM_REG_R10: <span class="string">&quot;R10&quot;</span>,</span><br><span class="line">           arm_const.UC_ARM_REG_R11: <span class="string">&quot;R11&quot;</span>,</span><br><span class="line">           arm_const.UC_ARM_REG_R12: <span class="string">&quot;R12&quot;</span>,</span><br><span class="line">           arm_const.UC_ARM_REG_R13: <span class="string">&quot;R13&quot;</span>,</span><br><span class="line">           arm_const.UC_ARM_REG_R14: <span class="string">&quot;R14&quot;</span>,</span><br><span class="line">           arm_const.UC_ARM_REG_R15: <span class="string">&quot;R15&quot;</span>,</span><br><span class="line">           arm_const.UC_ARM_REG_PC: <span class="string">&quot;PC&quot;</span>,</span><br><span class="line">           arm_const.UC_ARM_REG_SP: <span class="string">&quot;SP&quot;</span>,</span><br><span class="line">           arm_const.UC_ARM_REG_LR: <span class="string">&quot;LR&quot;</span></span><br><span class="line">           &#125;</span><br><span class="line"> </span><br><span class="line">REG_TABLE = &#123;UC_ARCH_ARM: REG_ARM&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">str2int</span>(<span class="params">s</span>):</span><br><span class="line">    <span class="keyword">if</span> s.startswith(<span class="string">&#x27;0x&#x27;</span>) <span class="keyword">or</span> s.startswith(<span class="string">&quot;0X&quot;</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">int</span>(s[<span class="number">2</span>:], <span class="number">16</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">int</span>(s)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">advance_dump</span>(<span class="params">data, base</span>):</span><br><span class="line">    PY3K = sys.version_info &gt;= (<span class="number">3</span>, <span class="number">0</span>)</span><br><span class="line">    generator = hexdump.genchunks(data, <span class="number">16</span>)</span><br><span class="line">    retstr = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> addr, d <span class="keyword">in</span> <span class="built_in">enumerate</span>(generator):</span><br><span class="line">        <span class="comment"># 00000000:</span></span><br><span class="line">        line = <span class="string">&#x27;%08X: &#x27;</span> % (base + addr * <span class="number">16</span>)</span><br><span class="line">        <span class="comment"># 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00</span></span><br><span class="line">        dumpstr = hexdump.dump(d)</span><br><span class="line">        line += dumpstr[:<span class="number">8</span> * <span class="number">3</span>]</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(d) &gt; <span class="number">8</span>:  <span class="comment"># insert separator if needed</span></span><br><span class="line">            line += <span class="string">&#x27; &#x27;</span> + dumpstr[<span class="number">8</span> * <span class="number">3</span>:]</span><br><span class="line">        <span class="comment"># ................</span></span><br><span class="line">        <span class="comment"># calculate indentation, which may be different for the last line</span></span><br><span class="line">        pad = <span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(d) &lt; <span class="number">16</span>:</span><br><span class="line">            pad += <span class="number">3</span> * (<span class="number">16</span> - <span class="built_in">len</span>(d))</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(d) &lt;= <span class="number">8</span>:</span><br><span class="line">            pad += <span class="number">1</span></span><br><span class="line">        line += <span class="string">&#x27; &#x27;</span> * pad</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">for</span> byte <span class="keyword">in</span> d:</span><br><span class="line">            <span class="comment"># printable ASCII range 0x20 to 0x7E</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> PY3K:</span><br><span class="line">                byte = <span class="built_in">ord</span>(byte)</span><br><span class="line">            <span class="keyword">if</span> <span class="number">0x20</span> &lt;= byte &lt;= <span class="number">0x7E</span>:</span><br><span class="line">                line += <span class="built_in">chr</span>(byte)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                line += <span class="string">&#x27;.&#x27;</span></span><br><span class="line">        retstr += line + <span class="string">&#x27;\n&#x27;</span></span><br><span class="line">    <span class="keyword">return</span> retstr</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">_dbg_trace</span>(<span class="params">mu, address, size, self</span>):</span><br><span class="line"> </span><br><span class="line">    self._tracks.append(address)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> self._is_step <span class="keyword">and</span> self._tmp_bpt == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">if</span> address <span class="keyword">not</span> <span class="keyword">in</span> self._list_bpt:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> self._tmp_bpt != address <span class="keyword">and</span> self._tmp_bpt != <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> _dbg_trace_internal(mu, address, size, self)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">_dbg_memory</span>(<span class="params">mu, access, address, length, value, self</span>):</span><br><span class="line">    pc = mu.reg_read(arm_const.UC_ARM_REG_PC)</span><br><span class="line">    <span class="built_in">print</span> (<span class="string">&quot;memory error: pc: %x access: %x address: %x length: %x value: %x&quot;</span> %</span><br><span class="line">                 (pc, access, address, length, value))</span><br><span class="line">    _dbg_trace_internal(mu, pc, <span class="number">4</span>, self)</span><br><span class="line">    mu.emu_stop()</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">_dbg_trace_internal</span>(<span class="params">mu, address, size, self</span>):</span><br><span class="line"> </span><br><span class="line">    self._is_step = <span class="literal">False</span></span><br><span class="line">    <span class="built_in">print</span> (<span class="string">&quot;======================= Registers =======================&quot;</span>)</span><br><span class="line">    self.dump_reg()</span><br><span class="line">    <span class="built_in">print</span> (<span class="string">&quot;======================= Disassembly =====================&quot;</span>)</span><br><span class="line">    self.dump_asm(address, size * self.dis_count)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        raw_command = <span class="built_in">input</span>(<span class="string">&quot;&gt;&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> raw_command == <span class="string">&#x27;&#x27;</span>:</span><br><span class="line">            raw_command = self._last_command</span><br><span class="line">        self._last_command = raw_command</span><br><span class="line">        command = []</span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> raw_command.split(<span class="string">&quot; &quot;</span>):</span><br><span class="line">            <span class="keyword">if</span> c != <span class="string">&quot;&quot;</span>:</span><br><span class="line">                command.append(c)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">if</span> command[<span class="number">0</span>] == <span class="string">&#x27;set&#x27;</span>:</span><br><span class="line">                <span class="keyword">if</span> command[<span class="number">1</span>] == <span class="string">&#x27;reg&#x27;</span>:<span class="comment"># set reg regname value</span></span><br><span class="line">                    self.write_reg(command[<span class="number">2</span>], str2int(command[<span class="number">3</span>]))</span><br><span class="line">                <span class="keyword">elif</span> command[<span class="number">1</span>] == <span class="string">&#x27;bpt&#x27;</span>:</span><br><span class="line">                    self.add_bpt(str2int(command[<span class="number">2</span>]))</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;[Debugger Error]command error see help.&quot;</span>)</span><br><span class="line"> </span><br><span class="line">            <span class="keyword">elif</span> command[<span class="number">0</span>] == <span class="string">&#x27;s&#x27;</span> <span class="keyword">or</span> command[<span class="number">0</span>] == <span class="string">&#x27;step&#x27;</span>:</span><br><span class="line">                <span class="comment"># self._tmp_bpt = address + size</span></span><br><span class="line">                self._tmp_bpt = <span class="number">0</span></span><br><span class="line">                self._is_step = <span class="literal">True</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">elif</span> command[<span class="number">0</span>] == <span class="string">&#x27;n&#x27;</span> <span class="keyword">or</span> command[<span class="number">0</span>] == <span class="string">&#x27;next&#x27;</span>:</span><br><span class="line">                self._tmp_bpt = address + size</span><br><span class="line">                self._is_step = <span class="literal">False</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"> </span><br><span class="line">            <span class="keyword">elif</span> command[<span class="number">0</span>] == <span class="string">&#x27;r&#x27;</span> <span class="keyword">or</span> command[<span class="number">0</span>] == <span class="string">&#x27;run&#x27;</span>:</span><br><span class="line">                self._tmp_bpt = <span class="number">0</span></span><br><span class="line">                self._is_step = <span class="literal">False</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">elif</span> command[<span class="number">0</span>] == <span class="string">&#x27;dump&#x27;</span>:</span><br><span class="line">                <span class="keyword">if</span> <span class="built_in">len</span>(command) &gt;= <span class="number">3</span>:</span><br><span class="line">                    nsize = str2int(command[<span class="number">2</span>])</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    nsize = <span class="number">4</span> * <span class="number">16</span></span><br><span class="line">                self.dump_mem(str2int(command[<span class="number">1</span>]), nsize)</span><br><span class="line">            <span class="keyword">elif</span> command[<span class="number">0</span>] == <span class="string">&#x27;list&#x27;</span>:</span><br><span class="line">                <span class="keyword">if</span> command[<span class="number">1</span>] == <span class="string">&#x27;bpt&#x27;</span>:</span><br><span class="line">                    self.list_bpt()</span><br><span class="line">            <span class="keyword">elif</span> command[<span class="number">0</span>] == <span class="string">&#x27;del&#x27;</span>:</span><br><span class="line">                <span class="keyword">if</span> command[<span class="number">1</span>] == <span class="string">&#x27;bpt&#x27;</span>:</span><br><span class="line">                    self.del_bpt(str2int(command[<span class="number">2</span>]))</span><br><span class="line">            <span class="keyword">elif</span> command[<span class="number">0</span>]==<span class="string">&#x27;stop&#x27;</span>:</span><br><span class="line">                exit(<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">elif</span> command[<span class="number">0</span>] == <span class="string">&#x27;t&#x27;</span>:</span><br><span class="line">                self._castone = self._capstone_thumb</span><br><span class="line">                <span class="built_in">print</span> (<span class="string">&quot;======================= Disassembly =====================&quot;</span>)</span><br><span class="line">                self.dump_asm(address, size * self.dis_count)</span><br><span class="line">            <span class="keyword">elif</span> command[<span class="number">0</span>] == <span class="string">&#x27;a&#x27;</span>:</span><br><span class="line">                self._castone = self._capstone_arm</span><br><span class="line">                <span class="built_in">print</span> (<span class="string">&quot;======================= Disassembly =====================&quot;</span>)</span><br><span class="line">                self.dump_asm(address, size * self.dis_count)</span><br><span class="line">            <span class="keyword">elif</span> command[<span class="number">0</span>] == <span class="string">&#x27;f&#x27;</span>:</span><br><span class="line">                <span class="built_in">print</span> (<span class="string">&quot; == recent ==&quot;</span>)</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> self._tracks[-<span class="number">10</span>:-<span class="number">1</span>]:</span><br><span class="line">                    <span class="built_in">print</span> (self.sym_handler(i))</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="built_in">print</span> (<span class="string">&quot;Command Not Found!&quot;</span>)</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[Debugger Error]command error see help.&quot;</span>)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UnicornDebugger</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, mu, mode = UDBG_MODE_ALL</span>):</span><br><span class="line">        self._tracks = []</span><br><span class="line">        self._mu = mu</span><br><span class="line">        self._arch = mu._arch</span><br><span class="line">        self._mode = mu._mode</span><br><span class="line">        self._list_bpt = []</span><br><span class="line">        self._tmp_bpt = <span class="number">0</span></span><br><span class="line">        self._error = <span class="string">&#x27;&#x27;</span></span><br><span class="line">        self._last_command = <span class="string">&#x27;&#x27;</span></span><br><span class="line">        self.dis_count = <span class="number">5</span></span><br><span class="line">        self._is_step = <span class="literal">False</span></span><br><span class="line">        self.sym_handler = self._default_sym_handler</span><br><span class="line">        self._capstone_arm = <span class="literal">None</span></span><br><span class="line">        self._capstone_thumb = <span class="literal">None</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span> self._arch != UC_ARCH_ARM:</span><br><span class="line">            mu.emu_stop()</span><br><span class="line">            <span class="keyword">raise</span> RuntimeError(<span class="string">&quot;arch:%d is not supported! &quot;</span> % self._arch)</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span> self._arch == UC_ARCH_ARM:</span><br><span class="line">            capstone_arch = cp.CS_ARCH_ARM</span><br><span class="line">        <span class="keyword">elif</span> self._arch == UC_ARCH_ARM64:</span><br><span class="line">            capstone_arch = cp.CS_ARCH_ARM64</span><br><span class="line">        <span class="keyword">elif</span> self._arch == UC_ARCH_X86:</span><br><span class="line">            capstone_arch = cp.CS_ARCH_X86</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            mu.emu_stop()</span><br><span class="line">            <span class="keyword">raise</span> RuntimeError(<span class="string">&quot;arch:%d is not supported! &quot;</span> % self._arch)</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span> self._mode == UC_MODE_THUMB:</span><br><span class="line">            capstone_mode = cp.CS_MODE_THUMB</span><br><span class="line">        <span class="keyword">elif</span> self._mode == UC_MODE_ARM:</span><br><span class="line">            capstone_mode = cp.CS_MODE_ARM</span><br><span class="line">        <span class="keyword">elif</span> self._mode == UC_MODE_32:</span><br><span class="line">            capstone_mode = cp.CS_MODE_32</span><br><span class="line">        <span class="keyword">elif</span> self._mode == UC_MODE_64:</span><br><span class="line">            capstone_mode = cp.CS_MODE_64</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            mu.emu_stop()</span><br><span class="line">            <span class="keyword">raise</span> RuntimeError(<span class="string">&quot;mode:%d is not supported! &quot;</span> % self._mode)</span><br><span class="line"> </span><br><span class="line">        self._capstone_thumb = cp.Cs(cp.CS_ARCH_ARM, cp.CS_MODE_THUMB)</span><br><span class="line">        self._capstone_arm = cp.Cs(cp.CS_ARCH_ARM, cp.CS_MODE_ARM)</span><br><span class="line"> </span><br><span class="line">        self._capstone = self._capstone_thumb</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span> mode == UDBG_MODE_ALL:</span><br><span class="line">            mu.hook_add(UC_HOOK_CODE, _dbg_trace, self)</span><br><span class="line"> </span><br><span class="line">        mu.hook_add(UC_HOOK_MEM_UNMAPPED, _dbg_memory, self)</span><br><span class="line">        mu.hook_add(UC_HOOK_MEM_FETCH_PROT, _dbg_memory, self)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">        self._regs = REG_TABLE[self._arch]</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">dump_mem</span>(<span class="params">self, addr, size</span>):</span><br><span class="line">        data = self._mu.mem_read(addr, size)</span><br><span class="line">        <span class="built_in">print</span> (advance_dump(data, addr))</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">dump_asm</span>(<span class="params">self, addr, size</span>):</span><br><span class="line">        md = self._capstone</span><br><span class="line">        code = self._mu.mem_read(addr, size)</span><br><span class="line">        count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> ins <span class="keyword">in</span> md.disasm(code, addr):</span><br><span class="line">            <span class="keyword">if</span> count &gt;= self.dis_count:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;%s:\t%s\t%s&quot;</span> % (self.sym_handler(ins.address), ins.mnemonic, ins.op_str))</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">dump_reg</span>(<span class="params">self</span>):</span><br><span class="line">        result_format = <span class="string">&#x27;&#x27;</span></span><br><span class="line">        count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> rid <span class="keyword">in</span> self._regs:</span><br><span class="line">            rname = self._regs[rid]</span><br><span class="line">            value = self._mu.reg_read(rid)</span><br><span class="line">            <span class="keyword">if</span> count &lt; <span class="number">4</span>:</span><br><span class="line">                result_format += rname + <span class="string">&#x27;=&#x27;</span> + <span class="built_in">hex</span>(value) + <span class="string">&#x27;\t&#x27;</span></span><br><span class="line">                count += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                count = <span class="number">1</span></span><br><span class="line">                result_format += <span class="string">&#x27;\n&#x27;</span> + rname + <span class="string">&#x27;=&#x27;</span> + <span class="built_in">hex</span>(value) + <span class="string">&#x27;\t&#x27;</span></span><br><span class="line">        <span class="built_in">print</span> (result_format)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">write_reg</span>(<span class="params">self, reg_name, value</span>):</span><br><span class="line">        <span class="keyword">for</span> rid <span class="keyword">in</span> self._regs:</span><br><span class="line">            rname = self._regs[rid]</span><br><span class="line">            <span class="keyword">if</span> rname == reg_name:</span><br><span class="line">                self._mu.reg_write(rid, value)</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&quot;[Debugger Error] Reg not found:%s &quot;</span> % reg_name)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">show_help</span>(<span class="params">self</span>):</span><br><span class="line">        help_info = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        # commands</span></span><br><span class="line"><span class="string">        # set reg &lt;regname&gt; &lt;value&gt;</span></span><br><span class="line"><span class="string">        # set bpt &lt;addr&gt;</span></span><br><span class="line"><span class="string">        # n[ext]</span></span><br><span class="line"><span class="string">        # s[etp]</span></span><br><span class="line"><span class="string">        # r[un]</span></span><br><span class="line"><span class="string">        # dump &lt;addr&gt; &lt;size&gt;</span></span><br><span class="line"><span class="string">        # list bpt</span></span><br><span class="line"><span class="string">        # del bpt &lt;addr&gt;</span></span><br><span class="line"><span class="string">        # stop</span></span><br><span class="line"><span class="string">        # a/t change arm/thumb</span></span><br><span class="line"><span class="string">        # f show ins flow</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span> (help_info)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">list_bpt</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">for</span> idx <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(self._list_bpt)):</span><br><span class="line">            <span class="built_in">print</span> (<span class="string">&quot;[%d] %s&quot;</span> % (idx, self.sym_handler(self._list_bpt[idx])))</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">add_bpt</span>(<span class="params">self, addr</span>):</span><br><span class="line">        self._list_bpt.append(addr)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">del_bpt</span>(<span class="params">self, addr</span>):</span><br><span class="line">        self._list_bpt.remove(addr)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_tracks</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> self._tracks[-<span class="number">100</span>:-<span class="number">1</span>]:</span><br><span class="line">            <span class="comment">#print (self.sym_handler(i))</span></span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">return</span> self._tracks</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_default_sym_handler</span>(<span class="params">self, address</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">hex</span>(address)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">set_symbol_name_handler</span>(<span class="params">self, handler</span>):</span><br><span class="line">        self.sym_handler = handler</span><br></pre></td></tr></table></figure>
+<p>将它放入Python库中，比如我放到了<code>C:\Users\v5le0n9\AppData\Local\Programs\Python\Python38\Lib\site-packages\unicorn</code>中，如果想要调用调试器直接在测试文件中导入。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> unicorn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> unicorn.arm_const <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> unicorn.UnicornDebugger <span class="keyword">import</span> *</span><br><span class="line">THUMB = <span class="string">b&quot;\x83\xb0\x83\xb0\x83\xb0&quot;</span></span><br><span class="line"><span class="comment"># sub    sp, #0xc</span></span><br><span class="line"><span class="comment"># sub    sp, #0xc</span></span><br><span class="line"><span class="comment"># sub    sp, #0xc </span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_arm</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Emulate Thumb code&quot;</span>)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># Initialize emulator in ARM mode</span></span><br><span class="line">        mu = Uc(UC_ARCH_ARM, UC_MODE_THUMB)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">        <span class="comment"># map 2MB memory for this emulation</span></span><br><span class="line">        ADDRESS = <span class="number">0x10000</span></span><br><span class="line">        mu.mem_map(ADDRESS, <span class="number">2</span> * <span class="number">0x10000</span>)</span><br><span class="line">        mu.mem_write(ADDRESS, THUMB)</span><br><span class="line"> </span><br><span class="line">        mu.reg_write(UC_ARM_REG_SP, <span class="number">0x1234</span>)</span><br><span class="line">        mu.reg_write(UC_ARM_REG_R2, <span class="number">0x6789</span>)</span><br><span class="line"> </span><br><span class="line">        <span class="comment">#debugger attach</span></span><br><span class="line">        udbg = UnicornDebugger(mu)</span><br><span class="line">        udbg.add_bpt(ADDRESS)</span><br><span class="line"> </span><br><span class="line">        <span class="comment"># emulate machine code in infinite time</span></span><br><span class="line">        mu.emu_start(ADDRESS, ADDRESS + <span class="built_in">len</span>(THUMB))</span><br><span class="line">        r0 = mu.reg_read(UC_ARM_REG_SP)</span><br><span class="line">        r1 = mu.reg_read(UC_ARM_REG_R1)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;&gt;&gt;&gt; SP = 0x%x&quot;</span> % r0)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;&gt;&gt;&gt; R1 = 0x%x&quot;</span> % r1)</span><br><span class="line">    <span class="keyword">except</span> UcError <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;ERROR: %s&quot;</span> % e)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    test_arm()</span><br></pre></td></tr></table></figure>
+<p>在调试过程中，发现无名大佬写的调试器还是有些致命性的错误的，比如在执行n或s命令时，正常来说是执行一条汇编指令的，但这里执行了两条指令。而且指令执行完后SP的值并没有改变。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\v5le0n9\Desktop&gt;python unicorn_test.py</span><br><span class="line">Emulate Thumb code</span><br><span class="line">======================= Registers =======================</span><br><span class="line">R0=0x0  R1=0x0  R2=0x6789       R3=0x0</span><br><span class="line">R4=0x0  R5=0x0  R6=0x0  R7=0x0</span><br><span class="line">R8=0x0  R9=0x0  R10=0x0 R11=0x0</span><br><span class="line">R12=0x0 SP=0x1234       LR=0x0  PC=0x10000</span><br><span class="line">======================= Disassembly =====================</span><br><span class="line">0x10000:        sub     sp, #0xc</span><br><span class="line">0x10002:        sub     sp, #0xc</span><br><span class="line">0x10004:        sub     sp, #0xc</span><br><span class="line">0x10006:        movs    r0, r0</span><br><span class="line">0x10008:        movs    r0, r0</span><br><span class="line">0x1000a:        movs    r0, r0</span><br><span class="line">0x1000c:        movs    r0, r0</span><br><span class="line">0x1000e:        movs    r0, r0</span><br><span class="line">0x10010:        movs    r0, r0</span><br><span class="line">0x10012:        movs    r0, r0</span><br><span class="line">&gt;s</span><br><span class="line">======================= Registers =======================</span><br><span class="line">R0=0x0  R1=0x0  R2=0x6789       R3=0x0</span><br><span class="line">R4=0x0  R5=0x0  R6=0x0  R7=0x0</span><br><span class="line">R8=0x0  R9=0x0  R10=0x0 R11=0x0</span><br><span class="line">R12=0x0 SP=0x1234       LR=0x0  PC=0x10004</span><br><span class="line">======================= Disassembly =====================</span><br><span class="line">0x10004:        sub     sp, #0xc</span><br><span class="line">0x10006:        movs    r0, r0</span><br><span class="line">0x10008:        movs    r0, r0</span><br><span class="line">0x1000a:        movs    r0, r0</span><br><span class="line">0x1000c:        movs    r0, r0</span><br><span class="line">0x1000e:        movs    r0, r0</span><br><span class="line">0x10010:        movs    r0, r0</span><br><span class="line">0x10012:        movs    r0, r0</span><br><span class="line">0x10014:        movs    r0, r0</span><br><span class="line">0x10016:        movs    r0, r0</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="2-3-Unicorn调用so之加载模块"><a href="#2-3-Unicorn调用so之加载模块" class="headerlink" title="2.3 Unicorn调用so之加载模块"></a>2.3 Unicorn调用so之加载模块</h2><p>Android是基于Linux开发的，Android Native原生库是ELF文件格式。Unicorn 并不能加载ELF文件，所以我们要自己将ELF文件加载到Unicorn虚拟机的内存中去。 加载ELF 文件是一个很复杂的过程，涉及到ELF文件解析、重定位、符号解析、依赖库加载等。 </p>
+<p>Python 可以使用elftools库解析ELF 文件。elftools安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pyelftools</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-1-映射ELF文件"><a href="#2-3-1-映射ELF文件" class="headerlink" title="2.3.1 映射ELF文件"></a>2.3.1 映射ELF文件</h3><p>ELF 文件有两种视图，链接视图和执行视图。elftools 是基于链接视图解析ELF格式的，然而现在有一些ELF文件的section信息是被抹掉的。</p>
+<p>加载ELF文件第一步需要将ELF文件映射到内存。如何映射呢？只需要找到类型为PT_LOAD的segment，按照segment的信息映射即可。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># - LOAD (determinate what parts of the ELF file get mapped into memory)</span></span><br><span class="line">load_segments = [x <span class="keyword">for</span> x <span class="keyword">in</span> elf.iter_segments() <span class="keyword">if</span> x.header.p_type == <span class="string">&#x27;PT_LOAD&#x27;</span>]</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> segment <span class="keyword">in</span> load_segments:</span><br><span class="line">    prot = UC_PROT_ALL</span><br><span class="line">    self.emu.memory.mem_map(load_base + segment.header.p_vaddr, segment.header.p_memsz, prot)</span><br><span class="line">    self.emu.memory.mem_write(load_base + segment.header.p_vaddr, segment.data())</span><br></pre></td></tr></table></figure>
+<h1 id="3-Frida"><a href="#3-Frida" class="headerlink" title="3. Frida"></a>3. Frida</h1><p>在Windows上安装好Frida-tools和Frida后，在安卓上安装Frida-server。首先要准备好你的安卓机，真机、模拟器都可以，还需要<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44903147/article/details/104065844">adb工具包</a>。使用adb查看和连接安卓设备，查看安卓设备的架构类型。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\v5le0n9\Downloads\platform-tools_r33.0.2-windows&gt;adb devices</span><br><span class="line">List of devices attached</span><br><span class="line">192.168.24.101:5555     device</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">C:\Users\v5le0n9\Downloads\platform-tools_r33.0.2-windows&gt;adb shell</span><br><span class="line">vbox86p:/ # getprop ro.product.cpu.abi</span><br><span class="line">x86</span><br><span class="line">vbox86p:/ #</span><br></pre></td></tr></table></figure>
+<p>查看Frida在Windows上的版本，从 <a target="_blank" rel="noopener" href="https://github.com/frida/frida/releases">https://github.com/frida/frida/releases</a> 下载对应Frida版本和对应安卓架构的Frida-server。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\v5le0n9&gt;frida --version</span><br><span class="line">15.2.2</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://github.com/frida/frida/releases/download/15.2.2/frida-server-15.2.2-android-x86.xz">frida-server-15.2.2-android-x86.xz</a></p>
+<p>解压后进入到存放Frida-server目录，Shift + 右键打开Powershell。运行以下命令将Frida-server上传到安卓设备的/data/local/tmp目录下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\v5le0n9\Downloads&gt; adb push .\frida-server-15.2.2-android-x86 /data/local/tmp</span><br><span class="line">.\frida-server-15.2.2-android-x86: 1 file pushed, 0 skipped. 206.2 MB/s (46387888 bytes in 0.215s)</span><br><span class="line">PS C:\Users\v5le0n9\Downloads&gt;</span><br></pre></td></tr></table></figure>
+<p>将安卓设备中的Frida-server赋予777权限并运行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vbox86p:/ # cd /data/local/tmp</span><br><span class="line">vbox86p:/data/local/tmp # chmod 777 frida-server-15.2.2-android-x86</span><br><span class="line">vbox86p:/data/local/tmp # ./frida-server-15.2.2-android-x86</span><br></pre></td></tr></table></figure>
+<p>在Powershell中输入以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">frida-ps -U</span><br></pre></td></tr></table></figure>
+<p>如果存在<code>android.process.acore</code>等信息表示Windows和安卓设备的Frida框架搭建成功。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="v5le0n9 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="v5le0n9 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/187bfa35.html" rel="prev" title="ELF文件格式">
+      <i class="fa fa-chevron-left"></i> ELF文件格式
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-MobSF"><span class="nav-text">1. MobSF</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="nav-text">1.1 基本信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E6%89%AB%E6%8F%8F%E4%BF%A1%E6%81%AF%E5%92%8C%E5%8F%8D%E7%BC%96%E8%AF%91%E4%BB%A3%E7%A0%81"><span class="nav-text">1.2 扫描信息和反编译代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E7%AD%BE%E5%90%8D%E8%80%85%E8%AF%81%E4%B9%A6"><span class="nav-text">1.3 签名者证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E6%9D%83%E9%99%90%E4%BF%A1%E6%81%AF"><span class="nav-text">1.4 权限信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-%E5%AE%89%E5%8D%93API"><span class="nav-text">1.5 安卓API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-6-Browsable-Activities"><span class="nav-text">1.6 Browsable Activities</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-7-%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90"><span class="nav-text">1.7 安全分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Unicorn"><span class="nav-text">2. Unicorn</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Unicorn%E7%9A%84%E7%BC%96%E5%86%99"><span class="nav-text">2.1 Unicorn的编写</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E5%B9%B6%E5%8A%A0%E8%BD%BD%E6%A8%A1%E6%8B%9F%E6%89%A7%E8%A1%8C%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="nav-text">2.1.1 设置参数并加载模拟执行的代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-%E6%B7%BB%E5%8A%A0%E6%8C%87%E4%BB%A4%E7%BA%A7%E7%9A%84Hook"><span class="nav-text">2.1.2 添加指令级的Hook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3-%E5%90%AF%E5%8A%A8%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-text">2.1.3 启动虚拟机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-4-%E8%8E%B7%E5%8F%96%E5%92%8C%E4%BF%AE%E6%94%B9%E5%AF%84%E5%AD%98%E5%99%A8%E5%86%85%E5%AE%B9"><span class="nav-text">2.1.4 获取和修改寄存器内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-5-%E4%B8%8A%E8%BF%B0%E6%A0%B7%E4%BE%8B%E7%9A%84%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="nav-text">2.1.5 上述样例的完整代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-Capstone%E5%8F%8D%E6%B1%87%E7%BC%96"><span class="nav-text">2.2 Capstone反汇编</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-Capstone%E4%BE%8B%E5%AD%90"><span class="nav-text">2.2.1 Capstone例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-UnicornDebbuger%E8%B0%83%E8%AF%95%E5%99%A8"><span class="nav-text">2.2.2 UnicornDebbuger调试器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-Unicorn%E8%B0%83%E7%94%A8so%E4%B9%8B%E5%8A%A0%E8%BD%BD%E6%A8%A1%E5%9D%97"><span class="nav-text">2.3 Unicorn调用so之加载模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-%E6%98%A0%E5%B0%84ELF%E6%96%87%E4%BB%B6"><span class="nav-text">2.3.1 映射ELF文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Frida"><span class="nav-text">3. Frida</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="v5le0n9"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">v5le0n9</p>
+  <div class="site-description" itemprop="description">v5le0n9's garden</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/Leong_Vinson" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;Leong_Vinson" rel="noopener" target="_blank"><i class="fab fa-cuttlefish fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/v5le0n9" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;v5le0n9" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:v5le0n9@163.com" title="E-Mail → mailto:v5le0n9@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">v5le0n9</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">15:52</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '7c58e80079a2457b610d',
+      clientSecret: 'fc16b1b0fdfb278016ebe41c20f3743c3c927466',
+      repo        : 'comments.github.io',
+      owner       : 'v5le0n9',
+      admin       : ['v5le0n9'],
+      id          : '2b04ba83a1b9df2e5399266154d467bb',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

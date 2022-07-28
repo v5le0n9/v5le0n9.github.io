@@ -37,12 +37,27 @@
 <meta property="og:image" content="http://example.com/posts/4dec66bb/5.3.5.png">
 <meta property="og:image" content="http://example.com/posts/4dec66bb/5.3.6.png">
 <meta property="og:image" content="http://example.com/posts/4dec66bb/5.3.7.png">
+<meta property="og:image" content="http://example.com/posts/4dec66bb/5.3.8.png">
+<meta property="og:image" content="http://example.com/posts/4dec66bb/5.3.9.png">
+<meta property="og:image" content="http://example.com/posts/4dec66bb/5.3.10.png">
+<meta property="og:image" content="http://example.com/posts/4dec66bb/5.3.11.png">
+<meta property="og:image" content="http://example.com/posts/4dec66bb/5.3.12.png">
+<meta property="og:image" content="http://example.com/posts/4dec66bb/5.3.13.png">
+<meta property="og:image" content="http://example.com/posts/4dec66bb/5.3.14.png">
+<meta property="og:image" content="http://example.com/posts/4dec66bb/5.3.15.jpg">
+<meta property="og:image" content="http://example.com/posts/4dec66bb/5.3.16.png">
+<meta property="og:image" content="http://example.com/posts/4dec66bb/5.3.17.png">
+<meta property="og:image" content="http://example.com/posts/4dec66bb/5.3.18.png">
+<meta property="og:image" content="http://example.com/posts/4dec66bb/5.3.19.png">
 <meta property="og:image" content="http://example.com/posts/4dec66bb/%E5%AF%BC%E5%87%BA%E8%A1%A8%E7%9B%B8%E4%BA%92%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="http://example.com/posts/4dec66bb/5.4.1.png">
+<meta property="og:image" content="http://example.com/posts/4dec66bb/5.4.2.png">
+<meta property="og:image" content="http://example.com/posts/4dec66bb/5.4.3.png">
 <meta property="og:image" content="http://example.com/posts/4dec66bb/%E8%B5%84%E6%BA%90%E6%A0%91%E5%BD%A2%E7%BB%93%E6%9E%84.png">
 <meta property="og:image" content="http://example.com/posts/4dec66bb/%E8%B5%84%E6%BA%90%E7%9B%AE%E5%BD%95.png">
 <meta property="og:image" content="http://example.com/posts/4dec66bb/PE%E7%BB%93%E6%9E%84.png">
 <meta property="article:published_time" content="2022-05-17T06:31:06.671Z">
-<meta property="article:modified_time" content="2022-07-22T14:20:35.400Z">
+<meta property="article:modified_time" content="2022-07-26T14:38:33.563Z">
 <meta property="article:author" content="v5le0n9">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/posts/4dec66bb/PE%E6%96%87%E4%BB%B6%E6%A1%86%E6%9E%B6%E7%BB%93%E6%9E%84.jpg">
@@ -234,7 +249,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-22 22:20:35" itemprop="dateModified" datetime="2022-07-22T22:20:35+08:00">2022-07-22</time>
+                <time title="修改时间：2022-07-26 22:38:33" itemprop="dateModified" datetime="2022-07-26T22:38:33+08:00">2022-07-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -259,14 +274,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>24k</span>
+              <span>26k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>22 分钟</span>
+              <span>23 分钟</span>
             </span>
 
         </div>
@@ -716,7 +731,7 @@ PointerOfRawData \le FOA\le PointerOfRawData + VirtualSize</script><ol>
 <li>FOA在内存中的偏移为RVA = <code>VirtualAddress</code> + RVA2。</li>
 </ol>
 <h2 id="5-3-输入表"><a href="#5-3-输入表" class="headerlink" title="5.3 输入表"></a>5.3 输入表</h2><h3 id="5-3-1-输入函数"><a href="#5-3-1-输入函数" class="headerlink" title="5.3.1 输入函数"></a>5.3.1 输入函数</h3><p>在代码分析或编程中经常遇到“输入函数”的概念，输入函数就是被程序调用但其执行代码又不在程序中的函数，这些函数的代码位于相关的DLL文件中，在调用者程序中只保留相关的函数信息(如函数名、DLL文件名等)即可。对于磁盘上的PE文件来说，它无法得知这些输入函数在内存中的地址，只有当PE文件被装入内存后，Windows加载器才将相关DLL装入，并将调用输入函数的指令和函数实际所处的地址联系起来，这就是“动态链接”的概念。动态链接是通过PE文件中定义的“输入表”来完成的，输入表中保存的正是函数名和其驻留的DLL名等。</p>
-<h3 id="5-3-2-IMAGE-IMPORT-DESCRIPTOR"><a href="#5-3-2-IMAGE-IMPORT-DESCRIPTOR" class="headerlink" title="5.3.2 IMAGE_IMPORT_DESCRIPTOR"></a>5.3.2 IMAGE_IMPORT_DESCRIPTOR</h3><p>PE文件头的<code>IAMGE_OPTIONAL_HEADER</code>结构中的<code>DataDirectory</code>的第二个成员就是指向输入表。而输入表是以一个<code>IMAGE_IMPORT_DESCRIPTOR</code>(简称IID)的数组开始。每个被PE文件链接进来的DLL文件都分别对应一个IID数组结构。在这个IID数组中，并没有指出有多少个链接文件，但它<strong>最后是以一个全为0(NULL)的IID作为结束的标志</strong>。</p>
+<h3 id="5-3-2-IMAGE-IMPORT-DESCRIPTOR"><a href="#5-3-2-IMAGE-IMPORT-DESCRIPTOR" class="headerlink" title="5.3.2 IMAGE_IMPORT_DESCRIPTOR"></a>5.3.2 IMAGE_IMPORT_DESCRIPTOR</h3><p>PE文件头的<code>IAMGE_OPTIONAL_HEADER</code>结构中的<code>DataDirectory</code>数组的第二个元素就是指向输入表。而输入表是一个<code>IMAGE_IMPORT_DESCRIPTOR</code>(简称IID)数组。每个被PE文件链接进来的DLL文件都分别对应一个IID数组结构。在这个IID数组中，并没有指出有多少个链接文件，但它<strong>最后是以一个全为0(NULL)的IID作为结束的标志</strong>。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_IMPORT_DESCRIPTOR</span> &#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">union</span>&#123;</span><span class="comment">//共用体类型，共占同一个地址，分时用</span></span><br><span class="line">        DWORD	 Characteristics;</span><br><span class="line">        DWORD    OriginalFirstThunk;		<span class="comment">//指向输入名称表(INT)RVA的结构数组</span></span><br><span class="line">    &#125;;</span><br><span class="line">	DWORD     TimeDateStamp;</span><br><span class="line">	DWORD     ForwarderChain;</span><br><span class="line">	DWORD     Name;							<span class="comment">//指向被输入的DLL名称</span></span><br><span class="line">	DWORD     FirstThunk;					<span class="comment">//指向输入地址表(IAT)RVA，IAT是一个IMAGE_THUNK_DATA结构的数组</span></span><br><span class="line">&#125; IMAGE_IMPORT_DESCRIPTOR, *PIMAGE_IMPORT_DESCRIPTOR;</span><br></pre></td></tr></table></figure>
 <p>重要字段如下：</p>
 <ul>
@@ -732,7 +747,7 @@ PointerOfRawData \le FOA\le PointerOfRawData + VirtualSize</script><ol>
 <img src="/posts/4dec66bb/5.3.4.png" class="" title="导入表相互关系">
 <p>为什么会有两个一模一样的数组呢？<code>OriginalFirstThunk</code>指向的数组通常叫做hint-name table，即HNT ，它在 PE 加载到内存中时被保留了下来且永远不会被修改。但是在 Windows 加载过 PE 到内存之后，Windows 会重写<code>FirstThunk</code>所指向的数组元素中的内容，使得数组中每个<code>IMAGE_THUNK_DATA</code>元素不再表示指向带有函数描述的 <code>IMAGE_IMPORT_BY_NAME</code>数组元素，而是直接指向了函数地址。此时，<code>FirstThunk</code>所指向的数组就称之为输入地址表（Import Address Table ，即经常说的 IAT）。</p>
 <img src="/posts/4dec66bb/5.3.5.png" class="" title="输入地址表">
-<h3 id="5-3-6-查找导入表地址"><a href="#5-3-6-查找导入表地址" class="headerlink" title="5.3.6 查找导入表地址"></a>5.3.6 查找导入表地址</h3><p>让我们从头开始。编写一个EXE程序，里面只有两个API函数：<code>MessageBox()</code>和<code>SetWindowTextA()</code>。目的是找到导入表在PE文件中的地址和被加载进内存的地址。</p>
+<h3 id="5-3-6-查找导入表地址"><a href="#5-3-6-查找导入表地址" class="headerlink" title="5.3.6 查找导入表地址"></a>5.3.6 查找导入表地址</h3><p>让我们从头开始。编写一个EXE程序，里面只有两个API函数：<code>MessageBox()</code>和<code>SetWindowTextA()</code>。目的是找到导入表并且找到<code>MessageBox()</code>在PE文件中的地址和被加载进内存的地址。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> WINAPI <span class="title function_">WinMain</span><span class="params">(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, <span class="type">int</span> iCmdShow)</span></span><br><span class="line">&#123;</span><br><span class="line">	MessageBox(<span class="literal">NULL</span>, TEXT(<span class="string">&quot;这是我写的第一个程序&quot;</span>), TEXT(<span class="string">&quot;v5le0n9&quot;</span>), MB_OK);</span><br><span class="line">	SetWindowTextA(<span class="number">0</span>, <span class="string">&quot;hello&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>编译如果出现如下问题：</p>
@@ -741,17 +756,43 @@ PointerOfRawData \le FOA\le PointerOfRawData + VirtualSize</script><ol>
 <img src="/posts/4dec66bb/5.3.6.png" class="" title="VS2019设置属性">
 <img src="/posts/4dec66bb/5.3.7.png" class="" title="VS2019设置属性">
 </blockquote>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1us411P7nL?p=9">找到输入表在PE文件中的地址和被加载进内存的地址 空降18:38</a></p>
+<p>使用PEview查看PE文件结构。</p>
+<img src="/posts/4dec66bb/5.3.8.png" class="" title="PEview查看PE">
+<p>已知PE文件头的<code>IAMGE_OPTIONAL_HEADER</code>结构中的<code>DataDirectory</code>数组的第二个元素就是指向导入表。<code>IMAGE_DATA_DIRECTORY</code>数据类型中有两个成员，一个是数据块在内存中的偏移地址，另一个是数据块的大小。</p>
+<img src="/posts/4dec66bb/5.3.9.png" class="" title="PEview查看PE">
+<p>知道了导入表的RVA为0x1B1E4后，遍历<code>IMAGE_SECTION_HEADER</code>数组，最终找到导入表在idata这个区块中（0x1B000 &lt;= 0X1B1E4 &lt;= 0x1BB15）。所以RVA2=0x1E4。</p>
+<img src="/posts/4dec66bb/5.3.10.png" class="" title="PEview查看PE">
+<p>在PE文件中的偏移为0x8000，大小为0xC00。所以导入表在PE文件中的偏移为0x81E4。</p>
+<img src="/posts/4dec66bb/5.3.11.png" class="" title="PEview查看PE">
+<p>此时，导入表的地址已经找到了，接下来找<code>MessageBox()</code>的地址。</p>
+<p>从上图可知，该PE文件导入了4个DLL，每个对应一个IID，最后以一个空的IID结尾。已知<code>MessageBox()</code>函数在<code>USER32.DLL</code>中，所以应该在第一个IID里找。可以根据<code>OriginalFirstThunk</code>找，也可以根据<code>FirstThunk</code>找。无论哪个，它们都指向相同的数据类型<code>IMAGE_THUNK_DATA32</code>。</p>
+<p>我们先根据<code>OriginalFirstThunk</code>找。<code>OriginalFirstThunk</code>的值为0x1B2E0，即表示INT的<code>IMAGE_THUNK_DATA32</code>结构数组首地址。该RVA也在idata块中，所以<code>IMAGE_THUNK_DATA32</code>数组在PE文件偏移为0x82E0的地方。</p>
+<img src="/posts/4dec66bb/5.3.12.png" class="" title="PEview查看PE">
+<p>可以看到有3个<code>IMAGE_THUNK_DATA32</code>型变量，最后一个为空表示结尾。<code>IMAGE_THUNK_DATA32</code>只占4个字节，当双字字节的最高位为0时，表示函数以字符串类型的函数名方式输入，这时双字的值是一个RVA，指向一个<code>IMAGE_IMPORT_BY_NAME</code>结构。我们找的是<code>MessageBox()</code>函数的地址，所以应找RVA为0x1B43E相对于PE文件的偏移。该RVA也在idata中，所以表示<code>MessageBox()</code>函数的<code>IMAGE_IMPORT_BY_NAME</code>结构在PE中的偏移为0x843E。</p>
+<img src="/posts/4dec66bb/5.3.13.png" class="" title="PEview查看PE">
+<p>再根据<code>FirstThunk</code>找。<code>IMAGE_THUNK_DATA32</code>的偏移在0x8098。</p>
+<img src="/posts/4dec66bb/5.3.14.png" class="" title="PEview查看PE">
+<p>代表<code>MessageBox()</code>函数的<code>IMAGE_IMPORT_BY_NAME</code>结构在0x843E。</p>
+<p>故在静态存放时，IAT和INT都是指向<code>IMAGE_IMPORT_BY_NAME</code>结构。</p>
+<p>那将它加载进内存，会有什么不一样呢？运行EXE程序，使用PE Tools将运行中的EXE程序全部dump下来。</p>
+<img src="/posts/4dec66bb/5.3.15.jpg" class="" title="PEToolsdump">
+<p><code>Dumped.exe</code>和<code>Project4.exe</code>有什么区别呢？<code>Dumped.exe</code>是<code>Project4.exe</code>通过Windows加载器加载进内存中之后，再按照内存大小1:1映射回磁盘的文件。</p>
+<img src="/posts/4dec66bb/5.3.16.png" class="" title="区别">
+<p>用PEview查看<code>Dumped.exe</code>，重复上述操作查看IAT和INT的指针。</p>
+<img src="/posts/4dec66bb/5.3.17.png" class="" title="PEview查看映像文件">
+<img src="/posts/4dec66bb/5.3.18.png" class="" title="PEview查看映像文件">
+<img src="/posts/4dec66bb/5.3.19.png" class="" title="PEview查看映像文件">
+<p>可以看出<code>MessageBox()</code>函数在内存中的真正地址为0x761410C0。</p>
 <h2 id="5-4-输出表"><a href="#5-4-输出表" class="headerlink" title="5.4 输出表"></a>5.4 输出表</h2><p>当PE文件被执行的时候，Windows加载器将文件装入内存并将导入表登记的动态链接库(一般是DLL格式)文件一并装入地址空间，再根据DLL文件中的函数导出信息，对可执行文件的IAT进行修正。</p>
 <p>动态链接库是被映射到其它应用程序的地址空间中执行的，它和应用程序可以看成是“一体”的，动态链接库可以使用应用程序的资源，它所拥有的资源也可以被应用程序使用，它的任何操作都是代表应用程序进行的，当动态链接库进行打开文件、分配内存和创建窗口等操作后，这些文件、内存和窗口都是为应用程序所拥有的。</p>
-<p>导出表就是记载着动态链接库的一些导出信息。通过导出表，DLL 文件可以向系统提供导出函数的名称、序号和入口地址等信息，比便Windows 加载器通过这些信息来完成动态连接的整个过程。</p>
+<p>导出表就是记载着动态链接库的一些导出信息。通过导出表，DLL 文件可以向系统提供导出函数的名称、序号和入口地址等信息，以便Windows 加载器通过这些信息来完成动态连接的整个过程。</p>
 <p>注意：扩展名为<code>.exe</code>的PE文件一般不存在导出表，而大部分的<code>.dll</code>文件中都包含导出表。但注意，这并不是绝对。比如纯粹用作资源的<code>.dll</code>文件不需要导出函数，有些特殊功能的<code>.exe</code>文件也会存在导出函数。</p>
 <h3 id="5-4-1-导出表结构"><a href="#5-4-1-导出表结构" class="headerlink" title="5.4.1 导出表结构"></a>5.4.1 导出表结构</h3><p>PE文件头的<code>IAMGE_OPTIONAL_HEADER</code>结构中的<code>DataDirectory</code>的第一个成员就是指向导出表。导出表是用来描述模块中的导出函数的结构，如果一个模块导出了函数，那么这个函数会被记录在导出表中，这样通过<code>GetProcAddress()</code>函数就能动态获取到函数的地址。函数导出的方式有两种，一种是按名字导出，一种是按序号导出。这两种导出方式在导出表中的描述方式也不相同。</p>
-<p>导出表（Export Table）中的主要成分是一个表格，内含函数名称、输出序数等。序数是指定DLL 中某个函数的16位数字，在所指向的DLL 文件中是独一无二的。在此不提倡仅仅通过序数来索引函数的方法，这样会给DLL 文件的维护带来问题。例如当DLL 文件一旦升级或修改就可能导致调用改DLL 的程序无法加载到需要的函数。</p>
+<p>导出表（Export Table）中的主要成分是一个表格，内含函数名称、输出序数等。序数是指定DLL 中某个函数的16位数字，在所指向的DLL 文件中是独一无二的。在此不提倡仅仅通过序数来索引函数的方法，这样会给DLL 文件的维护带来问题。例如当DLL 文件一旦升级或修改就可能导致调用该DLL 的程序无法加载到需要的函数。</p>
 <h3 id="5-4-2-IMAGE-EXPORT-DIRECTORY"><a href="#5-4-2-IMAGE-EXPORT-DIRECTORY" class="headerlink" title="5.4.2 IMAGE_EXPORT_DIRECTORY"></a>5.4.2 IMAGE_EXPORT_DIRECTORY</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_EXPORT_DIRECTORY</span> &#123;</span></span><br><span class="line">    DWORD   Characteristics;	<span class="comment">//未使用，总是定义为0</span></span><br><span class="line">    DWORD   TimeDateStamp;		<span class="comment">//文件生成时间</span></span><br><span class="line">    WORD    MajorVersion;		<span class="comment">//未使用，总是定义为0</span></span><br><span class="line">    WORD    MinorVersion;		<span class="comment">//未使用，总是定义为0</span></span><br><span class="line">    DWORD   Name;					<span class="comment">//模块名字</span></span><br><span class="line">    DWORD   Base;					<span class="comment">//基数，加上序数就是函数地址数组的索引值</span></span><br><span class="line">    DWORD   NumberOfFunctions;		<span class="comment">//所有导出函数的数量</span></span><br><span class="line">    DWORD   NumberOfNames;			<span class="comment">//按名字导出函数的数量</span></span><br><span class="line">    DWORD   AddressOfFunctions;     <span class="comment">//指向输出函数地址的RVA</span></span><br><span class="line">    DWORD   AddressOfNames;         <span class="comment">//指向输出函数名字的RVA</span></span><br><span class="line">    DWORD   AddressOfNameOrdinals;  <span class="comment">//指向输出函数序号的RVA</span></span><br><span class="line">&#125; IMAGE_EXPORT_DIRECTORY, *PIMAGE_EXPORT_DIRECTORY;</span><br></pre></td></tr></table></figure>
 <p>重要字段说明如下：</p>
 <ul>
-<li><p>Name：一个RVA 值，指向一个定义了模块名称的字符串。如即使Kernel32.dll 文件被改名为”Ker.dll”，仍然可以从这个字符串中的值得知其在编译时的文件名是”Kernel32.dll”。</p>
+<li><p>Name：一个RVA 值，指向一个定义了模块名称的字符串。如即使<code>Kernel32.dll</code>文件被改名为<code>Ker.dll</code>，仍然可以从这个RVA值得知其在编译时的文件名是<code>Kernel32.dll</code>。</p>
 </li>
 <li><p>NumberOfFunctions：文件中包含的导出函数的总数。</p>
 </li>
@@ -759,10 +800,10 @@ PointerOfRawData \le FOA\le PointerOfRawData + VirtualSize</script><ol>
 </li>
 <li><p>AddressOfFunctions：一个RVA 值，指向包含全部导出函数入口地址的双字数组。数组中的每一项是一个RVA 值，数组的项数等于<code>NumberOfFunctions</code>字段的值。</p>
 </li>
-<li><p>Base：导出函数序号的起始值，将<code>AddressOfFunctions</code>字段指向的入口地址表的索引号加上这个起始值就是对应函数的导出序号。</p>
+<li><p>Base：导出函数序号的起始值，将<code>AddressOfFunctions</code>字段指向的入口地址表的索引加上这个起始值就是对应函数的导出序号。</p>
 <p>假如Base 字段的值为x，那么入口地址表指定的第1个导出函数的序号就是x；第2个导出函数的序号就是x＋1。总之，一个导出函数的导出序号等于Base 字段的值加上其在入口地址表中的位置索引值。</p>
 </li>
-<li><p>AddressOfNames 和 AddressOfNameOrdinals：均为RVA 值。前者指向函数名字符串地址表。这个地址表是一个双字数组，数组中的每一项指向一个函数名称字符串的RVA。数组的项数等于<code>NumberOfNames</code>字段的值，所有有名称的导出函数的名称字符串都定义在这个表中；后者指向另一个word 类型的数组（注意不是双字数组）。数组项目与文件名地址表中的项目一一对应，项目值代表函数入口地址表的索引，这样函数名称与函数入口地址关联起来。</p>
+<li><p>AddressOfNames 和 AddressOfNameOrdinals：均为RVA 值。前者指向函数名字符串地址表。这个地址表是一个双字数组，数组中的每一项指向一个函数名称字符串的RVA。数组的项数等于<code>NumberOfNames</code>字段的值，所有有名称的导出函数的名称字符串都定义在这个表中；后者指向一个word 类型的数组，数组项目与文件名地址表中的项目一一对应，项目值代表函数入口地址表的索引，这样函数名称与函数入口地址关联起来。</p>
 <p>假如函数名称字符串地址表的第n项指向一个字符串“MyFunction”，那么可以去查找<code>AddressOfNameOrdinals</code>指向的数组的第n项，假如第n项中存放的值是x，则表示<code>AddressOfFunctions</code>字段描述的地址表中的第x项函数入口地址对应的名称就是“MyFunction”。</p>
 </li>
 </ul>
@@ -785,6 +826,13 @@ PointerOfRawData \le FOA\le PointerOfRawData + VirtualSize</script><ol>
 <li>最后，以 x 值作为索引值，在<code>AddressOfFunctions</code>字段指向的函数入口地址表中获取的 RVA 就是函数的入口地址</li>
 </ol>
 <p>一般情况下病毒程序就是通过函数名称查找入口地址的，因为病毒程序作为一段额外的代码被附加到可执行文件中的，如果病毒代码中用到某些 API 的话，这些 API 的地址不可能在宿主文件的导出表中为病毒代码准备好。因此只能通过在内存中动态查找的方法来实现获取 API 的地址。</p>
+<h3 id="5-4-4-查找函数入口地址例子"><a href="#5-4-4-查找函数入口地址例子" class="headerlink" title="5.4.4 查找函数入口地址例子"></a>5.4.4 查找函数入口地址例子</h3><p>比如我们用<code>user32.dll</code>作为研究对象。DLL程序不能直接双击运行，如果想要单纯把它加载进内存，可以在“运行”(徽标键 + R)中输入<code>rundll32.exe C:\Users\Dell\Desktop\user32.dll</code>。</p>
+<p>当然，我们查找函数入口地址不需要将它加载进内存，只需载入PEview分析。注意，PEview只支持查看在IAT/INT中前32个导入的DLL。</p>
+<p>首先在<code>IMAGE_OPTIONAL_HEADER32</code>中得到导出表的RVA，为0x9D5B0。</p>
+<img src="/posts/4dec66bb/5.4.1.png" class="" title="导出表RVA">
+<p>遍历区块表，可知导出表在text区块中。RVA2=0x9D5B0-0x1000=0x9C5B0，导出表的FOA=0x400+0x9C5B0=0x9C9B0。</p>
+<img src="/posts/4dec66bb/5.4.2.png" class="" title="导出表RVA">
+<img src="/posts/4dec66bb/5.4.3.png" class="" title="导出表RVA">
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1us411P7nL?p=10">找到PE文件中输出表的导出函数地址 空降23:05</a></p>
 <h2 id="5-5-基址重定位"><a href="#5-5-基址重定位" class="headerlink" title="5.5 基址重定位"></a>5.5 基址重定位</h2><p>链接器生成一个PE文件时，它会假设程序被装入时使用的默认<code>ImageBase</code>基地址（VC默认EXE基地址00400000h，DLL基地址10000000h），并且会把代码中所有指令中用到的地址都使用默认的基地址（例如程序代码中 push 10001000，就是把10000000h当做了基地址，把push 10001000写入到文件中）。如果一个EXE程序中一个DLL装载时的地址与其它DLL地址发生冲突（因为Windows程序是虚拟地址空间，EXE一般不会有地址冲突，加载DLL时可能会有地址冲突），就需要修改代码中的地址，这时就需要进行基址重定位。</p>
 <p>凡是涉及到直接寻址的指令都需要进行重定位处理，如push 10001000，call 10002000等。假设重定位后的基地址由原来的10000000h变为20000000h，那么push 10001000应该改成push 20001000。</p>
@@ -985,7 +1033,7 @@ PointerOfRawData \le FOA\le PointerOfRawData + VirtualSize</script><ol>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-PE%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">1. PE的基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-MS-DOS%E5%A4%B4%E9%83%A8"><span class="nav-text">2. MS-DOS头部</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-IMAGE-DOS-HEADER"><span class="nav-text">2.1 IMAGE_DOS_HEADER</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-PE%E6%96%87%E4%BB%B6%E5%A4%B4"><span class="nav-text">3. PE文件头</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-IMAGE-NT-HEADERS"><span class="nav-text">3.1 IMAGE_NT_HEADERS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-IMAGE-FILE-HEADER"><span class="nav-text">3.2 IMAGE_FILE_HEADER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-IMAGE-OPTIONAL-HEADER32"><span class="nav-text">3.3 IMAGE_OPTIONAL_HEADER32</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-IMAGE-DATA-DIRECTORY"><span class="nav-text">3.4 IMAGE_DATA_DIRECTORY</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E5%8C%BA%E5%9D%97%E8%A1%A8-%E8%8A%82%E8%A1%A8"><span class="nav-text">4. 区块表(节表)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-PE%E6%96%87%E4%BB%B6%E5%88%B0%E5%86%85%E5%AD%98%E7%9A%84%E6%98%A0%E5%B0%84"><span class="nav-text">4.1 PE文件到内存的映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-%E8%8A%82%E8%A1%A8"><span class="nav-text">4.2 节表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-IMAGE-SECTION-HEADER"><span class="nav-text">4.3 IMAGE_SECTION_HEADER</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E5%8C%BA%E5%9D%97-%E8%8A%82"><span class="nav-text">5. 区块(节)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-%E5%8C%BA%E5%9D%97%E7%9A%84%E5%AF%B9%E9%BD%90"><span class="nav-text">5.1 区块的对齐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%80%BB5-2-RVA%E5%88%B0FOA%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="nav-text">※5.2 RVA到FOA的转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-%E8%BE%93%E5%85%A5%E8%A1%A8"><span class="nav-text">5.3 输入表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-1-%E8%BE%93%E5%85%A5%E5%87%BD%E6%95%B0"><span class="nav-text">5.3.1 输入函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-2-IMAGE-IMPORT-DESCRIPTOR"><span class="nav-text">5.3.2 IMAGE_IMPORT_DESCRIPTOR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-3-IMAGE-THUNK-DATA32"><span class="nav-text">5.3.3 IMAGE_THUNK_DATA32</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-4-IMAGE-IMPORT-BY-NAME"><span class="nav-text">5.3.4 IMAGE_IMPORT_BY_NAME</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%BB5-3-5-%E8%BE%93%E5%85%A5%E5%9C%B0%E5%9D%80%E8%A1%A8-IAT"><span class="nav-text">※5.3.5 输入地址表(IAT)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-6-%E6%9F%A5%E6%89%BE%E5%AF%BC%E5%85%A5%E8%A1%A8%E5%9C%B0%E5%9D%80"><span class="nav-text">5.3.6 查找导入表地址</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-%E8%BE%93%E5%87%BA%E8%A1%A8"><span class="nav-text">5.4 输出表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-1-%E5%AF%BC%E5%87%BA%E8%A1%A8%E7%BB%93%E6%9E%84"><span class="nav-text">5.4.1 导出表结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-2-IMAGE-EXPORT-DIRECTORY"><span class="nav-text">5.4.2 IMAGE_EXPORT_DIRECTORY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%BB5-4-3-%E6%9F%A5%E6%89%BE%E5%87%BD%E6%95%B0%E5%85%A5%E5%8F%A3%E5%9C%B0%E5%9D%80"><span class="nav-text">※5.4.3 查找函数入口地址</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-4-3-1-%E4%BB%8E%E5%BA%8F%E5%8F%B7%E6%9F%A5%E6%89%BE%E5%87%BD%E6%95%B0%E5%85%A5%E5%8F%A3%E5%9C%B0%E5%9D%80"><span class="nav-text">5.4.3.1 从序号查找函数入口地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-4-3-2-%E4%BB%8E%E5%87%BD%E6%95%B0%E5%90%8D%E7%A7%B0%E6%9F%A5%E6%89%BE%E5%85%A5%E5%8F%A3%E5%9C%B0%E5%9D%80"><span class="nav-text">5.4.3.2 从函数名称查找入口地址</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-5-%E5%9F%BA%E5%9D%80%E9%87%8D%E5%AE%9A%E4%BD%8D"><span class="nav-text">5.5 基址重定位</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-5-1-IMAGE-BASE-RELOCATION"><span class="nav-text">5.5.1 IMAGE_BASE_RELOCATION</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-6-%E8%B5%84%E6%BA%90%E8%A1%A8"><span class="nav-text">5.6 资源表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-6-1-%E8%B5%84%E6%BA%90%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-text">5.6.1 资源目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-6-2-IMAGE-RESOURCE-DIRECTORY"><span class="nav-text">5.6.2 IMAGE_RESOURCE_DIRECTORY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-6-3-IMAGE-RESOURCE-DIRECTORY-ENTRY"><span class="nav-text">5.6.3 IMAGE_RESOURCE_DIRECTORY_ENTRY</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-6-3-1-%E7%AC%AC%E4%B8%80%E4%B8%AA%E8%81%94%E5%90%88%E4%BD%93"><span class="nav-text">5.6.3.1 第一个联合体</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-6-3-2-%E7%AC%AC%E4%BA%8C%E4%B8%AA%E8%81%94%E5%90%88%E4%BD%93"><span class="nav-text">5.6.3.2 第二个联合体</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-6-4-IMAGE-RESOURCE-DATA-ENTRY"><span class="nav-text">5.6.4 IMAGE_RESOURCE_DATA_ENTRY</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-PE%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">1. PE的基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-MS-DOS%E5%A4%B4%E9%83%A8"><span class="nav-text">2. MS-DOS头部</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-IMAGE-DOS-HEADER"><span class="nav-text">2.1 IMAGE_DOS_HEADER</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-PE%E6%96%87%E4%BB%B6%E5%A4%B4"><span class="nav-text">3. PE文件头</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-IMAGE-NT-HEADERS"><span class="nav-text">3.1 IMAGE_NT_HEADERS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-IMAGE-FILE-HEADER"><span class="nav-text">3.2 IMAGE_FILE_HEADER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-IMAGE-OPTIONAL-HEADER32"><span class="nav-text">3.3 IMAGE_OPTIONAL_HEADER32</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-IMAGE-DATA-DIRECTORY"><span class="nav-text">3.4 IMAGE_DATA_DIRECTORY</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E5%8C%BA%E5%9D%97%E8%A1%A8-%E8%8A%82%E8%A1%A8"><span class="nav-text">4. 区块表(节表)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-PE%E6%96%87%E4%BB%B6%E5%88%B0%E5%86%85%E5%AD%98%E7%9A%84%E6%98%A0%E5%B0%84"><span class="nav-text">4.1 PE文件到内存的映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-%E8%8A%82%E8%A1%A8"><span class="nav-text">4.2 节表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-IMAGE-SECTION-HEADER"><span class="nav-text">4.3 IMAGE_SECTION_HEADER</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E5%8C%BA%E5%9D%97-%E8%8A%82"><span class="nav-text">5. 区块(节)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-%E5%8C%BA%E5%9D%97%E7%9A%84%E5%AF%B9%E9%BD%90"><span class="nav-text">5.1 区块的对齐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%80%BB5-2-RVA%E5%88%B0FOA%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="nav-text">※5.2 RVA到FOA的转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-%E8%BE%93%E5%85%A5%E8%A1%A8"><span class="nav-text">5.3 输入表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-1-%E8%BE%93%E5%85%A5%E5%87%BD%E6%95%B0"><span class="nav-text">5.3.1 输入函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-2-IMAGE-IMPORT-DESCRIPTOR"><span class="nav-text">5.3.2 IMAGE_IMPORT_DESCRIPTOR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-3-IMAGE-THUNK-DATA32"><span class="nav-text">5.3.3 IMAGE_THUNK_DATA32</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-4-IMAGE-IMPORT-BY-NAME"><span class="nav-text">5.3.4 IMAGE_IMPORT_BY_NAME</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%BB5-3-5-%E8%BE%93%E5%85%A5%E5%9C%B0%E5%9D%80%E8%A1%A8-IAT"><span class="nav-text">※5.3.5 输入地址表(IAT)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-6-%E6%9F%A5%E6%89%BE%E5%AF%BC%E5%85%A5%E8%A1%A8%E5%9C%B0%E5%9D%80"><span class="nav-text">5.3.6 查找导入表地址</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-%E8%BE%93%E5%87%BA%E8%A1%A8"><span class="nav-text">5.4 输出表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-1-%E5%AF%BC%E5%87%BA%E8%A1%A8%E7%BB%93%E6%9E%84"><span class="nav-text">5.4.1 导出表结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-2-IMAGE-EXPORT-DIRECTORY"><span class="nav-text">5.4.2 IMAGE_EXPORT_DIRECTORY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%BB5-4-3-%E6%9F%A5%E6%89%BE%E5%87%BD%E6%95%B0%E5%85%A5%E5%8F%A3%E5%9C%B0%E5%9D%80"><span class="nav-text">※5.4.3 查找函数入口地址</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-4-3-1-%E4%BB%8E%E5%BA%8F%E5%8F%B7%E6%9F%A5%E6%89%BE%E5%87%BD%E6%95%B0%E5%85%A5%E5%8F%A3%E5%9C%B0%E5%9D%80"><span class="nav-text">5.4.3.1 从序号查找函数入口地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-4-3-2-%E4%BB%8E%E5%87%BD%E6%95%B0%E5%90%8D%E7%A7%B0%E6%9F%A5%E6%89%BE%E5%85%A5%E5%8F%A3%E5%9C%B0%E5%9D%80"><span class="nav-text">5.4.3.2 从函数名称查找入口地址</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-4-%E6%9F%A5%E6%89%BE%E5%87%BD%E6%95%B0%E5%85%A5%E5%8F%A3%E5%9C%B0%E5%9D%80%E4%BE%8B%E5%AD%90"><span class="nav-text">5.4.4 查找函数入口地址例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-5-%E5%9F%BA%E5%9D%80%E9%87%8D%E5%AE%9A%E4%BD%8D"><span class="nav-text">5.5 基址重定位</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-5-1-IMAGE-BASE-RELOCATION"><span class="nav-text">5.5.1 IMAGE_BASE_RELOCATION</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-6-%E8%B5%84%E6%BA%90%E8%A1%A8"><span class="nav-text">5.6 资源表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-6-1-%E8%B5%84%E6%BA%90%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-text">5.6.1 资源目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-6-2-IMAGE-RESOURCE-DIRECTORY"><span class="nav-text">5.6.2 IMAGE_RESOURCE_DIRECTORY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-6-3-IMAGE-RESOURCE-DIRECTORY-ENTRY"><span class="nav-text">5.6.3 IMAGE_RESOURCE_DIRECTORY_ENTRY</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-6-3-1-%E7%AC%AC%E4%B8%80%E4%B8%AA%E8%81%94%E5%90%88%E4%BD%93"><span class="nav-text">5.6.3.1 第一个联合体</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-6-3-2-%E7%AC%AC%E4%BA%8C%E4%B8%AA%E8%81%94%E5%90%88%E4%BD%93"><span class="nav-text">5.6.3.2 第二个联合体</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-6-4-IMAGE-RESOURCE-DATA-ENTRY"><span class="nav-text">5.6.4 IMAGE_RESOURCE_DATA_ENTRY</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -1001,7 +1049,7 @@ PointerOfRawData \le FOA\le PointerOfRawData + VirtualSize</script><ol>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1014,7 +1062,7 @@ PointerOfRawData \le FOA\le PointerOfRawData + VirtualSize</script><ol>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1070,7 +1118,7 @@ PointerOfRawData \le FOA\le PointerOfRawData + VirtualSize</script><ol>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">15:17</span>
+    <span title="站点阅读时长">15:52</span>
 </div>
 
         
