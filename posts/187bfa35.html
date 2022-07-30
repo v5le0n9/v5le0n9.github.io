@@ -28,18 +28,18 @@
 <meta property="og:site_name" content="v5le0n9&#39;s garden">
 <meta property="og:description" content="Android是基于Linux开发的，所以了解ELF格式对学习Android逆向和Linux逆向是必不可少的。 可执行与可链接格式 （Executable and Linkable Format，ELF），常被称为 ELF格式，是一种用于可执行文件、目标代码、共享库和核心转储（core dump）的标准文件格式，一般用于类Unix系统，比如Linux，Macox等。ELF 格式灵活性高、可扩展，并">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/posts/undefined/2.1.1.png">
-<meta property="og:image" content="http://example.com/posts/undefined/3.1.1.jpg">
-<meta property="og:image" content="http://example.com/posts/undefined/3.1.2.png">
-<meta property="og:image" content="http://example.com/posts/undefined/3.2.1.png">
-<meta property="og:image" content="http://example.com/posts/undefined/3.3.1.png">
-<meta property="og:image" content="http://example.com/posts/undefined/3.4.1.png">
-<meta property="og:image" content="http://example.com/posts/undefined/4.1.1.png">
+<meta property="og:image" content="http://example.com/posts/187bfa35/2.1.1.png">
+<meta property="og:image" content="http://example.com/posts/187bfa35/3.1.1.jpg">
+<meta property="og:image" content="http://example.com/posts/187bfa35/3.1.2.png">
+<meta property="og:image" content="http://example.com/posts/187bfa35/3.2.1.png">
+<meta property="og:image" content="http://example.com/posts/187bfa35/3.3.1.png">
+<meta property="og:image" content="http://example.com/posts/187bfa35/3.4.1.png">
+<meta property="og:image" content="http://example.com/posts/187bfa35/4.1.1.png">
 <meta property="article:published_time" content="2022-07-28T14:18:08.185Z">
-<meta property="article:modified_time" content="2022-07-28T14:35:57.709Z">
+<meta property="article:modified_time" content="2022-07-28T14:36:34.088Z">
 <meta property="article:author" content="v5le0n9">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/posts/undefined/2.1.1.png">
+<meta name="twitter:image" content="http://example.com/posts/187bfa35/2.1.1.png">
 
 <link rel="canonical" href="http://example.com/posts/187bfa35.html">
 
@@ -222,7 +222,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-07-28 22:18:08 / 修改时间：22:35:57" itemprop="dateCreated datePublished" datetime="2022-07-28T22:18:08+08:00">2022-07-28</time>
+              <time title="创建时间：2022-07-28 22:18:08 / 修改时间：22:36:34" itemprop="dateCreated datePublished" datetime="2022-07-28T22:18:08+08:00">2022-07-28</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -281,9 +281,9 @@
 <li><p>如果用于<strong>加载执行</strong>（可执行文件），则<strong>加载器</strong>则将把ELF文件看作是程序头表描述的段的集合，一个段可能包含多个节，节头表可选。</p>
 </li>
 </ol>
-<img src="/posts/undefined/2.1.1.png" class="" title="链接阶段和执行阶段">
+<img src="/posts/187bfa35/2.1.1.png" class="" title="链接阶段和执行阶段">
 <h1 id="3-ELF文件格式"><a href="#3-ELF文件格式" class="headerlink" title="3. ELF文件格式"></a>3. ELF文件格式</h1><p>ELF文件由4部分组成，分别是ELF头（ELF header）、程序头表（Program header table）、节（Section）和节头表（Section header table）。实际上，一个文件中不一定包含全部内容，而且它们的位置也未必如图所示这样安排，只有ELF头的位置是固定的，其余各部分的位置、大小等信息由ELF头中的各项值来决定。</p>
-<img src="/posts/undefined/3.1.1.jpg" class="" title="ELF文件格式">
+<img src="/posts/187bfa35/3.1.1.jpg" class="" title="ELF文件格式">
 <h2 id="3-1-ELF文件头"><a href="#3-1-ELF文件头" class="headerlink" title="3.1 ELF文件头"></a>3.1 ELF文件头</h2><p>ELF文件头描述了ELF文件的基本类型、地址偏移等信息，分为32bit和64bit两个版本，定义于Linux源码的<code>/usr/include/elf.h</code>文件中。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> EI_NIDENT	16</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">elf32_hdr</span>&#123;</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">char</span>	e_ident[EI_NIDENT];<span class="comment">//ELF文件的描述，是一个16字节的标识，表明当前文件的数据格式、位数等【重要】</span></span><br><span class="line">  Elf32_Half	e_type;<span class="comment">//文件的标识字段标识文件的类型【重要】</span></span><br><span class="line">  Elf32_Half	e_machine;<span class="comment">//目标文件的体系结构</span></span><br><span class="line">  Elf32_Word	e_version;<span class="comment">//目标文件的体系结构版本</span></span><br><span class="line">  Elf32_Addr	e_entry;<span class="comment">//程序的虚拟入口地址，如果文件没有对应的入口可以为0【重要】</span></span><br><span class="line">  Elf32_Off		e_phoff;<span class="comment">//文件中程序头表的偏移(bytes)，如果文件没有该项，则应该为0【重要】</span></span><br><span class="line">  Elf32_Off		e_shoff;<span class="comment">//文件中段表/节表的偏移(bytes)，如果文件没有该项，则应该为0【重要】</span></span><br><span class="line">  Elf32_Word	e_flags;<span class="comment">//处理器相关的标志位，宏格式为EF_machine_flags比如EF_MIPS_PIC</span></span><br><span class="line">  Elf32_Half	e_ehsize;<span class="comment">//ELF文件头的大小(bytes)【重要】</span></span><br><span class="line">  Elf32_Half	e_phentsize;<span class="comment">//程序头表中单项的大小，表中每一项的大小相同</span></span><br><span class="line">  Elf32_Half	e_phnum;<span class="comment">//程序头表中的项数，也就是说程序头表的实际大小为ephentsize × e_phnum，如果文件中没有程序头表该项为0</span></span><br><span class="line">  Elf32_Half	e_shentsize;<span class="comment">//节表中单项的大小，表中每一项的大小相同</span></span><br><span class="line">  Elf32_Half	e_shnum;<span class="comment">//节表中项的数量</span></span><br><span class="line">  Elf32_Half	e_shstrndx;<span class="comment">//节表中节名的索引，如果文件没有该表则该项为SHN_UNDEF(0)</span></span><br><span class="line">&#125; Elf32_Ehdr;</span><br></pre></td></tr></table></figure>
 <p>数据类型说明：</p>
@@ -333,7 +333,7 @@
 <p>64bit和32bit仅仅只是字长的区别，字段上没有实际上的差别。</p>
 <p>某些成员的相关参数：</p>
 <p><code>e_ident[EI_NIDENT]</code>：ELF文件的描述，是一个16字节的标识，表明当前文件的数据格式、位数等。</p>
-<img src="/posts/undefined/3.1.2.png" class="" title="e_iden[EI_NIDENT]">
+<img src="/posts/187bfa35/3.1.2.png" class="" title="e_iden[EI_NIDENT]">
 <ul>
 <li>前4字节为魔数，取值为固定的0x7F454C46，标记当前文件为一个ELF文件。</li>
 <li>第5个字节表明当前文件类别：0表示非法，1表示32bit，2表示64bit。</li>
@@ -488,7 +488,7 @@
 </tbody>
 </table>
 </div>
-<img src="/posts/undefined/3.2.1.png" class="" title="程序头表">
+<img src="/posts/187bfa35/3.2.1.png" class="" title="程序头表">
 <h2 id="3-3-节头表"><a href="#3-3-节头表" class="headerlink" title="3.3 节头表"></a>3.3 节头表</h2><p>节头表描述了ELF文件中的节的基本信息。可执行文件不一定有节头表但是一定有节，节头表可利用特殊的方式去除。节头表是也是一个结构数组，每个元素描述了不同的节。</p>
 <p>段和节的区别是：</p>
 <ul>
@@ -595,7 +595,7 @@
 </tbody>
 </table>
 </div>
-<img src="/posts/undefined/3.3.1.png" class="" title="节头表">
+<img src="/posts/187bfa35/3.3.1.png" class="" title="节头表">
 <h3 id="3-3-1-一些特殊的节"><a href="#3-3-1-一些特殊的节" class="headerlink" title="3.3.1 一些特殊的节"></a>3.3.1 一些特殊的节</h3><p>ELF文件中用一些预定义的节来保存程序、数据和一些控制信息，这些节被用来链接或者装载程序。每个操作系统都支持一组链接模式，主要分为两类（也就是常说的动态库和静态库）：</p>
 <ul>
 <li>Static：静态绑定的一组目标文件、系统库和库档案（比如静态库），解析包含的符号引用并创建一个完全自包含的可执行文件；</li>
@@ -626,7 +626,7 @@
 <p><code>.relaname</code>，类型<code>SHT_RELA</code>：同relname。</p>
 <p>其它：对于C++程序有些版本会有<code>.ctors</code>（有时也会是<code>.init_array</code>）和<code>.dtors</code>两个节存储构造和析构相关的代码。</p>
 <h2 id="3-4-字符串表"><a href="#3-4-字符串表" class="headerlink" title="3.4 字符串表"></a>3.4 字符串表</h2><p>字符串表是一个存储字符串的表格，而每个字符串是以NULL也就是<code>\0</code>为结尾的。字符串表格中索引为0处的字符串被定义为空字符串。符号表中保存的字符串是节名和目标文件中使用到的符号。而需要使用对应字符串时，只需要在需要使用的地方指明对应字符在字符串表中的索引即可，使用的字符串就是索引处到第一个<code>\0</code>之间的字符串。</p>
-<img src="/posts/undefined/3.4.1.png" class="" title="字符串表">
+<img src="/posts/187bfa35/3.4.1.png" class="" title="字符串表">
 <h2 id="3-5-符号表"><a href="#3-5-符号表" class="headerlink" title="3.5 符号表"></a>3.5 符号表</h2><p>目标文件的符号表包含定位和重定位程序的符号定义和引用所需的信息。符号表索引是该数组的下标。索引0既指定表中的第一个条目，又用作未定义的符号索引。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">elf32_sym</span>&#123;</span></span><br><span class="line">  Elf32_Word	st_name;<span class="comment">//存储一个指向字符串表的索引来表示对应符号的名称</span></span><br><span class="line">  Elf32_Addr	st_value;<span class="comment">//存储对应符号的取值，具体值依赖于上下文，可能是一个指针地址，立即数等</span></span><br><span class="line">  Elf32_Word	st_size;<span class="comment">//符号的大小，具体指为sizeof(instance)，如果未知则为0</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">char</span>	st_info;<span class="comment">//指定符号的类型和绑定属性</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">char</span>	st_other;<span class="comment">//该成员当前持有 0 并且没有定义的含义</span></span><br><span class="line">  Elf32_Half	st_shndx;<span class="comment">//每个符号都有属于的节，当前成员存储的就是对应节的索引</span></span><br><span class="line">&#125; Elf32_Sym;</span><br></pre></td></tr></table></figure>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">elf64_sym</span> &#123;</span></span><br><span class="line">  Elf64_Word st_name;		<span class="comment">/* Symbol name, index in string tbl */</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">char</span>	st_info;	<span class="comment">/* Type and binding attributes */</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">char</span>	st_other;	<span class="comment">/* No defined meaning, 0 */</span></span><br><span class="line">  Elf64_Half st_shndx;		<span class="comment">/* Associated section index */</span></span><br><span class="line">  Elf64_Addr st_value;		<span class="comment">/* Value of the symbol */</span></span><br><span class="line">  Elf64_Xword st_size;		<span class="comment">/* Associated symbol size */</span></span><br><span class="line">&#125; Elf64_Sym;</span><br></pre></td></tr></table></figure>
@@ -742,7 +742,7 @@
 <li><code>gcc -g -o hello hello.c</code>：生成可执行文件。</li>
 <li><code>gcc -g -fPIC -o libhello.so -shared hello.c</code>：生成共享目标文件。</li>
 </ul>
-<img src="/posts/undefined/4.1.1.png" class="" title="编译ELF文件">
+<img src="/posts/187bfa35/4.1.1.png" class="" title="编译ELF文件">
 <h2 id="4-1-共享目标文件"><a href="#4-1-共享目标文件" class="headerlink" title="4.1 共享目标文件"></a>4.1 共享目标文件</h2><h3 id="4-1-1-ELF文件头"><a href="#4-1-1-ELF文件头" class="headerlink" title="4.1.1 ELF文件头"></a>4.1.1 ELF文件头</h3><p>解析ELF文件头：<code>readelf -h [文件名]</code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">┌──(kali㉿kali)-[~/Desktop]</span><br><span class="line">└─$ readelf -h libhello.so </span><br><span class="line">ELF Header:</span><br><span class="line">  Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00 </span><br><span class="line">  Class:                             ELF64</span><br><span class="line">  Data:                              2&#x27;s complement, little endian</span><br><span class="line">  Version:                           1 (current)</span><br><span class="line">  OS/ABI:                            UNIX - System V</span><br><span class="line">  ABI Version:                       0</span><br><span class="line">  Type:                              DYN (Shared object file)</span><br><span class="line">  Machine:                           Advanced Micro Devices X86-64</span><br><span class="line">  Version:                           0x1</span><br><span class="line">  Entry point address:               0x0</span><br><span class="line">  Start of program headers:          64 (bytes into file)</span><br><span class="line">  Start of section headers:          14296 (bytes into file)</span><br><span class="line">  Flags:                             0x0</span><br><span class="line">  Size of this header:               64 (bytes)</span><br><span class="line">  Size of program headers:           56 (bytes)</span><br><span class="line">  Number of program headers:         9</span><br><span class="line">  Size of section headers:           64 (bytes)</span><br><span class="line">  Number of section headers:         34</span><br><span class="line">  Section header string table index: 33                                  </span><br></pre></td></tr></table></figure>
 <p>从上面的ELF文件头信息中能够看出：当前文件类型为64bit的共享库，小端存储，版本为1，机器架构为x86-64，程序头表项有9项，节头表项有34项。</p>
@@ -797,8 +797,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/48a5a16b.html" rel="prev" title="移动安全相关工具">
-      <i class="fa fa-chevron-left"></i> 移动安全相关工具
+    <a href="/posts/d0c575b3.html" rel="prev" title="WannaCry病毒的行为机理分析">
+      <i class="fa fa-chevron-left"></i> WannaCry病毒的行为机理分析
     </a></div>
       <div class="post-nav-item">
     <a href="/posts/78ecec07.html" rel="next" title="Android移动安全相关工具">
@@ -879,7 +879,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -892,7 +892,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
