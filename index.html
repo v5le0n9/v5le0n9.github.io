@@ -273,6 +273,143 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/c971a26a.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="v5le0n9">
+      <meta itemprop="description" content="小呀小二郎呀背着个书包上学堂">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="v5le0n9's garden">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/c971a26a.html" class="post-title-link" itemprop="url">App常见漏洞</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-08-08 20:21:20 / 修改时间：20:26:04" itemprop="dateCreated datePublished" datetime="2022-08-08T20:21:20+08:00">2022-08-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">Android逆向</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="1-Android客户端常见漏洞"><a href="#1-Android客户端常见漏洞" class="headerlink" title="1. Android客户端常见漏洞"></a>1. Android客户端常见漏洞</h1><img src="/posts/undefined/1.1.1.png" class="" title="Android客户端常见漏洞">
+<h2 id="1-1-组件安全"><a href="#1-1-组件安全" class="headerlink" title="1.1 组件安全"></a>1.1 组件安全</h2><p>Android四大组件：Activity(界面)、ContentIP rovider(数据)、Service(服务)、Broadcast(广播)。</p>
+<ul>
+<li>对于程序中的每一个界面都是一个Activity，每一个Activity有不同的功能，比如登录、注册、注册码验证、手势密码等，Activity之间的切换需要满足一定的条件。</li>
+<li>ContentIP rovider用于保存和获取数据，并使其对所有应用程序可见。这是不同应用程序间共享数据的唯一方法，因为Android没有提供所有应用共同访问的公共存储区。比如通讯录数据。</li>
+<li>Service是伴随着程序启动，一直运行在后台，主要起检测作用的执行代码。服务一般用于时刻检测客户端的更新状态、时刻检测是否异地登录、时刻上传用户的操作信息。</li>
+<li>Broadcast是当程序检测到外界的某种运行环境发生变化时，而执行的逻辑代码，比如程序的自启动、网络变化、实时消息(打车软件)。</li>
+</ul>
+<h3 id="1-1-1-四大组件的访问权限控制"><a href="#1-1-1-四大组件的访问权限控制" class="headerlink" title="1.1.1 四大组件的访问权限控制"></a>1.1.1 四大组件的访问权限控制</h3><p>最重要的风险点：android:exported属性。</p>
+<p>android:exported是Android中四大组件中都会有的一个属性。如果设为true表示可对外进行访问或使用；设为false表示不可对外进行访问或使用。对内部组件设置为true时，可能出现组件被外部App进行恶意访问、非法操作等风险。</p>
+<h4 id="1-1-1-1-Activity暴露"><a href="#1-1-1-1-Activity暴露" class="headerlink" title="1.1.1.1 Activity暴露"></a>1.1.1.1 Activity暴露</h4><p>Activity暴露的风险：权限绕过、本地拒绝服务攻击。</p>
+<p>本地拒绝服务攻击：</p>
+<img src="/posts/undefined/1.2.1.png" class="" title="本地拒绝服务攻击">
+<h4 id="1-1-1-2-Service暴露"><a href="#1-1-1-2-Service暴露" class="headerlink" title="1.1.1.2 Service暴露"></a>1.1.1.2 Service暴露</h4><h4 id="1-1-1-3-broadcast暴露"><a href="#1-1-1-3-broadcast暴露" class="headerlink" title="1.1.1.3 broadcast暴露"></a>1.1.1.3 broadcast暴露</h4><p>借助广播，监听打车软件的订单信息。</p>
+<h4 id="1-1-1-4-ContentIP-rovider暴露"><a href="#1-1-1-4-ContentIP-rovider暴露" class="headerlink" title="1.1.1.4 ContentIP rovider暴露"></a>1.1.1.4 ContentIP rovider暴露</h4><p>Android本地数据库SQL注入、防范：应避免使用外来字符串拼接SQL语句，或对参与SQL语句拼接的外来字符串进行过滤。</p>
+<h3 id="1-1-2-Intent隐式跳转风险"><a href="#1-1-2-Intent隐式跳转风险" class="headerlink" title="1.1.2 Intent隐式跳转风险"></a>1.1.2 Intent隐式跳转风险</h3><p>隐式调用一般用于在不同应用程序之间的组件跳转，因跳转目标是由系统来进行判断，特殊情况下会出现目标错误，造成传递数据泄露的安全风险。</p>
+<p>通过设置action、category、数据(URI和数据类型)等隐式意图的方式来进行目标跳转，Android系统会根据设置的隐式意图找到最合适的组件作为目标组件进行跳转。</p>
+<p>防范方法：在使用Intent进行组件间跳转时应尽量使用显式调用，非特殊情况应避免使用隐式调用。</p>
+<h3 id="1-1-3-Backup备份安全"><a href="#1-1-3-Backup备份安全" class="headerlink" title="1.1.3 Backup备份安全"></a>1.1.3 Backup备份安全</h3><p>Android API Level 8及其以上Android系统提供了为应用程序数据的备份和恢复功能。此功能的开关决定于该应用程序中<code>AndroidManifest.xml</code>文件中的allowBackup属性值，其属性值默认为true。当为true时，用户可以通过adb backup和adb restore来进行对应用数据的备份和恢复，这可能会带来一定的安全风险。</p>
+<p>备份指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb backup -nosystem -noshared -apk -f xxx.xxx.xxx F:\Restore</span><br></pre></td></tr></table></figure>
+<p>还原指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb backup -f F:\Restore -apk xxx.xxx.xxx</span><br></pre></td></tr></table></figure>
+<h3 id="1-1-4-Java调试开启风险"><a href="#1-1-4-Java调试开启风险" class="headerlink" title="1.1.4 Java调试开启风险"></a>1.1.4 Java调试开启风险</h3><p>Java调试的开启是指在客户端开发时，主配置文件<code>AndroidManifest.xml</code>中设置了debuggable的Debuggable属性为true，导致产生以下风险：</p>
+<ul>
+<li>jdb调试：获取和篡改用户敏感信息，甚至分析并且修改代码实现的业务逻辑，例如窃取用户密码，绕过验证码防护等。</li>
+<li>Release和Debug的调试：Release和Debug模式下，程序运行两种不同的逻辑流程，比如：<ul>
+<li>Debug走程序中的内测流程，使用内网IP、Log调试日志全开</li>
+<li>Release走线上的发布版本流程</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-1-5-使用IMEI作为设备唯一标识风险"><a href="#1-1-5-使用IMEI作为设备唯一标识风险" class="headerlink" title="1.1.5 使用IMEI作为设备唯一标识风险"></a>1.1.5 使用IMEI作为设备唯一标识风险</h3><p>由于Android领域中有不少模拟器可以模拟和篡改IMEI，IMEI在个别特殊系统与终端中是无法获取到的，如果把IMEI作为设备的唯一ID将出现一定的重复与无法获取的几率。</p>
+<p>防范方法：在需要使用设备唯一ID的业务场景中，应使用DEVICE_ID、MAC ADDRESS、Sim Serial Number、IMEI等数据进行字符串组合后生成Hash值作为设备唯一ID，避免单独使用IMEI作为设备唯一ID标识。</p>
+<h3 id="1-1-6-WebView控件漏洞"><a href="#1-1-6-WebView控件漏洞" class="headerlink" title="1.1.6 WebView控件漏洞"></a>1.1.6 WebView控件漏洞</h3><p>WebView是Android客户端浏览Web端页面的系统控件，存在着Web逻辑与本地客户端逻辑的交互，基于这个特点，WebView存在安全风险点有以下几点：</p>
+<ul>
+<li>WebView密码明文保存漏洞</li>
+<li>WebView忽略SSL证书验证错误漏洞</li>
+</ul>
+<h3 id="1-1-7-Activity界面劫持"><a href="#1-1-7-Activity界面劫持" class="headerlink" title="1.1.7 Activity界面劫持"></a>1.1.7 Activity界面劫持</h3><p>Activity界面劫持类似于Web端的“页面钓鱼”，就是通过伪造与原应用非常相像的登录界面、注册界面、找回密码界面等，欺骗用户输入账户名和密码，然后后台将账户密码发送到指定地方的黑客手段。</p>
+<h2 id="1-2-数据安全"><a href="#1-2-数据安全" class="headerlink" title="1.2 数据安全"></a>1.2 数据安全</h2><h3 id="1-2-1-本地数据全局读写漏洞"><a href="#1-2-1-本地数据全局读写漏洞" class="headerlink" title="1.2.1 本地数据全局读写漏洞"></a>1.2.1 本地数据全局读写漏洞</h3><p>App在创建数据库时，将数据库设置了全局的可读权限，攻击者恶意读取数据库内容，获取敏感信息。在设置数据库属性时如果设置全局可写，攻击者可能会篡改、伪造内容，可能会进行诈骗等行为，造成用户财产损失。</p>
+<p>防范方法：应该使用MODE_PRIVATE模式创建数据库。</p>
+<h3 id="1-2-2-调试信息泄露"><a href="#1-2-2-调试信息泄露" class="headerlink" title="1.2.2 调试信息泄露"></a>1.2.2 调试信息泄露</h3><ul>
+<li>运行日志信息泄露</li>
+<li>测试内网/账号泄露</li>
+</ul>
+<h3 id="1-2-3-避免测试数据残留"><a href="#1-2-3-避免测试数据残留" class="headerlink" title="1.2.3 避免测试数据残留"></a>1.2.3 避免测试数据残留</h3><p>发布版本应对程序中所有测试数据、测试方法、内网数据进行统一删除。</p>
+<h2 id="1-3-业务安全"><a href="#1-3-业务安全" class="headerlink" title="1.3 业务安全"></a>1.3 业务安全</h2><h3 id="1-3-1-HTTP-HTTPS中间人攻击"><a href="#1-3-1-HTTP-HTTPS中间人攻击" class="headerlink" title="1.3.1 HTTP/HTTPS中间人攻击"></a>1.3.1 HTTP/HTTPS中间人攻击</h3><h3 id="1-3-2-数据封包弱加密"><a href="#1-3-2-数据封包弱加密" class="headerlink" title="1.3.2 数据封包弱加密"></a>1.3.2 数据封包弱加密</h3><p>App网络协议封包普遍存在弱加密易解密的主要原因是：Key/IV/CER等密钥的硬编码。</p>
+<h3 id="1-3-3-手机验证码机制安全"><a href="#1-3-3-手机验证码机制安全" class="headerlink" title="1.3.3 手机验证码机制安全"></a>1.3.3 手机验证码机制安全</h3><ul>
+<li>验证码是否可无限请求：短信轰炸接口，浪费资源</li>
+<li>是否可重复使用：有效次数只有一次，且新验证码要覆盖旧验证码</li>
+<li>是否是真正随机：实时使用实时随机</li>
+<li>是否返回到本地：所有具有验证码凭证性质的数据都不能返回到本地</li>
+<li>验证码的错误次数是否限定：防止位数较短的验证码被恶意爆破</li>
+<li>是否可被绕过：在注册、找回密码的最终请求中抛弃了验证码，可能存在绕过</li>
+</ul>
+<img src="/posts/undefined/1.2.3.png" class="" title="壳">
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/posts/80f0c627.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -296,10 +433,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-08-07 22:37:14 / 修改时间：22:36:31" itemprop="dateCreated datePublished" datetime="2022-08-07T22:37:14+08:00">2022-08-07</time>
+              <time title="创建时间：2022-08-07 22:37:14" itemprop="dateCreated datePublished" datetime="2022-08-07T22:37:14+08:00">2022-08-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-08 20:20:14" itemprop="dateModified" datetime="2022-08-08T20:20:14+08:00">2022-08-08</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -316,7 +459,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
+              <span>2.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -393,7 +536,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-06 22:53:31" itemprop="dateModified" datetime="2022-08-06T22:53:31+08:00">2022-08-06</time>
+                <time title="修改时间：2022-08-08 20:19:35" itemprop="dateModified" datetime="2022-08-08T20:19:35+08:00">2022-08-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -411,14 +554,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>43k</span>
+              <span>44k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>39 分钟</span>
+              <span>40 分钟</span>
             </span>
 
         </div>
@@ -1018,101 +1161,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/posts/8fb0b0f6.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="v5le0n9">
-      <meta itemprop="description" content="小呀小二郎呀背着个书包上学堂">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="v5le0n9's garden">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/8fb0b0f6.html" class="post-title-link" itemprop="url">PE数字签名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-03 11:00:54" itemprop="dateCreated datePublished" datetime="2022-07-03T11:00:54+08:00">2022-07-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-07 13:47:22" itemprop="dateModified" datetime="2022-07-07T13:47:22+08:00">2022-07-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Windows%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">Windows逆向</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在做Android逆向题时就遇到过对APK文件进行签名的题，奇安信面试官跟我说，无论是做哪个平台的逆向，它的大方向、学习路径总是相似的。比如Android逆向有签名、有Hook和注入技术，Windows逆向也是有的。所以这篇笔记就是学习PE文件的数字签名。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/8fb0b0f6.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1184,7 +1232,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-count">57</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1266,7 +1314,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">16:16</span>
+    <span title="站点阅读时长">16:19</span>
 </div>
 
         
