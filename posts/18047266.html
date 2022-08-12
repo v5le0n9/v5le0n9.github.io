@@ -37,7 +37,7 @@
 <meta property="og:image" content="http://example.com/posts/undefined/5.2.7.png">
 <meta property="og:image" content="http://example.com/posts/undefined/5.2.8.png">
 <meta property="article:published_time" content="2022-08-11T14:45:22.828Z">
-<meta property="article:modified_time" content="2022-08-11T14:45:08.819Z">
+<meta property="article:modified_time" content="2022-08-12T11:32:41.289Z">
 <meta property="article:author" content="v5le0n9">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/posts/undefined/5.2.1.png">
@@ -221,10 +221,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-08-11 22:45:22 / 修改时间：22:45:08" itemprop="dateCreated datePublished" datetime="2022-08-11T22:45:22+08:00">2022-08-11</time>
+              <time title="创建时间：2022-08-11 22:45:22" itemprop="dateCreated datePublished" datetime="2022-08-11T22:45:22+08:00">2022-08-11</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-12 19:32:41" itemprop="dateModified" datetime="2022-08-12T19:32:41+08:00">2022-08-12</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -248,14 +254,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.2k</span>
+              <span>4.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -376,7 +382,29 @@
 <p>如果不禁用dex2oat，那么函数体必须在进入dex2oat流程前恢复好，才可以在dex2oat流程之中进行脱壳，脱下完整的函数体恢复之后的DEX。</p>
 <p>GenerateOatFileNoChecks -&gt; Dex2Oat -&gt; Exec -&gt; exec_utils.cc -&gt; Exec -&gt; ExecAndReturnCode -&gt; execve。</p>
 <p>使用Native hook，hook住execve，使其不运行dex2oat进程。</p>
-<h1 id="6-更强抽取壳的dump"><a href="#6-更强抽取壳的dump" class="headerlink" title="6. 更强抽取壳的dump"></a>6. 更强抽取壳的dump</h1>
+<h1 id="6-更强抽取壳的dump"><a href="#6-更强抽取壳的dump" class="headerlink" title="6. 更强抽取壳的dump"></a>6. 更强抽取壳的dump</h1><h2 id="6-1-Fart整体dump思路的演进"><a href="#6-1-Fart整体dump思路的演进" class="headerlink" title="6.1 Fart整体dump思路的演进"></a>6.1 Fart整体dump思路的演进</h2><h3 id="6-1-1-v1-0：ClassLoader中dump"><a href="#6-1-1-v1-0：ClassLoader中dump" class="headerlink" title="6.1.1 v1.0：ClassLoader中dump"></a>6.1.1 v1.0：ClassLoader中dump</h3><ul>
+<li>时机：App中的Applocation类中的<code>attachBaseContext()</code>和<code>onCreate()</code>函数是App中最先执行的方法，因此需要选在Application的<code>onCreate()</code>函数执行之后才开始被调用的任意一个函数中。比如选择在ActivityThread中的<code>performLaunchActivity()</code>函数作为时机，来获取最终的应用的ClassLoader。</li>
+<li>方式：hook -&gt; 反射和dump。获取到应用解密后的DEX文件最终依附的ClassLoader之后通过Java的反射机制最终获取到对应的DexFile的结构体，并完成DEX的dump。</li>
+</ul>
+<h3 id="6-1-2-v2-0：更多“海量”的脱壳点"><a href="#6-1-2-v2-0：更多“海量”的脱壳点" class="headerlink" title="6.1.2 v2.0：更多“海量”的脱壳点"></a>6.1.2 v2.0：更多“海量”的脱壳点</h3><ul>
+<li>时机：所有类和方法的装载和链接/编译和执行流程之中。</li>
+<li>方式：基于hook -&gt; dump。ART下DexFile类中定义了两个关键的变量：begin_、size_以及用于获取这两个变量的<code>Begin()</code>和<code>Size()</code>函数。这两个变量分别代表着当前DexFile对象对应的内存中的DEX文件加载的起始位置和大小。只要有了这两个值，我们就可以完成对这个DEX的dump。</li>
+</ul>
+<h3 id="6-1-3-v3-0：优中选优后的脱壳点"><a href="#6-1-3-v3-0：优中选优后的脱壳点" class="headerlink" title="6.1.3 v3.0：优中选优后的脱壳点"></a>6.1.3 v3.0：优中选优后的脱壳点</h3><ul>
+<li>时机：找到绕过dex2oat的时机，类的初始化函数始终运行在ART下的interpreter模式。</li>
+<li>方式：在解释执行<clinit>时进行脱壳，实现“绕过”dex2oat，因此必然进入到<code>interpreter.cc</code>文件中的<code>Execute()</code>函数，进而进入ART下的解释器解释执行。</li>
+</ul>
+<h3 id="6-1-4-v4-0：优中选优-双保险"><a href="#6-1-4-v4-0：优中选优-双保险" class="headerlink" title="6.1.4 v4.0：优中选优+双保险"></a>6.1.4 v4.0：优中选优+双保险</h3><ul>
+<li>时机和方式：同时在dex2oat和类的初始化流程函数设置hook。</li>
+</ul>
+<h2 id="6-2-Youpk的整体dump思路"><a href="#6-2-Youpk的整体dump思路" class="headerlink" title="6.2 Youpk的整体dump思路"></a>6.2 Youpk的整体dump思路</h2><h3 id="6-2-1-v4-0：优中选优-双保险"><a href="#6-2-1-v4-0：优中选优-双保险" class="headerlink" title="6.2.1 v4.0：优中选优+双保险"></a>6.2.1 v4.0：优中选优+双保险</h3><ul>
+<li>时机：App启动后10s开始。</li>
+<li>方式：禁用dex2oat，在dex2oat中设置CompilerFilter为仅验证compiler_options_ -&gt; SetCompilerFilter()，从ClassLinker中遍历DexFile对象并dump。</li>
+</ul>
+<h2 id="6-3-Youpk-Fart整体dump进一步提升"><a href="#6-3-Youpk-Fart整体dump进一步提升" class="headerlink" title="6.3 Youpk+Fart整体dump进一步提升"></a>6.3 Youpk+Fart整体dump进一步提升</h2><h3 id="6-3-1-每个脱壳点都可以脱壳DexFile"><a href="#6-3-1-每个脱壳点都可以脱壳DexFile" class="headerlink" title="6.3.1 每个脱壳点都可以脱壳DexFile"></a>6.3.1 每个脱壳点都可以脱壳DexFile</h3><ul>
+<li>时机和方式：在安卓8上禁用dex2oat，结合Fart所提出的海量脱壳点，每个脱壳点都可以脱壳。</li>
+</ul>
+
     </div>
 
     
@@ -474,7 +502,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%8A%A0%E5%A3%B3%E6%8A%80%E6%9C%AF"><span class="nav-text">1. 加壳技术</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E7%AC%AC%E4%B8%80%E4%BB%A3%E5%A3%B3-DEX%E5%8A%A0%E5%AF%86"><span class="nav-text">1.1 第一代壳 DEX加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E7%AC%AC%E4%BA%8C%E4%BB%A3%E5%A3%B3-DEX%E6%8A%BD%E5%8F%96%E4%B8%8Eso%E5%8A%A0%E5%9B%BA"><span class="nav-text">1.2 第二代壳 DEX抽取与so加固</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E7%AC%AC%E4%B8%89%E4%BB%A3%E5%A3%B3-DEX%E5%8A%A8%E6%80%81%E8%A7%A3%E5%AF%86%E4%B8%8Eso%E6%B7%B7%E6%B7%86"><span class="nav-text">1.3 第三代壳 DEX动态解密与so混淆</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%8A%A0%E5%A3%B3%E6%8A%80%E6%9C%AF%E7%9A%84%E7%89%B9%E5%BE%81"><span class="nav-text">2. 加壳技术的特征</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E7%BC%96%E8%AF%91%E5%AE%89%E5%8D%93%E6%BA%90%E7%A0%81"><span class="nav-text">3. 编译安卓源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E6%B2%99%E7%AE%B1%E8%84%B1%E5%A3%B3%E6%9C%BA%E7%9A%84%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86"><span class="nav-text">4. 沙箱脱壳机的核心原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E8%84%B1%E5%A3%B3%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="nav-text">4.1 脱壳的本质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-%E5%85%B3%E9%94%AE%E7%B1%BB%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90"><span class="nav-text">4.2 关键类流程分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-1-InMemoryDexClassLoader%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-text">4.2.1 InMemoryDexClassLoader源码分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-2-DexClassLoader%E5%8A%A0%E8%BD%BDDEX%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-text">4.2.2 DexClassLoader加载DEX源码分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-3-Dex2oat"><span class="nav-text">4.2.3 Dex2oat</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E4%BA%8C%E4%BB%A3%E5%A3%B3%E5%AF%B9%E6%96%B9%E6%B3%95%E4%BD%93%E7%9A%84%E9%9D%99%E6%80%81%E6%8A%BD%E5%8F%96%E4%B8%8E%E5%8A%A8%E6%80%81%E5%9B%9E%E5%A1%AB"><span class="nav-text">5. 二代壳对方法体的静态抽取与动态回填</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-%E6%8A%BD%E5%8F%96%E5%A3%B3%E7%9A%84%E5%AE%8C%E6%95%B4%E8%BF%90%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="nav-text">5.1 抽取壳的完整运行流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-%E6%89%8B%E5%8A%A8%E8%BF%9B%E8%A1%8C%E5%87%BD%E6%95%B0%E6%8A%BD%E5%8F%96"><span class="nav-text">5.2 手动进行函数抽取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-%E5%8A%A8%E6%80%81%E5%9B%9E%E5%A1%AB"><span class="nav-text">5.3 动态回填</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-1-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%97%B6%E6%9C%BA"><span class="nav-text">5.3.1 类加载时机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-2-%E7%B1%BB%E8%A3%85%E8%BD%BD%E6%B5%81%E7%A8%8B"><span class="nav-text">5.3.2 类装载流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-%E5%AE%9E%E7%8E%B0%E5%87%BD%E6%95%B0%E6%8A%BD%E5%8F%96%E5%A3%B3%E7%9A%84%E5%89%8D%E7%BD%AE%E6%8A%80%E6%9C%AF"><span class="nav-text">5.4 实现函数抽取壳的前置技术</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E6%9B%B4%E5%BC%BA%E6%8A%BD%E5%8F%96%E5%A3%B3%E7%9A%84dump"><span class="nav-text">6. 更强抽取壳的dump</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%8A%A0%E5%A3%B3%E6%8A%80%E6%9C%AF"><span class="nav-text">1. 加壳技术</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E7%AC%AC%E4%B8%80%E4%BB%A3%E5%A3%B3-DEX%E5%8A%A0%E5%AF%86"><span class="nav-text">1.1 第一代壳 DEX加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E7%AC%AC%E4%BA%8C%E4%BB%A3%E5%A3%B3-DEX%E6%8A%BD%E5%8F%96%E4%B8%8Eso%E5%8A%A0%E5%9B%BA"><span class="nav-text">1.2 第二代壳 DEX抽取与so加固</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E7%AC%AC%E4%B8%89%E4%BB%A3%E5%A3%B3-DEX%E5%8A%A8%E6%80%81%E8%A7%A3%E5%AF%86%E4%B8%8Eso%E6%B7%B7%E6%B7%86"><span class="nav-text">1.3 第三代壳 DEX动态解密与so混淆</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%8A%A0%E5%A3%B3%E6%8A%80%E6%9C%AF%E7%9A%84%E7%89%B9%E5%BE%81"><span class="nav-text">2. 加壳技术的特征</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E7%BC%96%E8%AF%91%E5%AE%89%E5%8D%93%E6%BA%90%E7%A0%81"><span class="nav-text">3. 编译安卓源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E6%B2%99%E7%AE%B1%E8%84%B1%E5%A3%B3%E6%9C%BA%E7%9A%84%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86"><span class="nav-text">4. 沙箱脱壳机的核心原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E8%84%B1%E5%A3%B3%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="nav-text">4.1 脱壳的本质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-%E5%85%B3%E9%94%AE%E7%B1%BB%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90"><span class="nav-text">4.2 关键类流程分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-1-InMemoryDexClassLoader%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-text">4.2.1 InMemoryDexClassLoader源码分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-2-DexClassLoader%E5%8A%A0%E8%BD%BDDEX%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-text">4.2.2 DexClassLoader加载DEX源码分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-3-Dex2oat"><span class="nav-text">4.2.3 Dex2oat</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E4%BA%8C%E4%BB%A3%E5%A3%B3%E5%AF%B9%E6%96%B9%E6%B3%95%E4%BD%93%E7%9A%84%E9%9D%99%E6%80%81%E6%8A%BD%E5%8F%96%E4%B8%8E%E5%8A%A8%E6%80%81%E5%9B%9E%E5%A1%AB"><span class="nav-text">5. 二代壳对方法体的静态抽取与动态回填</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-%E6%8A%BD%E5%8F%96%E5%A3%B3%E7%9A%84%E5%AE%8C%E6%95%B4%E8%BF%90%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="nav-text">5.1 抽取壳的完整运行流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-%E6%89%8B%E5%8A%A8%E8%BF%9B%E8%A1%8C%E5%87%BD%E6%95%B0%E6%8A%BD%E5%8F%96"><span class="nav-text">5.2 手动进行函数抽取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-%E5%8A%A8%E6%80%81%E5%9B%9E%E5%A1%AB"><span class="nav-text">5.3 动态回填</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-1-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%97%B6%E6%9C%BA"><span class="nav-text">5.3.1 类加载时机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-2-%E7%B1%BB%E8%A3%85%E8%BD%BD%E6%B5%81%E7%A8%8B"><span class="nav-text">5.3.2 类装载流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-%E5%AE%9E%E7%8E%B0%E5%87%BD%E6%95%B0%E6%8A%BD%E5%8F%96%E5%A3%B3%E7%9A%84%E5%89%8D%E7%BD%AE%E6%8A%80%E6%9C%AF"><span class="nav-text">5.4 实现函数抽取壳的前置技术</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E6%9B%B4%E5%BC%BA%E6%8A%BD%E5%8F%96%E5%A3%B3%E7%9A%84dump"><span class="nav-text">6. 更强抽取壳的dump</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-Fart%E6%95%B4%E4%BD%93dump%E6%80%9D%E8%B7%AF%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="nav-text">6.1 Fart整体dump思路的演进</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-1-v1-0%EF%BC%9AClassLoader%E4%B8%ADdump"><span class="nav-text">6.1.1 v1.0：ClassLoader中dump</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-2-v2-0%EF%BC%9A%E6%9B%B4%E5%A4%9A%E2%80%9C%E6%B5%B7%E9%87%8F%E2%80%9D%E7%9A%84%E8%84%B1%E5%A3%B3%E7%82%B9"><span class="nav-text">6.1.2 v2.0：更多“海量”的脱壳点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-3-v3-0%EF%BC%9A%E4%BC%98%E4%B8%AD%E9%80%89%E4%BC%98%E5%90%8E%E7%9A%84%E8%84%B1%E5%A3%B3%E7%82%B9"><span class="nav-text">6.1.3 v3.0：优中选优后的脱壳点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-4-v4-0%EF%BC%9A%E4%BC%98%E4%B8%AD%E9%80%89%E4%BC%98-%E5%8F%8C%E4%BF%9D%E9%99%A9"><span class="nav-text">6.1.4 v4.0：优中选优+双保险</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-Youpk%E7%9A%84%E6%95%B4%E4%BD%93dump%E6%80%9D%E8%B7%AF"><span class="nav-text">6.2 Youpk的整体dump思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-1-v4-0%EF%BC%9A%E4%BC%98%E4%B8%AD%E9%80%89%E4%BC%98-%E5%8F%8C%E4%BF%9D%E9%99%A9"><span class="nav-text">6.2.1 v4.0：优中选优+双保险</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-Youpk-Fart%E6%95%B4%E4%BD%93dump%E8%BF%9B%E4%B8%80%E6%AD%A5%E6%8F%90%E5%8D%87"><span class="nav-text">6.3 Youpk+Fart整体dump进一步提升</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-1-%E6%AF%8F%E4%B8%AA%E8%84%B1%E5%A3%B3%E7%82%B9%E9%83%BD%E5%8F%AF%E4%BB%A5%E8%84%B1%E5%A3%B3DexFile"><span class="nav-text">6.3.1 每个脱壳点都可以脱壳DexFile</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -572,7 +600,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">16:44</span>
+    <span title="站点阅读时长">16:45</span>
 </div>
 
         
