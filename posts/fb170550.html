@@ -28,17 +28,17 @@
 <meta property="og:site_name" content="v5le0n9&#39;s garden">
 <meta property="og:description" content="每次都要找教程太累人了，自己写一个记录。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/posts/undefined/1.1.1.png">
-<meta property="og:image" content="http://example.com/posts/undefined/1.1.2.png">
-<meta property="og:image" content="http://example.com/posts/undefined/1.1.3.png">
-<meta property="og:image" content="http://example.com/posts/undefined/1.1.4.png">
-<meta property="og:image" content="http://example.com/posts/undefined/1.1.5.png">
-<meta property="og:image" content="http://example.com/posts/undefined/1.1.6.png">
+<meta property="og:image" content="http://example.com/posts/fb170550/1.1.1.png">
+<meta property="og:image" content="http://example.com/posts/fb170550/1.1.2.png">
+<meta property="og:image" content="http://example.com/posts/fb170550/1.1.3.png">
+<meta property="og:image" content="http://example.com/posts/fb170550/1.1.4.png">
+<meta property="og:image" content="http://example.com/posts/fb170550/1.1.5.png">
+<meta property="og:image" content="http://example.com/posts/fb170550/1.1.6.png">
 <meta property="article:published_time" content="2022-08-13T08:08:26.960Z">
-<meta property="article:modified_time" content="2022-08-13T04:25:51.298Z">
+<meta property="article:modified_time" content="2022-08-13T14:01:01.050Z">
 <meta property="article:author" content="v5le0n9">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/posts/undefined/1.1.1.png">
+<meta name="twitter:image" content="http://example.com/posts/fb170550/1.1.1.png">
 
 <link rel="canonical" href="http://example.com/posts/fb170550.html">
 
@@ -221,7 +221,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-08-13 16:08:26 / 修改时间：12:25:51" itemprop="dateCreated datePublished" datetime="2022-08-13T16:08:26+08:00">2022-08-13</time>
+              <time title="创建时间：2022-08-13 16:08:26 / 修改时间：22:01:01" itemprop="dateCreated datePublished" datetime="2022-08-13T16:08:26+08:00">2022-08-13</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -246,14 +246,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.7k</span>
+              <span>2.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -269,8 +269,8 @@
 <span id="more"></span>
 <h1 id="1-基础配置"><a href="#1-基础配置" class="headerlink" title="1. 基础配置"></a>1. 基础配置</h1><p>去Kali官网下载最新版的<a target="_blank" rel="noopener" href="https://www.kali.org/get-kali/#kali-virtual-machines">Kali虚拟机</a>，解压后放入VMware即可，将内存和处理器往高调。默认账户kali，密码kali。</p>
 <p>将Kali调成永不熄屏。</p>
-<img src="/posts/undefined/1.1.1.png" class="">
-<img src="/posts/undefined/1.1.2.png" class="">
+<img src="/posts/fb170550/1.1.1.png" class="">
+<img src="/posts/fb170550/1.1.2.png" class="">
 <p>修改账户root的密码为toor，重启，使用root用户登录：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd root</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
 <p>如果Kali里的时间不正确，修改为正确时间：</p>
@@ -285,14 +285,14 @@
 <p>增加HISTSIZE，可以保存更多的命令历史：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim .bashrc</span><br></pre></td></tr></table></figure>
 <p>将HISTSIZE和HISTFILESIZE设置大一点：</p>
-<img src="/posts/undefined/1.1.3.png" class="">
+<img src="/posts/fb170550/1.1.3.png" class="">
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source .bashrc</span><br></pre></td></tr></table></figure>
 <p>如果有科学上网，可以设置代理，没有可以不弄：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/proxychains4.conf</span><br></pre></td></tr></table></figure>
-<img src="/posts/undefined/1.1.4.png" class="">
+<img src="/posts/fb170550/1.1.4.png" class="">
 <p>注释掉proxy_dns和socks4，增加socks5 [连接虚拟机网卡的主机IP] [端口]。</p>
-<img src="/posts/undefined/1.1.5.png" class="">
-<img src="/posts/undefined/1.1.6.png" class="">
+<img src="/posts/fb170550/1.1.5.png" class="">
+<img src="/posts/fb170550/1.1.6.png" class="">
 <h1 id="2-实用工具"><a href="#2-实用工具" class="headerlink" title="2. 实用工具"></a>2. 实用工具</h1><p>安装htop，用来动态查看当前活跃的、占用高的进程：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install htop</span><br></pre></td></tr></table></figure>
 <p>安装jnettop，流量查看工具，可以查看下载和安装速度：</p>
@@ -301,6 +301,8 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://www.sweetscape.com/download/010EditorLinux64Installer.tar.gz</span><br><span class="line">tar zxvf 010EditorLinux64Installer.tar.gz</span><br><span class="line">./010EditorLinux64Installer</span><br></pre></td></tr></table></figure>
 <p>安装<a target="_blank" rel="noopener" href="https://code.visualstudio.com/">VSCode</a>，下载<code>.deb</code>包，解压：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt install dpkg</span><br><span class="line">dpkg -i code_1.70.1-1660113095_amd64.deb</span><br></pre></td></tr></table></figure>
+<p>VSCode在root用户打不开，可在快捷方式右键 -&gt; Edit Application，在Command中修改为以下命令即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/share/code/code --no-sandbox --unity-launch %F</span><br></pre></td></tr></table></figure>
 <h1 id="3-安卓逆向必备工具"><a href="#3-安卓逆向必备工具" class="headerlink" title="3. 安卓逆向必备工具"></a>3. 安卓逆向必备工具</h1><p>去<a target="_blank" rel="noopener" href="https://developer.android.google.cn/studio">Android Studio官网</a>下载安装Android Studio：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2021.2.1.16/android-studio-2021.2.1.16-linux.tar.gz</span><br><span class="line">tar zxvf android-studio-2021.2.1.16-linux.tar.gz</span><br><span class="line">cd android-studio/bin</span><br><span class="line">./studio.sh</span><br></pre></td></tr></table></figure>
 <p>运行AS让它下载SDK，创建一个Empty Avtivity让它下载并初始化一下安卓开发环境。</p>
