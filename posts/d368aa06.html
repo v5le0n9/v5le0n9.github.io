@@ -62,7 +62,7 @@
 <meta property="og:image" content="http://example.com/posts/d368aa06/7.2.6.png">
 <meta property="og:image" content="http://example.com/posts/d368aa06/11.1.1.jpg">
 <meta property="article:published_time" content="2022-07-31T08:30:47.469Z">
-<meta property="article:modified_time" content="2022-08-11T14:47:02.980Z">
+<meta property="article:modified_time" content="2022-08-18T11:17:26.254Z">
 <meta property="article:author" content="v5le0n9">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/posts/d368aa06/2.1.1.png">
@@ -254,7 +254,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-11 22:47:02" itemprop="dateModified" datetime="2022-08-11T22:47:02+08:00">2022-08-11</time>
+                <time title="修改时间：2022-08-18 19:17:26" itemprop="dateModified" datetime="2022-08-18T19:17:26+08:00">2022-08-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -316,7 +316,7 @@
 <h1 id="2-分析Android程序"><a href="#2-分析Android程序" class="headerlink" title="2. 分析Android程序"></a>2. 分析Android程序</h1><h2 id="2-1-编写Android程序"><a href="#2-1-编写Android程序" class="headerlink" title="2.1 编写Android程序"></a>2.1 编写Android程序</h2><p>使用Android Studio创建一个Empty Activity，命名为crackme。</p>
 <p>首先设计显示界面。打开工程的<code>activity_main.xml</code>布局文件，添加用户名与注册码编辑框。</p>
 <img src="/posts/d368aa06/2.1.1.png" class="" title="设计界面">
-<p>接着编写<code>MainActivity.java</code>，将注册的核心算法设计好。的输入框与用户输入连接起来。在<code>MainActivity</code>类中添加一个<code>checkSN()</code>方法，代码如下：</p>
+<p>接着编写<code>MainActivity.java</code>，将注册的核心算法设计好，输入框与用户输入连接起来。在<code>MainActivity</code>类中添加一个<code>checkSN()</code>方法，代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">checkSN</span><span class="params">(String username, String sn)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>((username == <span class="literal">null</span>) || (username.length() == <span class="number">0</span>))</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">if</span>((sn == <span class="literal">null</span>) || (sn.length() != <span class="number">16</span>))</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="type">MessageDigest</span> <span class="variable">digest</span> <span class="operator">=</span> MessageDigest.getInstance(<span class="string">&quot;MD5&quot;</span>);<span class="comment">//返回实现MD5摘要算法的 MessageDigest 对象</span></span><br><span class="line">        digest.reset();<span class="comment">//将待摘要数据重置，即初始化</span></span><br><span class="line">        digest.update(username.getBytes());<span class="comment">//将username转化为字节数组，作为待摘要数据</span></span><br><span class="line">        <span class="type">byte</span>[] bytes = digest.digest();<span class="comment">//执行摘要算法，结果存入字节数组</span></span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">sb1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">sb2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">byte</span> b : bytes)</span><br><span class="line">        &#123;<span class="comment">//从字节数组中依次取出1个字节</span></span><br><span class="line">            <span class="type">String</span> <span class="variable">hexstr</span> <span class="operator">=</span> Integer.toHexString(b &amp; <span class="number">0xff</span>);<span class="comment">//将每个字节转化为十六进制字符串</span></span><br><span class="line">            <span class="keyword">if</span> (hexstr.length() == <span class="number">1</span>)</span><br><span class="line">            &#123;<span class="comment">//如果得出的结果长度为1，则在前面加0，保证每个字节转字符串后加入序列时是两个字符</span></span><br><span class="line">                hexstr = <span class="string">&quot;0&quot;</span> + hexstr;</span><br><span class="line">            &#125;</span><br><span class="line">            sb1.append(hexstr);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>; i&lt;sb1.length(); i+=<span class="number">2</span>)</span><br><span class="line">            sb2.append(sb1.charAt(i));<span class="comment">//将摘要的奇位数作为sn</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">userSN</span> <span class="operator">=</span> sb2.toString();</span><br><span class="line">        <span class="keyword">if</span>(!userSN.equalsIgnoreCase(sn))</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span>(NoSuchAlgorithmException e)</span><br><span class="line">    &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>MessageDigest 类为应用程序提供信息摘要算法的功能，如 MD5 或 SHA 算法。信息摘要是安全的单向哈希函数，它接收任意大小的数据，并输出固定长度的哈希值。MessageDigest 对象开始被初始化，该对象通过使用 update() 方法处理数据。任何时候都可以调用 reset() 方法重置摘要。一旦所有需要更新的数据都已经被更新了，应该调用 digest() 方法之一完成哈希计算。对于给定数量的更新数据，digest() 方法只能被调用一次。在调用 digest() 之后，MessageDigest 对象被重新设置成其初始状态。</p>
@@ -1006,12 +1006,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">1.1m</span>
+    <span title="站点总字数">1.2m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">17:22</span>
+    <span title="站点阅读时长">17:32</span>
 </div>
 
         
