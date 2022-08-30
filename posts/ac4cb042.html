@@ -67,6 +67,7 @@
 <meta property="og:image" content="http://example.com/posts/ac4cb042/5.1.6.png">
 <meta property="og:image" content="http://example.com/posts/ac4cb042/5.1.7.png">
 <meta property="og:image" content="http://example.com/posts/ac4cb042/5.1.8.png">
+<meta property="og:image" content="http://example.com/posts/ac4cb042/5.1.13.png">
 <meta property="og:image" content="http://example.com/posts/ac4cb042/5.1.9.png">
 <meta property="og:image" content="http://example.com/posts/ac4cb042/5.1.10.png">
 <meta property="og:image" content="http://example.com/posts/ac4cb042/5.1.11.png">
@@ -83,7 +84,7 @@
 <meta property="og:image" content="http://example.com/posts/ac4cb042/5.2.11.png">
 <meta property="og:image" content="http://example.com/posts/ac4cb042/5.2.12.png">
 <meta property="article:published_time" content="2022-08-24T13:44:15.795Z">
-<meta property="article:modified_time" content="2022-08-26T14:12:06.616Z">
+<meta property="article:modified_time" content="2022-08-30T14:41:46.148Z">
 <meta property="article:author" content="v5le0n9">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/posts/ac4cb042/2.1.1.png">
@@ -275,7 +276,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-26 22:12:06" itemprop="dateModified" datetime="2022-08-26T22:12:06+08:00">2022-08-26</time>
+                <time title="修改时间：2022-08-30 22:41:46" itemprop="dateModified" datetime="2022-08-30T22:41:46+08:00">2022-08-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -300,14 +301,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>11k</span>
+              <span>12k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>10 分钟</span>
+              <span>11 分钟</span>
             </span>
 
         </div>
@@ -453,6 +454,7 @@
 <h3 id="5-1-1-onCreate"><a href="#5-1-1-onCreate" class="headerlink" title="5.1.1 onCreate()"></a>5.1.1 onCreate()</h3><p>上面这些hook的方法都在<code>onCreate()</code>方法中被调用到了：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(Bundle bundle)</span> &#123;</span><br><span class="line">       <span class="built_in">super</span>.onCreate(bundle);</span><br><span class="line">       <span class="built_in">this</span>.i0.setBackgroundResource(R.drawable.img_control_bg);</span><br><span class="line">       <span class="built_in">this</span>.i0.getBackground().setAlpha(<span class="number">255</span>);</span><br><span class="line">       setContentView(R.layout.activity_control_f);</span><br><span class="line">       ButterKnife.a(<span class="built_in">this</span>);</span><br><span class="line">       <span class="built_in">this</span>.X0 = <span class="keyword">new</span> <span class="title class_">FunctionPopupWindow</span>(U());</span><br><span class="line">       <span class="built_in">this</span>.z1.start();</span><br><span class="line">       i1();</span><br><span class="line">       h1();</span><br><span class="line">       r1();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 <img src="/posts/ac4cb042/5.1.8.png" class="">
+<img src="/posts/ac4cb042/5.1.13.png" class="">
 <p><code>i1()</code>是设置界面按钮与id之间的对应关系；<code>h1()</code>是监听各类点击事件；<code>r1()</code>是通过读取APK包信息设置下面那一栏的单位。</p>
 <img src="/posts/ac4cb042/5.1.9.png" class="">
 <img src="/posts/ac4cb042/5.1.10.png" class="">
@@ -498,6 +500,23 @@
 <h3 id="5-2-1-onCreate"><a href="#5-2-1-onCreate" class="headerlink" title="5.2.1 onCreate()"></a>5.2.1 onCreate()</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(Bundle bundle)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>.onCreate(bundle);</span><br><span class="line">    <span class="built_in">this</span>.i0.setBackgroundResource(R.drawable.img_control_bg);</span><br><span class="line">    <span class="built_in">this</span>.i0.getBackground().setAlpha(<span class="number">255</span>);</span><br><span class="line">    setContentView(R.layout.activity_control_f);</span><br><span class="line">    ButterKnife.a(<span class="built_in">this</span>);</span><br><span class="line">    <span class="built_in">this</span>.W0 = <span class="keyword">new</span> <span class="title class_">FunctionPopupWindow</span>(U());</span><br><span class="line">    h1();</span><br><span class="line">    g1();</span><br><span class="line">    j1();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <img src="/posts/ac4cb042/5.2.12.png" class="">
 <h3 id="5-2-2-onClick"><a href="#5-2-2-onClick" class="headerlink" title="5.2.2 onClick()"></a>5.2.2 onClick()</h3><p>这个也几乎一样。</p>
+<h1 id="6-另一种思路"><a href="#6-另一种思路" class="headerlink" title="6. 另一种思路"></a>6. 另一种思路</h1><p>直接分析App可能不好找入手的地方，可以结合无人机上面的固件和App一起分析，看有没有telnet和ftp的空口令，比如捕获App发送起飞、降落、拍照命令时的数据包，通常是udp，看重放有没有效果。</p>
+<p>没有WiFi的情况下如何进行Android抓包？没有WiFi意味着Charles和fiddler都不能用了，因为它们必须要求手机与电脑在同一个局域网内。当然电脑开热点也是可以滴，手机开热点按理说应该也可以。</p>
+<p>但遇到物联网时，比如无人机，需要手机连接无人机设备的WiFi，此时电脑要想和手机处在一个局域网内，就必须要连接无人机设备的WiFi，但该WiFi不能联网，不能联网也可以使用Charles或fiddler抓包吗？没试过。</p>
+<p>我目前试过可行的方法就是使用一台root好的手机，使用<a target="_blank" rel="noopener" href="https://www.androidtcpdump.com/android-tcpdump/downloads">Android tcpdump</a>工具将手机内的数据包dump下来。</p>
+<p>通过USB连接手机与电脑，下载好Android tcpdump后将它push到手机中，授予777权限。将手机连接到无人机设备的WiFi，在手机终端界面执行以下命令进行抓包：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./tcpdump -i any -p -s 0 -w /sdcard/capture.pcap</span><br></pre></td></tr></table></figure>
+<p>Ctrl + C停止抓包，回到Kali终端执行以下命令将手机内的<code>capture.pcap</code> pull出来：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb pull /sdcard/capture.pcap</span><br></pre></td></tr></table></figure>
+<p>如果分析无人机飞控相关，使用App代替遥控器进行操作，说明进行了远程控制，有可能是利用telnet协议进行的。如果分析无人机图传相关，飞行器拍下来的照片或录像保存到了手机上，有可能是利用ftp协议进行文件传输。</p>
+<p>对照组一：连接到无人机设备的WiFi的情况下，进入App进行操作与不进入App对照。（说明是否抓到了无人机App中的包）</p>
+<p>对照组二：连接数据流量与不连接对比，进入酷安。（说明tcpdump抓包是否需要联网）</p>
+<ul>
+<li>不联网没有数据包</li>
+<li>Google机连不上小米机的热点</li>
+</ul>
+<p>一个简单的抓包过程：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">┌──(root㉿kali)-[~]</span><br><span class="line">└─# adb shell</span><br><span class="line">bullhead:/ $ su</span><br><span class="line">bullhead:/ # cd /data/local/tmp</span><br><span class="line">bullhead:/ # ./tcpdump -i any -p -s 0 -w /sdcard/capture.pcap           </span><br><span class="line">tcpdump: data link type LINUX_SLL2</span><br><span class="line">tcpdump: listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144 bytes</span><br><span class="line">^C10270 packets captured</span><br><span class="line">10370 packets received by filter</span><br><span class="line">0 packets dropped by kernel</span><br><span class="line">bullhead:/data/local/tmp # exit</span><br><span class="line">bullhead:/ $ exit                                                           </span><br><span class="line"></span><br><span class="line">┌──(root㉿kali)-[~]</span><br><span class="line">└─# adb pull /sdcard/capture.pcap                                            </span><br><span class="line">/sdcard/capture.pcap: 1 file pulled, .... 12.9 MB/s (2595261 bytes in 0.191s)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -596,7 +615,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">1. 环境配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%9F%A5%E7%9C%8B%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="nav-text">2. 查看基本信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-WelcomeActivity-onCreate"><span class="nav-text">3. WelcomeActivity.onCreate()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-WelcomeActivity-onClick"><span class="nav-text">4. WelcomeActivity.onClick()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-ControlFActivity%E5%92%8CControlHyActivity"><span class="nav-text">5. ControlFActivity和ControlHyActivity</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-ControlHyActivity"><span class="nav-text">5.1 ControlHyActivity</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-1-onCreate"><span class="nav-text">5.1.1 onCreate()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-2-onClick"><span class="nav-text">5.1.2 onClick()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-ControlFActivity"><span class="nav-text">5.2 ControlFActivity</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-1-onCreate"><span class="nav-text">5.2.1 onCreate()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-2-onClick"><span class="nav-text">5.2.2 onClick()</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">1. 环境配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%9F%A5%E7%9C%8B%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="nav-text">2. 查看基本信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-WelcomeActivity-onCreate"><span class="nav-text">3. WelcomeActivity.onCreate()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-WelcomeActivity-onClick"><span class="nav-text">4. WelcomeActivity.onClick()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-ControlFActivity%E5%92%8CControlHyActivity"><span class="nav-text">5. ControlFActivity和ControlHyActivity</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-ControlHyActivity"><span class="nav-text">5.1 ControlHyActivity</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-1-onCreate"><span class="nav-text">5.1.1 onCreate()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-2-onClick"><span class="nav-text">5.1.2 onClick()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-ControlFActivity"><span class="nav-text">5.2 ControlFActivity</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-1-onCreate"><span class="nav-text">5.2.1 onCreate()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-2-onClick"><span class="nav-text">5.2.2 onClick()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E5%8F%A6%E4%B8%80%E7%A7%8D%E6%80%9D%E8%B7%AF"><span class="nav-text">6. 另一种思路</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -694,7 +713,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">17:57</span>
+    <span title="站点阅读时长">18:06</span>
 </div>
 
         
