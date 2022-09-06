@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":{"gitalk":{"order":-2}},"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1. HTTP环境配置将主机与手机连上同一WiFi，使它们处于同一局域网内。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安卓抓包也是一门学问">
+<meta property="og:url" content="http://example.com/posts/56766070.html">
+<meta property="og:site_name" content="v5le0n9&#39;s garden">
+<meta property="og:description" content="1. HTTP环境配置将主机与手机连上同一WiFi，使它们处于同一局域网内。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.5.jpg">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.1.jpg">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.4.png">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.6.png">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.7.png">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.8.png">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.9.png">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.10.png">
+<meta property="og:image" content="http://example.com/posts/undefined/1.2.1.png">
+<meta property="og:image" content="http://example.com/posts/undefined/1.2.2.png">
+<meta property="og:image" content="http://example.com/posts/undefined/1.2.3.png">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.2.jpg">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.3.jpg">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.1.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.3.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.2.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.8.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.9.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.10.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.4.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.5.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.6.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.7.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.3.1.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.3.2.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.3.3.png">
+<meta property="og:image" content="http://example.com/posts/undefined/3.1.1.png">
+<meta property="og:image" content="http://example.com/posts/undefined/3.1.2.png">
+<meta property="og:image" content="http://example.com/posts/undefined/3.1.4.png">
+<meta property="og:image" content="http://example.com/posts/undefined/3.1.3.png">
+<meta property="og:image" content="http://example.com/posts/undefined/3.1.5.png">
+<meta property="og:image" content="http://example.com/posts/undefined/3.1.6.png">
+<meta property="og:image" content="http://example.com/posts/undefined/3.1.7.png">
+<meta property="og:image" content="http://example.com/posts/undefined/3.1.8.png">
+<meta property="og:image" content="http://example.com/posts/undefined/3.1.9.png">
+<meta property="og:image" content="http://example.com/posts/undefined/3.1.10.png">
+<meta property="og:image" content="http://example.com/posts/undefined/3.1.11.png">
+<meta property="article:published_time" content="2022-09-06T09:31:36.221Z">
+<meta property="article:modified_time" content="2022-09-06T09:31:04.033Z">
+<meta property="article:author" content="v5le0n9">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/posts/undefined/1.1.5.jpg">
+
+<link rel="canonical" href="http://example.com/posts/56766070.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>安卓抓包也是一门学问 | v5le0n9's garden</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="v5le0n9's garden" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">v5le0n9's garden</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">小凉的秘密基地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/v5le0n9" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/56766070.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="v5le0n9">
+      <meta itemprop="description" content="小呀小二郎呀背着个书包上学堂">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="v5le0n9's garden">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          安卓抓包也是一门学问
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-09-06 17:31:36 / 修改时间：17:31:04" itemprop="dateCreated datePublished" datetime="2022-09-06T17:31:36+08:00">2022-09-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">Android逆向</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="1-HTTP环境配置"><a href="#1-HTTP环境配置" class="headerlink" title="1. HTTP环境配置"></a>1. HTTP环境配置</h1><p>将主机与手机连上同一WiFi，使它们处于同一局域网内。</p>
+<img src="/posts/undefined/1.1.5.jpg" class="">
+<span id="more"></span>
+<p>Kali设置为桥接模式或自定义网卡，编辑 -&gt; 虚拟网络编辑器，更改桥接目标与主机一致。</p>
+<img src="/posts/undefined/1.1.1.jpg" class="">
+<p>此时可以查看各自IP地址，看是否处于同一局域网内。虚拟机与手机要能相互ping通，数据包才能互传。</p>
+<img src="/posts/undefined/1.1.4.png" class="">
+<h2 id="1-1-Charles"><a href="#1-1-Charles" class="headerlink" title="1.1 Charles"></a>1.1 Charles</h2><p>下载Charles，可以在 <a target="_blank" rel="noopener" href="https://www.zzzmode.com/mytools/charles/">https://www.zzzmode.com/mytools/charles/</a> 进行破解，但还是推荐支持正版。</p>
+<p>运行Charles，Proxy -&gt; Proxy Setting 查看监听端口，默认为8888。</p>
+<img src="/posts/undefined/1.1.6.png" class="">
+<p>将手机连接上的WiFi设置手动代理，代理服务器主机为虚拟机的IP地址，代理服务器端口为监听端口。</p>
+<img src="/posts/undefined/1.1.7.png" class="">
+<p>在Charles中会弹出窗口，点击允许。</p>
+<img src="/posts/undefined/1.1.8.png" class="">
+<p>手机随意浏览网页，Charles就捕获到数据包了。当浏览HTTP网页时，可以将页面的相关内容解析出来。</p>
+<img src="/posts/undefined/1.1.9.png" class="">
+<p>但浏览HTTPS网页时，Charles只充当一个透明代理，收到什么就转发什么，里面的内容解析不出来。 </p>
+<img src="/posts/undefined/1.1.10.png" class="">
+<h2 id="1-2-Burp-Suite"><a href="#1-2-Burp-Suite" class="headerlink" title="1.2 Burp Suite"></a>1.2 Burp Suite</h2><p>Kali自带，将代理监听器设置为任何IP的8080端口。</p>
+<img src="/posts/undefined/1.2.1.png" class="">
+<p>将手机连接上的WiFi代理服务器端口修改为8080，即可抓包。</p>
+<img src="/posts/undefined/1.2.2.png" class="">
+<p>可以去找个Pro版，方便很多。具体安装教程可以参考这篇文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/zw05011/article/details/122459723">https://blog.csdn.net/zw05011/article/details/122459723</a></p>
+<p>同样把IP设置为任意。</p>
+<img src="/posts/undefined/1.2.3.png" class="">
+<h2 id="1-3-HTTP的缺陷"><a href="#1-3-HTTP的缺陷" class="headerlink" title="1.3 HTTP的缺陷"></a>1.3 HTTP的缺陷</h2><p>HTTP的缺陷：</p>
+<ul>
+<li>通信使用明文(不加密)，内容可能会被窃听</li>
+<li>不验证通信方的身份，因此有可能遭遇伪装</li>
+<li>无法证明报文的完整性，所以有可能已遭篡改</li>
+</ul>
+<h1 id="2-HTTPS环境配置"><a href="#2-HTTPS环境配置" class="headerlink" title="2. HTTPS环境配置"></a>2. HTTPS环境配置</h1><p>HTTP + SSL + 认证 + 完整性保护 = HTTPS</p>
+<p>下图是HTTPS通信完整流程：</p>
+<img src="/posts/undefined/1.1.2.jpg" class="">
+<h2 id="2-1-HTTPS中间人抓包核心原理"><a href="#2-1-HTTPS中间人抓包核心原理" class="headerlink" title="2.1 HTTPS中间人抓包核心原理"></a>2.1 HTTPS中间人抓包核心原理</h2><p>HTTPS抓包的原理还是挺简单的，简单来说，就是Charles作为“中间人代理”，拿到了 服务器证书公钥 和 HTTPS连接的对称密钥，前提是客户端选择信任并安装Charles的CA证书，否则客户端就会“报警”并中止连接。</p>
+<img src="/posts/undefined/1.1.3.jpg" class="" title="应用层Https抓包的根本原理">
+<p>有了Charles置于中间之后，本来C/S架构的通信过程会“分裂”为两个独立的通信过程，App本来验证的是服务器的证书，服务器的证书手机的根证书是认可的，直接内置的；但是分裂成两个独立的通信过程之后，App验证的是Charles的证书，它的证书手机根证书并不认可，它并不是由手机内置的权威根证书签发机构签发的，所以手机不认，然后App也不认；所以我们要把Charles的证书导入到手机根证书目录中去，这样手机就会认可，如果App没有进行额外的校验（比如在代码中对该证书进行校验，也就是SSL pinning系列API）的话，App也会直接认可接受。</p>
+<h2 id="2-2-Charles配置SSL"><a href="#2-2-Charles配置SSL" class="headerlink" title="2.2 Charles配置SSL"></a>2.2 Charles配置SSL</h2><p>Proxy -&gt; SSL Proxying Settings，勾选“Enable SSL Proxying”，在“Include”添加任意IP和任意端口。</p>
+<img src="/posts/undefined/2.2.1.png" class="">
+<p>Charles开启监听，手机如果想要浏览HTTPS网页，会有警告提示。因为浏览器获得的是Charles的公钥而不是HTTPS网页的服务器公钥。</p>
+<img src="/posts/undefined/2.2.3.png" class="">
+<p>如果用户不顾警告，点击“高级”，选择继续浏览，有些网站可以，但有些网站使用了HSTS(严格传输安全协议)，让浏览器强制使用HTTPS与网站进行通信，以减少会话劫持风险。</p>
+<img src="/posts/undefined/2.2.2.png" class="">
+<p>如果能继续进入，就可以抓到HTTPS中的一些数据包，比如图片、HTML等，但也有一些红叉叉。</p>
+<img src="/posts/undefined/2.2.8.png" class="">
+<p>输入账号密码后登录成功，跳转到用户界面，Charles抓到请求响应包，并且可以解析用户界面的内容，比如可以知道学号、姓名等。</p>
+<img src="/posts/undefined/2.2.9.png" class="">
+<img src="/posts/undefined/2.2.10.png" class="">
+<p>点击红叉叉的Notes栏提示我们如果想要这些内容显示需要浏览器或应用程序信任Charles根证书。同样，要想成功进入使用了HSTS的网页，也需要添加Charles根证书。</p>
+<p>在浏览器中输入 chls.pro/ssl 下载Charles公钥证书并安装。</p>
+<img src="/posts/undefined/2.2.4.png" class="">
+<img src="/posts/undefined/2.2.5.png" class="">
+<p>此时再次访问HTTPS网页就没有警告提示了，链接显示绿色，并且可以将HTML解析出来。</p>
+<img src="/posts/undefined/2.2.6.png" class="">
+<p>那些红叉叉也没有了。</p>
+<img src="/posts/undefined/2.2.7.png" class="">
+<h2 id="2-3-Burp-Suite配置SSL"><a href="#2-3-Burp-Suite配置SSL" class="headerlink" title="2.3 Burp Suite配置SSL"></a>2.3 Burp Suite配置SSL</h2><p>同样，如果Burp Suite抓HTTPS的包也是会显示警告提示，也是要安装Burp Suite公钥证书。</p>
+<img src="/posts/undefined/2.3.1.png" class="">
+<p>导出的是<code>.der</code>格式的证书，将它转化为<code>.pem</code>格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -inform DER -in burpsuite.der -out burpsuite.pem</span><br></pre></td></tr></table></figure>
+<p>再将<code>.pem</code>格式的证书push到手机中，安装证书即可。可以在用户凭据中查看安装的证书。</p>
+<img src="/posts/undefined/2.3.2.png" class="">
+<p>再次进入HTTPS网页同样可以解析内容。</p>
+<img src="/posts/undefined/2.3.3.png" class="">
+<h1 id="3-抓取App中的内容"><a href="#3-抓取App中的内容" class="headerlink" title="3. 抓取App中的内容"></a>3. 抓取App中的内容</h1><p>上面讲到，无论HTTP还是HTTPS，都是在浏览器中进行的，那抓App中的内容有什么不同吗？</p>
+<p>以某个视频App为例子，发现它的网页、图片、音视频都是用HTTP传输的，但登录注册肯定是用HTTPS传输的，要不然用户数据就是在网上裸奔。</p>
+<img src="/posts/undefined/3.1.1.png" class="">
+<p>在尝试发送验证码时，会弹窗“网络不给力”。</p>
+<img src="/posts/undefined/3.1.2.png" class="">
+<p>怎么回事呢？我们将代理关掉，重新发送验证码，发现会经过一个安全检测，然后可以发送短信。</p>
+<img src="/posts/undefined/3.1.4.png" class="">
+<img src="/posts/undefined/3.1.3.png" class="">
+<p>说明这不是网络的问题，而是HTTPS传输时发现公钥不匹配导致的。Charles的抓包结果验证了我们的想法。</p>
+<img src="/posts/undefined/3.1.5.png" class="">
+<p>这是因为在 Android 7.0（API 24）到 Android 8.1（API 27），默认不再信任用户添加的 CA 证书，所以也就不再信任 Charles 和 Fiddler 抓包工具的证书，所以抓取 HTTPS 包时才会失败。而且在 Android 9.0（API 28）及更高版本上，不仅默认只系统预装的 CA 证书，还默认禁止所有明文通信（不允许 HTTP 请求）。</p>
+<p>解决方案一：IOS和安卓&lt;7.0的版本没有此问题，因此如果条件允许，可以换为苹果手机或安卓版本低于7.0版本的手机去抓取。</p>
+<p>解决方案二：将抓包工具的证书安装到系统凭据中而不是用户凭据中。</p>
+<p>打开Charles，Help -&gt; SSL Proxying -&gt; Save Charles Root Certificate ，以<code>.pem</code>格式保存，在root目录下就会生成一个<code>charles.pem</code>证书。</p>
+<img src="/posts/undefined/3.1.6.png" class="">
+<p>输入以下命令查看证书的哈希值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -subject_hash_old -in charles.pem</span><br></pre></td></tr></table></figure>
+<img src="/posts/undefined/3.1.7.png" class="">
+<p>将证书重命名为第一行的<code>bc7c86bb</code>，为了防止文件名冲突可以在末尾追加<code>.0</code>，如果根证书文件夹里面已经有这个文件名了，那就将<code>.0</code>改为<code>.1</code>，以此类推。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv charles.pem bc7c86bb.0</span><br></pre></td></tr></table></figure>
+<p>将证书导入到系统凭据中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">adb push bc7c86bb.0 /sdcard/</span><br><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">mount -o rw,remount /system</span><br><span class="line">mv /sdcard/bc7c86bb.0 /system/etc/security/cacerts/</span><br><span class="line">chmod 644 /system/etc/security/cacerts/bc7c86bb.0</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+<img src="/posts/undefined/3.1.8.png" class="">
+<p>Burp Suite的证书同样可以利用这种方法导入到系统凭据中。</p>
+<img src="/posts/undefined/3.1.9.png" class="">
+<p>现在就可以抓取发送短信验证码的包了。</p>
+<img src="/posts/undefined/3.1.10.png" class="">
+<p>如果在安全检测中滑动校验时出现“网络不给力”，加载不出拼图也没关系，因为此时我们已经把上面那个包抓到了。</p>
+<img src="/posts/undefined/3.1.11.png" class="">
+<h1 id="4-Postern-Charles"><a href="#4-Postern-Charles" class="headerlink" title="4. Postern + Charles"></a>4. Postern + Charles</h1><p>现在大部分App都只做了客户端校验服务器的操作，也就是HTTPS中间人抓包核心原理的左半部分。由于通信是双方的，所以有些服务器也会校验客户端。</p>
+<h1 id="3-无人机抓包环境配置"><a href="#3-无人机抓包环境配置" class="headerlink" title="3. 无人机抓包环境配置"></a>3. 无人机抓包环境配置</h1><p>另外，曾经有人问我，像这样的一个场景如何抓包：</p>
+<pre><code>问：最近在分析手机搬家类软件的协议，不知道用什么去抓包，系统应用，不可卸载那种。搬家场景：两台手机打开搬家软件，一台会创建热点，另一台手机连接该热点后，通过搬家软件传输数据。求大佬指点抓包方法。
+</code></pre><p>这个场景是有点和难度的，我们把开热点的手机假设为A，连接热点的手机假设为B。另外准备一台抓包电脑，连接上A开的热点。在B上安装VPN软件Postern，服务器设置为抓包电脑，这样B应该可以正常连接到A，B的所有流量也是从抓包电脑走的，可以抓到所有的包。</p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/197657#h3-10">https://www.anquanke.com/post/id/197657#h3-10</a></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="v5le0n9 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="v5le0n9 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/203cba03.html" rel="prev" title="so加载执行流程">
+      <i class="fa fa-chevron-left"></i> so加载执行流程
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-HTTP%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">1. HTTP环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Charles"><span class="nav-text">1.1 Charles</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Burp-Suite"><span class="nav-text">1.2 Burp Suite</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-HTTP%E7%9A%84%E7%BC%BA%E9%99%B7"><span class="nav-text">1.3 HTTP的缺陷</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-HTTPS%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">2. HTTPS环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-HTTPS%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%8A%93%E5%8C%85%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86"><span class="nav-text">2.1 HTTPS中间人抓包核心原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-Charles%E9%85%8D%E7%BD%AESSL"><span class="nav-text">2.2 Charles配置SSL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-Burp-Suite%E9%85%8D%E7%BD%AESSL"><span class="nav-text">2.3 Burp Suite配置SSL</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%8A%93%E5%8F%96App%E4%B8%AD%E7%9A%84%E5%86%85%E5%AE%B9"><span class="nav-text">3. 抓取App中的内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Postern-Charles"><span class="nav-text">4. Postern + Charles</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%97%A0%E4%BA%BA%E6%9C%BA%E6%8A%93%E5%8C%85%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">3. 无人机抓包环境配置</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="v5le0n9"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">v5le0n9</p>
+  <div class="site-description" itemprop="description">小呀小二郎呀背着个书包上学堂</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/Leong_Vinson" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;Leong_Vinson" rel="noopener" target="_blank"><i class="fab fa-cuttlefish fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/v5le0n9" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;v5le0n9" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:v5le0n9@163.com" title="E-Mail → mailto:v5le0n9@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.zz1syyd.com/" title="https:&#x2F;&#x2F;www.zz1syyd.com&#x2F;" rel="noopener" target="_blank">zz1syyd</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://one-null-pointer.github.io/" title="https:&#x2F;&#x2F;one-null-pointer.github.io&#x2F;" rel="noopener" target="_blank">liaoyue</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">v5le0n9</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.2m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">18:23</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '7c58e80079a2457b610d',
+      clientSecret: 'fc16b1b0fdfb278016ebe41c20f3743c3c927466',
+      repo        : 'comments.github.io',
+      owner       : 'v5le0n9',
+      admin       : ['v5le0n9'],
+      id          : 'd4a607ac5f2991faa071e7539e7c2921',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
