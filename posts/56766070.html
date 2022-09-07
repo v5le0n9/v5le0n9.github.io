@@ -65,8 +65,18 @@
 <meta property="og:image" content="http://example.com/posts/56766070/3.1.9.png">
 <meta property="og:image" content="http://example.com/posts/56766070/3.1.10.png">
 <meta property="og:image" content="http://example.com/posts/56766070/3.1.11.png">
+<meta property="og:image" content="http://example.com/posts/56766070/4.1.1.png">
+<meta property="og:image" content="http://example.com/posts/56766070/4.1.2.png">
+<meta property="og:image" content="http://example.com/posts/56766070/4.1.3.png">
+<meta property="og:image" content="http://example.com/posts/56766070/4.1.4.png">
+<meta property="og:image" content="http://example.com/posts/56766070/4.1.5.png">
+<meta property="og:image" content="http://example.com/posts/56766070/4.3.2.jpg">
+<meta property="og:image" content="http://example.com/posts/56766070/4.3.3.png">
+<meta property="og:image" content="http://example.com/posts/56766070/4.3.4.png">
+<meta property="og:image" content="http://example.com/posts/56766070/4.3.5.jpg">
+<meta property="og:image" content="http://example.com/posts/56766070/4.3.1.png">
 <meta property="article:published_time" content="2022-09-06T09:31:36.221Z">
-<meta property="article:modified_time" content="2022-09-06T09:32:46.608Z">
+<meta property="article:modified_time" content="2022-09-07T09:46:09.528Z">
 <meta property="article:author" content="v5le0n9">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/posts/56766070/1.1.5.jpg">
@@ -250,10 +260,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-09-06 17:31:36 / 修改时间：17:32:46" itemprop="dateCreated datePublished" datetime="2022-09-06T17:31:36+08:00">2022-09-06</time>
+              <time title="创建时间：2022-09-06 17:31:36" itemprop="dateCreated datePublished" datetime="2022-09-06T17:31:36+08:00">2022-09-06</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-07 17:46:09" itemprop="dateModified" datetime="2022-09-07T17:46:09+08:00">2022-09-07</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -277,14 +293,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.3k</span>
+              <span>6.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>6 分钟</span>
             </span>
 
         </div>
@@ -360,7 +376,7 @@
 <img src="/posts/56766070/2.3.2.png" class="">
 <p>再次进入HTTPS网页同样可以解析内容。</p>
 <img src="/posts/56766070/2.3.3.png" class="">
-<h1 id="3-抓取App中的内容"><a href="#3-抓取App中的内容" class="headerlink" title="3. 抓取App中的内容"></a>3. 抓取App中的内容</h1><p>上面讲到，无论HTTP还是HTTPS，都是在浏览器中进行的，那抓App中的内容有什么不同吗？</p>
+<h1 id="3-抓取App中的HTTPS"><a href="#3-抓取App中的HTTPS" class="headerlink" title="3. 抓取App中的HTTPS"></a>3. 抓取App中的HTTPS</h1><p>上面讲到，无论HTTP还是HTTPS，都是在浏览器中进行的，那抓App中的内容有什么不同吗？</p>
 <p>以某个视频App为例子，发现它的网页、图片、音视频都是用HTTP传输的，但登录注册肯定是用HTTPS传输的，要不然用户数据就是在网上裸奔。</p>
 <img src="/posts/56766070/3.1.1.png" class="">
 <p>在尝试发送验证码时，会弹窗“网络不给力”。</p>
@@ -372,7 +388,7 @@
 <img src="/posts/56766070/3.1.5.png" class="">
 <p>这是因为在 Android 7.0（API 24）到 Android 8.1（API 27），默认不再信任用户添加的 CA 证书，所以也就不再信任 Charles 和 Fiddler 抓包工具的证书，所以抓取 HTTPS 包时才会失败。而且在 Android 9.0（API 28）及更高版本上，不仅默认只系统预装的 CA 证书，还默认禁止所有明文通信（不允许 HTTP 请求）。</p>
 <p>解决方案一：IOS和安卓&lt;7.0的版本没有此问题，因此如果条件允许，可以换为苹果手机或安卓版本低于7.0版本的手机去抓取。</p>
-<p>解决方案二：将抓包工具的证书安装到系统凭据中而不是用户凭据中。</p>
+<p>解决方案二：将抓包工具的证书安装到系统凭据中。</p>
 <p>打开Charles，Help -&gt; SSL Proxying -&gt; Save Charles Root Certificate ，以<code>.pem</code>格式保存，在root目录下就会生成一个<code>charles.pem</code>证书。</p>
 <img src="/posts/56766070/3.1.6.png" class="">
 <p>输入以下命令查看证书的哈希值：</p>
@@ -389,7 +405,46 @@
 <img src="/posts/56766070/3.1.10.png" class="">
 <p>如果在安全检测中滑动校验时出现“网络不给力”，加载不出拼图也没关系，因为此时我们已经把上面那个包抓到了。</p>
 <img src="/posts/56766070/3.1.11.png" class="">
-<h1 id="4-Postern-Charles"><a href="#4-Postern-Charles" class="headerlink" title="4. Postern + Charles"></a>4. Postern + Charles</h1><p>现在大部分App都只做了客户端校验服务器的操作，也就是HTTPS中间人抓包核心原理的左半部分。由于通信是双方的，所以有些服务器也会校验客户端。</p>
+<h1 id="4-Postern-Charles"><a href="#4-Postern-Charles" class="headerlink" title="4. Postern + Charles"></a>4. Postern + Charles</h1><p>现在大部分App都只做了客户端校验服务器的操作，也就是HTTPS中间人抓包核心原理的左半部分。由于通信是双方的，所以有些App为了防止被抓包会进行服务器校验客户端的操作。</p>
+<p>如果App进行了服务器校验客户端，在通信过程中发现传过来客户端的公钥与存储的公钥不匹配，App会直接退出，终止通信。</p>
+<p>目前只有Charles支持通过Postern抓包。单纯使用Charles抓这些App的登录包是抓不住的（应用层抓包），因为App设置了noproxy，根本不走代理，所以此时App还是能成功发送验证码（反正你又抓不到，我为什么不发）。</p>
+<p>具体可看赵四大佬的文章：<a target="_blank" rel="noopener" href="http://www.520monkey.com/archives/1263">Android安全防护之旅—只需要这几行代码让Android程序项目变得更加安全</a></p>
+<p>怎样才能抓到这个包呢？可以结合<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1mevjC7TO2t5QeeQGo3x0Eg">Postern</a>，提取码：a9c1。使Charles监听到Postern而不是直接监听App，Postern就是一个VPN，所以App设置不走代理也没用，Postern照样能监听到，然后Postern再转发到Charles上，这样就完成了抓包（传输层抓包）。</p>
+<h2 id="4-1-环境配置"><a href="#4-1-环境配置" class="headerlink" title="4.1 环境配置"></a>4.1 环境配置</h2><p>在Charles中开启SOCKS Proxy：Proxy -&gt; Proxy Settings，勾选“Enable SOCKS Proxy”，默认端口为8889。</p>
+<img src="/posts/56766070/4.1.1.png" class="">
+<p>手机中的WiFi代理关掉，打开Postern，在配置代理中编辑代理服务器：</p>
+<img src="/posts/56766070/4.1.2.png" class="">
+<p>在配置规则中编辑规则：</p>
+<img src="/posts/56766070/4.1.3.png" class="">
+<p>重启一下VPN，此时Charles就会弹窗，点击允许。此时Charles + Postern已经配置好了。</p>
+<h2 id="4-2-VPN抓包"><a href="#4-2-VPN抓包" class="headerlink" title="4.2 VPN抓包"></a>4.2 VPN抓包</h2><p>抓某个视频App的登录包也没问题。</p>
+<img src="/posts/56766070/4.1.4.png" class="">
+<p>在这样一个环境下，如果抓进行了服务器校验客户端的App的登录包，点击获取验证码后App就会直接退出，此时可以看到Charles抓到了包，但是服务器返回的是400状态码，这里就是服务器校验客户端的精髓所在。</p>
+<img src="/posts/56766070/4.1.5.png" class="">
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">center</span>&gt;</span><span class="tag">&lt;<span class="name">h1</span>&gt;</span>400 Bad Request<span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;/<span class="name">center</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">center</span>&gt;</span>No required SSL certificate was sent<span class="tag">&lt;/<span class="name">center</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="4-3-客户端证书提取转化和导入抓包"><a href="#4-3-客户端证书提取转化和导入抓包" class="headerlink" title="4.3 客户端证书提取转化和导入抓包"></a>4.3 客户端证书提取转化和导入抓包</h2><p>服务器校验客户端是HTTPS中间人抓包核心原理的右半部分，这时候与服务器进行通信的已经不是App，而是Charles了，所以我们要将App中内置的证书导入到Charles中去。</p>
+<p>那么如何找到这个内置的证书呢？一般进行APK解包后，直接搜索后缀名为<code>.p12</code>的文件即可，一般常用的命令为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tree -NCfhl | grep -i p12</span><br></pre></td></tr></table></figure>
+<p>直接打印出P12文件的路径，当然也有一些App比较“狡猾”，比如我们通过搜索“p12”没有搜到证书，然后看jadx反编译的源码得出它将证书伪装成<code>border_ks_19</code>文件，我们找到这个文件用file命令查看，果然不是后缀名所显示的PNG格式，将其改成<code>.p12</code>的后缀名尝试打开时要求输入密码，可见其确实是一个证书。</p>
+<img src="/posts/56766070/4.3.2.jpg" class="" title="伪装成PNG的证书文件">
+<p>当然证书还有很多格式，后缀名并不一定都是<code>.p12</code>，实际上在Android中是无法使用P12格式的证书的，Android 系统中使用的证书要求是BKS格式。（所以上面解包后搜索<code>.bks</code>也行？）</p>
+<p>P12格式的证书可以在Windows上直接打开，而BKS不行。如果实在不知道证书的类型或者不会打开其它类型的证书，可以下载 <a target="_blank" rel="noopener" href="http://keystore-explorer.org/downloads.html">KeyStore Explorer</a> 证书转换工具，它可以解析证书类型、转换为其它格式的证书。使用该工具的前提是知道证书的密码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/kaikramer/keystore-explorer/releases/download/v5.5.1/kse_5.5.1_all.deb</span><br><span class="line">dpkg -i kse_5.5.1_all.deb</span><br></pre></td></tr></table></figure>
+<p>证书的密码一般在jadx反编译的代码中或者so库拖进IDA后可以看到硬编码的明文，也可以使用hook，将证书密码直接打印出来：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hook_KeyStore_load</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> <span class="title class_">StringClass</span> = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.lang.String&quot;</span>);</span><br><span class="line">        <span class="keyword">var</span> <span class="title class_">KeyStore</span> = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.security.KeyStore&quot;</span>);</span><br><span class="line">        <span class="title class_">KeyStore</span>.<span class="property">load</span>.<span class="title function_">overload</span>(<span class="string">&#x27;java.security.KeyStore$LoadStoreParameter&#x27;</span>).<span class="property">implementation</span> = <span class="keyword">function</span> (<span class="params">arg0</span>) &#123;</span><br><span class="line">            <span class="title function_">printStack</span>(<span class="string">&quot;KeyStore.load1&quot;</span>);</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;KeyStore.load1:&quot;</span>, arg0);</span><br><span class="line">            <span class="variable language_">this</span>.<span class="title function_">load</span>(arg0);</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="title class_">KeyStore</span>.<span class="property">load</span>.<span class="title function_">overload</span>(<span class="string">&#x27;java.io.InputStream&#x27;</span>, <span class="string">&#x27;[C&#x27;</span>).<span class="property">implementation</span> = <span class="keyword">function</span> (<span class="params">arg0, arg1</span>) &#123;</span><br><span class="line">            <span class="title function_">printStack</span>(<span class="string">&quot;KeyStore.load2&quot;</span>);</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;KeyStore.load2:&quot;</span>, arg0, arg1 ? <span class="title class_">StringClass</span>.$new(arg1) : <span class="literal">null</span>);</span><br><span class="line">            <span class="variable language_">this</span>.<span class="title function_">load</span>(arg0, arg1);</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;hook_KeyStore_load...&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">hook_KeyStore_load</span>()</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">setImmediate</span>(main)</span><br></pre></td></tr></table></figure>
+<p>为什么要hook这个函数，因为开发时设置自签名证书的密码就是这个函数呀。逆向过程中需要解决的问题，答案往往在开发中。具体可看：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u013424496/article/details/51161647">App实现自签名的ssl证书</a>。注意这个脚本在Android 8.1.0可行，但Android 10.0.0就不行了，查看Android 10.0.0源码发现已经没有这个<code>KeyStore.load()</code>函数了。</p>
+<p>由于Charles只支持导入<code>.p12</code>和<code>.pem</code>格式的证书，所以如果不是这两个格式的证书，可以使用上面说的KeyStore Explorer工具转换。</p>
+<p><a target="_blank" rel="noopener" href="https://help.trustasia.com/how-to-transfer-the-format-of-certificates-by-using-keystore-explorer/">使用KeyStore Explorer工具转换证书格式</a></p>
+<p>在Charles中 Proxy -&gt; SSL Proxying Settings -&gt; Client Certificates，创建一个安全存储，再进行导入证书。Host和Port可以填成任意，意思是你以“趣充”的身份访问所有网站，因为只有“趣充”才有该证书，而平时我们访问网站是匿名的。也可以按最小权限原则，只在某个特定网站才以“趣充”身份访问，比如在4.2中可知是在“share.equchong.com:9443”中校验客户端证书的，所以只在这个网站中以“趣充”身份访问。</p>
+<img src="/posts/56766070/4.3.3.png" class="">
+<p>Porxy -&gt; Proxy Settings，按照下图填上端口。</p>
+<img src="/posts/56766070/4.3.4.png" class="">
+<p>此时再次进行抓包，App没有直接退出，短信发送成功，Charles也抓到包了。</p>
+<img src="/posts/56766070/4.3.5.jpg" class="">
+<h2 id="4-5-VPN抓包对抗"><a href="#4-5-VPN抓包对抗" class="headerlink" title="4.5 VPN抓包对抗"></a>4.5 VPN抓包对抗</h2><p>当我们开启VPN后，手机会多出一个叫“tun0”网卡，手机的所有流量都会经过这个网卡，所以使用Charles监听VPN，就可以抓到手机所有的流量。</p>
+<img src="/posts/56766070/4.3.1.png" class="">
+<p>要想对抗VPN抓包，App可以通过判断<code>java.net.Network.getName()</code>是否等于“tun0”或“ppp0”来判断是否存在VPN。</p>
+<p>但绕过这个检测也很简单，hook该API使其返回“rmnet_data1”即可。</p>
 <h1 id="3-无人机抓包环境配置"><a href="#3-无人机抓包环境配置" class="headerlink" title="3. 无人机抓包环境配置"></a>3. 无人机抓包环境配置</h1><p>另外，曾经有人问我，像这样的一个场景如何抓包：</p>
 <pre><code>问：最近在分析手机搬家类软件的协议，不知道用什么去抓包，系统应用，不可卸载那种。搬家场景：两台手机打开搬家软件，一台会创建热点，另一台手机连接该热点后，通过搬家软件传输数据。求大佬指点抓包方法。
 </code></pre><p>这个场景是有点和难度的，我们把开热点的手机假设为A，连接热点的手机假设为B。另外准备一台抓包电脑，连接上A开的热点。在B上安装VPN软件Postern，服务器设置为抓包电脑，这样B应该可以正常连接到A，B的所有流量也是从抓包电脑走的，可以抓到所有的包。</p>
@@ -492,7 +547,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-HTTP%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">1. HTTP环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Charles"><span class="nav-text">1.1 Charles</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Burp-Suite"><span class="nav-text">1.2 Burp Suite</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-HTTP%E7%9A%84%E7%BC%BA%E9%99%B7"><span class="nav-text">1.3 HTTP的缺陷</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-HTTPS%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">2. HTTPS环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-HTTPS%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%8A%93%E5%8C%85%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86"><span class="nav-text">2.1 HTTPS中间人抓包核心原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-Charles%E9%85%8D%E7%BD%AESSL"><span class="nav-text">2.2 Charles配置SSL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-Burp-Suite%E9%85%8D%E7%BD%AESSL"><span class="nav-text">2.3 Burp Suite配置SSL</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%8A%93%E5%8F%96App%E4%B8%AD%E7%9A%84%E5%86%85%E5%AE%B9"><span class="nav-text">3. 抓取App中的内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Postern-Charles"><span class="nav-text">4. Postern + Charles</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%97%A0%E4%BA%BA%E6%9C%BA%E6%8A%93%E5%8C%85%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">3. 无人机抓包环境配置</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-HTTP%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">1. HTTP环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Charles"><span class="nav-text">1.1 Charles</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Burp-Suite"><span class="nav-text">1.2 Burp Suite</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-HTTP%E7%9A%84%E7%BC%BA%E9%99%B7"><span class="nav-text">1.3 HTTP的缺陷</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-HTTPS%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">2. HTTPS环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-HTTPS%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%8A%93%E5%8C%85%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86"><span class="nav-text">2.1 HTTPS中间人抓包核心原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-Charles%E9%85%8D%E7%BD%AESSL"><span class="nav-text">2.2 Charles配置SSL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-Burp-Suite%E9%85%8D%E7%BD%AESSL"><span class="nav-text">2.3 Burp Suite配置SSL</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%8A%93%E5%8F%96App%E4%B8%AD%E7%9A%84HTTPS"><span class="nav-text">3. 抓取App中的HTTPS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Postern-Charles"><span class="nav-text">4. Postern + Charles</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">4.1 环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-VPN%E6%8A%93%E5%8C%85"><span class="nav-text">4.2 VPN抓包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AF%81%E4%B9%A6%E6%8F%90%E5%8F%96%E8%BD%AC%E5%8C%96%E5%92%8C%E5%AF%BC%E5%85%A5%E6%8A%93%E5%8C%85"><span class="nav-text">4.3 客户端证书提取转化和导入抓包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-VPN%E6%8A%93%E5%8C%85%E5%AF%B9%E6%8A%97"><span class="nav-text">4.5 VPN抓包对抗</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%97%A0%E4%BA%BA%E6%9C%BA%E6%8A%93%E5%8C%85%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">3. 无人机抓包环境配置</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -590,7 +645,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">18:23</span>
+    <span title="站点阅读时长">18:26</span>
 </div>
 
         
