@@ -84,9 +84,15 @@
 <meta property="og:image" content="http://example.com/posts/56766070/4.4.8.png">
 <meta property="og:image" content="http://example.com/posts/56766070/4.4.8.jpg">
 <meta property="og:image" content="http://example.com/posts/56766070/4.5.1.png">
+<meta property="og:image" content="http://example.com/posts/56766070/4.4.9.jpg">
+<meta property="og:image" content="http://example.com/posts/56766070/4.4.10.jpg">
+<meta property="og:image" content="http://example.com/posts/56766070/4.4.11.jpg">
+<meta property="og:image" content="http://example.com/posts/56766070/4.4.12.jpg">
+<meta property="og:image" content="http://example.com/posts/56766070/4.4.13.jpg">
+<meta property="og:image" content="http://example.com/posts/56766070/4.4.14.jpg">
 <meta property="og:image" content="http://example.com/posts/56766070/4.3.1.png">
 <meta property="article:published_time" content="2022-09-06T09:31:36.221Z">
-<meta property="article:modified_time" content="2022-09-11T07:22:16.186Z">
+<meta property="article:modified_time" content="2022-09-13T09:28:59.649Z">
 <meta property="article:author" content="v5le0n9">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/posts/56766070/1.1.5.jpg">
@@ -278,7 +284,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-11 15:22:16" itemprop="dateModified" datetime="2022-09-11T15:22:16+08:00">2022-09-11</time>
+                <time title="修改时间：2022-09-13 17:28:59" itemprop="dateModified" datetime="2022-09-13T17:28:59+08:00">2022-09-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -303,14 +309,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>9.6k</span>
+              <span>11k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>9 分钟</span>
+              <span>10 分钟</span>
             </span>
 
         </div>
@@ -481,11 +487,35 @@
 <img src="/posts/56766070/4.5.1.png" class="">
 <p>解绑的第一步就是要知道App是用了哪个框架的SSL pinning，或者将上面的SSL Pinning方法全都来一遍，还是抓不到内容可以合理怀疑是做了混淆，使我们hook不到对应的方法。</p>
 <p>可以从系统角度出发，客户端或服务器校验证书时是利用证书的哈希值来判断该证书是否有效。计算证书的哈希值就必须要打开证书，所以肯定会有文件打开函数。我们可以使用objection hook文件打开函数，看是否打开了证书。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">android hooking search classes File//查找与文件有关的类</span><br><span class="line">android hooking watch class_method java.io.File$init --dump-args --dump-return --dump-backtrace</span><br></pre></td></tr></table></figure>
+<p>hook好后尝试注册，发现确实打开了证书算哈希。上面的<code>checkServerTrusted()</code>等函数用上面的框架方法不能通过，继续往下看发现<code>CertificatePinner.java</code>，它是okHttp里面的。</p>
+<img src="/posts/56766070/4.4.9.jpg" class="">
+<p>如果实在不知道的话可以用WallBreaker查看<code>z1.g</code>这个类的方法和常量。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plugin load ./~Wallbreaker//加载插件</span><br><span class="line">plugin wallbreaker classdump z1.g//将这个类的常量和方法dump下来</span><br><span class="line">plugin wallbreaker objectsearch z1.g//查找类的实例</span><br></pre></td></tr></table></figure>
+<img src="/posts/56766070/4.4.10.jpg" class="">
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugin wallbreaker objectdump --fullname 0x24e6//将类的实例dump下来</span><br></pre></td></tr></table></figure>
+<img src="/posts/56766070/4.4.11.jpg" class="">
+<p>由于里面的<code>a()</code>方法是混淆过的，所以需要找到okHttp里<code>CertificatePinner.java</code>中对应的方法。又由于<code>a()</code>方法与SSL pinning相关，所以可以在大佬的脚本上查看hook okHttp中的哪个函数，<code>a()</code>大概率就是那个函数。</p>
+<img src="/posts/56766070/4.4.12.jpg" class="">
+<p>可以照着大佬的脚本写：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hookCer</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;z1.g&quot;</span>).<span class="property">a</span>.<span class="property">implementation</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;z1.g. was called!&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">hookCer</span>()</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">serImmediate</span>(main)</span><br></pre></td></tr></table></figure>
+<img src="/posts/56766070/4.4.13.jpg" class="">
+<p>此时进行抓包也没有问题了。</p>
+<img src="/posts/56766070/4.4.14.jpg" class="">
 <h2 id="4-5-VPN抓包对抗"><a href="#4-5-VPN抓包对抗" class="headerlink" title="4.5 VPN抓包对抗"></a>4.5 VPN抓包对抗</h2><p>当我们开启VPN后，手机会多出一个叫“tun0”网卡，手机的所有流量都会经过这个网卡，所以使用Charles监听VPN，就可以抓到手机所有的流量。</p>
 <img src="/posts/56766070/4.3.1.png" class="">
 <p>要想对抗VPN抓包，App可以通过判断<code>java.net.Network.getName()</code>是否等于“tun0”或“ppp0”来判断是否存在VPN。</p>
 <p>但绕过这个检测也很简单，hook该API使其返回“rmnet_data1”即可。</p>
-<h1 id="3-无人机抓包环境配置"><a href="#3-无人机抓包环境配置" class="headerlink" title="3. 无人机抓包环境配置"></a>3. 无人机抓包环境配置</h1><p>另外，曾经有人问我，像这样的一个场景如何抓包：</p>
+<h1 id="5-Socket通信抓包"><a href="#5-Socket通信抓包" class="headerlink" title="5. Socket通信抓包"></a>5. Socket通信抓包</h1><p>Socket的本质是收发包的接口。它不是中间人抓包，而是网卡流量的dump转储下来。</p>
+<p>这个用Wireshark抓就行。</p>
+<h2 id="5-1-TCP-IP应用层hook"><a href="#5-1-TCP-IP应用层hook" class="headerlink" title="5.1 TCP/IP应用层hook"></a>5.1 TCP/IP应用层hook</h2><p>SSL + HTTP 、SMTP/POP/IMAP 、protibuf…</p>
+<p>hook SSL框架直接获得明文。</p>
+<h2 id="5-2-TCP-IP传输层hook"><a href="#5-2-TCP-IP传输层hook" class="headerlink" title="5.2 TCP/IP传输层hook"></a>5.2 TCP/IP传输层hook</h2><p>Frida hook Socket</p>
+<h2 id="5-3-TCP-IP网络层抓包"><a href="#5-3-TCP-IP网络层抓包" class="headerlink" title="5.3 TCP/IP网络层抓包"></a>5.3 TCP/IP网络层抓包</h2><p>彻底解决抓不到包的问题。</p>
+<h3 id="5-3-1-环境配置"><a href="#5-3-1-环境配置" class="headerlink" title="5.3.1 环境配置"></a>5.3.1 环境配置</h3><p>在手机上再安装一个Linux操作系统。</p>
+<p>下载与手机型号对应的<a target="_blank" rel="noopener" href="https://www.kali.org/get-kali/#kali-mobile">kali nethunter</a>，使用种子下载会快很多。</p>
+<p>…</p>
+<h1 id="6-无人机抓包环境配置"><a href="#6-无人机抓包环境配置" class="headerlink" title="6. 无人机抓包环境配置"></a>6. 无人机抓包环境配置</h1><p>另外，曾经有人问我，像这样的一个场景如何抓包：</p>
 <pre><code>问：最近在分析手机搬家类软件的协议，不知道用什么去抓包，系统应用，不可卸载那种。搬家场景：两台手机打开搬家软件，一台会创建热点，另一台手机连接该热点后，通过搬家软件传输数据。求大佬指点抓包方法。
 </code></pre><p>这个场景是有点和难度的，我们把开热点的手机假设为A，连接热点的手机假设为B。另外准备一台抓包电脑，连接上A开的热点。在B上安装VPN软件Postern，服务器设置为抓包电脑，这样B应该可以正常连接到A，B的所有流量也是从抓包电脑走的，可以抓到所有的包。</p>
 <p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/197657#h3-10">https://www.anquanke.com/post/id/197657#h3-10</a></p>
@@ -587,7 +617,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-HTTP%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">1. HTTP环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Charles"><span class="nav-text">1.1 Charles</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Burp-Suite"><span class="nav-text">1.2 Burp Suite</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-HTTP%E7%9A%84%E7%BC%BA%E9%99%B7"><span class="nav-text">1.3 HTTP的缺陷</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-HTTPS%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">2. HTTPS环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-HTTPS%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%8A%93%E5%8C%85%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86"><span class="nav-text">2.1 HTTPS中间人抓包核心原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-Charles%E9%85%8D%E7%BD%AESSL"><span class="nav-text">2.2 Charles配置SSL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-Burp-Suite%E9%85%8D%E7%BD%AESSL"><span class="nav-text">2.3 Burp Suite配置SSL</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%8A%93%E5%8F%96App%E4%B8%AD%E7%9A%84HTTPS"><span class="nav-text">3. 抓取App中的HTTPS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Postern-Charles"><span class="nav-text">4. Postern + Charles</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">4.1 环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-VPN%E6%8A%93%E5%8C%85"><span class="nav-text">4.2 VPN抓包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AF%81%E4%B9%A6%E6%8F%90%E5%8F%96%E8%BD%AC%E5%8C%96%E5%92%8C%E5%AF%BC%E5%85%A5%E6%8A%93%E5%8C%85"><span class="nav-text">4.3 客户端证书提取转化和导入抓包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-SSL-pinning"><span class="nav-text">4.4 SSL pinning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-1-%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E5%9B%9E%E9%A1%BE-%E5%BC%95%E5%85%A5"><span class="nav-text">4.4.1 案例——回顾 + 引入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-2-bypass"><span class="nav-text">4.4.2 bypass</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-3-%E8%AF%81%E4%B9%A6%E7%BB%91%E5%AE%9A%E5%BC%80%E5%8F%91%E9%80%86%E5%90%91%E5%92%8C%E6%B7%B7%E6%B7%86%E5%90%8E%E7%9A%84%E8%A7%A3%E7%BB%91"><span class="nav-text">4.4.3 证书绑定开发逆向和混淆后的解绑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-4-%E6%B7%B7%E6%B7%86%E6%A1%88%E4%BE%8B"><span class="nav-text">4.4.4 混淆案例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-VPN%E6%8A%93%E5%8C%85%E5%AF%B9%E6%8A%97"><span class="nav-text">4.5 VPN抓包对抗</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%97%A0%E4%BA%BA%E6%9C%BA%E6%8A%93%E5%8C%85%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">3. 无人机抓包环境配置</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-HTTP%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">1. HTTP环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Charles"><span class="nav-text">1.1 Charles</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Burp-Suite"><span class="nav-text">1.2 Burp Suite</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-HTTP%E7%9A%84%E7%BC%BA%E9%99%B7"><span class="nav-text">1.3 HTTP的缺陷</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-HTTPS%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">2. HTTPS环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-HTTPS%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%8A%93%E5%8C%85%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86"><span class="nav-text">2.1 HTTPS中间人抓包核心原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-Charles%E9%85%8D%E7%BD%AESSL"><span class="nav-text">2.2 Charles配置SSL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-Burp-Suite%E9%85%8D%E7%BD%AESSL"><span class="nav-text">2.3 Burp Suite配置SSL</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%8A%93%E5%8F%96App%E4%B8%AD%E7%9A%84HTTPS"><span class="nav-text">3. 抓取App中的HTTPS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Postern-Charles"><span class="nav-text">4. Postern + Charles</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">4.1 环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-VPN%E6%8A%93%E5%8C%85"><span class="nav-text">4.2 VPN抓包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AF%81%E4%B9%A6%E6%8F%90%E5%8F%96%E8%BD%AC%E5%8C%96%E5%92%8C%E5%AF%BC%E5%85%A5%E6%8A%93%E5%8C%85"><span class="nav-text">4.3 客户端证书提取转化和导入抓包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-SSL-pinning"><span class="nav-text">4.4 SSL pinning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-1-%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E5%9B%9E%E9%A1%BE-%E5%BC%95%E5%85%A5"><span class="nav-text">4.4.1 案例——回顾 + 引入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-2-bypass"><span class="nav-text">4.4.2 bypass</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-3-%E8%AF%81%E4%B9%A6%E7%BB%91%E5%AE%9A%E5%BC%80%E5%8F%91%E9%80%86%E5%90%91%E5%92%8C%E6%B7%B7%E6%B7%86%E5%90%8E%E7%9A%84%E8%A7%A3%E7%BB%91"><span class="nav-text">4.4.3 证书绑定开发逆向和混淆后的解绑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-4-%E6%B7%B7%E6%B7%86%E6%A1%88%E4%BE%8B"><span class="nav-text">4.4.4 混淆案例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-VPN%E6%8A%93%E5%8C%85%E5%AF%B9%E6%8A%97"><span class="nav-text">4.5 VPN抓包对抗</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Socket%E9%80%9A%E4%BF%A1%E6%8A%93%E5%8C%85"><span class="nav-text">5. Socket通信抓包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-TCP-IP%E5%BA%94%E7%94%A8%E5%B1%82hook"><span class="nav-text">5.1 TCP&#x2F;IP应用层hook</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-TCP-IP%E4%BC%A0%E8%BE%93%E5%B1%82hook"><span class="nav-text">5.2 TCP&#x2F;IP传输层hook</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-TCP-IP%E7%BD%91%E7%BB%9C%E5%B1%82%E6%8A%93%E5%8C%85"><span class="nav-text">5.3 TCP&#x2F;IP网络层抓包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-1-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">5.3.1 环境配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E6%97%A0%E4%BA%BA%E6%9C%BA%E6%8A%93%E5%8C%85%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">6. 无人机抓包环境配置</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -685,7 +715,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">18:29</span>
+    <span title="站点阅读时长">18:30</span>
 </div>
 
         
