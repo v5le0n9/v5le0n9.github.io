@@ -100,6 +100,7 @@
 <meta property="og:image" content="http://example.com/posts/ac4cb042/6.1.16.png">
 <meta property="og:image" content="http://example.com/posts/ac4cb042/6.1.18.png">
 <meta property="og:image" content="http://example.com/posts/ac4cb042/6.1.17.png">
+<meta property="og:image" content="http://example.com/posts/ac4cb042/6.2.12.jpg">
 <meta property="og:image" content="http://example.com/posts/ac4cb042/6.2.3.png">
 <meta property="og:image" content="http://example.com/posts/ac4cb042/6.2.1.png">
 <meta property="og:image" content="http://example.com/posts/ac4cb042/6.2.2.png">
@@ -155,11 +156,14 @@
 <meta property="og:image" content="http://example.com/posts/ac4cb042/7.2.12.png">
 <meta property="og:image" content="http://example.com/posts/ac4cb042/7.2.13.png">
 <meta property="og:image" content="http://example.com/posts/ac4cb042/7.2.14.png">
+<meta property="og:image" content="http://example.com/posts/ac4cb042/7.2.16.png">
 <meta property="og:image" content="http://example.com/posts/ac4cb042/7.2.15.png">
 <meta property="og:image" content="http://example.com/posts/ac4cb042/8.1.1.jpg">
 <meta property="og:image" content="http://example.com/posts/ac4cb042/8.1.2.jpg">
+<meta property="og:image" content="http://example.com/posts/ac4cb042/8.1.3.png">
+<meta property="og:image" content="http://example.com/posts/ac4cb042/8.1.4.png">
 <meta property="article:published_time" content="2022-08-24T13:44:15.795Z">
-<meta property="article:modified_time" content="2022-10-01T12:39:51.425Z">
+<meta property="article:modified_time" content="2022-10-05T03:30:18.305Z">
 <meta property="article:author" content="v5le0n9">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/posts/ac4cb042/2.1.1.png">
@@ -351,7 +355,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-01 20:39:51" itemprop="dateModified" datetime="2022-10-01T20:39:51+08:00">2022-10-01</time>
+                <time title="修改时间：2022-10-05 11:30:18" itemprop="dateModified" datetime="2022-10-05T11:30:18+08:00">2022-10-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -376,14 +380,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>21k</span>
+              <span>23k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>19 分钟</span>
+              <span>21 分钟</span>
             </span>
 
         </div>
@@ -638,6 +642,12 @@
 <img src="/posts/ac4cb042/6.1.17.png" class="">
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">68 07 01 05 03</span><br><span class="line">68 07 01 0a 0c</span><br><span class="line">68 07 01 0f 09</span><br><span class="line">68 07 01 14 12</span><br><span class="line">68 07 01 19 1f</span><br><span class="line">68 07 01 1e 18</span><br><span class="line">68 07 01 23 25</span><br><span class="line">68 07 01 28 2e</span><br></pre></td></tr></table></figure>
 <p>第4字节从代码中就能看出是传入的参数，也就是递增或递减5。最后发现第5字节是第2~4字节的异或运算，原来bArr字节数组就是传过去的数据本身。</p>
+<p>进而尝试使用netwox或Python构造TCP包，重放看是否能调节云台角度。</p>
+<p>貌似使用netwox构造有点难度啊…</p>
+<img src="/posts/ac4cb042/6.2.12.jpg" class="">
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netwox 40 --ip4-offsetfrag 0 --ip4-ttl 64 --ip4-protocol 6 --ip4-src 172.16.10.20 --ip4-dst 172.16.10.1 --tcp-src 36946 --tcp-dst 8888 --tcp-seqnum 972054647 --tcp-acknum 227906598 --tcp-ack --tcp-psh --tcp-window 128 --tcp-data &quot;680701282e&quot;</span><br></pre></td></tr></table></figure>
+<p>使用python：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> socket  </span><br><span class="line">  </span><br><span class="line">parser = argparse.ArgumentParser(description=<span class="string">&#x27;Client&#x27;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&#x27;--TCP_UDP&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, default=<span class="string">&#x27;UDP&#x27;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&#x27;--src_ip&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, default=<span class="string">&#x27;172.16.10.20&#x27;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&#x27;--dst_ip&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, default=<span class="string">&#x27;172.16.10.1&#x27;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&#x27;--dst_port&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=<span class="number">8888</span>)</span><br><span class="line">parser.add_argument(<span class="string">&#x27;--send_times&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=<span class="number">10</span>)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> args.TCP_UDP == <span class="string">&#x27;UDP&#x27;</span>:</span><br><span class="line">    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)</span><br><span class="line">    <span class="comment"># s.bind((args.src_ip,0))                                                   # in windows</span></span><br><span class="line">    s.setsockopt(socket.SOL_SOCKET, <span class="number">25</span>, <span class="string">&#x27;ens3f0&#x27;</span>.encode(encoding=<span class="string">&quot;utf-8&quot;</span>))      <span class="comment"># in linux</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;now using:&quot;</span>+<span class="built_in">str</span>(args.TCP_UDP))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;src_ip:&quot;</span>+<span class="built_in">str</span>(args.src_ip))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;dst_ip:&quot;</span>+<span class="built_in">str</span>(args.dst_ip))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;dst_port:&quot;</span>+<span class="built_in">str</span>(args.dst_port))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;send_times&quot;</span>+<span class="built_in">str</span>(args.send_times))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;send data begin&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(args.send_times):  </span><br><span class="line">        s.sendto(<span class="string">&quot;test udp&quot;</span>.encode(encoding=<span class="string">&quot;utf-8&quot;</span>), (args.dst_ip, args.dst_port)) </span><br><span class="line">    </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;send ok&quot;</span>)  </span><br><span class="line">    s.close() </span><br><span class="line"></span><br><span class="line"><span class="keyword">elif</span> args.TCP_UDP == <span class="string">&#x27;TCP&#x27;</span> : <span class="comment"># TCP尚未测试</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;now using:&quot;</span>+<span class="built_in">str</span>(args.TCP_UDP))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;src_ip:&quot;</span>+<span class="built_in">str</span>(args.src_ip))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;dst_ip:&quot;</span>+<span class="built_in">str</span>(args.dst_ip))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;dst_port:&quot;</span>+<span class="built_in">str</span>(args.dst_port))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;send_times&quot;</span>+<span class="built_in">str</span>(args.send_times))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;send data begin&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  </span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        s.connect((args.dst_ip, args.dst_port)) </span><br><span class="line">    <span class="keyword">except</span> Exception:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;server port not connect!&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(args.send_times):</span><br><span class="line">        s.send(<span class="string">&#x27;test tcp&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;send ok&quot;</span>)</span><br><span class="line">    s.close()</span><br><span class="line"></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;error TCP/UDP type&quot;</span>)</span><br></pre></td></tr></table></figure>
 <h3 id="6-1-3-设备升级"><a href="#6-1-3-设备升级" class="headerlink" title="6.1.3 设备升级"></a>6.1.3 设备升级</h3><p>第三第四个，查看哪里调用了<code>b()</code>和<code>c()</code>。</p>
 <img src="/posts/ac4cb042/6.2.3.png" class="">
 <img src="/posts/ac4cb042/6.2.1.png" class="">
@@ -778,12 +788,14 @@
 <img src="/posts/ac4cb042/7.2.9.png" class="">
 <p>查看DataPacket类，其内部成员变量及方法如下：</p>
 <img src="/posts/ac4cb042/7.2.10.png" class="">
-<p>在它成为DataPacket前，我们可以溯源它最开始的样子。也就是单纯的、原始的数据类型。继续溯源，很难受了，又是一个自定义数据类型。</p>
+<p>在它成为DataPacket前，我们可以溯源它最开始的样子。也就是单纯的、原始的数据类型。继续溯源，很难受了，又是一个自定义数据类型Define.FrameInfo。</p>
 <img src="/posts/ac4cb042/7.2.11.png" class="">
 <img src="/posts/ac4cb042/7.2.12.png" class="">
 <img src="/posts/ac4cb042/7.2.13.png" class="">
-<p>oneFrame字节数组是经过<code>VNDK.getOneFrame()</code>这个JNI函数得来，oneFrame可以通过<code>VNDK.decodeH264()</code>来解码，转换成Define.FrameInfo数据类型，再利用其中的<code>getFrame()</code>方法得到照片或录像字节流。</p>
+<p>oneFrame字节数组是经过<code>VNDK.getOneFrame()</code>这个JNI函数得来，oneFrame通过<code>VNDK.decodeH264()</code>解码转换成Define.FrameInfo数据类型，再利用其中的<code>getFrame()</code>方法得到照片或录像字节流。</p>
 <img src="/posts/ac4cb042/7.2.14.png" class="">
+<img src="/posts/ac4cb042/7.2.16.png" class="">
+<p>或许我们可以hook FrameInfo类的三个方法，得到字节流，像素的长和宽。</p>
 <p>需要管这个吗？？直接看offer了什么不行吗？</p>
 <img src="/posts/ac4cb042/7.2.15.png" class="">
 <p>hook <code>u()</code>方法呢？</p>
@@ -796,7 +808,19 @@
 <img src="/posts/ac4cb042/8.1.2.jpg" class="">
 <p>上面说到，如果把tcpdump放入手机中，只能抓手机与无人机通信的包，而将tcpdump放在无人机中，就可以同时抓到无人机与遥控器、无人机与手机通信的包了。如何将tcpdump放进去呢？我们注意到无人机开启了ftp文件传输服务。尝试用ftp将tcpdump传过去，发现连接不上。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">┌──(root㉿kali)-[~]</span><br><span class="line">└─# ftp 172.16.10.1                                         </span><br><span class="line">Connected to 172.16.10.1.</span><br><span class="line">inetd: can&#x27;t execute &#x27;/sbin/ftpd&#x27;: No such file or directory</span><br><span class="line">ftp&gt; ls</span><br><span class="line">Not connected.</span><br><span class="line">ftp&gt; </span><br></pre></td></tr></table></figure>
-<p>但我们注意到可以利用SD卡将tcpdump放入无人机系统中。</p>
+<p>但我们注意到可以利用SD卡将Android tcpdump放入无人机系统中。tcpdump 4.99.1 / 1.10.1 版本太新，无人机系统不兼容，所以选择tcpdump 4.9.2 / 1.9.0。</p>
+<p>在抓包前，查看当前环境：</p>
+<ul>
+<li>无人机：172.16.10.1</li>
+<li>遥控器：172.16.10.10</li>
+<li>手机：172.16.10.20</li>
+<li>物理机：172.16.10.21</li>
+<li>虚拟机：172.16.10.22</li>
+</ul>
+<p>执行抓包命令就可以知道无人机在跟哪些IP通信。</p>
+<img src="/posts/ac4cb042/8.1.3.png" class="">
+<p>同样执行拍照操作，App一次，遥控器一次。结果还是通过App获取了两次照片和容量。但照片的数据并没有通过TCP/UDP传至SD卡中。？？</p>
+<img src="/posts/ac4cb042/8.1.4.png" class="">
 
     </div>
 
@@ -996,7 +1020,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">19:24</span>
+    <span title="站点阅读时长">19:26</span>
 </div>
 
         
