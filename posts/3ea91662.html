@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":{"gitalk":{"order":-2}},"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="尝试一下学习安卓漏洞挖掘。 https:&#x2F;&#x2F;www.cnblogs.com&#x2F;wjrblogs&#x2F;p&#x2F;13953761.html#%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android App四大组件漏洞">
+<meta property="og:url" content="http://example.com/posts/3ea91662.html">
+<meta property="og:site_name" content="v5le0n9&#39;s garden">
+<meta property="og:description" content="尝试一下学习安卓漏洞挖掘。 https:&#x2F;&#x2F;www.cnblogs.com&#x2F;wjrblogs&#x2F;p&#x2F;13953761.html#%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.2.png">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.1.png">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.3.png">
+<meta property="og:image" content="http://example.com/posts/undefined/1.1.4.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.1.1.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.1.5.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.1.2.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.1.4.png">
+<meta property="og:image" content="http://example.com/posts/undefined/2.2.1.jpg">
+<meta property="og:image" content="http://example.com/posts/undefined/5.1.1.png">
+<meta property="og:image" content="http://example.com/posts/undefined/5.1.2.png">
+<meta property="article:published_time" content="2022-10-20T09:51:24.663Z">
+<meta property="article:modified_time" content="2022-10-20T09:51:42.133Z">
+<meta property="article:author" content="v5le0n9">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/posts/undefined/1.1.2.png">
+
+<link rel="canonical" href="http://example.com/posts/3ea91662.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Android App四大组件漏洞 | v5le0n9's garden</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="v5le0n9's garden" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">v5le0n9's garden</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">小凉的秘密基地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/v5le0n9" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/3ea91662.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="v5le0n9">
+      <meta itemprop="description" content="小呀小二郎呀背着个书包上学堂">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="v5le0n9's garden">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android App四大组件漏洞
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-10-20 17:51:24 / 修改时间：17:51:42" itemprop="dateCreated datePublished" datetime="2022-10-20T17:51:24+08:00">2022-10-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" itemprop="url" rel="index"><span itemprop="name">漏洞挖掘</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>10k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>尝试一下学习安卓漏洞挖掘。</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wjrblogs/p/13953761.html#%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6">https://www.cnblogs.com/wjrblogs/p/13953761.html#%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6</a></p>
+<span id="more"></span>
+<h1 id="1-环境配置"><a href="#1-环境配置" class="headerlink" title="1. 环境配置"></a>1. 环境配置</h1><p>Python环境一定是2.7版本：<a target="_blank" rel="noopener" href="https://www.python.org/downloads/release/python-2718/">https://www.python.org/downloads/release/python-2718/</a></p>
+<p>在Windows下切换Python2和Python3：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/qtzd/p/14728029.html">https://www.cnblogs.com/qtzd/p/14728029.html</a> ，也就是说Path环境变量中哪个Python版本在前，系统默认用哪个。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python --version</span><br></pre></td></tr></table></figure>
+<p>在github下载drozer：<a target="_blank" rel="noopener" href="https://github.com/WithSecureLabs/drozer">https://github.com/WithSecureLabs/drozer</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/FSecureLABS/drozer.git</span><br><span class="line">cd drozer</span><br><span class="line">python.exe setup.py bdist_msi</span><br><span class="line">.\dist\drozer-2.4.3.win-amd64.msi</span><br></pre></td></tr></table></figure>
+<p>选择在Python 2.7环境下安装drozer：</p>
+<img src="/posts/undefined/1.1.2.png" class="">
+<img src="/posts/undefined/1.1.1.png" class="">
+<p>下载drozer agent：<a target="_blank" rel="noopener" href="https://github.com/FSecureLABS/drozer/releases/download/2.3.4/drozer-agent-2.3.4.apk">https://github.com/FSecureLABS/drozer/releases/download/2.3.4/drozer-agent-2.3.4.apk</a> ，安装到手机上。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb install drozer-agent-2.3.4.apk</span><br></pre></td></tr></table></figure>
+<p>安装protobuf组件，否则等下执行<code>drozer console connect</code>会报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install protobuf</span><br></pre></td></tr></table></figure>
+<p>安装OpenSSL组件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pyOpenSSL</span><br></pre></td></tr></table></figure>
+<p>安装pyyaml组件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pyyaml</span><br></pre></td></tr></table></figure>
+<p>安装twisted组件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install twisted</span><br></pre></td></tr></table></figure>
+<p>安装service_identity组件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install service_identity</span><br></pre></td></tr></table></figure>
+<p>启动drozer agent，绑定drozer默认端口31415：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb forward tcp:31415 tcp:31415</span><br><span class="line">drozer console connect</span><br></pre></td></tr></table></figure>
+<img src="/posts/undefined/1.1.3.png" class="">
+<p><strong>解决drozer中文乱码的问题：</strong></p>
+<p>在<code>C:\Python27\Lib\site-packages\drozer\modules\app\package.py</code>中开头插入以下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">reload(sys)</span><br><span class="line">sys.setdefaultencoding(<span class="string">&#x27;utf-8&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>在List类中的以下两处增加“u”：</p>
+<img src="/posts/undefined/1.1.4.png" class="">
+<p>安装drozer出错及解决方案：<a target="_blank" rel="noopener" href="https://www.freesion.com/article/768646023/">https://www.freesion.com/article/768646023/</a></p>
+<p>在手机上安装官方测试APK：<a target="_blank" rel="noopener" href="https://github.com/mwrlabs/drozer/releases/download/2.3.4/sieve.apk">https://github.com/mwrlabs/drozer/releases/download/2.3.4/sieve.apk</a> ，准备工作完成。</p>
+<h1 id="2-Activity"><a href="#2-Activity" class="headerlink" title="2. Activity"></a>2. Activity</h1><p>在Android系统中，Activity默认是不导出的。如果设置了exported = “true” 这样的关键值或者是添加了<intent-filter>这样的属性，那么此时Activity是导出的，就会导致越权绕过或者是泄露敏感信息等安全风险。</p>
+<p>例如：</p>
+<p>(1)一些敏感的界面需要用户输入密码才能查看，如果没有对调用此Activity的组件进行权限验证，就会造成验证的越权问题，导致攻击者不需要密码就可以打开</p>
+<p>(2)通过Intent给Activity传输畸形数据使得程序崩溃拒绝服务</p>
+<p>(3)对Activity界面进行劫持</p>
+<h2 id="2-1-越权绕过"><a href="#2-1-越权绕过" class="headerlink" title="2.1 越权绕过"></a>2.1 越权绕过</h2><h3 id="2-1-1-漏洞复现"><a href="#2-1-1-漏洞复现" class="headerlink" title="2.1.1 漏洞复现"></a>2.1.1 漏洞复现</h3><p>列出手机中所有的App包，找到我们的测试APK：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">run app.package.list</span><br><span class="line"></span><br><span class="line">或者过滤一下：</span><br><span class="line">run app.package.list -f sieve</span><br></pre></td></tr></table></figure>
+<img src="/posts/undefined/2.1.1.png" class="">
+<p>查看具体包的信息，包括版本号、数据目录、使用权限等：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run app.package.info -a com.mwr.example.sieve</span><br></pre></td></tr></table></figure>
+<img src="/posts/undefined/2.1.5.png" class="">
+<p>查询目标应用的攻击面，可以知道该APK四大组件分别被允许导出的个数，该APK是可调试的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dz&gt; run app.package.attacksurface com.mwr.example.sieve</span><br><span class="line">Attack Surface:</span><br><span class="line">  3 activities exported</span><br><span class="line">  0 broadcast receivers exported</span><br><span class="line">  2 content providers exported</span><br><span class="line">  2 services exported</span><br><span class="line">    is debuggable</span><br></pre></td></tr></table></figure>
+<p>查看哪3个Activity是被导出的，被导出的Activity可以通过强制跳转实现越权绕过，也就是不用登录就可以进入到其它页面，其中进入<code>com.mwr.example.sieve.PWList</code>发现存储的用户信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">run app.activity.info -a  com.mwr.example.sieve</span><br><span class="line">run app.activity.start --component com.mwr.example.sieve com.mwr.example.sieve.PWList</span><br></pre></td></tr></table></figure>
+<img src="/posts/undefined/2.1.2.png" class="">
+<p>这其实跟使用frida-objection中的intent功能是一样的。呃…经试验这几个Activity其实都可以直接跳过去。</p>
+<img src="/posts/undefined/2.1.4.png" class="">
+<h3 id="2-1-2-防护策略"><a href="#2-1-2-防护策略" class="headerlink" title="2.1.2 防护策略"></a>2.1.2 防护策略</h3><p>(1)私有Activity不应被其他应用启动相对是安全的，创建Activity时：设置exported属性为false</p>
+<p>(2)公开暴露的Activity组件，可以被任意应用启动，创建Activity时：设置exported属性为true，谨慎处理接收的Intent，返回数据不包含敏感信息，不应发送敏感信息，收到返回数据谨慎处理</p>
+<h2 id="2-2-钓鱼欺诈-Activity劫持"><a href="#2-2-钓鱼欺诈-Activity劫持" class="headerlink" title="2.2 钓鱼欺诈/Activity劫持"></a>2.2 钓鱼欺诈/Activity劫持</h2><h3 id="2-2-1-原理介绍"><a href="#2-2-1-原理介绍" class="headerlink" title="2.2.1 原理介绍"></a>2.2.1 原理介绍</h3><p>Android App中不同界面的切换通过Activity的调度来实现，而Acticity的调度是由Android系统中的AMS来实现。每个应用想启动或停止一个进程，都报告给AMS，AMS收到启动或停止Activity的消息时，先更新内部记录，再通知相应的进程或停止指定的Activity。当新的Activity启动，前一个Activity就会停止，这些Activity会保留在系统中的一个Activity历史栈中。每有一个Activity启动，它就压入历史栈顶，并在手机上显示。当用户按下back，顶部的Activity弹出，恢复前一个Activity，栈顶指向当前的Activity。</p>
+<p>由于Activity的这种特性，如果在启动一个Activity时，给它加入一个标志位FLAG_ACTIVITY_NEW_TASK,就能使它置于栈顶并立马呈现给用户，如果这个Activity是用于盗号的伪装Activity，就会产生钓鱼安全事件或者一个Activity中有Webview加载，允许加载任意网页都有可能产生钓鱼事件。</p>
+<h3 id="2-2-2-防护策略"><a href="#2-2-2-防护策略" class="headerlink" title="2.2.2 防护策略"></a>2.2.2 防护策略</h3><p>目前，对activity劫持的防护，只能是适当给用户警示信息。一些简单的防护手段就是显示当前运行的进程提示框。梆梆加固则是在进程切换的时候给出提示，并使用白名单过滤。</p>
+<p>比如旅行青蛙被切换到后台后，会弹出提示框：</p>
+<img src="/posts/undefined/2.2.1.jpg" class="">
+<h2 id="2-3-隐式启动Intent包含敏感数据"><a href="#2-3-隐式启动Intent包含敏感数据" class="headerlink" title="2.3 隐式启动Intent包含敏感数据"></a>2.3 隐式启动Intent包含敏感数据</h2><h3 id="2-3-1-原理介绍"><a href="#2-3-1-原理介绍" class="headerlink" title="2.3.1 原理介绍"></a>2.3.1 原理介绍</h3><p>Intent可分为隐私(implicitly)和显式(explicitly)两种：</p>
+<p>(1)显式Intent：即在构造Intent对象时就指定接收者，它一般用在知道目标组件名称的前提下，一般是在相同的应用程序内部实现的，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Intent</span> <span class="variable">intent</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Intent</span>(MainActivity.<span class="built_in">this</span>, NewActivity.class);</span><br><span class="line">startActivity(intent);</span><br></pre></td></tr></table></figure>
+<p>(2)隐式Intent：即Intent的发送者在构造Intent对象时，并不知道也不关心接收者是谁，有利于<br>降低发送者和接收者之间的耦合，它一般用在没有明确指出目标组件名称的前提下，一般是用于<br>不同应用程序之间，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Intent</span> <span class="variable">intent</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Intent</span>();</span><br><span class="line">intent.setAction(<span class="string">&quot;com.wooyun.test&quot;</span>);</span><br><span class="line">startActivity(intent);</span><br></pre></td></tr></table></figure>
+<p>对于显式Intent，Android不需要去做解析，因为目标组件已经很明确，Android需要解析的是那些<br>隐式Intent。通过解析，将Intent映射给可以处理此Intent的Activity，IntentReceiver或Service。</p>
+<p>有一个应用A，采用Intent隐式传递，它的动作是“X”。此时还有一个应用B，动作也是“X”，我们在启动的时候，通过Intent隐式传递，就会同时弹出两个界面，我们就不知道到底启动A还是B。</p>
+<h2 id="2-4-拒绝服务攻击"><a href="#2-4-拒绝服务攻击" class="headerlink" title="2.4 拒绝服务攻击"></a>2.4 拒绝服务攻击</h2><h3 id="2-4-1-原理介绍"><a href="#2-4-1-原理介绍" class="headerlink" title="2.4.1 原理介绍"></a>2.4.1 原理介绍</h3><p>Android提供Intent机制来协助应用间的交互和通讯，通过Intent实现对应用中一次操作的动作、动作涉及数据、附加数据进行描述，Android通过Intent的描述，负责找到对应组件，完成调用。</p>
+<p>拒绝服务攻击源于程序没有对Intent.getXXXExtra()获取的异常或者畸形数据处理时没有进行异常捕获，从而导致攻击者向应用发送此类空数据、异常或者畸形数据来达到使该应用崩溃的目的。本地拒绝服务可以被竞争方利用来攻击，使得己方应用崩溃，造成破坏。</p>
+<p>危害：拒绝服务漏洞对于锁屏应用、安全防护类软件危害是巨大的。</p>
+<h3 id="2-4-2-防护策略"><a href="#2-4-2-防护策略" class="headerlink" title="2.4.2 防护策略"></a>2.4.2 防护策略</h3><p>异常类型有：空指针异常、类型转换异常、数组越界访问异常、类未定义异常、其它异常。谨慎处理接收的intent以及其携带的信息，对接收到的任何数据做try/catch处理，以及对不符合预期数据做异常处理。</p>
+<p>1.不需要被外部调用的Activity设置android:exported=”false”；</p>
+<p>2.若需要外部调用，需自定义signature或者signatureOrSystem级别的权限；</p>
+<p>3.注册的组件请严格校验输入参数，注意空值判定和类型转换判断。</p>
+<h1 id="3-Service"><a href="#3-Service" class="headerlink" title="3. Service"></a>3. Service</h1><p>Service(服务)是一种可以在后台执行长时间运行操作而没有用户界面的应用组件。服务可由其他应用组件启动(如Activity)，服务一旦被启动将在后台一直运行，即使启动服务的组件(Activity)已销毁也不受影响。 此外，组件可以绑定到服务，以与之进行交互，甚至是执行进程间通信 (IPC)。</p>
+<p>如果一个导出的Service没有做严格的限制，任何应用都可以去启动并绑定到这个Service上，取决于被暴露的功能， 这可以是一个应用去执行未授权的行为，获取敏感信息或污染修改内部应用的状态造成威胁。</p>
+<h2 id="3-1-权限提升"><a href="#3-1-权限提升" class="headerlink" title="3.1 权限提升"></a>3.1 权限提升</h2><h3 id="3-1-1-原理介绍"><a href="#3-1-1-原理介绍" class="headerlink" title="3.1.1 原理介绍"></a>3.1.1 原理介绍</h3><p>当一个Service配置了intent-filter默认是被导出的，如果没对调用Service进行权限，限制或者是没有对调用者的身份进行有效验证，那么恶意构造的App都可以对此Service传入恰当的参数进行调用，导致恶意行为发生比如调用具有system权限的删除卸载服务删除卸载其他应用。</p>
+<h2 id="3-2-Service劫持"><a href="#3-2-Service劫持" class="headerlink" title="3.2 Service劫持"></a>3.2 Service劫持</h2><h3 id="3-2-1-原理介绍"><a href="#3-2-1-原理介绍" class="headerlink" title="3.2.1 原理介绍"></a>3.2.1 原理介绍</h3><p>隐式启动Service，当存在同名Service，先安装应用的Service优先级高。</p>
+<h2 id="3-3-消息伪造"><a href="#3-3-消息伪造" class="headerlink" title="3.3 消息伪造"></a>3.3 消息伪造</h2><h3 id="3-3-1-原理介绍"><a href="#3-3-1-原理介绍" class="headerlink" title="3.3.1 原理介绍"></a>3.3.1 原理介绍</h3><p>暴露的Service对外接收Intent，如果构造恶意的消息放在Intent中传输，被调用的Service接收可能产生安全隐患。</p>
+<h2 id="3-4-拒绝服务攻击"><a href="#3-4-拒绝服务攻击" class="headerlink" title="3.4 拒绝服务攻击"></a>3.4 拒绝服务攻击</h2><h3 id="3-4-1-原理介绍"><a href="#3-4-1-原理介绍" class="headerlink" title="3.4.1 原理介绍"></a>3.4.1 原理介绍</h3><p>Service的拒绝服务主要来源于Service启动时对接收的Intent等没有做异常情况下的处理，导致程序崩溃。主要体现在给Service传输的intent或者传输序列化对象导致接收时候的类型传化异常。</p>
+<p>Service拒绝服务攻击和Activity拒绝服务攻击的原理一样。</p>
+<h3 id="3-4-2-防护策略"><a href="#3-4-2-防护策略" class="headerlink" title="3.4.2 防护策略"></a>3.4.2 防护策略</h3><p>（1）私有Service不定义intent-filter并且设置exported为false</p>
+<p>（2）公开的service设置exported为true，intent-filter可以定义或者不定义</p>
+<p>（3）合作Service需对合作方的App签名做校验</p>
+<p>（4）只被应用本身使用的Service应设置为私有</p>
+<p>（5）Service接收的数据需要谨慎处理</p>
+<p>（6）内部Service需要使用签名级别的protectionLevel来判断是否未内部应用调用</p>
+<p>（7）不应在Service创建（onCreate方法被调用）的时候决定是否提供服务，应在onStartCommand/onBind/onHandleIntent等方法被调用时做判断</p>
+<p>（8）当Service有返回数据的时候，因判断数据接收App是否有信息泄露的风险</p>
+<p>（9）有明确的服务需调用时使用显示Intent</p>
+<p>（10）尽量不发送敏感信息</p>
+<p>（11）启动Activity时不设置intent的FLAG_ACTIVITY_NEW_TASK标签</p>
+<h1 id="4-Broadcast-Recevier"><a href="#4-Broadcast-Recevier" class="headerlink" title="4. Broadcast Recevier"></a>4. Broadcast Recevier</h1><p>Android中的每个应用程序都可以对自己感兴趣的广播进行注册，这样该程序只会收到自己所关心的广播内容，这些广播可以是来自系统的，也可能是来自其他程序的。Android提供了一套完整的API，允许应用程序自由地发送和接收广播。</p>
+<p>广播机制分为两个方面：广播发送者和广播接收者，一般来说，BroadcastReceiver就是广播接收者。</p>
+<p>广播接收者有两种注册方式：静态注册、动态注册。</p>
+<ul>
+<li>静态注册：在<code>AndroidManifest.xml</code>里通过<receive>标签声明</li>
+<li>动态注册：需要在功能代码中进行注册<br>（1）实例化自定义的广播接收者，我们实现广播的功能，可以继承BroadcastReceiver类，并重写类中的方法<code>onReceive()</code><br>（2）实例化intentFilter，并设置要过滤的广播类型<br>（3）使用Context的<code>registerReceiver(BroadcastReceiver,IntentFilter)</code>方法注册广播<br>（4）在<code>onPause()</code>方法中通过调用<code>unregisterReceiver()</code>方法来实现注销</li>
+</ul>
+<p>这里的广播实际上指的是intent。当发送一个广播时，系统会将发送的广播(intent)与系统中所有注册的符合条件的IntentFilter进行匹配，匹配成功，则执行相应的<code>onReceive()</code>函数。发送广播时，如果处理不当，恶意应用便可以嗅探，拦截广播，致使敏感数据泄露、拒绝服务攻击、伪造消息、越权操作等。</p>
+<h2 id="4-1-敏感信息泄露"><a href="#4-1-敏感信息泄露" class="headerlink" title="4.1 敏感信息泄露"></a>4.1 敏感信息泄露</h2><h3 id="4-1-1-原理介绍"><a href="#4-1-1-原理介绍" class="headerlink" title="4.1.1 原理介绍"></a>4.1.1 原理介绍</h3><p>发送的intent没有明确指定接收者，而是简单地通过action进行匹配，恶意应用便可以注册一个广播接收者嗅探拦截到这个广播，如果这个广播存在敏感数据，就被恶意应用窃取了。</p>
+<h3 id="4-1-2-防护策略"><a href="#4-1-2-防护策略" class="headerlink" title="4.1.2 防护策略"></a>4.1.2 防护策略</h3><p>尝试采用本地广播的方式，这样程序发出的广播就只能被App自身广播接收器接收：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Intent</span> <span class="variable">intent</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Intent</span>(<span class="string">&quot;my-sensitive-event&quot;</span>);</span><br><span class="line">intent.putExtra(<span class="string">&quot;event&quot;</span>,<span class="string">&quot;this is a test event&quot;</span>);</span><br><span class="line">LocalBroadcastManager.getInstance(<span class="built_in">this</span>).sendBroadcast(intent);</span><br></pre></td></tr></table></figure>
+<h2 id="4-2-越权绕过"><a href="#4-2-越权绕过" class="headerlink" title="4.2 越权绕过"></a>4.2 越权绕过</h2><h3 id="4-2-1-原理介绍"><a href="#4-2-1-原理介绍" class="headerlink" title="4.2.1 原理介绍"></a>4.2.1 原理介绍</h3><p>动态注册的广播默认都是导出的，如果导出的BroadcastReceiver没有做权限控制，导致BroadcastReceiver组件可以接收一个外部可控的url、或者其他命令，导致攻击者可以越权利用应用的一些特定功能，比如发送恶意广播、伪造消息、任意应用下载安装、打开钓鱼网站等。</p>
+<h2 id="4-3-消息伪造"><a href="#4-3-消息伪造" class="headerlink" title="4.3 消息伪造"></a>4.3 消息伪造</h2><h3 id="4-3-1-原理介绍"><a href="#4-3-1-原理介绍" class="headerlink" title="4.3.1 原理介绍"></a>4.3.1 原理介绍</h3><p>暴露的Receiver对外接收Intent，如果构造恶意的消息放在Intent中传输，被调用的Receiver接收可能产生安全隐患。</p>
+<h2 id="4-4-拒绝服务攻击"><a href="#4-4-拒绝服务攻击" class="headerlink" title="4.4 拒绝服务攻击"></a>4.4 拒绝服务攻击</h2><h3 id="4-4-1-原理介绍"><a href="#4-4-1-原理介绍" class="headerlink" title="4.4.1 原理介绍"></a>4.4.1 原理介绍</h3><p>如果敏感的BroadcastReceiver没有设置相应的权限保护，很容易受到攻击。最常见的是拒绝服务攻击。拒绝服务攻击指的是，传递恶意畸形的intent数据给广播接收器，广播接收器无法处理异常导致crash。<br>拒绝服务攻击的危害视具体业务场景而定，比如一个安全防护产品的拒绝服务、锁屏应用的拒绝服务、支付进程的拒绝服务等危害就是巨大的。</p>
+<h2 id="4-5-Broadcast-Reciver的安全防护"><a href="#4-5-Broadcast-Reciver的安全防护" class="headerlink" title="4.5 Broadcast Reciver的安全防护"></a>4.5 Broadcast Reciver的安全防护</h2><p>（1）私有广播接收器设置exported=”false”，并且不配置intent-filter。(私有广播接收器依然能接收到同UID的广播)。</p>
+<p>（2）对接收来的广播进行验证。</p>
+<p>（3）App内部之间的广播使用protectionLevel=”signature” 验证其是否真是内部App。</p>
+<p>（4）返回结果时需注意接收App是否会泄露信息。</p>
+<p>（5）发送的广播包含敏感信息时需指定广播接收器，使用显示intent或者setPackage(String packageName)。</p>
+<p>（6）使用LocalBroadcastManager。</p>
+<h1 id="5-Content-Provider"><a href="#5-Content-Provider" class="headerlink" title="5. Content Provider"></a>5. Content Provider</h1><p>Android中的数据存储方式：Shared Preferences、网络存储、文件存储、外部存储、SQLite，这些存储方式一般在单独的应用程序中实现数据共享，对于不同应用之间共享数据，就要借助Content Provider。</p>
+<p>ContentProvider为存储和读取数据提供了统一的接口，使用表的形式来对数据进行封装，使用ContentProvider可以在不同的应用程序之间共享数据，统一数据的访问方式，保证数据的安全性。</p>
+<p>当外部应用需要对ContentProvider中的数据进行添加、删除、修改及查询操作时，可以使用ContentResolver类来完成，要获取ContentResolver对象，可以使用Activity提供<code>getContentResolver()</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Uri <span class="title function_">insert</span><span class="params">(Uri uri, ContentValues values)</span><span class="comment">//往ContentProvider添加数据；</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">delete</span><span class="params">(Uri uri, String selection, String[] selectionArgs)</span><span class="comment">//从ContentProvider删除数据；</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">update</span><span class="params">(Uri uri, ContentValues values, String selection, String[] selectionArgs)</span><span class="comment">//更新ContentProvider中的数据；</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> Cursor <span class="title function_">query</span><span class="params">(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)</span><span class="comment">//从ContentProvider中获取数据；</span></span><br></pre></td></tr></table></figure>
+<p>Android中Content Provider起到在不同的进程App之间实现共享数据的作用，通过Binder进程间通信机制以及匿名共享内存机制来实现，但是考虑到数据的安全性，我们需要设置一定的保护权限。Binder进程间通信机制突破了以应用程序为边界的权限控制，是安全可控的，数据的访问接口由数据的所有者来提供，数据提供方实现安全控制，决定数据的读写操作。而Content Provider组件本身提供了读取权限控制，这导致在使用过程中就会存在一些漏洞。</p>
+<img src="/posts/undefined/5.1.1.png" class="">
+<h2 id="5-1-信息泄露"><a href="#5-1-信息泄露" class="headerlink" title="5.1 信息泄露"></a>5.1 信息泄露</h2><p>Content URI是一个标志provider中的数据的URI。Content URI中包含了整个provider的以符号表示的名字(它的authority)和指向一个表的名字(一个路径)。当你调用一个客户端的方法来操作一个provider中的一个表，指向表的Content URI是参数之一，如果对ContentProvider的权限没有做好控制，就有可能导致恶意的程序通过这种方式读取App的敏感数据。</p>
+<h3 id="5-1-1-漏洞复现"><a href="#5-1-1-漏洞复现" class="headerlink" title="5.1.1 漏洞复现"></a>5.1.1 漏洞复现</h3><p>查看针对 provider 数据组件具体的攻击面：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run app.provider.info -a com.mwr.example.sieve</span><br></pre></td></tr></table></figure>
+<img src="/posts/undefined/5.1.2.png" class="">
+<p>扫描APK的所有URI：（都出错了）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">run app.provider.finduri com.mwr.example.sieve</span><br><span class="line">run scanner.provider.finduris -a com.mwr.example.sieve</span><br><span class="line"></span><br><span class="line">dz&gt; run scanner.provider.finduris -a com.mwr.example.sieve</span><br><span class="line">Scanning com.mwr.example.sieve...</span><br><span class="line">C:\Program Files\Java\jdk1.8.0_341\bin\javac.exe -cp C:\Python27\lib\site-packages\drozer\lib\android.jar ZipUtil.java</span><br><span class="line">C:\Python27\lib\site-packages\drozer\lib\dx.bat --dex --output e6b772d6bca864c2997c1de7498de91f.apk ZipUtil.class</span><br><span class="line"></span><br><span class="line">UNEXPECTED TOP-LEVEL EXCEPTION:</span><br><span class="line">com.android.dx.cf.iface.ParseException: bad class file magic (cafebabe) or version (0034.0000)</span><br><span class="line">        at com.android.dx.cf.direct.DirectClassFile.parse0(DirectClassFile.java:472)</span><br><span class="line">        at com.android.dx.cf.direct.DirectClassFile.parse(DirectClassFile.java:406)</span><br><span class="line">        at com.android.dx.cf.direct.DirectClassFile.parseToInterfacesIfNecessary(DirectClassFile.java:388)</span><br><span class="line">        at com.android.dx.cf.direct.DirectClassFile.getMagic(DirectClassFile.java:251)</span><br><span class="line">        at com.android.dx.command.dexer.Main.processClass(Main.java:665)</span><br><span class="line">        at com.android.dx.command.dexer.Main.processFileBytes(Main.java:634)</span><br><span class="line">        at com.android.dx.command.dexer.Main.access$600(Main.java:78)</span><br><span class="line">        at com.android.dx.command.dexer.Main$1.processFileBytes(Main.java:572)</span><br><span class="line">        at com.android.dx.cf.direct.ClassPathOpener.processOne(ClassPathOpener.java:170)</span><br><span class="line">        at com.android.dx.cf.direct.ClassPathOpener.process(ClassPathOpener.java:144)</span><br><span class="line">        at com.android.dx.command.dexer.Main.processOne(Main.java:596)</span><br><span class="line">        at com.android.dx.command.dexer.Main.processAllFiles(Main.java:498)</span><br><span class="line">        at com.android.dx.command.dexer.Main.runMonoDex(Main.java:264)</span><br><span class="line">        at com.android.dx.command.dexer.Main.run(Main.java:230)</span><br><span class="line">        at com.android.dx.command.dexer.Main.main(Main.java:199)</span><br><span class="line">        at com.android.dx.command.Main.main(Main.java:103)</span><br><span class="line">...while parsing ZipUtil.class</span><br><span class="line"></span><br><span class="line">1 error; aborting</span><br><span class="line">drozer could not find or compile a required extension library.</span><br><span class="line"></span><br><span class="line">dz&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>针对 com.mwr.example.sieve.DBContentProvider 攻击面进行测试</strong></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="v5le0n9 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="v5le0n9 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/8a5081f6.html" rel="prev" title="无人机漏洞挖掘学习">
+      <i class="fa fa-chevron-left"></i> 无人机漏洞挖掘学习
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">1. 环境配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Activity"><span class="nav-text">2. Activity</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E8%B6%8A%E6%9D%83%E7%BB%95%E8%BF%87"><span class="nav-text">2.1 越权绕过</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"><span class="nav-text">2.1.1 漏洞复现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-%E9%98%B2%E6%8A%A4%E7%AD%96%E7%95%A5"><span class="nav-text">2.1.2 防护策略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E9%92%93%E9%B1%BC%E6%AC%BA%E8%AF%88-Activity%E5%8A%AB%E6%8C%81"><span class="nav-text">2.2 钓鱼欺诈&#x2F;Activity劫持</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="nav-text">2.2.1 原理介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-%E9%98%B2%E6%8A%A4%E7%AD%96%E7%95%A5"><span class="nav-text">2.2.2 防护策略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E9%9A%90%E5%BC%8F%E5%90%AF%E5%8A%A8Intent%E5%8C%85%E5%90%AB%E6%95%8F%E6%84%9F%E6%95%B0%E6%8D%AE"><span class="nav-text">2.3 隐式启动Intent包含敏感数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="nav-text">2.3.1 原理介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-%E6%8B%92%E7%BB%9D%E6%9C%8D%E5%8A%A1%E6%94%BB%E5%87%BB"><span class="nav-text">2.4 拒绝服务攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1-%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="nav-text">2.4.1 原理介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-%E9%98%B2%E6%8A%A4%E7%AD%96%E7%95%A5"><span class="nav-text">2.4.2 防护策略</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Service"><span class="nav-text">3. Service</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87"><span class="nav-text">3.1 权限提升</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-1-%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="nav-text">3.1.1 原理介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-Service%E5%8A%AB%E6%8C%81"><span class="nav-text">3.2 Service劫持</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-1-%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="nav-text">3.2.1 原理介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E6%B6%88%E6%81%AF%E4%BC%AA%E9%80%A0"><span class="nav-text">3.3 消息伪造</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-1-%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="nav-text">3.3.1 原理介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-%E6%8B%92%E7%BB%9D%E6%9C%8D%E5%8A%A1%E6%94%BB%E5%87%BB"><span class="nav-text">3.4 拒绝服务攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-1-%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="nav-text">3.4.1 原理介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-2-%E9%98%B2%E6%8A%A4%E7%AD%96%E7%95%A5"><span class="nav-text">3.4.2 防护策略</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Broadcast-Recevier"><span class="nav-text">4. Broadcast Recevier</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2"><span class="nav-text">4.1 敏感信息泄露</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-1-%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="nav-text">4.1.1 原理介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-2-%E9%98%B2%E6%8A%A4%E7%AD%96%E7%95%A5"><span class="nav-text">4.1.2 防护策略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-%E8%B6%8A%E6%9D%83%E7%BB%95%E8%BF%87"><span class="nav-text">4.2 越权绕过</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-1-%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="nav-text">4.2.1 原理介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-%E6%B6%88%E6%81%AF%E4%BC%AA%E9%80%A0"><span class="nav-text">4.3 消息伪造</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-1-%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="nav-text">4.3.1 原理介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-%E6%8B%92%E7%BB%9D%E6%9C%8D%E5%8A%A1%E6%94%BB%E5%87%BB"><span class="nav-text">4.4 拒绝服务攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-1-%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="nav-text">4.4.1 原理介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-Broadcast-Reciver%E7%9A%84%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4"><span class="nav-text">4.5 Broadcast Reciver的安全防护</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Content-Provider"><span class="nav-text">5. Content Provider</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2"><span class="nav-text">5.1 信息泄露</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-1-%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"><span class="nav-text">5.1.1 漏洞复现</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="v5le0n9"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">v5le0n9</p>
+  <div class="site-description" itemprop="description">小呀小二郎呀背着个书包上学堂</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/Leong_Vinson" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;Leong_Vinson" rel="noopener" target="_blank"><i class="fab fa-cuttlefish fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/v5le0n9" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;v5le0n9" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:v5le0n9@163.com" title="E-Mail → mailto:v5le0n9@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.zz1syyd.com/" title="https:&#x2F;&#x2F;www.zz1syyd.com&#x2F;" rel="noopener" target="_blank">zz1syyd</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://one-null-pointer.github.io/" title="https:&#x2F;&#x2F;one-null-pointer.github.io&#x2F;" rel="noopener" target="_blank">liaoyue</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">v5le0n9</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">19:38</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '7c58e80079a2457b610d',
+      clientSecret: 'fc16b1b0fdfb278016ebe41c20f3743c3c927466',
+      repo        : 'comments.github.io',
+      owner       : 'v5le0n9',
+      admin       : ['v5le0n9'],
+      id          : '260c6aff18842b479da88953d5ae1e19',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
