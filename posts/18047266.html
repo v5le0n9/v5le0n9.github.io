@@ -29,7 +29,13 @@
 <meta property="og:description" content="从前面的笔记我们已经知道Frida如何安装并可以用来进行Native层注入，Frida其实还有一个很强大的功能，就是脱壳。这篇文章就来认识一下Android的壳与记录一下Frida脱壳的基本步骤。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/posts/18047266/1.1.1.jpg">
+<meta property="og:image" content="http://example.com/posts/18047266/1.1.2.png">
 <meta property="og:image" content="http://example.com/posts/18047266/1.1.3.png">
+<meta property="og:image" content="http://example.com/posts/18047266/1.1.5.png">
+<meta property="og:image" content="http://example.com/posts/18047266/1.1.4.png">
+<meta property="og:image" content="http://example.com/posts/18047266/1.1.6.png">
+<meta property="og:image" content="http://example.com/posts/18047266/1.1.7.png">
+<meta property="og:image" content="http://example.com/posts/18047266/1.1.8.png">
 <meta property="og:image" content="http://example.com/posts/18047266/5.2.1.png">
 <meta property="og:image" content="http://example.com/posts/18047266/5.2.2.png">
 <meta property="og:image" content="http://example.com/posts/18047266/5.2.3.jpg">
@@ -39,7 +45,7 @@
 <meta property="og:image" content="http://example.com/posts/18047266/5.2.7.png">
 <meta property="og:image" content="http://example.com/posts/18047266/5.2.8.png">
 <meta property="article:published_time" content="2022-08-11T14:45:22.828Z">
-<meta property="article:modified_time" content="2022-10-09T01:54:14.804Z">
+<meta property="article:modified_time" content="2022-10-27T07:27:13.029Z">
 <meta property="article:author" content="v5le0n9">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/posts/18047266/1.1.1.jpg">
@@ -231,7 +237,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-09 09:54:14" itemprop="dateModified" datetime="2022-10-09T09:54:14+08:00">2022-10-09</time>
+                <time title="修改时间：2022-10-27 15:27:13" itemprop="dateModified" datetime="2022-10-27T15:27:13+08:00">2022-10-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -256,7 +262,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>6.4k</span>
+              <span>6.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -290,12 +296,12 @@
 <p>加固过程需要三个对象：</p>
 <ul>
 <li>待加固APK，也就是源APK</li>
-<li>壳程序APK，负责对源APK进行解密</li>
-<li>加密工具，负责加密源APK并与壳DEX合并成新的DEX</li>
+<li>脱壳程序APK，负责对源APK进行解密</li>
+<li>加密工具(加壳程序)，负责加密源APK并与脱壳DEX合并成新的DEX</li>
 </ul>
 <p>在DEX中可进行的加固方法有：字符串加密、资源加密、对抗反编译、反调试、自定义DexClassLoader。</p>
 <p>DEX整体加固的本质是文件加载和内存加载。</p>
-<h3 id="1-1-2-加固的主要步骤"><a href="#1-1-2-加固的主要步骤" class="headerlink" title="1.1.2 加固的主要步骤"></a>1.1.2 加固的主要步骤</h3><p>拿到源APK和壳程序APK，用加密算法对源APK进行加密，再将加密后的APK文件与壳APK中的DEX文件进行合并得到一个新的DEX文件，最后替换壳程序APK中的DEX文件即可。此时得到一个新的APK文件，那么该APK就是加固后的APK，它的主要工作是在运行时解密源APK，然后动态加载，让其正常运行起来。</p>
+<h3 id="1-1-2-加固的主要步骤"><a href="#1-1-2-加固的主要步骤" class="headerlink" title="1.1.2 加固的主要步骤"></a>1.1.2 加固的主要步骤</h3><p>拿到源APK和脱壳程序APK，用加密算法对源APK进行加密，再将加密后的APK文件与脱壳APK中的DEX文件进行合并得到一个新的DEX文件，最后替换脱壳程序APK中的DEX文件即可。此时得到一个新的APK文件，那么该APK就是加固后的APK，它的主要工作是在运行时解密源APK，然后动态加载，让其正常运行起来。</p>
 <p>合并时主要关注DEX文件的dex header中的checksum、signature、file_size字段。因为我们需要将一个文件写入到DEX中，那么我们肯定需要修改文件校验码(checksum)，因为它用于检查文件是否有错误。同样需要修改signature，它唯一识别DEX文件。还有就是需要修改DEX文件的大小(file_size)。</p>
 <ul>
 <li>checksum：文件校验码。使用alder32算法校验文件中除maigc和checksum外剩下的所有文件区域，用于检查文件错误。</li>
@@ -311,7 +317,7 @@
 <p>如果需要安装至Android设备则使用<code>adb install</code>命令。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb install xxxx.apk</span><br></pre></td></tr></table></figure>
 <p>用Android查壳工具查看APK程序是否加壳，APK使用了360加固。</p>
-
+<img src="/posts/18047266/1.1.2.png" class="" title="APP查壳">
 <p>载入jadx，核心代码都被藏起来了。</p>
 <img src="/posts/18047266/1.1.3.png" class="" title="jadx查看">
 <p>那我们可以先来脱壳。运行frida-server。</p>
@@ -322,16 +328,16 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">com.coolapk.market on (Android: 9) [usb] # plugin load root/.objection/plugins/frida-dexdump/frida_dexdump</span><br><span class="line">com.coolapk.market on (Android: 9) [usb] # plugin dexdump dump</span><br></pre></td></tr></table></figure>
 <p>但貌似新版的frida-dexdump不支持作为objection插件了？那就直接利用frida-dexdump进行脱壳：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@kali# frida-dexdump -U -f com.coolapk.market</span><br></pre></td></tr></table></figure>
-
+<img src="/posts/18047266/1.1.5.png" class="">
 <p>脱壳成功后会在当前目录生成一个以包名命名的目录，里面是一堆DEX文件。一般都是找其中DEX文件最大、并且内容含有“MainActivity”字符串的DEX文件来分析。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grep -ril &quot;MainActivity&quot; *</span><br><span class="line">du -h xxxx.dex</span><br></pre></td></tr></table></figure>
-
+<img src="/posts/18047266/1.1.4.png" class="">
 <p>将DEX文件载入jadx分析，发现校验码出错，使用010Editor修改其校验码即可。</p>
-
+<img src="/posts/18047266/1.1.6.png" class="">
 <p>修改为0x5f3f35fa。</p>
-
+<img src="/posts/18047266/1.1.7.png" class="">
 <p>动态加载与jadx反编译后的类名有很大不同，很有可能是做了混淆，但这个DEX文件相比之前未脱壳的APK已经多了很多内容了。</p>
-
+<img src="/posts/18047266/1.1.8.png" class="">
 <h2 id="1-2-第二代壳-DEX抽取与so加固"><a href="#1-2-第二代壳-DEX抽取与so加固" class="headerlink" title="1.2 第二代壳 DEX抽取与so加固"></a>1.2 第二代壳 DEX抽取与so加固</h2><p>对抗第一代壳常见的脱壳法、Dex Method代码抽取到外部(通常企业版)、Dex动态加载、so加密。</p>
 <p>函数抽取：在函数粒度完成代码的保护</p>
 <p>so加固种类：</p>
@@ -657,7 +663,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">19:43</span>
+    <span title="站点阅读时长">19:54</span>
 </div>
 
         
