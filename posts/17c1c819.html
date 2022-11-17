@@ -21,12 +21,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":{"gitalk":{"order":-2}},"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="1. signin运行一下程序。">
+  <meta name="description" content="记录一下在Bugku做的一些Moblie题。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Bugku Android逆向合集">
 <meta property="og:url" content="http://example.com/posts/17c1c819.html">
 <meta property="og:site_name" content="v5le0n9&#39;s garden">
-<meta property="og:description" content="1. signin运行一下程序。">
+<meta property="og:description" content="记录一下在Bugku做的一些Moblie题。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/posts/17c1c819/1.png">
 <meta property="og:image" content="http://example.com/posts/17c1c819/2.png">
@@ -50,7 +50,7 @@
 <meta property="og:image" content="http://example.com/posts/17c1c819/5.5.png">
 <meta property="og:image" content="http://example.com/posts/17c1c819/5.6.png">
 <meta property="article:published_time" content="2022-04-05T01:29:27.772Z">
-<meta property="article:modified_time" content="2022-04-11T05:26:29.122Z">
+<meta property="article:modified_time" content="2022-11-17T06:24:12.905Z">
 <meta property="article:author" content="v5le0n9">
 <meta property="article:tag" content="Reverse">
 <meta property="article:tag" content="CTF">
@@ -244,7 +244,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-11 13:26:29" itemprop="dateModified" datetime="2022-04-11T13:26:29+08:00">2022-04-11</time>
+                <time title="修改时间：2022-11-17 14:24:12" itemprop="dateModified" datetime="2022-11-17T14:24:12+08:00">2022-11-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -252,7 +252,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">Android逆向</span></a>
+                  <a href="/categories/Android%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">Android安全</span></a>
                 </span>
             </span>
 
@@ -269,7 +269,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.2k</span>
+              <span>4.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -288,9 +288,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="1-signin"><a href="#1-signin" class="headerlink" title="1. signin"></a>1. signin</h1><p>运行一下程序。</p>
-<img src="/posts/17c1c819/1.png" class="" title="运行程序">
+        <p>记录一下在Bugku做的一些Moblie题。</p>
 <span id="more"></span>
+<h1 id="1-signin-Java-hook"><a href="#1-signin-Java-hook" class="headerlink" title="1. signin(Java hook)"></a>1. signin(Java hook)</h1><p>运行一下程序。</p>
+<img src="/posts/17c1c819/1.png" class="" title="运行程序">
 <p>加载进jeb分析：</p>
 <img src="/posts/17c1c819/2.png" class="" title="jeb分析">
 <p>那如何获取到flag呢？可以用hook。hook一个方法需要知道：</p>
@@ -305,14 +306,14 @@
 <img src="/posts/17c1c819/4.png" class="" title="getFlag返回值">
 <p>随便找个可以逆序文字的网站，再拿去Base64解码，得到flag：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#逆序后</span><br><span class="line">ZmxhZ3tIZXIzX2k1X3kwdXJfZjFhZ18zOWZiY199</span><br><span class="line"></span><br><span class="line">#Base64解码后</span><br><span class="line">flag&#123;Her3_i5_y0ur_f1ag_39fbc_&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="2-mobile1"><a href="#2-mobile1" class="headerlink" title="2. mobile1"></a>2. mobile1</h1><p>运行程序。</p>
+<h1 id="2-mobile1-算法分析"><a href="#2-mobile1-算法分析" class="headerlink" title="2. mobile1(算法分析)"></a>2. mobile1(算法分析)</h1><p>运行程序。</p>
 <img src="/posts/17c1c819/2.1.png" class="" title="运行程序">
 <p>载入jeb分析Java伪代码：</p>
 <img src="/posts/17c1c819/2.2.png" class="" title="jeb分析">
 <img src="/posts/17c1c819/2.3.png" class="" title="jeb分析">
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#Tenshine的MD5加密</span><br><span class="line">b9c77224ff234f27ac6badf83b855c76</span><br><span class="line"></span><br><span class="line">#取MD5的奇数位</span><br><span class="line">flag&#123;bc72f242a6af3857&#125;</span><br></pre></td></tr></table></figure>
-<p>mobile2解压后用NotePad++打开<code>AndroidManifest.xml</code>就可以看到flag。不知道在考察什么。直接将zip改成apk在模拟器上运行不了，解压后打包说缺少<code>apktool.yml</code>所以打包失败。</p>
-<h1 id="3-Timer"><a href="#3-Timer" class="headerlink" title="3. Timer"></a>3. Timer</h1><img src="/posts/17c1c819/3.1.png" class="" title="运行程序">
+<h1 id="3-mobile2-XML文件"><a href="#3-mobile2-XML文件" class="headerlink" title="3. mobile2(XML文件)"></a>3. mobile2(XML文件)</h1><p>同<a target="_blank" rel="noopener" href="https://v5le0n9.github.io/posts/9f62af2.html#19-APK%E9%80%86%E5%90%91-2-XML%E6%96%87%E4%BB%B6">APK逆向-2</a>，mobile2下载下来是一个ZIP文件，一样的。</p>
+<h1 id="4-Timer-算法分析-amp-Smali文件修改"><a href="#4-Timer-算法分析-amp-Smali文件修改" class="headerlink" title="4. Timer(算法分析&amp;Smali文件修改)"></a>4. Timer(算法分析&amp;Smali文件修改)</h1><img src="/posts/17c1c819/3.1.png" class="" title="运行程序">
 <p>拿去AK看了一下，没有允许动态调试。一般CTF的题如果没有动态调试，说明这道题不是考动态调试so文件的，而且这道题没有输入，断也不知道在哪里断下来，断下来干嘛。那如果so文件拿去IDA看，没有Log语句的话也挺难静态分析的。所以这道题很有可能是直接修改smali文件。</p>
 <p>先jeb查看Java源码，因为重点不是so文件，所以可以暂时忽略它了：</p>
 <img src="/posts/17c1c819/3.2.png" class="" title="jeb分析">
@@ -325,7 +326,7 @@
 <p>保存，编译，安装，运行。</p>
 <img src="/posts/17c1c819/3.6.png" class="" title="flag">
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alictf&#123;Y0vAr3TimerMa3te7&#125;</span><br><span class="line">flag&#123;Y0vAr3TimerMa3te7&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="4-First-Mobile"><a href="#4-First-Mobile" class="headerlink" title="4. First_Mobile"></a>4. First_Mobile</h1><p>在模拟器上运行不了，可能是架构的问题，但这题不需要在页面上显示什么，所以运行不了也没事。</p>
+<h1 id="5-First-Mobile-算法分析"><a href="#5-First-Mobile-算法分析" class="headerlink" title="5. First_Mobile(算法分析)"></a>5. First_Mobile(算法分析)</h1><p>在模拟器上运行不了，可能是架构的问题，但这题不需要在页面上显示什么，所以运行不了也没事。</p>
 <p>载入jeb分析：</p>
 <img src="/posts/17c1c819/4.1.png" class="" title="jeb分析">
 <img src="/posts/17c1c819/4.2.png" class="" title="jeb分析">
@@ -333,7 +334,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">encode</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">byte</span>[] b;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        encode.b = <span class="keyword">new</span> <span class="title class_">byte</span>[]&#123;<span class="number">23</span>, <span class="number">22</span>, <span class="number">26</span>, <span class="number">26</span>, <span class="number">25</span>, <span class="number">25</span>, <span class="number">25</span>, <span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">30</span>, <span class="number">30</span>, <span class="number">29</span>, <span class="number">30</span>, <span class="number">32</span>, <span class="number">32</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">encode</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">check</span><span class="params">(String arg7)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">v6</span> <span class="operator">=</span> <span class="number">16</span>;</span><br><span class="line">        <span class="type">byte</span>[] v1 = arg7.getBytes();</span><br><span class="line">        <span class="type">byte</span>[] v3 = <span class="keyword">new</span> <span class="title class_">byte</span>[v6];</span><br><span class="line">        <span class="type">int</span> i,j;</span><br><span class="line">        <span class="type">byte</span>[] v5 = <span class="keyword">new</span> <span class="title class_">byte</span>[v6];</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>; j&lt;v1.length; j++)</span><br><span class="line">        &#123;</span><br><span class="line">	        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; v6; ++i) &#123;</span><br><span class="line">	            v3[i] = ((<span class="type">byte</span>)((v1[j] + encode.b[i]) % <span class="number">61</span>));</span><br><span class="line">	            v3[i] = ((<span class="type">byte</span>)(v3[i] * <span class="number">2</span> - i));</span><br><span class="line">	            <span class="keyword">if</span> (v3[i] == v1[j])</span><br><span class="line">	            &#123;</span><br><span class="line">	            	v5[i] = v3[i];</span><br><span class="line"></span><br><span class="line">	            &#125;</span><br><span class="line">	        &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span> (v5);</span><br><span class="line">        System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AES_128</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span></span><br><span class="line">    &#123;</span><br><span class="line">    	<span class="type">encode</span> <span class="variable">enc</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">encode</span>();</span><br><span class="line">    	<span class="type">String</span> <span class="variable">arg7</span> <span class="operator">=</span> <span class="string">&quot;ABCDEFGHJIKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890&#123;&#125;_&quot;</span>;</span><br><span class="line">    	enc.check(arg7);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">LOHILMNMLKHILKHI</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
 <p>所以flag为：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">XMAN&#123;LOHILMNMLKHILKHI&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="5-easy-100"><a href="#5-easy-100" class="headerlink" title="5. easy_100"></a>5. easy_100</h1><p>虽然在模拟器不能运行，但没root的手机也可以从电脑上安装app。</p>
+<h1 id="6-easy-100-AES加密"><a href="#6-easy-100-AES加密" class="headerlink" title="6. easy_100(AES加密)"></a>6. easy_100(AES加密)</h1><p>虽然在模拟器不能运行，但没root的手机也可以从电脑上安装app。</p>
 <img src="/posts/17c1c819/5.1.jpg" class="" title="运行程序">
 <p>在AK中看到没有so文件，也不用动态调试。jeb分析，因为有混淆，所以看起来还挺费力。</p>
 <img src="/posts/17c1c819/5.2.png" class="" title="jeb分析">
@@ -344,7 +345,8 @@
 <img src="/posts/17c1c819/5.6.png" class="" title="jeb分析">
 <p>密文与数组比较。现在理一下思路：key经过小端存储作为密钥，输入的文本串经AES_ECB模式和密钥加密后得到需要比较的数组。所以我们现在想逆向回去找文本串，需要将key转换成密钥，再利用ECB解密数组，得到flag。编写脚本：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> v5le0n9;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.security.InvalidKeyException;</span><br><span class="line"><span class="keyword">import</span> java.security.NoSuchAlgorithmException;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.BadPaddingException;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.Cipher;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.IllegalBlockSizeException;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.NoSuchPaddingException;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.spec.SecretKeySpec;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">demo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException &#123;</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">v1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="type">int</span> v0_1;</span><br><span class="line">        String v0_2;</span><br><span class="line">        <span class="type">String</span> <span class="variable">arg4</span> <span class="operator">=</span> <span class="string">&quot;this_is_the_key.&quot;</span>;    <span class="comment">//在winhex中发现</span></span><br><span class="line">        <span class="keyword">for</span>(v0_1 = <span class="number">0</span>; v0_1 &lt; arg4.length(); v0_1 += <span class="number">2</span>) &#123;  <span class="comment">//对KEY进行二次变换，这是有类c中的函数分析得到的</span></span><br><span class="line">            v1.append(arg4.charAt(v0_1 + <span class="number">1</span>));</span><br><span class="line">            v1.append(arg4.charAt(v0_1));</span><br><span class="line">        &#125;</span><br><span class="line">        v0_2 = v1.toString();</span><br><span class="line">        <span class="type">byte</span> key[] = v0_2.getBytes();     <span class="comment">//转换成Bytes数组</span></span><br><span class="line">        SecretKeySpec a;</span><br><span class="line">        Cipher b;</span><br><span class="line">        a = <span class="keyword">new</span> <span class="title class_">SecretKeySpec</span>(key, <span class="string">&quot;AES&quot;</span>);</span><br><span class="line">        b = Cipher.getInstance(<span class="string">&quot;AES/ECB/PKCS5Padding&quot;</span>);</span><br><span class="line">        <span class="type">byte</span> flag[] = &#123;<span class="number">21</span>, -<span class="number">93</span>, -<span class="number">68</span>, -<span class="number">94</span>, <span class="number">86</span>, <span class="number">117</span>, -<span class="number">19</span>, -<span class="number">68</span>,</span><br><span class="line">                -<span class="number">92</span>, <span class="number">33</span>, <span class="number">50</span>, <span class="number">118</span>, <span class="number">16</span>, <span class="number">13</span>, <span class="number">1</span>, -<span class="number">15</span>, -<span class="number">13</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">103</span>, -<span class="number">18</span>, <span class="number">81</span>, <span class="number">30</span>, <span class="number">68</span>, <span class="number">54</span>, -<span class="number">93</span>, <span class="number">44</span>, -<span class="number">23</span>,</span><br><span class="line">                <span class="number">93</span>, <span class="number">98</span>, <span class="number">5</span>, <span class="number">59</span>&#125;;</span><br><span class="line">        b.init(Cipher.DECRYPT_MODE,a);    <span class="comment">//这里注意前面的参数，选择相应的解密参数</span></span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">AES_decode</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(b.doFinal(flag),<span class="string">&quot;utf-8&quot;</span>);</span><br><span class="line">        System.out.println(AES_decode);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">LCTF&#123;1t&#x27;s_rea1ly_an_ea3y_ap4&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
-<h1 id="6-HelloSmali2"><a href="#6-HelloSmali2" class="headerlink" title="6. HelloSmali2"></a>6. HelloSmali2</h1><p>将java文件运行一下就有答案。</p>
+<h1 id="6-HelloSmali2-送分"><a href="#6-HelloSmali2-送分" class="headerlink" title="6. HelloSmali2(送分)"></a>6. HelloSmali2(送分)</h1><p>下载下来一个smali文件和一个java文件，将java文件运行一下就有答案。所以smali文件并没有什么用？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">javac XMan.java//生成XMan.class文件</span><br><span class="line">java XMan//执行class文件</span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">eM_5m4Li_i4_Ea5y</span><br><span class="line">XMAN&#123;eM_5m4Li_i4_Ea5y&#125;</span><br></pre></td></tr></table></figure>
 
     </div>
@@ -452,7 +454,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-signin"><span class="nav-text">1. signin</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-mobile1"><span class="nav-text">2. mobile1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Timer"><span class="nav-text">3. Timer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-First-Mobile"><span class="nav-text">4. First_Mobile</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-easy-100"><span class="nav-text">5. easy_100</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-HelloSmali2"><span class="nav-text">6. HelloSmali2</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-signin-Java-hook"><span class="nav-text">1. signin(Java hook)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-mobile1-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">2. mobile1(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-mobile2-XML%E6%96%87%E4%BB%B6"><span class="nav-text">3. mobile2(XML文件)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Timer-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90-amp-Smali%E6%96%87%E4%BB%B6%E4%BF%AE%E6%94%B9"><span class="nav-text">4. Timer(算法分析&amp;Smali文件修改)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-First-Mobile-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">5. First_Mobile(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-easy-100-AES%E5%8A%A0%E5%AF%86"><span class="nav-text">6. easy_100(AES加密)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-HelloSmali2-%E9%80%81%E5%88%86"><span class="nav-text">6. HelloSmali2(送分)</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -468,20 +470,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-count">65</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -550,7 +552,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">20:37</span>
+    <span title="站点阅读时长">20:35</span>
 </div>
 
         
