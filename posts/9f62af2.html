@@ -187,8 +187,22 @@
 <meta property="og:image" content="http://example.com/posts/9f62af2/20.10.png">
 <meta property="og:image" content="http://example.com/posts/9f62af2/20.11.png">
 <meta property="og:image" content="http://example.com/posts/9f62af2/20.12.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/21.1.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/21.2.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/21.3.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/21.4.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/21.12.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/21.14.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/21.13.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/21.5.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/21.6.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/21.7.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/21.8.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/21.9.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/21.10.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/21.11.png">
 <meta property="article:published_time" content="2022-04-05T01:29:28.252Z">
-<meta property="article:modified_time" content="2022-11-17T06:24:27.524Z">
+<meta property="article:modified_time" content="2022-12-01T06:31:11.752Z">
 <meta property="article:author" content="v5le0n9">
 <meta property="article:tag" content="Reverse">
 <meta property="article:tag" content="CTF">
@@ -382,7 +396,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-17 14:24:27" itemprop="dateModified" datetime="2022-11-17T14:24:27+08:00">2022-11-17</time>
+                <time title="修改时间：2022-12-01 14:31:11" itemprop="dateModified" datetime="2022-12-01T14:31:11+08:00">2022-12-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -414,7 +428,7 @@
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>26 分钟</span>
+              <span>27 分钟</span>
             </span>
 
         </div>
@@ -873,6 +887,33 @@
 <p>运行，点击按钮，打印返回值。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\dell\Desktop&gt;python hookso.py</span><br><span class="line">Hook start</span><br><span class="line">perhapsThis_result:Congratulation!YouFoundTheRightActivityHereYouGo-CTF&#123;IDontHaveABadjokeSorry&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CTF&#123;IDontHaveABadjokeSorry&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="21-LoopCrypto"><a href="#21-LoopCrypto" class="headerlink" title="21. LoopCrypto"></a>21. LoopCrypto</h1><img src="/posts/9f62af2/21.1.png" class="">
+<img src="/posts/9f62af2/21.2.png" class="">
+<p>将用户输入传到<code>a()</code>方法中，当点击“CHECK”时执行<code>onClick()</code>方法。取出包中的签名并对其进行MD5加密，再转换成16进制字符串。将输入与加密后的签名一同传入到JNI层的<code>check()</code>方法中。</p>
+<img src="/posts/9f62af2/21.3.png" class="">
+<img src="/posts/9f62af2/21.4.png" class="">
+<p>使用jeb动调可以得到签名的MD5值吗？由于APK的debuggable属性为false，那我们修改系统为全局可调试。有两个进程，选第一个进程发现变量全为空，选第二个进程发现不可调试。</p>
+<img src="/posts/9f62af2/21.12.png" class="">
+<img src="/posts/9f62af2/21.14.png" class="">
+<img src="/posts/9f62af2/21.13.png" class="">
+<p>行吧，真不知道什么原因，或许到时候可以hook <code>check()</code>函数得到签名的MD5值。进入So，没有找到<code>check()</code>，去看看<code>JNI_OnLoad()</code>。</p>
+<img src="/posts/9f62af2/21.5.png" class="">
+<p>进入<code>sub_88C4()</code>，<code>sub_8740()</code>调用了<code>Decode.a()</code>方法，将这三块内存数据解密成字符串。</p>
+<img src="/posts/9f62af2/21.6.png" class="">
+<img src="/posts/9f62af2/21.7.png" class="">
+<p>所以<code>sub_87FC()</code>就是我们要找的<code>check()</code>函数。进入<code>check()</code>函数：</p>
+<img src="/posts/9f62af2/21.8.png" class="">
+<p>尝试使用Frida hook <code>sub_87FC()</code>，要先在内存中找到So的地址，再通过<code>check()</code>函数在So中的偏移得到它的参数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hook_check</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> libcheck_addr = <span class="title class_">Module</span>.<span class="title function_">findBaseAddress</span>(<span class="string">&quot;libcheck.so&quot;</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;libcheck_addr =&gt; &quot;</span>, libcheck_addr)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">setImmediate</span>(hook_check)</span><br></pre></td></tr></table></figure>
+<p>呃…竟然没有，是因为我用的是x86架构模拟器，而So是ARM架构的吗，那怎么办…使用Android 8.1.0真机启动不了这个App。</p>
+<p>将off_12004中的622个字节dump下来，File -&gt; Script command，编写脚本以二进制的形式dump出来。</p>
+<img src="/posts/9f62af2/21.9.png" class="">
+<p>进入<code>sub_85E0()</code>函数：</p>
+<img src="/posts/9f62af2/21.10.png" class="">
+<p>所以APK签名的MD5值是多少呢？</p>
+<p>F8 C4 90 56 E4 CC F9 A1 1E 09 0E AF 47 1F 41 8D</p>
+<img src="/posts/9f62af2/21.11.png" class="">
+<p>进入<code>sub_84D0()</code>：</p>
 
     </div>
 
@@ -979,7 +1020,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-app1-%E7%89%88%E6%9C%AC%E5%8F%B7"><span class="nav-text">1. app1(版本号)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-app2-%E5%B9%BF%E6%92%AD%E6%8E%A5%E6%94%B6%E5%99%A8"><span class="nav-text">2. app2(广播接收器)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-app3-%E5%A4%87%E4%BB%BD%E6%96%87%E4%BB%B6ab"><span class="nav-text">3. app3(备份文件ab)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-easy-apk-%E5%8F%98%E7%A7%8Dbase64"><span class="nav-text">4. easy_apk(变种base64)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-RememberOther-MD5"><span class="nav-text">5. RememberOther(MD5)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-easyjni-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90-amp-%E5%8F%98%E7%A7%8Dbase64"><span class="nav-text">6. easyjni(算法分析&amp;变种base64)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-easy-so-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">7. easy-so(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-easyjava-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">8. easyjava(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-Ph0en1x-100-%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95so"><span class="nav-text">9. Ph0en1x-100(动态调试so)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-%E9%BB%91%E5%AE%A2%E7%B2%BE%E7%A5%9E-JNI-OnLoad"><span class="nav-text">10. 黑客精神(JNI_OnLoad)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-APK%E9%80%86%E5%90%91-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">11. APK逆向(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#12-%E4%BA%BA%E6%B0%91%E7%9A%84%E5%90%8D%E4%B9%89-%E6%8A%93%E6%8D%95%E8%B5%B5%E5%BE%B7%E6%B1%891-200-jar%E5%8C%85"><span class="nav-text">12. 人民的名义-抓捕赵德汉1-200(jar包)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#13-%E5%9F%BA%E7%A1%80android-%E5%B9%BF%E6%92%AD%E6%8E%A5%E6%94%B6%E5%99%A8"><span class="nav-text">13. 基础android(广播接收器)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#14-easy-dex-%E8%A7%A3%E5%AF%86dex-amp-Twofish%E7%AE%97%E6%B3%95"><span class="nav-text">14. easy-dex(解密dex&amp;Twofish算法)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#15-%E4%BD%A0%E6%98%AF%E8%B0%81-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">15. 你是谁(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#16-Android2-0-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">16. Android2.0(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#17-boomshakalaka-3-%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6"><span class="nav-text">17. boomshakalaka-3(共享文件)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#18-Illusion-ARM%E6%B1%87%E7%BC%96"><span class="nav-text">18. Illusion(ARM汇编)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#19-APK%E9%80%86%E5%90%91-2-XML%E6%96%87%E4%BB%B6"><span class="nav-text">19. APK逆向-2(XML文件)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#20-ill-intentions-Native-hook"><span class="nav-text">20. ill-intentions(Native hook)</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-app1-%E7%89%88%E6%9C%AC%E5%8F%B7"><span class="nav-text">1. app1(版本号)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-app2-%E5%B9%BF%E6%92%AD%E6%8E%A5%E6%94%B6%E5%99%A8"><span class="nav-text">2. app2(广播接收器)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-app3-%E5%A4%87%E4%BB%BD%E6%96%87%E4%BB%B6ab"><span class="nav-text">3. app3(备份文件ab)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-easy-apk-%E5%8F%98%E7%A7%8Dbase64"><span class="nav-text">4. easy_apk(变种base64)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-RememberOther-MD5"><span class="nav-text">5. RememberOther(MD5)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-easyjni-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90-amp-%E5%8F%98%E7%A7%8Dbase64"><span class="nav-text">6. easyjni(算法分析&amp;变种base64)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-easy-so-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">7. easy-so(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-easyjava-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">8. easyjava(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-Ph0en1x-100-%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95so"><span class="nav-text">9. Ph0en1x-100(动态调试so)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-%E9%BB%91%E5%AE%A2%E7%B2%BE%E7%A5%9E-JNI-OnLoad"><span class="nav-text">10. 黑客精神(JNI_OnLoad)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-APK%E9%80%86%E5%90%91-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">11. APK逆向(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#12-%E4%BA%BA%E6%B0%91%E7%9A%84%E5%90%8D%E4%B9%89-%E6%8A%93%E6%8D%95%E8%B5%B5%E5%BE%B7%E6%B1%891-200-jar%E5%8C%85"><span class="nav-text">12. 人民的名义-抓捕赵德汉1-200(jar包)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#13-%E5%9F%BA%E7%A1%80android-%E5%B9%BF%E6%92%AD%E6%8E%A5%E6%94%B6%E5%99%A8"><span class="nav-text">13. 基础android(广播接收器)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#14-easy-dex-%E8%A7%A3%E5%AF%86dex-amp-Twofish%E7%AE%97%E6%B3%95"><span class="nav-text">14. easy-dex(解密dex&amp;Twofish算法)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#15-%E4%BD%A0%E6%98%AF%E8%B0%81-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">15. 你是谁(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#16-Android2-0-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">16. Android2.0(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#17-boomshakalaka-3-%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6"><span class="nav-text">17. boomshakalaka-3(共享文件)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#18-Illusion-ARM%E6%B1%87%E7%BC%96"><span class="nav-text">18. Illusion(ARM汇编)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#19-APK%E9%80%86%E5%90%91-2-XML%E6%96%87%E4%BB%B6"><span class="nav-text">19. APK逆向-2(XML文件)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#20-ill-intentions-Native-hook"><span class="nav-text">20. ill-intentions(Native hook)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#21-LoopCrypto"><span class="nav-text">21. LoopCrypto</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -1077,7 +1118,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">20:42</span>
+    <span title="站点阅读时长">20:43</span>
 </div>
 
         
