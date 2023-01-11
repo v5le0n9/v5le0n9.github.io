@@ -270,8 +270,25 @@
 <meta property="og:image" content="http://example.com/posts/9f62af2/26.6.png">
 <meta property="og:image" content="http://example.com/posts/9f62af2/26.7.png">
 <meta property="og:image" content="http://example.com/posts/9f62af2/26.8.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/26.9.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/26.10.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/26.11.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/26.12.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/27.1.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/27.2.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/27.3.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/27.4.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/27.5.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/27.6.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/27.7.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/27.8.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/27.9.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/28.1.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/28.2.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/28.3.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/29.1.png">
 <meta property="article:published_time" content="2022-04-05T01:29:28.252Z">
-<meta property="article:modified_time" content="2022-12-29T09:31:32.863Z">
+<meta property="article:modified_time" content="2023-01-11T08:09:27.313Z">
 <meta property="article:author" content="v5le0n9">
 <meta property="article:tag" content="Reverse">
 <meta property="article:tag" content="CTF">
@@ -465,7 +482,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-12-29 17:31:32" itemprop="dateModified" datetime="2022-12-29T17:31:32+08:00">2022-12-29</time>
+                <time title="修改时间：2023-01-11 16:09:27" itemprop="dateModified" datetime="2023-01-11T16:09:27+08:00">2023-01-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -490,14 +507,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>37k</span>
+              <span>39k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>34 分钟</span>
+              <span>36 分钟</span>
             </span>
 
         </div>
@@ -1122,12 +1139,56 @@
 <img src="/posts/9f62af2/26.5.png" class="">
 <p>并没有什么特殊的信息，我们知道数据库名为<code>BOOKS.db</code>，找到建立数据库的地方。</p>
 <img src="/posts/9f62af2/26.6.png" class="">
-<p>此时数据库密码可以通过Log打印，也可以通过动调方式得到。由于程序没有设置debuggable，所以通过设置ro.debuggable=1，再进行动调比较方便。由于<code>getSign()</code>函数在程序运行前就执行了，所以要用debug模式才能断到<code>getSign()</code>函数处。</p>
+<p>此时数据库密码可以通过Log打印，也可以通过动调或hook方式得到。由于程序没有设置debuggable，所以通过设置ro.debuggable=1，再进行动调比较方便。由于<code>getSign()</code>函数在程序运行前就执行了，所以要用debug模式才能断到<code>getSign()</code>函数处。</p>
 <img src="/posts/9f62af2/26.7.png" class="">
-<p>得到数据库密码：320b42d5771df37906eee0fff53c49059122eeaf。但我使用DB Browser for SQLCipher for Windows v3.12.99打不开数据库，听说要用sqlcipher 2才可以打开，但很遗憾还是不能打开。我密码错了？？不可能吧</p>
+<p>得到数据库密码：320b42d5771df37906eee0fff53c49059122eeaf。但我使用DB Browser for SQLCipher for Windows v3.12.99打不开数据库，用sqlcipher 2还是不能打开。</p>
 <img src="/posts/9f62af2/26.8.png" class="">
-<p>啊啊啊不行</p>
-
+<p>此时可以换一种方法解题。查看<code>getReadableDatabase()</code>函数，它返回的是一个SQLiteDatabase类型的对象，而这个数据类型中有<code>query()</code>与<code>rawQuery()</code>方法，都是用来查询数据库内容的。</p>
+<img src="/posts/9f62af2/26.9.png" class="">
+<img src="/posts/9f62af2/26.10.png" class="">
+<p>对比之下发现<code>rawQuery()</code>方法更符合我们编写SQL语句的习惯，我们可以用它来查询数据库中的信息。hook <code>getReadableDatabase()</code>，得到SQLiteDatabase对象，然后在<code>getReadableDatabase()</code>方法中调用<code>rawQuery()</code>方法来获得想要的数据。</p>
+<img src="/posts/9f62af2/26.11.png" class="">
+<img src="/posts/9f62af2/26.12.png" class="">
+<p>为什么只有自己增加的数据…</p>
+<h1 id="27-Where-炸弹引爆-amp-DEX修复"><a href="#27-Where-炸弹引爆-amp-DEX修复" class="headerlink" title="27. Where(炸弹引爆 &amp; DEX修复)"></a>27. Where(炸弹引爆 &amp; DEX修复)</h1><p>下载下来不知道什么格式文件，拿去WinHex或者010 Editor，文件头为50 4B 03 04，标准的ZIP文件格式，APK文件本质上也是个ZIP文件，所以将后缀名修改为<code>.apk</code>。</p>
+<img src="/posts/9f62af2/27.1.png" class="">
+<p><code>/assets</code>目录下还有一个abc文件，打开发现是一个DEX文件头，在<code>/original</code>目录下找到一个y文件，应该是DEX文件的一部分。</p>
+<p>查看abc文件，由于DEX文件头描述了整个DEX文件的分布，所以可以看到DexClassDef与数据段是有数据的，其余都为0。</p>
+<img src="/posts/9f62af2/27.2.png" class="">
+<p>但y文件只有0x94大小，根本不能构成一个DEX文件。与它同目录的<code>CERT.RSA</code>文件异常的大，考虑是使用了<a target="_blank" rel="noopener" href="http://www.hackdig.com/07/hack-24535.htm">炸弹引爆</a>。</p>
+<p>已知DEX文件总大小为0x1549F0，DEX文件头大小为0x70，所以DEX body的大小为0x154980。DEX body埋在了<code>CERT.RSA</code>的末尾，它的总大小为0x154EAB，所以<code>CERT.RSA</code>的大小应该最大为0x52B。</p>
+<p>但在提取前发现前面有“KEY”和“DEX”字样，后面有“aes-128-cbc”，也就是说DEX body有可能进行了AES加密。</p>
+<img src="/posts/9f62af2/27.3.png" class="">
+<img src="/posts/9f62af2/27.4.png" class="">
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/aa3b7398eac9">aes-128-cbc</a>是对称加密算法，加解密使用的KEY是一样的，明密文长度有可能不一致。将加密过后的DEX body取出，使用解密算法解密。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl enc -d -aes-128-cbc -k &#x27;Misc@inf0#fjhx11&#x27; -nosalt -in encrypt_dex -out decrypted</span><br></pre></td></tr></table></figure>
+<p>解密失败，这是由于openssl高版本加密时对密码使用sha256进行加密；低版本使用md5加密。如果需要兼容，则需要指定参数<code>-md</code>的值，确保两边使用相同的摘要算法。<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b0059bded3fe">使用opensll加解密压缩文件</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl enc -d -aes-128-cbc -md md5 -k &#x27;Misc@inf0#fjhx11&#x27; -nosalt -in encrypt_dex -out decrypted</span><br></pre></td></tr></table></figure>
+<img src="/posts/9f62af2/27.5.png" class="">
+<p>将<code>decrypted</code>中的数据追加到abc文件的尾部，大小恰好是0x1549F0。</p>
+<img src="/posts/9f62af2/27.6.png" class="">
+<p>由于现在已经有DEX body了，string_ids_size、type_ids_size等这些肯定不全为0。以string_ids_size为例，它的偏移为0x70，type_ids_size的偏移为0x91DC，这两个地址中间存放的全都是string的偏移地址。一个地址占4个字节，所以string_ids_size应该为(0x91DC - 0x70) / 4 = 0x245B。同理可得type_ids_size为0x484，proto_ids_size为0x12CF，field_ids_size为0x1BA4，method_ids_size为0x4404。</p>
+<p>将修改后的abc文件载入jadx发现checksum错误，猜测DEX文件还没完全修复，但现在只能修改checksum查看DEX文件被我们修改成什么样了。</p>
+<img src="/posts/9f62af2/27.7.png" class="">
+<p>发现<code>onCreate()</code>方法还没被修复出来。查看abc文件中的<code>onCreate()</code>方法，刚好全0的数据大小为0x94。</p>
+<img src="/posts/9f62af2/27.8.png" class="">
+<p>将y文件中的数据复制到这个地方，最后修改checksum(和最开始的checksum也不一样)。载入jadx查看<code>onCreate()</code>方法，得到最终flag：</p>
+<img src="/posts/9f62af2/27.9.png" class="">
+<h1 id="28-TryGetFlag1"><a href="#28-TryGetFlag1" class="headerlink" title="28. TryGetFlag1"></a>28. TryGetFlag1</h1><img src="/posts/9f62af2/28.1.png" class="">
+<p>看起来是函数抽取型壳，使用FART脱壳，应用没有存储权限，要在<code>AndroidManifest.xml</code>中增加读写存储权限。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot; /&gt;</span><br><span class="line">&lt;uses-permission android:name=&quot;android.permission.READ_EXTERNAL_STORAGE&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<p>在application标签中添加属性：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:requestLegacyExternalStorage=&quot;true&quot;</span><br></pre></td></tr></table></figure>
+<p>但我们发现重新安装APK后APK不能正常运行，也不能使用FART进行脱壳，这不死循环了吗…猜测这道题根本不用脱壳解题。</p>
+<p>由于知道一些明显的方法和成员变量，可以使用Frida hook这些方法与成员变量查看其值。</p>
+<img src="/posts/9f62af2/28.2.png" class="">
+<p><code>GetFlag()</code>方法返回的字符串提示我们这里有可利用的bug。<code>MainActivity.class</code>中还有一个静态成员变量，也将它hook出来看看。</p>
+<img src="/posts/9f62af2/28.3.png" class="">
+<p>将字符串作为<code>GetFlag()</code>的参数传入，却发现它说我们得到了一个错误的flag。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CISCN&#123;You.Got.It.11a15e&#125;</span><br></pre></td></tr></table></figure>
+<p>提交上去不行，我实在不知道怎么解了。</p>
+<h1 id="29-Load"><a href="#29-Load" class="headerlink" title="29. Load"></a>29. Load</h1><p>这个APK又安装不上，接受和响应这些必须要抓包才能看到吧。</p>
+<img src="/posts/9f62af2/29.1.png" class="">
     </div>
 
     
@@ -1233,7 +1294,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-app1-%E7%89%88%E6%9C%AC%E5%8F%B7"><span class="nav-text">1. app1(版本号)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-app2-%E5%B9%BF%E6%92%AD%E6%8E%A5%E6%94%B6%E5%99%A8"><span class="nav-text">2. app2(广播接收器)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-app3-%E5%A4%87%E4%BB%BD%E6%96%87%E4%BB%B6ab"><span class="nav-text">3. app3(备份文件ab)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-easy-apk-%E5%8F%98%E7%A7%8Dbase64"><span class="nav-text">4. easy_apk(变种base64)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-RememberOther-MD5"><span class="nav-text">5. RememberOther(MD5)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-easyjni-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90-amp-%E5%8F%98%E7%A7%8Dbase64"><span class="nav-text">6. easyjni(算法分析&amp;变种base64)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-easy-so-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">7. easy-so(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-easyjava-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">8. easyjava(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-Ph0en1x-100-%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95so"><span class="nav-text">9. Ph0en1x-100(动态调试so)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-%E9%BB%91%E5%AE%A2%E7%B2%BE%E7%A5%9E-JNI-OnLoad"><span class="nav-text">10. 黑客精神(JNI_OnLoad)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-APK%E9%80%86%E5%90%91-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">11. APK逆向(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#12-%E4%BA%BA%E6%B0%91%E7%9A%84%E5%90%8D%E4%B9%89-%E6%8A%93%E6%8D%95%E8%B5%B5%E5%BE%B7%E6%B1%891-200-jar%E5%8C%85"><span class="nav-text">12. 人民的名义-抓捕赵德汉1-200(jar包)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#13-%E5%9F%BA%E7%A1%80android-%E5%B9%BF%E6%92%AD%E6%8E%A5%E6%94%B6%E5%99%A8"><span class="nav-text">13. 基础android(广播接收器)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#14-easy-dex-%E8%A7%A3%E5%AF%86dex-amp-Twofish%E7%AE%97%E6%B3%95"><span class="nav-text">14. easy-dex(解密dex &amp; Twofish算法)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#15-%E4%BD%A0%E6%98%AF%E8%B0%81-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">15. 你是谁(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#16-Android2-0-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">16. Android2.0(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#17-boomshakalaka-3-%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6"><span class="nav-text">17. boomshakalaka-3(共享文件)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#18-Illusion-ARM%E6%B1%87%E7%BC%96"><span class="nav-text">18. Illusion(ARM汇编)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#19-APK%E9%80%86%E5%90%91-2-XML%E6%96%87%E4%BB%B6"><span class="nav-text">19. APK逆向-2(XML文件)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#20-ill-intentions-Native-hook"><span class="nav-text">20. ill-intentions(Native hook)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#21-LoopCrypto"><span class="nav-text">21. LoopCrypto</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#22-%E4%BB%8E%E6%9E%97%E7%9A%84%E7%A7%98%E5%AF%86-wasm-amp-z3"><span class="nav-text">22. 从林的秘密(wasm &amp; z3)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#23-%E5%8F%98%E5%BD%A2%E9%87%91%E5%88%9A-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8A%A0%E5%AF%86-amp-RC4-amp-%E5%8F%98%E7%A7%8DBase64"><span class="nav-text">23. 变形金刚(字符串加密 &amp; RC4 &amp; 变种Base64)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#24-%E4%B8%80%E7%BB%9F%E5%A4%A9%E4%B8%8B"><span class="nav-text">24. 一统天下</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#24-1-%E5%8F%8D%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8A%A0%E5%AF%86"><span class="nav-text">24.1 反字符串加密</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#24-1-1-IDA%E6%8F%92%E4%BB%B6uEmu"><span class="nav-text">24.1.1 IDA插件uEmu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#24-1-2-Frida-hook"><span class="nav-text">24.1.2 Frida hook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#24-1-3-AndroidEmu"><span class="nav-text">24.1.3 AndroidEmu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#24-1-4-%E4%BB%8E%E5%86%85%E5%AD%98%E4%B8%ADdump-data%E8%8A%82%E5%8C%BA"><span class="nav-text">24.1.4 从内存中dump .data节区</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#24-2-%E5%8F%8D%E8%99%9A%E5%81%87%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="nav-text">24.2 反虚假控制流</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#25-Phishing-is-not-a-crime-2"><span class="nav-text">25. Phishing is not a crime-2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#26-Flag-system-%E5%A4%87%E4%BB%BD%E6%96%87%E4%BB%B6ab"><span class="nav-text">26. Flag_system(备份文件ab)</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-app1-%E7%89%88%E6%9C%AC%E5%8F%B7"><span class="nav-text">1. app1(版本号)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-app2-%E5%B9%BF%E6%92%AD%E6%8E%A5%E6%94%B6%E5%99%A8"><span class="nav-text">2. app2(广播接收器)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-app3-%E5%A4%87%E4%BB%BD%E6%96%87%E4%BB%B6ab"><span class="nav-text">3. app3(备份文件ab)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-easy-apk-%E5%8F%98%E7%A7%8Dbase64"><span class="nav-text">4. easy_apk(变种base64)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-RememberOther-MD5"><span class="nav-text">5. RememberOther(MD5)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-easyjni-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90-amp-%E5%8F%98%E7%A7%8Dbase64"><span class="nav-text">6. easyjni(算法分析&amp;变种base64)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-easy-so-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">7. easy-so(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-easyjava-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">8. easyjava(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-Ph0en1x-100-%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95so"><span class="nav-text">9. Ph0en1x-100(动态调试so)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-%E9%BB%91%E5%AE%A2%E7%B2%BE%E7%A5%9E-JNI-OnLoad"><span class="nav-text">10. 黑客精神(JNI_OnLoad)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-APK%E9%80%86%E5%90%91-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">11. APK逆向(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#12-%E4%BA%BA%E6%B0%91%E7%9A%84%E5%90%8D%E4%B9%89-%E6%8A%93%E6%8D%95%E8%B5%B5%E5%BE%B7%E6%B1%891-200-jar%E5%8C%85"><span class="nav-text">12. 人民的名义-抓捕赵德汉1-200(jar包)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#13-%E5%9F%BA%E7%A1%80android-%E5%B9%BF%E6%92%AD%E6%8E%A5%E6%94%B6%E5%99%A8"><span class="nav-text">13. 基础android(广播接收器)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#14-easy-dex-%E8%A7%A3%E5%AF%86dex-amp-Twofish%E7%AE%97%E6%B3%95"><span class="nav-text">14. easy-dex(解密dex &amp; Twofish算法)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#15-%E4%BD%A0%E6%98%AF%E8%B0%81-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">15. 你是谁(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#16-Android2-0-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">16. Android2.0(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#17-boomshakalaka-3-%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6"><span class="nav-text">17. boomshakalaka-3(共享文件)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#18-Illusion-ARM%E6%B1%87%E7%BC%96"><span class="nav-text">18. Illusion(ARM汇编)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#19-APK%E9%80%86%E5%90%91-2-XML%E6%96%87%E4%BB%B6"><span class="nav-text">19. APK逆向-2(XML文件)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#20-ill-intentions-Native-hook"><span class="nav-text">20. ill-intentions(Native hook)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#21-LoopCrypto"><span class="nav-text">21. LoopCrypto</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#22-%E4%BB%8E%E6%9E%97%E7%9A%84%E7%A7%98%E5%AF%86-wasm-amp-z3"><span class="nav-text">22. 从林的秘密(wasm &amp; z3)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#23-%E5%8F%98%E5%BD%A2%E9%87%91%E5%88%9A-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8A%A0%E5%AF%86-amp-RC4-amp-%E5%8F%98%E7%A7%8DBase64"><span class="nav-text">23. 变形金刚(字符串加密 &amp; RC4 &amp; 变种Base64)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#24-%E4%B8%80%E7%BB%9F%E5%A4%A9%E4%B8%8B"><span class="nav-text">24. 一统天下</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#24-1-%E5%8F%8D%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8A%A0%E5%AF%86"><span class="nav-text">24.1 反字符串加密</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#24-1-1-IDA%E6%8F%92%E4%BB%B6uEmu"><span class="nav-text">24.1.1 IDA插件uEmu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#24-1-2-Frida-hook"><span class="nav-text">24.1.2 Frida hook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#24-1-3-AndroidEmu"><span class="nav-text">24.1.3 AndroidEmu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#24-1-4-%E4%BB%8E%E5%86%85%E5%AD%98%E4%B8%ADdump-data%E8%8A%82%E5%8C%BA"><span class="nav-text">24.1.4 从内存中dump .data节区</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#24-2-%E5%8F%8D%E8%99%9A%E5%81%87%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="nav-text">24.2 反虚假控制流</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#25-Phishing-is-not-a-crime-2"><span class="nav-text">25. Phishing is not a crime-2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#26-Flag-system-%E5%A4%87%E4%BB%BD%E6%96%87%E4%BB%B6ab"><span class="nav-text">26. Flag_system(备份文件ab)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#27-Where-%E7%82%B8%E5%BC%B9%E5%BC%95%E7%88%86-amp-DEX%E4%BF%AE%E5%A4%8D"><span class="nav-text">27. Where(炸弹引爆 &amp; DEX修复)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#28-TryGetFlag1"><span class="nav-text">28. TryGetFlag1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#29-Load"><span class="nav-text">29. Load</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -1331,7 +1392,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">20:51</span>
+    <span title="站点阅读时长">20:53</span>
 </div>
 
         
