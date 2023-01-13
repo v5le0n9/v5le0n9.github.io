@@ -49,8 +49,22 @@
 <meta property="og:image" content="http://example.com/posts/17c1c819/5.4.png">
 <meta property="og:image" content="http://example.com/posts/17c1c819/5.5.png">
 <meta property="og:image" content="http://example.com/posts/17c1c819/5.6.png">
+<meta property="og:image" content="http://example.com/posts/17c1c819/8.1.png">
+<meta property="og:image" content="http://example.com/posts/17c1c819/8.2.png">
+<meta property="og:image" content="http://example.com/posts/17c1c819/8.3.png">
+<meta property="og:image" content="http://example.com/posts/17c1c819/9.1.png">
+<meta property="og:image" content="http://example.com/posts/17c1c819/10.1.png">
+<meta property="og:image" content="http://example.com/posts/17c1c819/10.2.png">
+<meta property="og:image" content="http://example.com/posts/17c1c819/10.3.png">
+<meta property="og:image" content="http://example.com/posts/17c1c819/10.4.png">
+<meta property="og:image" content="http://example.com/posts/17c1c819/10.5.png">
+<meta property="og:image" content="http://example.com/posts/17c1c819/10.6.png">
+<meta property="og:image" content="http://example.com/posts/17c1c819/10.7.png">
+<meta property="og:image" content="http://example.com/posts/17c1c819/11.1.png">
+<meta property="og:image" content="http://example.com/posts/17c1c819/11.2.png">
+<meta property="og:image" content="http://example.com/posts/17c1c819/11.3.png">
 <meta property="article:published_time" content="2022-04-05T01:29:27.772Z">
-<meta property="article:modified_time" content="2022-11-17T06:24:12.905Z">
+<meta property="article:modified_time" content="2023-01-12T13:59:41.612Z">
 <meta property="article:author" content="v5le0n9">
 <meta property="article:tag" content="Reverse">
 <meta property="article:tag" content="CTF">
@@ -244,7 +258,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-17 14:24:12" itemprop="dateModified" datetime="2022-11-17T14:24:12+08:00">2022-11-17</time>
+                <time title="修改时间：2023-01-12 21:59:41" itemprop="dateModified" datetime="2023-01-12T21:59:41+08:00">2023-01-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -269,14 +283,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.3k</span>
+              <span>6.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>6 分钟</span>
             </span>
 
         </div>
@@ -345,10 +359,40 @@
 <img src="/posts/17c1c819/5.6.png" class="" title="jeb分析">
 <p>密文与数组比较。现在理一下思路：key经过小端存储作为密钥，输入的文本串经AES_ECB模式和密钥加密后得到需要比较的数组。所以我们现在想逆向回去找文本串，需要将key转换成密钥，再利用ECB解密数组，得到flag。编写脚本：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> v5le0n9;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.security.InvalidKeyException;</span><br><span class="line"><span class="keyword">import</span> java.security.NoSuchAlgorithmException;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.BadPaddingException;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.Cipher;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.IllegalBlockSizeException;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.NoSuchPaddingException;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.spec.SecretKeySpec;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">demo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException &#123;</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">v1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="type">int</span> v0_1;</span><br><span class="line">        String v0_2;</span><br><span class="line">        <span class="type">String</span> <span class="variable">arg4</span> <span class="operator">=</span> <span class="string">&quot;this_is_the_key.&quot;</span>;    <span class="comment">//在winhex中发现</span></span><br><span class="line">        <span class="keyword">for</span>(v0_1 = <span class="number">0</span>; v0_1 &lt; arg4.length(); v0_1 += <span class="number">2</span>) &#123;  <span class="comment">//对KEY进行二次变换，这是有类c中的函数分析得到的</span></span><br><span class="line">            v1.append(arg4.charAt(v0_1 + <span class="number">1</span>));</span><br><span class="line">            v1.append(arg4.charAt(v0_1));</span><br><span class="line">        &#125;</span><br><span class="line">        v0_2 = v1.toString();</span><br><span class="line">        <span class="type">byte</span> key[] = v0_2.getBytes();     <span class="comment">//转换成Bytes数组</span></span><br><span class="line">        SecretKeySpec a;</span><br><span class="line">        Cipher b;</span><br><span class="line">        a = <span class="keyword">new</span> <span class="title class_">SecretKeySpec</span>(key, <span class="string">&quot;AES&quot;</span>);</span><br><span class="line">        b = Cipher.getInstance(<span class="string">&quot;AES/ECB/PKCS5Padding&quot;</span>);</span><br><span class="line">        <span class="type">byte</span> flag[] = &#123;<span class="number">21</span>, -<span class="number">93</span>, -<span class="number">68</span>, -<span class="number">94</span>, <span class="number">86</span>, <span class="number">117</span>, -<span class="number">19</span>, -<span class="number">68</span>,</span><br><span class="line">                -<span class="number">92</span>, <span class="number">33</span>, <span class="number">50</span>, <span class="number">118</span>, <span class="number">16</span>, <span class="number">13</span>, <span class="number">1</span>, -<span class="number">15</span>, -<span class="number">13</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">103</span>, -<span class="number">18</span>, <span class="number">81</span>, <span class="number">30</span>, <span class="number">68</span>, <span class="number">54</span>, -<span class="number">93</span>, <span class="number">44</span>, -<span class="number">23</span>,</span><br><span class="line">                <span class="number">93</span>, <span class="number">98</span>, <span class="number">5</span>, <span class="number">59</span>&#125;;</span><br><span class="line">        b.init(Cipher.DECRYPT_MODE,a);    <span class="comment">//这里注意前面的参数，选择相应的解密参数</span></span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">AES_decode</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(b.doFinal(flag),<span class="string">&quot;utf-8&quot;</span>);</span><br><span class="line">        System.out.println(AES_decode);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">LCTF&#123;1t&#x27;s_rea1ly_an_ea3y_ap4&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
-<h1 id="6-HelloSmali2-送分"><a href="#6-HelloSmali2-送分" class="headerlink" title="6. HelloSmali2(送分)"></a>6. HelloSmali2(送分)</h1><p>下载下来一个smali文件和一个java文件，将java文件运行一下就有答案。所以smali文件并没有什么用？</p>
+<h1 id="7-HelloSmali2-送分"><a href="#7-HelloSmali2-送分" class="headerlink" title="7. HelloSmali2(送分)"></a>7. HelloSmali2(送分)</h1><p>下载下来一个smali文件和一个java文件，将java文件运行一下就有答案。所以smali文件并没有什么用？</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">javac XMan.java//生成XMan.class文件</span><br><span class="line">java XMan//执行class文件</span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">eM_5m4Li_i4_Ea5y</span><br><span class="line">XMAN&#123;eM_5m4Li_i4_Ea5y&#125;</span><br></pre></td></tr></table></figure>
-
+<h1 id="8-LoopAndLoop-算法分析"><a href="#8-LoopAndLoop-算法分析" class="headerlink" title="8. LoopAndLoop(算法分析)"></a>8. LoopAndLoop(算法分析)</h1><img src="/posts/17c1c819/8.1.png" class="" title="jadx分析">
+<img src="/posts/17c1c819/8.2.png" class="" title="jadx分析">
+<p>顺着它的逻辑编写代码，循环几次后发现规律，最后得到flag。</p>
+<img src="/posts/17c1c819/8.3.png" class="">
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alictf&#123;Jan6N100p3r&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="9-SafeBox-算法分析"><a href="#9-SafeBox-算法分析" class="headerlink" title="9. SafeBox(算法分析)"></a>9. SafeBox(算法分析)</h1><p>这有两个Activity，两个Activity的算法有点差别，将两个算法都算一遍就知道谁是正确flag了。</p>
+<p>而且题目描述说明flag内容只包含[a-zA-Z0-9]，所以可以轻易得出正确flag。</p>
+<img src="/posts/17c1c819/9.1.png" class="">
+<h1 id="10-baby-unity3d-unity-amp-Native-hook"><a href="#10-baby-unity3d-unity-amp-Native-hook" class="headerlink" title="10. baby unity3d(unity &amp; Native hook)"></a>10. baby unity3d(unity &amp; Native hook)</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u012787710/article/details/107247426/">unity3d手游逆向</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq78442761/article/details/118099220">Android逆向笔记-Unity3D逆向一般思路（静态分析）</a></p>
+<p>根据<a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-1348438-1-1.html">bugku baby unity3d分析思路</a>，在Magisk中<a target="_blank" rel="noopener" href="https://www.xitmi.com/10831.html">启动Zygisk</a>，使用<a target="_blank" rel="noopener" href="https://github.com/Perfare/Zygisk-Il2CppDumper">Zygisk-Il2CppDumper</a>将生成的ZIP包刷入Magisk后重启，启动游戏，得到<code>dump.cs</code>文件。</p>
+<img src="/posts/17c1c819/10.1.png" class="">
+<p>CS文件其实是C#源文件，可以使用任何编辑器打开。<code>dump.cs</code>中有上万行代码，需要在这些代码中寻找关键函数并不容易。可以根据<code>Assembly-CSharp.dll</code>的index进行定位。</p>
+<img src="/posts/17c1c819/10.2.png" class="">
+<img src="/posts/17c1c819/10.3.png" class="">
+<p>将<code>libil2cpp.so</code>载入IDA，定位到相关虚拟地址。将IDA中的函数名修改为<code>dump.cs</code>中的函数名以便理解。</p>
+<img src="/posts/17c1c819/10.4.png" class="">
+<img src="/posts/17c1c819/10.5.png" class="">
+<p><code>AESEncrypt()</code>的password和iv，<code>op_Equality()</code>的dword_69B7F0都很难在IDA中得到，可以通过Native hook将这些参数打印出来，点击程序中的Check按钮就会调用到这两个函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hook_flag</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> soAddr = <span class="title class_">Module</span>.<span class="title function_">findBaseAddress</span>(<span class="string">&quot;libil2cpp.so&quot;</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;soAddr =&gt; &quot;</span> + soAddr);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//根据函数偏移调用函数</span></span><br><span class="line">    <span class="keyword">var</span> <span class="title class_">AESEncryptAddr</span> = soAddr.<span class="title function_">add</span>(<span class="number">0x518b54</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;AESEncryptAddr =&gt; &quot;</span> + <span class="title class_">AESEncryptAddr</span>);</span><br><span class="line"></span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(<span class="title class_">AESEncryptAddr</span>, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>:<span class="keyword">function</span>(<span class="params">args</span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;AESEncrypt addr =&gt; &quot;</span>, args[<span class="number">0</span>]);</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;text =&gt; &quot;</span>, <span class="title function_">hexdump</span>(args[<span class="number">1</span>]));</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;password =&gt; &quot;</span>, <span class="title function_">hexdump</span>(args[<span class="number">2</span>]));</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;iv =&gt; &quot;</span>, <span class="title function_">hexdump</span>(args[<span class="number">3</span>]));</span><br><span class="line">        &#125;,<span class="attr">onLeave</span>:<span class="keyword">function</span>(<span class="params">retval</span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;AESEncrypt retval =&gt; &quot;</span>,<span class="title function_">hexdump</span>(retval));</span><br><span class="line">            <span class="keyword">return</span> retval;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> op_EqualityAddr = soAddr.<span class="title function_">add</span>(<span class="number">0x7d644</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;op_EqualityAddr =&gt; &quot;</span> + op_EqualityAddr);</span><br><span class="line"></span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(op_EqualityAddr, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>:<span class="keyword">function</span>(<span class="params">args</span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;op_Equality addr =&gt; &quot;</span>, args[<span class="number">0</span>]);</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;AESEncrypt retval =&gt; &quot;</span>, <span class="title function_">hexdump</span>(args[<span class="number">1</span>]));</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;dword_69B7F0 =&gt; &quot;</span>, <span class="title function_">hexdump</span>(args[<span class="number">2</span>]));</span><br><span class="line">        &#125;,<span class="attr">onLeave</span>:<span class="keyword">function</span>(<span class="params">retval</span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;op_Equality retval =&gt; &quot;</span>,retval);</span><br><span class="line">            <span class="keyword">return</span> retval;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">setImmediate</span>(hook_flag)</span><br></pre></td></tr></table></figure>
+<img src="/posts/17c1c819/10.6.png" class="">
+<p>可以得到password为91c775fa0f6a1cba，iv为58f3a445939aeb79。dword_69B7F0为w0ZyUZAHhn16/MRWie63lK+PuVpZObu/NpQ/E/ucplc=，应该是将密文再进行了一次Base64编码。</p>
+<img src="/posts/17c1c819/10.7.png" class="">
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">N1CTF&#123;h4ppy_W1TH_1l2cpp&#125;</span><br></pre></td></tr></table></figure>
+<p>如果不清楚<code>AESEncrypt()</code>中还进行了什么奇怪的算法，使用在线解密工具解密不出时，可以主动调用<code>libil2cpp.so</code>中的<code>AESDecrypt()</code>。但我貌似没这能耐啊不会弄。</p>
+<h1 id="11-easyeasy-200"><a href="#11-easyeasy-200" class="headerlink" title="11. easyeasy-200"></a>11. easyeasy-200</h1><img src="/posts/17c1c819/11.1.png" class="">
+<p><code>check()</code>方法中调用了Native方法<code>checkEmulator()</code>，看名字就知道是模拟器检测，还调用了<code>checkPasswd()</code>，这个才是核心函数。</p>
+<p>将So文件载入IDA，查看<code>.init_array</code>：</p>
+<img src="/posts/17c1c819/11.2.png" class="">
+<p>查看<code>JNI_OnLoad()</code>：</p>
+<img src="/posts/17c1c819/11.3.png" class="">
     </div>
 
     
@@ -454,7 +498,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-signin-Java-hook"><span class="nav-text">1. signin(Java hook)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-mobile1-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">2. mobile1(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-mobile2-XML%E6%96%87%E4%BB%B6"><span class="nav-text">3. mobile2(XML文件)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Timer-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90-amp-Smali%E6%96%87%E4%BB%B6%E4%BF%AE%E6%94%B9"><span class="nav-text">4. Timer(算法分析&amp;Smali文件修改)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-First-Mobile-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">5. First_Mobile(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-easy-100-AES%E5%8A%A0%E5%AF%86"><span class="nav-text">6. easy_100(AES加密)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-HelloSmali2-%E9%80%81%E5%88%86"><span class="nav-text">6. HelloSmali2(送分)</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-signin-Java-hook"><span class="nav-text">1. signin(Java hook)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-mobile1-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">2. mobile1(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-mobile2-XML%E6%96%87%E4%BB%B6"><span class="nav-text">3. mobile2(XML文件)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Timer-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90-amp-Smali%E6%96%87%E4%BB%B6%E4%BF%AE%E6%94%B9"><span class="nav-text">4. Timer(算法分析&amp;Smali文件修改)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-First-Mobile-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">5. First_Mobile(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-easy-100-AES%E5%8A%A0%E5%AF%86"><span class="nav-text">6. easy_100(AES加密)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-HelloSmali2-%E9%80%81%E5%88%86"><span class="nav-text">7. HelloSmali2(送分)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-LoopAndLoop-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">8. LoopAndLoop(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-SafeBox-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">9. SafeBox(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-baby-unity3d-unity-amp-Native-hook"><span class="nav-text">10. baby unity3d(unity &amp; Native hook)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-easyeasy-200"><span class="nav-text">11. easyeasy-200</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -470,14 +514,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">69</span>
+          <span class="site-state-item-count">70</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -552,7 +596,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">20:53</span>
+    <span title="站点阅读时长">20:55</span>
 </div>
 
         
