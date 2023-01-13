@@ -471,7 +471,7 @@
 </ul>
 <h2 id="6-2-Youpk的整体dump思路"><a href="#6-2-Youpk的整体dump思路" class="headerlink" title="6.2 Youpk的整体dump思路"></a>6.2 Youpk的整体dump思路</h2><h3 id="6-2-1-v4-0：优中选优-双保险"><a href="#6-2-1-v4-0：优中选优-双保险" class="headerlink" title="6.2.1 v4.0：优中选优+双保险"></a>6.2.1 v4.0：优中选优+双保险</h3><ul>
 <li>时机：App启动后10s开始。</li>
-<li>方式：禁用dex2oat，在dex2oat中设置CompilerFilter为仅验证compiler_options_ -&gt; SetCompilerFilter()，从ClassLinker中遍历DexFile对象并dump。</li>
+<li>方式：禁用dex2oat，在dex2oat中设置CompilerFilter为仅验证compiler<em>options</em> -&gt; SetCompilerFilter()，从ClassLinker中遍历DexFile对象并dump。</li>
 </ul>
 <h2 id="6-3-Youpk-Fart整体dump进一步提升"><a href="#6-3-Youpk-Fart整体dump进一步提升" class="headerlink" title="6.3 Youpk+Fart整体dump进一步提升"></a>6.3 Youpk+Fart整体dump进一步提升</h2><h3 id="6-3-1-每个脱壳点都可以脱壳DexFile"><a href="#6-3-1-每个脱壳点都可以脱壳DexFile" class="headerlink" title="6.3.1 每个脱壳点都可以脱壳DexFile"></a>6.3.1 每个脱壳点都可以脱壳DexFile</h3><ul>
 <li>时机和方式：在安卓8上禁用dex2oat，结合Fart所提出的海量脱壳点，每个脱壳点都可以脱壳。</li>
