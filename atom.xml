@@ -48,9 +48,9 @@
     <category term="Android安全" scheme="http://example.com/categories/Android%E5%AE%89%E5%85%A8/"/>
     
     
-    <category term="CTF" scheme="http://example.com/tags/CTF/"/>
-    
     <category term="Reverse" scheme="http://example.com/tags/Reverse/"/>
+    
+    <category term="CTF" scheme="http://example.com/tags/CTF/"/>
     
   </entry>
   

@@ -63,11 +63,16 @@
 <meta property="og:image" content="http://example.com/posts/17c1c819/11.1.png">
 <meta property="og:image" content="http://example.com/posts/17c1c819/11.2.png">
 <meta property="og:image" content="http://example.com/posts/17c1c819/11.3.png">
+<meta property="og:image" content="http://example.com/posts/17c1c819/11.4.png">
+<meta property="og:image" content="http://example.com/posts/17c1c819/11.5.png">
+<meta property="og:image" content="http://example.com/posts/17c1c819/11.6.png">
+<meta property="og:image" content="http://example.com/posts/17c1c819/11.7.png">
+<meta property="og:image" content="http://example.com/posts/17c1c819/11.8.png">
 <meta property="article:published_time" content="2022-04-05T01:29:27.772Z">
-<meta property="article:modified_time" content="2023-01-12T13:59:41.612Z">
+<meta property="article:modified_time" content="2023-01-13T14:43:57.912Z">
 <meta property="article:author" content="v5le0n9">
-<meta property="article:tag" content="CTF">
 <meta property="article:tag" content="Reverse">
+<meta property="article:tag" content="CTF">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/posts/17c1c819/1.png">
 
@@ -258,7 +263,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-01-12 21:59:41" itemprop="dateModified" datetime="2023-01-12T21:59:41+08:00">2023-01-12</time>
+                <time title="修改时间：2023-01-13 22:43:57" itemprop="dateModified" datetime="2023-01-13T22:43:57+08:00">2023-01-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -283,7 +288,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>6.5k</span>
+              <span>6.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -387,12 +392,22 @@
 <img src="/posts/17c1c819/10.7.png" class="">
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">N1CTF&#123;h4ppy_W1TH_1l2cpp&#125;</span><br></pre></td></tr></table></figure>
 <p>如果不清楚<code>AESEncrypt()</code>中还进行了什么奇怪的算法，使用在线解密工具解密不出时，可以主动调用<code>libil2cpp.so</code>中的<code>AESDecrypt()</code>。但我貌似没这能耐啊不会弄。</p>
-<h1 id="11-easyeasy-200"><a href="#11-easyeasy-200" class="headerlink" title="11. easyeasy-200"></a>11. easyeasy-200</h1><img src="/posts/17c1c819/11.1.png" class="">
+<h1 id="11-easyeasy-200-模拟器检测"><a href="#11-easyeasy-200-模拟器检测" class="headerlink" title="11. easyeasy-200(模拟器检测)"></a>11. easyeasy-200(模拟器检测)</h1><img src="/posts/17c1c819/11.1.png" class="">
 <p><code>check()</code>方法中调用了Native方法<code>checkEmulator()</code>，看名字就知道是模拟器检测，还调用了<code>checkPasswd()</code>，这个才是核心函数。</p>
 <p>将So文件载入IDA，查看<code>.init_array</code>：</p>
 <img src="/posts/17c1c819/11.2.png" class="">
 <p>查看<code>JNI_OnLoad()</code>：</p>
 <img src="/posts/17c1c819/11.3.png" class="">
+<img src="/posts/17c1c819/11.4.png" class="">
+<img src="/posts/17c1c819/11.5.png" class="">
+<p>相关检测可以看<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/541808821">Tide安全团队——动态防护技术</a>，<a target="_blank" rel="noopener" href="https://blog.51cto.com/kuangke/3140020">Android模拟器检测及对抗方法</a>，<a target="_blank" rel="noopener" href="https://dandelioncloud.cn/article/details/1549773196998443009">Android逆向之旅—运行时修改内存中的Dalvik指令来改变代码逻辑</a>，<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/40c5f0901e4e">Android常见风控检测位置</a>。</p>
+<p>最后看Native层函数：</p>
+<img src="/posts/17c1c819/11.6.png" class="">
+<img src="/posts/17c1c819/11.7.png" class="">
+<p><code>.init_array</code>中的secret是pass逆序后的Base64编码，拿去解码逆序回来即可。由于Base64字符表中没有“.”，猜测是占位符。解出没有前后缀的flag，加上前后缀提交。</p>
+<img src="/posts/17c1c819/11.8.png" class="">
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iwantashellbecauseidonthaveitttt</span><br><span class="line"></span><br><span class="line">flag&#123;iwantashellbecauseidonthaveitttt&#125;</span><br></pre></td></tr></table></figure>
+
     </div>
 
     
@@ -422,8 +437,8 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/CTF/" rel="tag"><i class="fa fa-tag"></i> CTF</a>
               <a href="/tags/Reverse/" rel="tag"><i class="fa fa-tag"></i> Reverse</a>
+              <a href="/tags/CTF/" rel="tag"><i class="fa fa-tag"></i> CTF</a>
           </div>
 
         
@@ -498,7 +513,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-signin-Java-hook"><span class="nav-text">1. signin(Java hook)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-mobile1-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">2. mobile1(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-mobile2-XML%E6%96%87%E4%BB%B6"><span class="nav-text">3. mobile2(XML文件)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Timer-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90-amp-Smali%E6%96%87%E4%BB%B6%E4%BF%AE%E6%94%B9"><span class="nav-text">4. Timer(算法分析&amp;Smali文件修改)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-First-Mobile-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">5. First_Mobile(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-easy-100-AES%E5%8A%A0%E5%AF%86"><span class="nav-text">6. easy_100(AES加密)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-HelloSmali2-%E9%80%81%E5%88%86"><span class="nav-text">7. HelloSmali2(送分)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-LoopAndLoop-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">8. LoopAndLoop(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-SafeBox-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">9. SafeBox(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-baby-unity3d-unity-amp-Native-hook"><span class="nav-text">10. baby unity3d(unity &amp; Native hook)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-easyeasy-200"><span class="nav-text">11. easyeasy-200</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-signin-Java-hook"><span class="nav-text">1. signin(Java hook)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-mobile1-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">2. mobile1(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-mobile2-XML%E6%96%87%E4%BB%B6"><span class="nav-text">3. mobile2(XML文件)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Timer-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90-amp-Smali%E6%96%87%E4%BB%B6%E4%BF%AE%E6%94%B9"><span class="nav-text">4. Timer(算法分析&amp;Smali文件修改)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-First-Mobile-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">5. First_Mobile(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-easy-100-AES%E5%8A%A0%E5%AF%86"><span class="nav-text">6. easy_100(AES加密)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-HelloSmali2-%E9%80%81%E5%88%86"><span class="nav-text">7. HelloSmali2(送分)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-LoopAndLoop-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">8. LoopAndLoop(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-SafeBox-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">9. SafeBox(算法分析)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-baby-unity3d-unity-amp-Native-hook"><span class="nav-text">10. baby unity3d(unity &amp; Native hook)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-easyeasy-200-%E6%A8%A1%E6%8B%9F%E5%99%A8%E6%A3%80%E6%B5%8B"><span class="nav-text">11. easyeasy-200(模拟器检测)</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -596,7 +611,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">20:55</span>
+    <span title="站点阅读时长">20:56</span>
 </div>
 
         
