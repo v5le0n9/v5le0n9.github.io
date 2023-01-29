@@ -287,8 +287,10 @@
 <meta property="og:image" content="http://example.com/posts/9f62af2/28.2.png">
 <meta property="og:image" content="http://example.com/posts/9f62af2/28.3.png">
 <meta property="og:image" content="http://example.com/posts/9f62af2/29.1.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/29.2.png">
+<meta property="og:image" content="http://example.com/posts/9f62af2/29.3.png">
 <meta property="article:published_time" content="2022-04-05T01:29:28.252Z">
-<meta property="article:modified_time" content="2023-01-11T08:09:27.313Z">
+<meta property="article:modified_time" content="2023-01-29T09:39:29.490Z">
 <meta property="article:author" content="v5le0n9">
 <meta property="article:tag" content="Reverse">
 <meta property="article:tag" content="CTF">
@@ -482,7 +484,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-01-11 16:09:27" itemprop="dateModified" datetime="2023-01-11T16:09:27+08:00">2023-01-11</time>
+                <time title="修改时间：2023-01-29 17:39:29" itemprop="dateModified" datetime="2023-01-29T17:39:29+08:00">2023-01-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1093,7 +1095,7 @@
 <h2 id="24-1-反字符串加密"><a href="#24-1-反字符串加密" class="headerlink" title="24.1 反字符串加密"></a>24.1 反字符串加密</h2><p>So中的字符串解密有两种情况，一种是在执行<code>JNI_OnLoad()</code>前就将所有字符串解密，解密算法在<code>.init_array</code>中；另一种是使用时再解密。加密字符串数据存储在<code>.data</code>节区。</p>
 <p>先将所有加密字符串解密，这里如何快速获得所有的解密字符串？一个个敲代码或在010 Editor中异或都太慢了。。。找到<code>OO0OOOO()</code>函数，并且看字符串还有TracerPid检测。</p>
 <img src="/posts/9f62af2/24.16.png" class="">
-<p>果然，被我找到一些方法。使用IDA插件<a target="_blank" rel="noopener" href="https://github.com/alexhude/uEmu">uEmu</a>对加密字符串进行解密；<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/94eb9e6c34e7">使用Frida hook方式得到解密字符串</a>；<a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-268107.htm">使用AndroidEmu或unidbg对抗字符串混淆</a>；也可以<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1pa411w7Gz">将So加载到内存后，dump <code>.data</code>节区中的数据</a>。</p>
+<p>果然，被我找到一些方法。使用IDA插件<a target="_blank" rel="noopener" href="https://github.com/alexhude/uEmu">uEmu</a>对加密字符串进行解密；<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/94eb9e6c34e7">使用Frida hook方式得到解密字符串</a>；<a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-268107.htm">使用AndroidEmu或unidbg对抗字符串混淆</a>；也可以将So加载到内存后，dump <code>.data</code>节区中的数据。</p>
 <p><a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-274532.htm">Android APP漏洞之战（14）——Ollvm混淆与反混淆</a>这篇文章几乎涵盖这道题所要用到的知识。</p>
 <h3 id="24-1-1-IDA插件uEmu"><a href="#24-1-1-IDA插件uEmu" class="headerlink" title="24.1.1 IDA插件uEmu"></a>24.1.1 IDA插件uEmu</h3><p>由于我下载的IDA Pro自带Python，所以要将unicorn下载到相应的Python环境中，在载入<code>uEmu.py</code>脚本时才不会报没有这个模块的错：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install unicorn --target=&quot;D:\CTF\tools\IDA_Pro_v7.5\python\3\&quot;</span><br></pre></td></tr></table></figure>
@@ -1162,8 +1164,7 @@
 <img src="/posts/9f62af2/27.4.png" class="">
 <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/aa3b7398eac9">aes-128-cbc</a>是对称加密算法，加解密使用的KEY是一样的，明密文长度有可能不一致。将加密过后的DEX body取出，使用解密算法解密。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl enc -d -aes-128-cbc -k &#x27;Misc@inf0#fjhx11&#x27; -nosalt -in encrypt_dex -out decrypted</span><br></pre></td></tr></table></figure>
-<p>解密失败，这是由于openssl高版本加密时对密码使用sha256进行加密；低版本使用md5加密。如果需要兼容，则需要指定参数<code>-md</code>的值，确保两边使用相同的摘要算法。<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b0059bded3fe">使用opensll加解密压缩文件</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl enc -d -aes-128-cbc -md md5 -k &#x27;Misc@inf0#fjhx11&#x27; -nosalt -in encrypt_dex -out decrypted</span><br></pre></td></tr></table></figure>
+<p>解密失败，这是由于openssl高版本加密时对密码使用sha256进行加密；低版本使用md5加密。如果需要兼容，则需要指定参数<code>-md</code>的值，确保两边使用相同的摘要算法。<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b0059bded3fe">使用opensll加解密压缩文件</a><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl enc -d -aes-128-cbc -md md5 -k &#x27;Misc@inf0#fjhx11&#x27; -nosalt -in encrypt_dex -out decrypted</span><br></pre></td></tr></table></figure></p>
 <img src="/posts/9f62af2/27.5.png" class="">
 <p>将<code>decrypted</code>中的数据追加到abc文件的尾部，大小恰好是0x1549F0。</p>
 <img src="/posts/9f62af2/27.6.png" class="">
@@ -1187,8 +1188,12 @@
 <p>将字符串作为<code>GetFlag()</code>的参数传入，却发现它说我们得到了一个错误的flag。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CISCN&#123;You.Got.It.11a15e&#125;</span><br></pre></td></tr></table></figure>
 <p>提交上去不行，我实在不知道怎么解了。</p>
-<h1 id="29-Load"><a href="#29-Load" class="headerlink" title="29. Load"></a>29. Load</h1><p>这个APK又安装不上，接受和响应这些必须要抓包才能看到吧。</p>
+<h1 id="29-Load"><a href="#29-Load" class="headerlink" title="29. Load"></a>29. Load</h1><p>APK安装上了但闪退。</p>
 <img src="/posts/9f62af2/29.1.png" class="">
+<img src="/posts/9f62af2/29.2.png" class="">
+<img src="/posts/9f62af2/29.3.png" class="">
+<p>救命真的好难</p>
+
     </div>
 
     
@@ -1317,7 +1322,7 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
