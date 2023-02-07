@@ -28,27 +28,27 @@
 <meta property="og:site_name" content="v5le0n9&#39;s garden">
 <meta property="og:description" content="吾爱论坛2023春节出的题，此道题是Android中级题。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/posts/undefined/1.1.png">
-<meta property="og:image" content="http://example.com/posts/undefined/1.2.png">
-<meta property="og:image" content="http://example.com/posts/undefined/1.3.png">
-<meta property="og:image" content="http://example.com/posts/undefined/1.4.png">
-<meta property="og:image" content="http://example.com/posts/undefined/1.5.png">
-<meta property="og:image" content="http://example.com/posts/undefined/2.0.png">
-<meta property="og:image" content="http://example.com/posts/undefined/2.2.png">
-<meta property="og:image" content="http://example.com/posts/undefined/1.6.png">
-<meta property="og:image" content="http://example.com/posts/undefined/1.7.png">
-<meta property="og:image" content="http://example.com/posts/undefined/1.8.png">
-<meta property="og:image" content="http://example.com/posts/undefined/1.9.png">
-<meta property="og:image" content="http://example.com/posts/undefined/2.1.png">
-<meta property="og:image" content="http://example.com/posts/undefined/2.3.png">
-<meta property="og:image" content="http://example.com/posts/undefined/2.4.png">
+<meta property="og:image" content="http://example.com/posts/4d713fff/1.1.png">
+<meta property="og:image" content="http://example.com/posts/4d713fff/1.2.png">
+<meta property="og:image" content="http://example.com/posts/4d713fff/1.3.png">
+<meta property="og:image" content="http://example.com/posts/4d713fff/1.4.png">
+<meta property="og:image" content="http://example.com/posts/4d713fff/1.5.png">
+<meta property="og:image" content="http://example.com/posts/4d713fff/2.0.png">
+<meta property="og:image" content="http://example.com/posts/4d713fff/2.2.png">
+<meta property="og:image" content="http://example.com/posts/4d713fff/1.6.png">
+<meta property="og:image" content="http://example.com/posts/4d713fff/1.7.png">
+<meta property="og:image" content="http://example.com/posts/4d713fff/1.8.png">
+<meta property="og:image" content="http://example.com/posts/4d713fff/1.9.png">
+<meta property="og:image" content="http://example.com/posts/4d713fff/2.1.png">
+<meta property="og:image" content="http://example.com/posts/4d713fff/2.3.png">
+<meta property="og:image" content="http://example.com/posts/4d713fff/2.4.png">
 <meta property="article:published_time" content="2023-01-27T03:36:12.283Z">
-<meta property="article:modified_time" content="2023-02-06T07:55:15.076Z">
+<meta property="article:modified_time" content="2023-02-06T08:36:03.133Z">
 <meta property="article:author" content="v5le0n9">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="Reverse">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/posts/undefined/1.1.png">
+<meta name="twitter:image" content="http://example.com/posts/4d713fff/1.1.png">
 
 <link rel="canonical" href="http://example.com/posts/4d713fff.html">
 
@@ -237,7 +237,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-06 15:55:15" itemprop="dateModified" datetime="2023-02-06T15:55:15+08:00">2023-02-06</time>
+                <time title="修改时间：2023-02-06 16:36:03" itemprop="dateModified" datetime="2023-02-06T16:36:03+08:00">2023-02-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -284,29 +284,29 @@
         <p>吾爱论坛2023春节出的题，此道题是Android中级题。</p>
 <span id="more"></span>
 <p>使用jadx查看程序流程：</p>
-<img src="/posts/undefined/1.1.png" class="">
+<img src="/posts/4d713fff/1.1.png" class="">
 <p>由于<code>write_img()</code>当分贝符合时才执行，所以先hook<code>Check_Volume()</code>修改其分贝值。</p>
-<img src="/posts/undefined/1.2.png" class="">
+<img src="/posts/4d713fff/1.2.png" class="">
 <p>查看<code>write_img()</code>函数：</p>
-<img src="/posts/undefined/1.3.png" class="">
+<img src="/posts/4d713fff/1.3.png" class="">
 <p>私有目录即<code>/sdcard/Android/data/&#123;PackageName&#125;/files/</code>，其实私有目录下的<code>aes.png</code>与<code>/assets/</code>中的<code>aes.png</code>是一样的。查看<code>aes.png</code>文件，发现进行了Base64编码。</p>
-<img src="/posts/undefined/1.4.png" class="">
+<img src="/posts/4d713fff/1.4.png" class="">
 <p>Java层逻辑已经分析了差不多了，并没有调用到Native层方法，但加载了So文件。查看<code>lib52pj.so</code>的导出函数，有AES加解密函数、Base64加解密函数以及Key，结合<code>aes.png</code>，基本上可以判断<code>aes.png</code>进行了AES加密，然后再进行Base64编码。</p>
-<img src="/posts/undefined/1.5.png" class="">
+<img src="/posts/4d713fff/1.5.png" class="">
 <p>接下来就是找密钥。查看<code>JNI_OnLoad()</code>方法，<code>JNI_OnLoad()</code>中执行了<code>ptrace()</code>方法，所以如果我们使用Frida再次<code>ptrace()</code>会失败。</p>
-<img src="/posts/undefined/2.0.png" class="">
+<img src="/posts/4d713fff/2.0.png" class="">
 <p>进入methods，找到注册函数<code>get_RealKey()</code>，传入的字符串长度为16，与内存数据加密后与“thisiskey”作比较，如果相等返回false，这里是个障眼法，我一直以为是相等返回true！</p>
-<img src="/posts/undefined/2.2.png" class="">
-<img src="/posts/undefined/1.6.png" class="">
+<img src="/posts/4d713fff/2.2.png" class="">
+<img src="/posts/4d713fff/1.6.png" class="">
 <p>那么这个传入的字符串是什么呢？这个应用并没有要求我们输入，所以这个字符串应该是本地存储的。猜测是通过假密钥得到真密钥。查看导出函数表的<code>encrypt()</code>与<code>decrypt()</code>函数，它们使用的密钥为<code>|wfkuqokj4548366</code>，这个应该就是假密钥。</p>
-<img src="/posts/undefined/1.7.png" class="">
-<img src="/posts/undefined/1.8.png" class="">
+<img src="/posts/4d713fff/1.7.png" class="">
+<img src="/posts/4d713fff/1.8.png" class="">
 <p><code>vaddq_s8()</code>函数表示一次性对16个数进行加法，刚好假密钥与内存数据都是16个字符。对其进行加密得到真密钥<code>wuaipojie2023114</code>。</p>
-<img src="/posts/undefined/1.9.png" class="">
+<img src="/posts/4d713fff/1.9.png" class="">
 <p>已知真密钥，再对<code>aes.png</code>进行AES解密。<a target="_blank" rel="noopener" href="https://gchq.github.io/CyberChef">CyberChef</a>也太香了。</p>
-<img src="/posts/undefined/2.1.png" class="">
-<img src="/posts/undefined/2.3.png" class="">
-<img src="/posts/undefined/2.4.png" class="">
+<img src="/posts/4d713fff/2.1.png" class="">
+<img src="/posts/4d713fff/2.3.png" class="">
+<img src="/posts/4d713fff/2.4.png" class="">
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;Happy_New_Year_Wuaipojie2023&#125;</span><br></pre></td></tr></table></figure>
 
     </div>
